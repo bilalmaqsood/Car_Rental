@@ -1,0 +1,15 @@
+/node_modules
+/public/js
+/public/css
+/public/hot
+/public/fonts
+/public/storage
+/storage/*.key
+/vendor
+/.idea
+/.vagrant
+Homestead.json
+Homestead.yaml
+.env
+/config/ide-helper.php
+/public/mix-manifest.json
