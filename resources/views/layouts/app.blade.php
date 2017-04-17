@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Qwikkar') }}</title>
 
     <!-- Styles -->
     <link href="{{ mix('css/qwikkar.css') }}" rel="stylesheet">
@@ -82,7 +82,9 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/jst.js?{{time()}}"></script>
+    <script src="{{ mix('js/jst.js') }}"></script>
+    <script src="{{ mix('js/manifest.js') }}"></script>
+    <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/qwikkar.js') }}"></script>
 </body>
 </html>

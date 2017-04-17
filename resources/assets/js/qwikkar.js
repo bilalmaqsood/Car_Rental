@@ -15,16 +15,22 @@ require('./bootstrap');
 
 Vue.component('example', require('./components/Example.vue'));
 
+Vue.component('passport-clients', require('./components/passport/Clients.vue'));
+
+Vue.component('passport-authorized-clients', require('./components/passport/AuthorizedClients.vue'));
+
+Vue.component('passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens.vue'));
+
 const app = new Vue({
     el: '#app'
 });
 
 // setTimeout(function () {
 //     console.log('timeout triggered');
-//     $('.navbar-brand').html(_.template(Qwikkar['panel.html']({
+//     $('#app-navbar-collapse').html(_.template(Qwikkar['panel.html']({
 //         data: {
 //             name: 'oknasir',
 //             description: 'panel description for oknasir'
 //         }
-//     })))
+//     })));
 // }, 3000);
