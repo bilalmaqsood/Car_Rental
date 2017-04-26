@@ -16,7 +16,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name',
+        'last_name',
+        'password',
+        'email',
+        'phone',
     ];
 
     /**
@@ -25,6 +29,81 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'id',
+        'password',
+        'updated_at',
+        'remember_token',
     ];
+
+    public function client()
+    {
+        return $this->hasOne('Qwikkar\Models\Client');
+    }
+
+    public function owner()
+    {
+        return $this->hasOne('Qwikkar\Models\Owner');
+    }
+
+    /**
+     * Get the types a user has
+     */
+    public function types()
+    {
+        return $this->belongsToMany('Qwikkar\Models\UserType', 'user_mappings');
+    }
+
+    /**
+     * Add the type of a user
+     */
+    public function addType($id)
+    {
+        $this->types()->attach($id);
+    }
+
+    /**
+     * Add the type of a user
+     */
+    public function removeType($id)
+    {
+        $this->types()->detach($id);
+    }
+
+    /**
+     * Add the type of a user
+     */
+    public function hasType($id)
+    {
+        return in_array($id, array_column($this->types->toArray(), 'id'));
+    }
+
+    /**
+     * Find out if User is an client, based on if has any types
+     *
+     * @return boolean
+     */
+    public function isClient()
+    {
+        return in_array('client', array_column($this->types->toArray(), 'name'));
+    }
+
+    /**
+     * Find out if User is an owner, based on if has any types
+     *
+     * @return boolean
+     */
+    public function isOwner()
+    {
+        return in_array('owner', array_column($this->types->toArray(), 'name'));
+    }
+
+    /**
+     * Find out if User is an admin, based on if has any types
+     *
+     * @return boolean
+     */
+    public function isAdmin()
+    {
+        return in_array('admin', array_column($this->types->toArray(), 'name'));
+    }
 }

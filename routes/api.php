@@ -13,6 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/auth', 'RegisterController@login');
+Route::post('/register/{type}', 'RegisterController@index');
+
+Route::group(['middleware' => 'auth:api'], function () {
+
+    Route::post('/user', function (Request $request) {
+        return api_response($request->user());
+    });
+
+//    Route::post('/token', function (Request $request) {
+//        $user = Qwikkar\Models\User::find(1);
+//        $token = $user->createToken('NewGeneratedToken')->accessToken;
+//        return api_response($token);
+//    });
+
 });
