@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         if ($user) {
             $user->tokens()->delete();
-            return api_response($user->createToken('APIAccessToken')->accessToken);
+            return api_response(['token' => $user->createToken('APIAccessToken')->accessToken, 'type' => $user->types->first()->name]);
         }
 
         return api_response(trans('auth.failed'), 406);
