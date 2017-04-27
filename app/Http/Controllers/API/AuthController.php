@@ -28,7 +28,7 @@ class AuthController extends Controller
             return api_response($user->createToken('APIAccessToken')->accessToken);
         }
 
-        return api_response('Invalid email address or password.', true);
+        return api_response(trans('auth.failed'), 406);
     }
 
     /**
@@ -59,6 +59,6 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
-        return api_response("Successfully logout {$request->user()->last_name}.");
+        return api_response(trans('auth.logout', ['name' => $request->user()->last_name]));
     }
 }

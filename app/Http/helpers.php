@@ -16,14 +16,14 @@ function d()
  * Format the response
  *
  * @param $data
- * @param bool $error
+ * @param bool|int $error
  *
- * @return array
+ * @return array|\Illuminate\Http\JsonResponse
  */
 function api_response($data, $error = false)
 {
     if ($error)
-        return ['error' => $data];
+        return response()->json(['error' => $data], $error);
     else
-        return ['success' => $data];
+        return response()->json(['success' => $data], 200);
 }
