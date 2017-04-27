@@ -34,6 +34,7 @@ class RegisterController extends Controller
      *
      * @param UserModel $request
      * @param string $type
+     * @param User $user
      * @return array
      */
     public function index(UserModel $request, $type, User $user)

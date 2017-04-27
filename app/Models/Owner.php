@@ -20,6 +20,17 @@ class Owner extends Model
         'postcode',
     ];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'id',
+        'user_id',
+        'updated_at',
+    ];
+
     public function user()
     {
         return $this->belongsTo('Qwikkar\Models\User');

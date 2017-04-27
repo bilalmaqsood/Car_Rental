@@ -32,14 +32,29 @@ class User extends Authenticatable
         'id',
         'password',
         'updated_at',
+        'created_at',
         'remember_token',
     ];
 
+    /**
+     * Relation with OAuth Tokens
+     */
+    public function oauthTokens()
+    {
+        return $this->hasMany('Qwikkar\Models\OauthAccessToken');
+    }
+
+    /**
+     * Relation with client
+     */
     public function client()
     {
         return $this->hasOne('Qwikkar\Models\Client');
     }
 
+    /**
+     * Relation with owner
+     */
     public function owner()
     {
         return $this->hasOne('Qwikkar\Models\Owner');
