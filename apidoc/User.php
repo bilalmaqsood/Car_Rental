@@ -164,6 +164,7 @@
  * @apiParam {String} town       Trading street address of user.
  * @apiParam {String} postcode   Trading postcode address of user.
  * @apiParam {String} country    Trading country address of user.
+ * @apiParam {String} promoCode  Promo Code (someone invited him/her)(New)
  *
  * @apiSuccess {String} token    Token for registered user.
  *
@@ -548,6 +549,10 @@
  * @apiParam {String} dvla       DVLA Points
  * @apiParam {String} postcode   Postcode on License
  * @apiParam {Date}   dob        Date of Birth
+ * @apiParam {String} pcoNumber  PCO Certificate Number(New)
+ * @apiParam {Date}   pcoRelDate PCO Release Date(New)
+ * @apiParam {Date}   pcoExpDate PCO Expiry Date(New)
+ * @apiParam {String} promoCode  Promo Code (someone invited him/her)(New)
  *
  * @apiSuccess {String} token    Token for registered User.
  *
