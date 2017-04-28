@@ -21,6 +21,9 @@ class CreateClientsTable extends Migration
             $table->string('dvla');
             $table->string('postcode');
             $table->date('dob');
+            $table->string('pco_number');
+            $table->date('pco_release_date');
+            $table->date('pco_expiry_date');
             $table->timestamps();
         });
     }

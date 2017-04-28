@@ -66,6 +66,9 @@ class RegisterController extends Controller
             'driving' => 'string',
             'dvla' => 'string',
             'dob' => 'date',
+            'pco_release_date' => 'date',
+            'pco_expiry_date' => 'date',
+            'pco_number' => 'string',
         ], ['postcode.regex' => 'The postcode is invalid.']);
 
         $user->fill($request->all());

@@ -17,6 +17,9 @@ class Client extends Model
         'driving',
         'dvla',
         'dob',
+        'pco_number',
+        'pco_release_date',
+        'pco_expiry_date',
     ];
 
     /**
@@ -37,6 +40,8 @@ class Client extends Model
      */
     protected $dates = [
         'dob',
+        'pco_release_date',
+        'pco_expiry_date',
     ];
 
     /**
