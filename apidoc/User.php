@@ -218,6 +218,7 @@
  * @apiParam {Json[]} discounts [{value:15,percent:15,weeks:2}]
  * @apiParam {Object[]} uberdiscount [{value:15,percent:15,range:<4.4}]
  * @apiParam {Images[]} images all images
+ * @apiParam {Images[]} Car Documents
  * @apiParam {Number} extension Contract Extension Weeks
  * @apiParam {Number} licenseyears License Older Than Years
  * @apiParam {Number} pcoyears PCO License older than years
@@ -230,8 +231,9 @@
  */
 
 
+
 /**
- * @api {post} /Owner/getvehicles/ 3.1.0 Get Vehicle
+ * @api {get} /Owner/vehicle/ 3.1.0 Get Vehicle
  * @apiName GetVehicles
  * @apiGroup Owner Vehicles
  *
@@ -267,9 +269,80 @@
  * @apiSuccess {Number} licensepoints Maximum points on license
  * @apiSuccess {Number} nofaultaccident Years since last accident with no driver fault
  * @apiSuccess {Number} faultaccident Years since last accident with driver fault
+ *
+ *
+ *
+ *
+ *
+ * @apiSuccess {Object[]} Vehicles list
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [{
+ *       "vid": 15,
+ *       "vehicle":     "Toyota Prius 1.8 Hybrid"
+ *       "candidate":   "John"
+ *       "start":       "01.03.2017"
+ *       "end":         "15.03.2017"
+ *       "rented":      5
+ *     }]
+ * @apiSampleRequest /Owner/vehicle/
  */
 
+/**
+ * @api {patch} /Owner/vehicle/id 3.1.1 Update Vehicle (New)
+ * @apiName UpdateVehicle
+ * @apiGroup Owner Vehicles
+ *
+ * @apiParam {String} make  Make of vehicle.
+ * @apiParam {String} model model of vehicle.
+ * @apiParam {String} variant variant of vehicle.
+ * @apiParam {String} year Year of vehicle.
+ * @apiParam {String} mileage Mileage of vehicle.
+ * @apiParam {String} fuel Fuel type of vehicle.
+ * @apiParam {String} mpg Fuel cosumption.
+ * @apiParam {String} transmission  Transmission of vehicle.
+ * @apiParam {String} seats Number of seats.
+ * @apiParam {String} availablefrom Available Date Start.
+ * @apiParam {String} availableto Available Date End.
+ * @apiParam {String} pickup Yes / No if pick by owner.
+ * @apiParam {String} delivery Yes / No if delivery by owner.
+ * @apiParam {String} location Vehicle Pickup location.
+ * @apiParam {Number} deliverycharges Delivery vharges per mile.
+ * @apiParam {Number} rent Rent Per Week
+ * @apiParam {Number} insurance Insurance Per Week
+ * @apiParam {Number} milecap Mileage Cap per week
+ * @apiParam {Number} aftermile after mileage per mile price
+ * @apiParam {Object[]} deposit Deposit
+ * @apiParam {Json[]} discounts [{value:15,percent:15,weeks:2}]
+ * @apiParam {Object[]} uberdiscount [{value:15,percent:15,range:<4.4}]
+ * @apiParam {Images[]} images all images
+ * @apiParam {Images[]} Car Documents
+ * @apiParam {Number} extension Contract Extension Weeks
+ * @apiParam {Number} licenseyears License Older Than Years
+ * @apiParam {Number} pcoyears PCO License older than years
+ * @apiParam {Number} driveryear Driver Older than years
+ * @apiParam {Number} licensepoints Maximum points on license
+ * @apiParam {Number} nofaultaccident Years since last accident with no driver fault
+ * @apiParam {Number} faultaccident Years since last accident with driver fault
+ *
+ * @apiSuccess {Number} id    Vehicle ID.
+ */
 
+/**
+ * @api {delete} /Owner/vehicle/vid 5.0.0 Remove Vehicle
+ * @apiName remove Vehicle
+ * @apiGroup Owner Vehicles
+ * @apiParam {String} vid Vehicle ID.
+ *
+ * @apiSuccess {String} vehicle Vehicle has been removed successfully.
+ * @apiError NotFound Not Found.
+ *
+ * @apiErrorExample Error-Response:
+ *     {
+ *       "error": "No Vehicle found"
+ *     }
+ * @apiSampleRequest /Owner/vehicle/vid
+ */
 
 /**
  * @api {post} /Owner/contract/ 3.2.4 Add Contract
