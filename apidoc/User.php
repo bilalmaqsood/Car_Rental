@@ -612,20 +612,20 @@
  * @apiHeader {String} Accept API accept 'application/json'.
  * @apiHeader {String} Content-Type Application accept content from request in form of 'application/json'.
  *
- * @apiParam {String} first_name First Name
- * @apiParam {String} last_name  Last Name
- * @apiParam {String} email      User Email
- * @apiParam {String} phone      User Phone Number
- * @apiParam {String} password   User Password
- * @apiParam {String} insurance  National Insurance Number
- * @apiParam {String} driving    Driving License Number
- * @apiParam {String} dvla       DVLA Points
- * @apiParam {String} postcode   Postcode on License
- * @apiParam {Date}   dob        Date of Birth
- * @apiParam {String} pcoNumber  PCO Certificate Number(New)
- * @apiParam {Date}   pcoRelDate PCO Release Date(New)
- * @apiParam {Date}   pcoExpDate PCO Expiry Date(New)
- * @apiParam {String} promoCode  Promo Code (someone invited him/her)(New)
+ * @apiParam {String} first_name       First Name
+ * @apiParam {String} last_name        Last Name
+ * @apiParam {String} email            User Email
+ * @apiParam {String} phone            User Phone Number
+ * @apiParam {String} password         User Password
+ * @apiParam {String} insurance        National Insurance Number
+ * @apiParam {String} driving          Driving License Number
+ * @apiParam {String} dvla             DVLA Points
+ * @apiParam {String} postcode         Postcode on License
+ * @apiParam {Date}   dob              Date of Birth
+ * @apiParam {String} pco_number       PCO Certificate Number
+ * @apiParam {Date}   pco_release_date PCO Release Date
+ * @apiParam {Date}   pco_expiry_date  PCO Expiry Date
+ * @apiParam {String} promoCode        Promo Code (someone invited him/her)(New)
  *
  * @apiSuccess {String} token    Token for registered User.
  *
