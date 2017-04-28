@@ -169,6 +169,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
         Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
+        Rap2hpoutre\LaravelCreditCardValidator\ServiceProvider::class,
 
         /*
          * Application Service Providers...

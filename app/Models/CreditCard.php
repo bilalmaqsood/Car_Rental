@@ -4,7 +4,7 @@ namespace Qwikkar\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Account extends Model
+class CreditCard extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,9 +12,10 @@ class Account extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
+        'name',
         'number',
-        'sortcode',
+        'expiry',
+        'address',
     ];
 
     /**
@@ -27,7 +28,7 @@ class Account extends Model
     ];
 
     /**
-     * Set the account number.
+     * Set the credit card number.
      *
      * @param  string $value
      * @return void
@@ -38,7 +39,7 @@ class Account extends Model
     }
 
     /**
-     * Get the account number.
+     * Get the credit card number.
      *
      * @param  string $value
      * @return string
@@ -49,29 +50,51 @@ class Account extends Model
     }
 
     /**
-     * Set the account number.
+     * Set the credit card expiry date.
      *
      * @param  string $value
      * @return void
      */
-    public function setSortcodeAttribute($value)
+    public function setExpiryAttribute($value)
     {
-        $this->attributes['sortcode'] = encrypt($value);
+        $this->attributes['expiry'] = encrypt($value);
     }
 
     /**
-     * Get the account number.
+     * Get the credit card expiry date.
      *
      * @param  string $value
      * @return string
      */
-    public function getSortcodeAttribute($value)
+    public function getExpiryAttribute($value)
     {
         return decrypt($value);
     }
 
     /**
-     * Get the user of account
+     * Set the credit card address.
+     *
+     * @param  string $value
+     * @return void
+     */
+    public function setAddressAttribute($value)
+    {
+        $this->attributes['address'] = encrypt($value);
+    }
+
+    /**
+     * Get the credit card address.
+     *
+     * @param  string $value
+     * @return string
+     */
+    public function getAddressAttribute($value)
+    {
+        return decrypt($value);
+    }
+
+    /**
+     * Get the user of credit card
      */
     public function user()
     {

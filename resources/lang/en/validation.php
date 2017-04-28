@@ -13,6 +13,9 @@ return [
     |
     */
 
+    'ccn'                  => 'The :attribute field contains an invalid number.',
+    'ccd'                  => 'The :attribute field contains an invalid date.',
+    'cvc'                  => 'The :attribute field contains an invalid credit validation code.',
     'phone'                => 'The :attribute field contains an invalid number.',
     'accepted'             => 'The :attribute must be accepted.',
     'active_url'           => 'The :attribute is not a valid URL.',

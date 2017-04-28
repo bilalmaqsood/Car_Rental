@@ -39,6 +39,14 @@ class User extends Authenticatable
     /**
      * Relation with Accounts
      */
+    public function creditCard()
+    {
+        return $this->hasMany('Qwikkar\Models\CreditCard');
+    }
+
+    /**
+     * Relation with Accounts
+     */
     public function account()
     {
         return $this->hasMany('Qwikkar\Models\Account');

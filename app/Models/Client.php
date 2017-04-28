@@ -39,6 +39,9 @@ class Client extends Model
         'dob',
     ];
 
+    /**
+     * Get the user of client
+     */
     public function user()
     {
         return $this->belongsTo('Qwikkar\Models\User');

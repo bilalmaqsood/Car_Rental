@@ -31,6 +31,9 @@ class Owner extends Model
         'updated_at',
     ];
 
+    /**
+     * Get the user of owner profile
+     */
     public function user()
     {
         return $this->belongsTo('Qwikkar\Models\User');
