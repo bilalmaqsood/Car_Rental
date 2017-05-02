@@ -218,6 +218,7 @@
  * @apiParam {Json[]} discounts [{value:15,percent:15,weeks:2}]
  * @apiParam {Object[]} uberdiscount [{value:15,percent:15,range:<4.4}]
  * @apiParam {Images[]} images all images
+ * @apiParam {Images[]} Car Documents
  * @apiParam {Number} extension Contract Extension Weeks
  * @apiParam {Number} licenseyears License Older Than Years
  * @apiParam {Number} pcoyears PCO License older than years
@@ -230,8 +231,9 @@
  */
 
 
+
 /**
- * @api {post} /Owner/getvehicles/ 3.1.0 Get Vehicle
+ * @api {get} /Owner/vehicle/ 3.1.0 Get Vehicle
  * @apiName GetVehicles
  * @apiGroup Owner Vehicles
  *
@@ -267,9 +269,80 @@
  * @apiSuccess {Number} licensepoints Maximum points on license
  * @apiSuccess {Number} nofaultaccident Years since last accident with no driver fault
  * @apiSuccess {Number} faultaccident Years since last accident with driver fault
+ *
+ *
+ *
+ *
+ *
+ * @apiSuccess {Object[]} Vehicles list
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [{
+ *       "vid": 15,
+ *       "vehicle":     "Toyota Prius 1.8 Hybrid"
+ *       "candidate":   "John"
+ *       "start":       "01.03.2017"
+ *       "end":         "15.03.2017"
+ *       "rented":      5
+ *     }]
+ * @apiSampleRequest /Owner/vehicle/
  */
 
+/**
+ * @api {patch} /Owner/vehicle/id 3.1.1 Update Vehicle (New)
+ * @apiName UpdateVehicle
+ * @apiGroup Owner Vehicles
+ *
+ * @apiParam {String} make  Make of vehicle.
+ * @apiParam {String} model model of vehicle.
+ * @apiParam {String} variant variant of vehicle.
+ * @apiParam {String} year Year of vehicle.
+ * @apiParam {String} mileage Mileage of vehicle.
+ * @apiParam {String} fuel Fuel type of vehicle.
+ * @apiParam {String} mpg Fuel cosumption.
+ * @apiParam {String} transmission  Transmission of vehicle.
+ * @apiParam {String} seats Number of seats.
+ * @apiParam {String} availablefrom Available Date Start.
+ * @apiParam {String} availableto Available Date End.
+ * @apiParam {String} pickup Yes / No if pick by owner.
+ * @apiParam {String} delivery Yes / No if delivery by owner.
+ * @apiParam {String} location Vehicle Pickup location.
+ * @apiParam {Number} deliverycharges Delivery vharges per mile.
+ * @apiParam {Number} rent Rent Per Week
+ * @apiParam {Number} insurance Insurance Per Week
+ * @apiParam {Number} milecap Mileage Cap per week
+ * @apiParam {Number} aftermile after mileage per mile price
+ * @apiParam {Object[]} deposit Deposit
+ * @apiParam {Json[]} discounts [{value:15,percent:15,weeks:2}]
+ * @apiParam {Object[]} uberdiscount [{value:15,percent:15,range:<4.4}]
+ * @apiParam {Images[]} images all images
+ * @apiParam {Images[]} Car Documents
+ * @apiParam {Number} extension Contract Extension Weeks
+ * @apiParam {Number} licenseyears License Older Than Years
+ * @apiParam {Number} pcoyears PCO License older than years
+ * @apiParam {Number} driveryear Driver Older than years
+ * @apiParam {Number} licensepoints Maximum points on license
+ * @apiParam {Number} nofaultaccident Years since last accident with no driver fault
+ * @apiParam {Number} faultaccident Years since last accident with driver fault
+ *
+ * @apiSuccess {Number} id    Vehicle ID.
+ */
 
+/**
+ * @api {delete} /Owner/vehicle/vid 5.0.0 Remove Vehicle
+ * @apiName remove Vehicle
+ * @apiGroup Owner Vehicles
+ * @apiParam {String} vid Vehicle ID.
+ *
+ * @apiSuccess {String} vehicle Vehicle has been removed successfully.
+ * @apiError NotFound Not Found.
+ *
+ * @apiErrorExample Error-Response:
+ *     {
+ *       "error": "No Vehicle found"
+ *     }
+ * @apiSampleRequest /Owner/vehicle/vid
+ */
 
 /**
  * @api {post} /Owner/contract/ 3.2.4 Add Contract
@@ -382,7 +455,22 @@
  * @apiGroup Owner Return
  *
  * @apiParam {Number}   id      Owner ID
- * @apiParam {Image}    image    Doc Image
+ * @apiParam {Image[]}  image    Doc Image Array
+ *
+ * @apiSuccess {String} success Added Successfully
+ */
+
+**
+ * @api {post} /Owner/return/openticket 3.2.6 Vehicle Return Open Ticket (New)
+ * @apiName Vehicle Return Open Ticket
+ * @apiGroup Owner Return
+ *
+ * @apiParam {Number}   id              Owner ID
+ * @apiParam {Number}   contractId      Contract Id, against which ticket is opened
+ * @apiParam {Number}   clientID        Client/Driver Id, driver will be set to HOLD, so He can not Book any car any more until ticket is resolved by admin OR Owner
+ *
+ * @apiParam {String}   ticketTextDescription      Description Text of Ticket
+ * @apiParam {Time}   timestamp                    Time and date in milliseconds
  *
  * @apiSuccess {String} success Added Successfully
  */
@@ -808,6 +896,67 @@
  */
 
 
+**
+ * @api {get} /admin/tickets 6.0.0 Get All Tickets (New)
+ * @apiName Get List of tickets
+ * @apiGroup Admin
+ *
+ * @apiParam {String}   status              Status of tickets OPEN/INPROGRESS/RESOLVED/PENDING
+ *
+ * @apiParam {Number}   limit               Number of tickets to load
+ * @apiParam {Number}   offset              offset of tickets, pagination
+ *
+ * @apiSuccess {Object} Tickets List of Tickets
+ * @apiSampleRequest /admin/tickets
+ */
+
+**
+ * @api {PATCH} /admin/tickets/ticketId 6.0.1 Update Ticket (New)
+ * @apiParam {Number}   ticketId
+ * @apiName Update Ticket
+ * @apiGroup Admin
+ *
+ * @apiParam {String}   status              Status of ticket to be updated OPEN/INPROGRESS/RESOLVED/PENDING
+ *
+ * @apiParam {Number}   description         Description/reason of Ticket updated
+ *
+ * @apiSuccess {String} success Ticket updated
+ * @apiSampleRequest /admin/tickets/1
+ */
 
 
+**
+ * @api {get} /app/TermsAndConditions 7.0.0 Get Application Terms and Conditions (New)
+ * @apiName Get Terms and Conditions
+ * @apiGroup App
+ *
+ *
+ *
+ * @apiSuccess String Terms and conditions of App
+ * @apiSampleRequest /app/TermsAndConditions
+ */
+
+**
+ * @api {post} /app/contactus 7.0.1 Contact Us (New)
+ * @apiName Contact Us
+ * @apiGroup App
+ * @apiParam {Object}   description         JSON Object of format {“full_name”:”Qamar Zaman”,”reason”:”Feature Request”,”message”:”Please add support for map nav”}
+ *
+ *
+ *
+ * @apiSuccess String Terms and conditions of App
+ * @apiSampleRequest /app/contactus
+ */
+
+**
+ * @api {post} /app/askNewQuestion 7.0.1 Ask New Question, Add Faq
+ * @apiName AskNewQuestion
+ * @apiGroup App
+ * @apiParam {String} question Text of Question asked  
+ *
+ *
+ *
+ * @apiSuccess String Terms and conditions of App
+ * @apiSampleRequest /app/TermsAndConditions
+ */
 
