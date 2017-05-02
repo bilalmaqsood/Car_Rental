@@ -32,6 +32,14 @@ class Owner extends Model
     ];
 
     /**
+     * Get the vehicle of owner
+     */
+    public function vehicles()
+    {
+        return $this->hasMany('Qwikkar\Models\Vehicle');
+    }
+
+    /**
      * Get the user of owner profile
      */
     public function user()
