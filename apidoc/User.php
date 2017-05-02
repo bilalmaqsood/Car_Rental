@@ -925,3 +925,38 @@
  */
 
 
+**
+ * @api {get} /app/TermsAndConditions 7.0.0 Get Application Terms and Conditions (New)
+ * @apiName Get Terms and Conditions
+ * @apiGroup App
+ *
+ *
+ *
+ * @apiSuccess String Terms and conditions of App
+ * @apiSampleRequest /app/TermsAndConditions
+ */
+
+**
+ * @api {post} /app/contactus 7.0.1 Contact Us (New)
+ * @apiName Contact Us
+ * @apiGroup App
+ * @apiParam {Object}   description         JSON Object of format {“full_name”:”Qamar Zaman”,”reason”:”Feature Request”,”message”:”Please add support for map nav”}
+ *
+ *
+ *
+ * @apiSuccess String Terms and conditions of App
+ * @apiSampleRequest /app/contactus
+ */
+
+**
+ * @api {post} /app/askNewQuestion 7.0.1 Ask New Question, Add Faq
+ * @apiName AskNewQuestion
+ * @apiGroup App
+ * @apiParam {String} question Text of Question asked  
+ *
+ *
+ *
+ * @apiSuccess String Terms and conditions of App
+ * @apiSampleRequest /app/TermsAndConditions
+ */
+
