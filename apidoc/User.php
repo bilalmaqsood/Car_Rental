@@ -455,7 +455,22 @@
  * @apiGroup Owner Return
  *
  * @apiParam {Number}   id      Owner ID
- * @apiParam {Image}    image    Doc Image
+ * @apiParam {Image[]}  image    Doc Image Array
+ *
+ * @apiSuccess {String} success Added Successfully
+ */
+
+**
+ * @api {post} /Owner/return/openticket 3.2.6 Vehicle Return Open Ticket (New)
+ * @apiName Vehicle Return Open Ticket
+ * @apiGroup Owner Return
+ *
+ * @apiParam {Number}   id              Owner ID
+ * @apiParam {Number}   contractId      Contract Id, against which ticket is opened
+ * @apiParam {Number}   clientID        Client/Driver Id, driver will be set to HOLD, so He can not Book any car any more until ticket is resolved by admin OR Owner
+ *
+ * @apiParam {String}   ticketTextDescription      Description Text of Ticket
+ * @apiParam {Time}   timestamp                    Time and date in milliseconds
  *
  * @apiSuccess {String} success Added Successfully
  */
@@ -881,6 +896,32 @@
  */
 
 
+**
+ * @api {get} /admin/tickets 6.0.0 Get All Tickets (New)
+ * @apiName Get List of tickets
+ * @apiGroup Admin
+ *
+ * @apiParam {String}   status              Status of tickets OPEN/INPROGRESS/RESOLVED/PENDING
+ *
+ * @apiParam {Number}   limit               Number of tickets to load
+ * @apiParam {Number}   offset              offset of tickets, pagination
+ *
+ * @apiSuccess {Object} Tickets List of Tickets
+ * @apiSampleRequest /admin/tickets
+ */
 
+**
+ * @api {PATCH} /admin/tickets/ticketId 6.0.1 Update Ticket (New)
+ * @apiParam {Number}   ticketId
+ * @apiName Update Ticket
+ * @apiGroup Admin
+ *
+ * @apiParam {String}   status              Status of ticket to be updated OPEN/INPROGRESS/RESOLVED/PENDING
+ *
+ * @apiParam {Number}   description         Description/reason of Ticket updated
+ *
+ * @apiSuccess {String} success Ticket updated
+ * @apiSampleRequest /admin/tickets/1
+ */
 
 
