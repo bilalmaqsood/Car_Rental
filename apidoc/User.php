@@ -146,6 +146,31 @@
  */
 
 /**
+ * @api {patch} /public/api/profile/update/ 3.3.0 Update Owner Profile
+ * @apiName UpdateOwnerProfile
+ * @apiGroup Owner
+ *
+ * @apiParam {Object} profile  Owner profile info, name, dob, etc, like in signup
+ *
+ * @apiSuccess {Object} profile    Profile of Driver, like name, dob, license, etc
+ *
+ * 
+ */
+
+
+/**
+ * @api {get} /public/api/client/profile 3.2.0 Get Client Profile
+ * @apiName GetClientProfile
+ * @apiGroup Owner
+ *
+ *
+ * @apiSuccess {Object} profile    Profile of Driver, like name, dob, license, etc
+ * @apiSampleRequest /public/api/client/profile
+ *
+ * 
+ */
+
+/**
  * @api {post} /register/owner 2.1.0 Owner Sign Up
  * @apiName Owner Sign Up
  * @apiGroup Owner
@@ -357,11 +382,10 @@
 
 
 /**
- * @api {post} /Owner/contract/ 3.2.0 Get Intent Contracts
+ * @api {get} /api/contract/intent 3.2.0 Get Intent Contracts
  * @apiName GetIntentContracts
  * @apiGroup Owner Contracts
  *
- * @apiParam {Number} id    Owner ID
  *
  * @apiSuccess {Object[]} contracts Contracts
  * @apiSuccessExample {json} Success-Response:
@@ -378,11 +402,10 @@
 
 
 /**
- * @api {post} /Owner/contract/ 3.2.1 Get Current Contracts
+ * @api {get} /api/contract/current 3.2.1 Get Current Contracts
  * @apiName GetCurrentContracts
  * @apiGroup Owner Contracts
  *
- * @apiParam {Number} id    Owner ID
  *
  * @apiSuccess {Object[]} contracts Contracts
  * @apiSuccessExample {json} Success-Response:
@@ -397,6 +420,60 @@
  *       "status":      "Ongoing/Not Signed/Pending Approval"
  *       "pdf":         "http://path/to/pdf"
  *     }]
+ */
+
+/**
+ * @api {get} /api/contract/past 3.2.2 Get Past Contracts
+ * @apiName GetPastContracts
+ * @apiGroup Owner Contracts
+ *
+ *
+ * @apiSuccess {Object[]} contracts Contracts
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [{
+ *       "vid": 15,
+ *       "vehicle":     "Toyota Prius 1.8 Hybrid"
+ *       "driver":      "John"
+ *       "start":       "01.03.2017"
+ *       "end":         "15.03.2017"
+ *       "cost":        140
+ *       "status":      "Ongoing/Not Signed/Pending Approval"
+ *       "pdf":         "http://path/to/pdf"
+ *     }]
+ */
+
+/**
+ * @api {get} /api/contract/template 3.2.3 Get Template
+ * @apiName GetAllContractTemplates
+ * @apiGroup Owner Contracts
+ *
+ *
+ * @apiSuccess {Object[]} templates Contract Template Texts
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [{
+ *       “tId”: 14,
+ *       “text”:        “text”
+ *     }]
+ */
+
+/**
+ * @api {post} /api/contract/template 3.2.4 Add Template
+ * @apiName AddTemplate
+ * @apiGroup Owner Contracts
+ * @apiParam content Text Content of Contract
+ *
+ * @apiSuccess {String} tId Id of template Created
+ */
+
+/**
+ * @api {delete} /api/contract/template/id 3.2.4 Add Template
+ * @apiName DeleteTemplate
+ * @apiGroup Owner Contracts
+ * @apiParam id Id of template to be deleted
+ *
+ * @apiSuccess {String} success Deleted Successfully
  */
 
 
@@ -960,3 +1037,13 @@
  * @apiSampleRequest /app/TermsAndConditions
  */
 
+**
+ * @api {get} /app/dashboard 7.0.2 App Dash board
+ * @apiName AppDashBoard
+ * @apiGroup App
+ *
+ *
+ *
+ * @apiSuccess {Object} Object Containing all the Dashboard Related Objects like, Last Message, New contracts, updated, signed, Latest Searches(client) ,Booking approved(client)
+ * @apiSampleRequest /app/dashboard
+ */
