@@ -154,7 +154,7 @@
  *
  * @apiSuccess {Object} profile    Profile of Driver, like name, dob, license, etc
  *
- * 
+ *
  */
 
 
@@ -167,7 +167,7 @@
  * @apiSuccess {Object} profile    Profile of Driver, like name, dob, license, etc
  * @apiSampleRequest /public/api/client/profile
  *
- * 
+ *
  */
 
 /**
@@ -254,7 +254,6 @@
  *
  * @apiSuccess {Number} id    Vehicle ID.
  */
-
 
 
 /**
@@ -537,7 +536,7 @@
  * @apiSuccess {String} success Added Successfully
  */
 
-**
+/**
  * @api {post} /Owner/return/openticket 3.2.6 Vehicle Return Open Ticket (New)
  * @apiName Vehicle Return Open Ticket
  * @apiGroup Owner Return
@@ -973,7 +972,7 @@
  */
 
 
-**
+/**
  * @api {get} /admin/tickets 6.0.0 Get All Tickets (New)
  * @apiName Get List of tickets
  * @apiGroup Admin
@@ -987,7 +986,7 @@
  * @apiSampleRequest /admin/tickets
  */
 
-**
+/**
  * @api {PATCH} /admin/tickets/ticketId 6.0.1 Update Ticket (New)
  * @apiParam {Number}   ticketId
  * @apiName Update Ticket
@@ -1002,7 +1001,7 @@
  */
 
 
-**
+/**
  * @api {get} /app/TermsAndConditions 7.0.0 Get Application Terms and Conditions (New)
  * @apiName Get Terms and Conditions
  * @apiGroup App
@@ -1013,7 +1012,7 @@
  * @apiSampleRequest /app/TermsAndConditions
  */
 
-**
+/**
  * @api {post} /app/contactus 7.0.1 Contact Us (New)
  * @apiName Contact Us
  * @apiGroup App
@@ -1025,11 +1024,11 @@
  * @apiSampleRequest /app/contactus
  */
 
-**
+/**
  * @api {post} /app/askNewQuestion 7.0.1 Ask New Question, Add Faq
  * @apiName AskNewQuestion
  * @apiGroup App
- * @apiParam {String} question Text of Question asked  
+ * @apiParam {String} question Text of Question asked
  *
  *
  *
@@ -1037,7 +1036,7 @@
  * @apiSampleRequest /app/TermsAndConditions
  */
 
-**
+/**
  * @api {get} /app/dashboard 7.0.2 App Dash board
  * @apiName AppDashBoard
  * @apiGroup App
