@@ -3,8 +3,6 @@
 namespace Qwikkar\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
-use Qwikkar\Http\Middleware\VerifyClientUser;
-use Qwikkar\Http\Middleware\VerifyOwnerUser;
 
 class Kernel extends HttpKernel
 {
@@ -59,7 +57,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Qwikkar\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'owner' => VerifyOwnerUser::class,
-        'client' => VerifyClientUser::class,
+        'owner' => \Qwikkar\Http\Middleware\VerifyOwnerUser::class,
+        'client' => \Qwikkar\Http\Middleware\VerifyClientUser::class,
+        'not-admin' => \Qwikkar\Http\Middleware\VerifyNotAdminUser::class,
     ];
 }

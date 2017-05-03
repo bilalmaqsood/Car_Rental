@@ -28,4 +28,20 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('credit-card', 'CreditCardController', ['except' => ['create', 'edit']]);
     Route::resource('vehicle', 'VehicleController', ['except' => ['create', 'edit']]);
 
+
+    /**
+     * Contracts
+     */
+    Route::get('contract/{id}/pdf', function ($id) {
+        return PDF::loadView('pdf.contract', ['id' => $id, 'sign' => '', 'name' => 'oknasir'])->download("contract-{$id}.pdf");
+    })->middleware('not-admin');
+
+    Route::post('contract/{id}/sign', function ($id, Request $request) {
+        return PDF::loadView('pdf.contract', [
+            'id' => $id,
+            'name' => 'oknasir',
+            'sign' => $request->hasFile('sign') ? $request->sign->store('signatures') : ''
+        ])->download("contract-{$id}.pdf");
+    })->middleware('owner');
+
 });
