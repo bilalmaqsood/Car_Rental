@@ -35,6 +35,7 @@ class Vehicle extends Model
         'discounts',
         'uber_discount',
         'images',
+        'documents',
         'extension',
         'license_years',
         'pco_years',
@@ -67,6 +68,7 @@ class Vehicle extends Model
         'discounts' => 'array',
         'uber_discount' => 'array',
         'images' => 'array',
+        'documents' => 'array',
     ];
 
     /**

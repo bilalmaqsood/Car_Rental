@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 Route::get('/terms/{type}', 'TermsController');
 
 Route::post('/auth', 'AuthController@login');
-Route::post('/register/{type}', 'RegisterController@index');
+Route::post('/register/{type}', 'RegisterController');
 
 Route::group(['middleware' => 'auth:api'], function () {
 
@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('account', 'AccountController', ['except' => ['create', 'edit']]);
     Route::resource('credit-card', 'CreditCardController', ['except' => ['create', 'edit']]);
     Route::resource('vehicle', 'VehicleController', ['except' => ['create', 'edit']]);
+
+    Route::post('/upload/{type}', 'UploadController');
 
 
     /**

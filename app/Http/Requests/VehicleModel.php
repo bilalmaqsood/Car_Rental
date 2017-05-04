@@ -28,11 +28,11 @@ class VehicleModel extends FormRequest
             'model' => 'required|string|max:50',
             'variant' => 'required|string|max:50',
             'year' => 'required|date_format:Y|max:50',
-            'mileage' => 'required|numeric',
-            'fuel' => 'required|string|max:50',
-            'mpg' => 'required|string|max:50',
-            'transmission' => 'required|string|max:255',
-            'seats' => 'required|string|max:50',
+            'mileage' => 'numeric',
+            'fuel' => 'string|max:50',
+            'mpg' => 'string|max:50',
+            'transmission' => 'string|max:255',
+            'seats' => 'string|max:50',
             'available_from' => 'required|date',
             'available_to' => 'required|date',
             'pickup' => 'required|boolean',
@@ -40,10 +40,10 @@ class VehicleModel extends FormRequest
             'location' => 'required|string|max:100',
             'delivery_charges' => 'required|numeric',
             'rent' => 'required|numeric',
-            'insurance' => 'numeric',
-            'mile_cap' => 'numeric',
-            'after_mile' => 'numeric',
-            'deposit' => 'numeric',
+            'insurance' => 'required|numeric',
+            'mile_cap' => 'required|numeric',
+            'after_mile' => 'required|numeric',
+            'deposit' => 'required|numeric',
             'extension' => 'numeric',
             'license_years' => 'numeric',
             'pco_years' => 'numeric',
@@ -62,6 +62,9 @@ class VehicleModel extends FormRequest
 
             'images' => 'array',
             'images.*' => 'string',
+
+            'documents' => 'array',
+            'documents.*' => 'string',
         ];
     }
 }

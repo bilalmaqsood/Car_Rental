@@ -37,7 +37,7 @@ class RegisterController extends Controller
      * @param User $user
      * @return array
      */
-    public function index(UserModel $request, $type, User $user)
+    public function __invoke(UserModel $request, $type, User $user)
     {
         switch ($type) {
             case 'client':
