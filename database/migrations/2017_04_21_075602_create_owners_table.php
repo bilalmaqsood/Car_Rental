@@ -16,12 +16,12 @@ class CreateOwnersTable extends Migration
         Schema::create('owners', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('company');
-            $table->string('street');
-            $table->string('address');
-            $table->string('town');
-            $table->string('postcode');
-            $table->string('country');
+            $table->string('company')->nullable();
+            $table->string('street')->nullable();
+            $table->string('address')->nullable();
+            $table->string('town')->nullable();
+            $table->string('postcode')->nullable();
+            $table->string('country')->nullable();
             $table->timestamps();
         });
     }

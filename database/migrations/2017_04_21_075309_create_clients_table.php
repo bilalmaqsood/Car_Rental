@@ -16,14 +16,14 @@ class CreateClientsTable extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('insurance');
-            $table->string('driving');
-            $table->string('dvla');
-            $table->string('postcode');
-            $table->date('dob');
-            $table->string('pco_number');
-            $table->date('pco_release_date');
-            $table->date('pco_expiry_date');
+            $table->string('insurance')->nullable();
+            $table->string('driving')->nullable();
+            $table->string('dvla')->nullable();
+            $table->string('postcode')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('pco_number')->nullable();
+            $table->date('pco_release_date')->nullable();
+            $table->date('pco_expiry_date')->nullable();
             $table->timestamps();
         });
     }

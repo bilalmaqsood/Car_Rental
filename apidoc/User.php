@@ -180,16 +180,16 @@
  *
  * @apiParam {String} first_name First name of the User.
  * @apiParam {String} last_name  Last name of the User.
- * @apiParam {String} company    Company Name.
+ * @apiParam {String} [company]    Company Name.
  * @apiParam {String} email      Email of the User.
- * @apiParam {String} phone      Phone of the User.
+ * @apiParam {String} [phone]      Phone of the User.
  * @apiParam {String} password   Password of user.
- * @apiParam {String} address    Property number and address of user.
- * @apiParam {String} street     Trading street address of user.
- * @apiParam {String} town       Trading street address of user.
- * @apiParam {String} postcode   Trading postcode address of user.
- * @apiParam {String} country    Trading country address of user.
- * @apiParam {String} promoCode  Promo Code (someone invited him/her)(New)
+ * @apiParam {String} [address]    Property number and address of user.
+ * @apiParam {String} [street]     Trading street address of user.
+ * @apiParam {String} [town]       Trading street address of user.
+ * @apiParam {String} [postcode]   Trading postcode address of user.
+ * @apiParam {String} [country]    Trading country address of user.
+ * @apiParam {String} [promoCode]  Promo Code (someone invited him/her)(New)
  *
  * @apiSuccess {String} token    Token for registered user.
  *
@@ -216,48 +216,48 @@
 
 
 /**
- * @api {post} /Owner/addvehicle/ 2.2.0 Add Vehicle
+ * @api {post} /vehicle 2.2.0 Add Vehicle
  * @apiName AddVehicle
  * @apiGroup Owner Vehicles
  *
- * @apiParam {String} make  Make of vehicle.
- * @apiParam {String} model model of vehicle.
- * @apiParam {String} variant variant of vehicle.
- * @apiParam {String} year Year of vehicle.
- * @apiParam {String} mileage Mileage of vehicle.
- * @apiParam {String} fuel Fuel type of vehicle.
- * @apiParam {String} mpg Fuel cosumption.
- * @apiParam {String} transmission  Transmission of vehicle.
- * @apiParam {String} seats Number of seats.
- * @apiParam {String} availablefrom Available Date Start.
- * @apiParam {String} availableto Available Date End.
- * @apiParam {String} pickup Yes / No if pick by owner.
- * @apiParam {String} delivery Yes / No if delivery by owner.
- * @apiParam {String} location Vehicle Pickup location.
- * @apiParam {Number} deliverycharges Delivery vharges per mile.
- * @apiParam {Number} rent Rent Per Week
- * @apiParam {Number} insurance Insurance Per Week
- * @apiParam {Number} milecap Mileage Cap per week
- * @apiParam {Number} aftermile after mileage per mile price
- * @apiParam {Object[]} deposit Deposit
- * @apiParam {Json[]} discounts [{value:15,percent:15,weeks:2}]
- * @apiParam {Object[]} uberdiscount [{value:15,percent:15,range:<4.4}]
- * @apiParam {Images[]} images all images
- * @apiParam {Images[]} Car Documents
- * @apiParam {Number} extension Contract Extension Weeks
- * @apiParam {Number} licenseyears License Older Than Years
- * @apiParam {Number} pcoyears PCO License older than years
- * @apiParam {Number} driveryear Driver Older than years
- * @apiParam {Number} licensepoints Maximum points on license
- * @apiParam {Number} nofaultaccident Years since last accident with no driver fault
- * @apiParam {Number} faultaccident Years since last accident with driver fault
+ * @apiParam {String}   make                 Make of vehicle.
+ * @apiParam {String}   model                model of vehicle.
+ * @apiParam {String}   variant              variant of vehicle.
+ * @apiParam {String}   year                 Year of vehicle.
+ * @apiParam {String}   [mileage]            Mileage of vehicle.
+ * @apiParam {String}   [fuel]               Fuel type of vehicle.
+ * @apiParam {String}   [mpg]                Fuel consumption.
+ * @apiParam {String}   [transmission]       Transmission of vehicle.
+ * @apiParam {String}   [seats]              Number of seats.
+ * @apiParam {String}   available_from       Available Date Start.
+ * @apiParam {String}   available_to         Available Date End.
+ * @apiParam {String}   pickup               Yes / No if pick by owner.
+ * @apiParam {String}   delivery             Yes / No if delivery by owner.
+ * @apiParam {String}   location             Vehicle Pickup location.
+ * @apiParam {Number}   delivery_charges     Delivery vharges per mile.
+ * @apiParam {Number}   rent                 Rent Per Week
+ * @apiParam {Number}   insurance            Insurance Per Week
+ * @apiParam {Number}   mile_cap             Mileage Cap per week
+ * @apiParam {Number}   after_mile           After mileage per mile price
+ * @apiParam {Number}   deposit              Deposit
+ * @apiParam {Json[]}   [discounts]          [{value:15,percent:15,weeks:2}]
+ * @apiParam {Json[]}   [uber_discount]      [{value:15,percent:15,range:<4.4}]
+ * @apiParam {Json[]}   [images]             ["/vehicle/image/hash", "/vehicle/image/hash"] All images
+ * @apiParam {Json[]}   [documents]          ["/vehicle/document/hash", "/vehicle/document/hash"] Documents of vehicle
+ * @apiParam {Number}   [extension]          Contract Extension Weeks
+ * @apiParam {Number}   [license_years]      License Older Than Years
+ * @apiParam {Number}   [pco_years]          PCO License older than years
+ * @apiParam {Number}   [driver_year]        Driver Older than years
+ * @apiParam {Number}   [license_points]     Maximum points on license
+ * @apiParam {Number}   [no_fault_accident]  Years since last accident with no driver fault
+ * @apiParam {Number}   [fault_accident]     Years since last accident with driver fault
  *
  * @apiSuccess {Number} id    Vehicle ID.
  */
 
 
 /**
- * @api {get} /Owner/vehicle/ 3.1.0 Get Vehicle
+ * @api {get} /vehicle 3.1.0 Get Vehicle
  * @apiName GetVehicles
  * @apiGroup Owner Vehicles
  *
@@ -703,20 +703,20 @@
  * @apiHeader {String} Accept API accept 'application/json'.
  * @apiHeader {String} Content-Type Application accept content from request in form of 'application/json'.
  *
- * @apiParam {String} first_name       First Name
- * @apiParam {String} last_name        Last Name
- * @apiParam {String} email            User Email
- * @apiParam {String} phone            User Phone Number
- * @apiParam {String} password         User Password
- * @apiParam {String} insurance        National Insurance Number
- * @apiParam {String} driving          Driving License Number
- * @apiParam {String} dvla             DVLA Points
- * @apiParam {String} postcode         Postcode on License
- * @apiParam {Date}   dob              Date of Birth
- * @apiParam {String} pco_number       PCO Certificate Number
- * @apiParam {Date}   pco_release_date PCO Release Date
- * @apiParam {Date}   pco_expiry_date  PCO Expiry Date
- * @apiParam {String} promoCode        Promo Code (someone invited him/her)(New)
+ * @apiParam {String} first_name         First Name
+ * @apiParam {String} last_name          Last Name
+ * @apiParam {String} email              User Email
+ * @apiParam {String} [phone]            User Phone Number
+ * @apiParam {String} password           User Password
+ * @apiParam {String} [insurance]        National Insurance Number
+ * @apiParam {String} [driving]          Driving License Number
+ * @apiParam {String} [dvla]             DVLA Points
+ * @apiParam {String} [postcode]         Postcode on License
+ * @apiParam {Date}   [dob]              Date of Birth
+ * @apiParam {String} [pco_number]       PCO Certificate Number
+ * @apiParam {Date}   [pco_release_date] PCO Release Date
+ * @apiParam {Date}   [pco_expiry_date]  PCO Expiry Date
+ * @apiParam {String} [promoCode]        Promo Code (someone invited him/her)(New)
  *
  * @apiSuccess {String} token    Token for registered User.
  *
