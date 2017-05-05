@@ -29,20 +29,21 @@ class UploadController extends Controller
      *
      * @param Request $request
      * @param $type
-     * @return array
+     * @return string
      */
     public function __invoke(Request $request, $type)
     {
+        $path = '';
         switch ($type) {
             case 'image':
-                $this->uploadImage($request);
+                $path = $this->uploadImage($request);
                 break;
             case 'document':
-                $this->uploadDocument($request);
+                $path = $this->uploadDocument($request);
                 break;
         }
 
-        return abort(404);
+        return api_response(asset("storage/{$path}"));
     }
 
     /**
@@ -57,7 +58,7 @@ class UploadController extends Controller
             'upload' => 'required|image'
         ]);
 
-        return asset($request->upload->store('images'));
+        return $request->upload->store('images', 'public');
     }
 
     /**
@@ -72,6 +73,6 @@ class UploadController extends Controller
             'upload' => 'required|file'
         ]);
 
-        return asset($request->upload->store('document'));
+        return $request->upload->store('document', 'public');
     }
 }
