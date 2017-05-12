@@ -51,7 +51,6 @@ class Vehicle extends Model
      * @var array
      */
     protected $casts = [
-        'year' => 'integer',
         'mileage' => 'float',
         'delivery_charges' => 'float',
         'rent' => 'float',
@@ -82,6 +81,15 @@ class Vehicle extends Model
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'owner_id',
+    ];
+
+    /**
      * Get the formatted available from date.
      *
      * @param  string $value
@@ -109,5 +117,13 @@ class Vehicle extends Model
     public function owner()
     {
         return $this->belongsTo('Qwikkar\Models\Owner');
+    }
+
+    /**
+     * Get all bookings of vehicle
+     */
+    public function booking()
+    {
+        return $this->hasMany('Qwikkar\Models\Booking');
     }
 }

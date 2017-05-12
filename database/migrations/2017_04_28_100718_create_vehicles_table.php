@@ -19,7 +19,7 @@ class CreateVehiclesTable extends Migration
             $table->string('make', 50);
             $table->string('model', 50);
             $table->string('variant', 50);
-            $table->string('year', 4);
+            $table->integer('year');
             $table->decimal('mileage')->nullable()->comment('mileage of vehicle');
             $table->string('fuel', 50)->nullable()->comment('fuel type of vehicle');
             $table->string('mpg', 50)->nullable()->comment('fuel consumption');
@@ -29,7 +29,7 @@ class CreateVehiclesTable extends Migration
             $table->date('available_to');
             $table->boolean('pickup')->comment('yes / no if pick by owner');
             $table->boolean('delivery')->comment('yes / no if delivery by owner');
-            $table->string('location', 100)->comment('vehicle pickup location');
+            $table->string('location', 100)->comment('vehicle pickup location in latitude and longitude');
             $table->decimal('delivery_charges')->comment('delivery charges per week');
             $table->decimal('rent')->comment('rent per week');
             $table->decimal('insurance')->comment('insurance per week');

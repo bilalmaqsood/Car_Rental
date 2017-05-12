@@ -137,4 +137,12 @@ class User extends Authenticatable
     {
         return in_array('admin', array_column($this->types->toArray(), 'name'));
     }
+
+    /**
+     * Get all bookings of vehicle
+     */
+    public function booking()
+    {
+        return $this->hasMany('Qwikkar\Models\Booking');
+    }
 }

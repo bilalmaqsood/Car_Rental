@@ -8,7 +8,7 @@ use Qwikkar\Http\Controllers\Controller;
 class UploadController extends Controller
 {
     /**
-     * upload types for application
+     * Upload types for application
      */
     protected $types = ['image', 'document'];
 
