@@ -500,6 +500,7 @@
  */
 
 
+
 /**
  * @api {post} /Owner/return/ 3.2.5 Add Vehicle Side Image
  * @apiName AddVehicleSideImage
@@ -838,6 +839,21 @@
  * @apiSuccess {String} pdf   Contract PDF.
  */
 
+/**
+ * @api {post} /Client/mileagetoservice/vID 4.1.3 Mileage to service (NEW)
+ * @apiName Change Mileage to service
+ * @apiGroup Client
+ *
+ * @apiParam {Number} vID    Vehicle Id
+ * @apiParam {Number} milage    milage
+ *
+ * @apiSuccess {String} success   Milage changed successfully
+ */
+
+
+
+
+
 
 /**
  * @api {post} /payment/card 5.0.0 Add Card
@@ -936,6 +952,24 @@
  * @apiSampleRequest /payment/card
  */
 
+/**
+ * @api {get} /Client/payments/ID 5.1.0 Get Contract Payments Detail (NEW)
+ * @apiName Get Payment of Contract
+ * @apiGroup Payment
+ *
+ * @apiParam {Number}   id    Contract ID
+ *
+ * @apiSuccess {Object[]} payments List of payments of Contract
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [{
+ *       "start":       "01.03.2017"
+ *       “dueDate”:     "15.03.2017"
+ *       “amount”:      140
+ *       "status":      “Pending/Payed/Overdue”
+ *       “name”:         “Deposit/Week 1/Week 2/Week 3”
+ *     }]
+ */
 
 /**
  * @api {post} /notifications/register Register User
