@@ -851,9 +851,42 @@
  */
 
 
+/**
+ * @api {get} /Client/contract/past 4.1.4 Past Contracts/Bookings (NEW)
+ * @apiName Past Contracts/Bookings
+ * @apiGroup Client
+ *
+ *
+ * @apiSuccess {Object[]} bookings   List of past Bookings
+ */
 
+/**
+ * @api {get} /Client/contract/ongoing 4.1.4 Ongoing Contracts/Bookings (NEW)
+ * @apiName Ongoing Contracts/Bookings
+ * @apiGroup Client
+ *
+ *
+ * @apiSuccess {Object[]} bookings   List of Ongoing Bookings
+ */
 
+/**
+ * @api {get} /Client/contract/cID 4.1.5 Contract/Booking Detail(NEW)
+ * @apiName Contract Detail
+ * @apiGroup Client
+ * @apiParam {Integer} cID Contract Id
+ *
+ *
+ * @apiSuccess {Object} contract   Full Detail of Contract
+ */
 
+/**
+ * @api {post} /Client/contract/request 4.1.6 Request a new Contract/Booking(NEW)
+ * @apiName Request a Contract/Booking
+ * @apiGroup Client
+ *
+ *
+ * @apiSuccess {Object} contract  Contract Info i,.e vehicle, client, booking period etc
+ */
 
 /**
  * @api {post} /payment/card 5.0.0 Add Card
