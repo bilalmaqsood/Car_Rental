@@ -25,8 +25,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('/logout', 'AuthController@logout');
 
     Route::resource('account', 'AccountController', ['except' => ['create', 'edit']]);
-    Route::resource('credit-card', 'CreditCardController', ['except' => ['create', 'edit']]);
     Route::resource('vehicle', 'VehicleController', ['except' => ['create', 'edit']]);
+    Route::resource('booking', 'BookingController', ['except' => ['create', 'edit']]);
+    Route::resource('credit-card', 'CreditCardController', ['except' => ['create', 'edit']]);
+
+    Route::post('/time-slot', 'TimeSlotController');
 
     Route::post('/upload/{type}', 'UploadController');
 

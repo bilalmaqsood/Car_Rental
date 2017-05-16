@@ -90,6 +90,25 @@ class Vehicle extends Model
     ];
 
     /**
+     * The model's attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'vehicle_name'
+    ];
+
+    /**
+     * Get the vehicle's name.
+     *
+     * @return string
+     */
+    public function getVehicleNameAttribute()
+    {
+        return implode(' ', [$this->make, $this->model, $this->variant, $this->year]);
+    }
+
+    /**
      * Get the formatted available from date.
      *
      * @param  string $value
@@ -125,5 +144,13 @@ class Vehicle extends Model
     public function booking()
     {
         return $this->hasMany('Qwikkar\Models\Booking');
+    }
+
+    /**
+     * Get all time slots of vehicle
+     */
+    public function timeSlots()
+    {
+        return $this->hasMany('Qwikkar\Models\TimeSlot');
     }
 }

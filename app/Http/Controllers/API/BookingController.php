@@ -8,23 +8,28 @@ use Qwikkar\Http\Controllers\Controller;
 class BookingController extends Controller
 {
     /**
+     * BookingController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('not-admin')->only(['index']);
+
+        $this->middleware('client')->only(['store']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        if ($request->user()->isOwner())
+            $bookingList = $request->user()->owner->vehicles;
+        else
+            $bookingList = $request->user()->booking;
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return api_response($bookingList);
     }
 
     /**
@@ -35,7 +40,13 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'location' => 'required|string'
+        ]);
+
+        return api_response($request->all());
     }
 
     /**
@@ -45,17 +56,6 @@ class BookingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }
