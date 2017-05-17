@@ -65,7 +65,7 @@ class VehicleController extends Controller
 
         if (!$vehicle) abort(404);
 
-        return api_response($vehicle);
+        return api_response($vehicle->with('timeSlots')->first());
     }
 
     /**

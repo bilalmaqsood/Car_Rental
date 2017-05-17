@@ -26,6 +26,15 @@ class TimeSlot extends Model
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'vehicle_id',
+    ];
+
+    /**
      * Get the vehicle of time slot
      */
     public function vehicle()

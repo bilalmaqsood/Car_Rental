@@ -94,9 +94,9 @@ class Vehicle extends Model
      *
      * @var array
      */
-    protected $attributes = [
-        'vehicle_name'
-    ];
+//    protected $attributes = [
+//        'vehicle_name'
+//    ];
 
     /**
      * Get the vehicle's name.

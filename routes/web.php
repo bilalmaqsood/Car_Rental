@@ -12,6 +12,8 @@
 */
 
 Route::get('/test', function () {
+    \DB::enableQueryLog();
+    dd(\DB::getQueryLog());
     d(storage_path('fonts'));
     dd(File::allFiles(storage_path('fonts')));
 });
