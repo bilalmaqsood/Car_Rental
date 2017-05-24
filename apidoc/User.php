@@ -39,6 +39,7 @@
  * @apiParam {String} title  Account Holder Name.
  * @apiParam {String} number Account Number.
  * @apiParam {String} sortcode Sort Code.
+ * @apiParam {String} billingAddress Billing Address of Account (NEW)
  *
  * @apiSampleRequest /account
  *
