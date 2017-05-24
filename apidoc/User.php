@@ -234,6 +234,11 @@
  * @apiParam {String}   pickup               Yes / No if pick by owner.
  * @apiParam {String}   delivery             Yes / No if delivery by owner.
  * @apiParam {String}   location             Vehicle Pickup location.
+ * @apiParam {String}   location             Vehicle Pickup location.
+ * @apiParam {Tuple}    pickLocation         Tuple of Lat,Long (NEW)
+ * @apiParam {Tuple}    returnLocation       Tuple of Lat,Long (NEW)
+ * @apiParam {String}   engine               Engine Specs/type (NEW)
+ * @apiParam {String}   description          Description of Car(NEW)
  * @apiParam {Number}   delivery_charges     Delivery vharges per mile.
  * @apiParam {Number}   rent                 Rent Per Week
  * @apiParam {Number}   insurance            Insurance Per Week
