@@ -12,6 +12,8 @@
 */
 
 Route::get('/test', function () {
+    d(\Qwikkar\Concerns\Coupon::generate());
+    d(\Illuminate\Support\Facades\Password::getRepository()->createNewToken());
     \DB::enableQueryLog();
     dd(\DB::getQueryLog());
     d(storage_path('fonts'));

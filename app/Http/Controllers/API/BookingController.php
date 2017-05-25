@@ -4,6 +4,7 @@ namespace Qwikkar\Http\Controllers\API;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Qwikkar\Concerns\BookingOperations;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
@@ -73,7 +74,7 @@ class BookingController extends Controller
         // validate minimum booking requirements
         $dates = $this->generateDateRange($request->start_date, $request->end_date);
         if (count($dates) < 7)
-            return api_response(trans('booking.minimum'), 422);
+            return api_response(trans('booking.minimum'), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $vehicle = Vehicle::whereId($request->vehicle_id)->with(['timeSlots' => function ($with) {
             $with->where('status', 1);
@@ -88,7 +89,7 @@ class BookingController extends Controller
         $dates = array_values($dates);
 
         if (count($dates))
-            return api_response(['message' => trans('time_slots.not-match'), 'data' => $dates], 409);
+            return api_response(['message' => trans('time_slots.not-match'), 'data' => $dates], Response::HTTP_CONFLICT);
 
         return $this->proceedToBooking($request, $vehicle);
     }
@@ -105,10 +106,10 @@ class BookingController extends Controller
         $booking = Booking::whereId($id)->with('vehicle')->first();
 
         if (!$booking)
-            return abort(404);
+            return abort(Response::HTTP_NOT_FOUND);
 
         if ($this->validateBooking($booking, $request))
-            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->last_name]), 422);
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->last_name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         return api_response($booking);
     }
@@ -132,16 +133,16 @@ class BookingController extends Controller
         $booking = Booking::whereId($id)->with('vehicle')->first();
 
         if (!$booking)
-            return abort(404);
+            return abort(Response::HTTP_NOT_FOUND);
 
         if ($this->validateBooking($booking, $request))
-            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->last_name]), 422);
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->last_name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $oldDates = $this->generateDateRange($booking->start_date, $booking->end_date);
 
         $dates = $this->generateDateRange($request->start_date, $request->end_date);
         if (count($dates) < 7)
-            return api_response(trans('booking.minimum'), 422);
+            return api_response(trans('booking.minimum'), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $remainingDays = array_values(array_diff($dates, $oldDates));
 
@@ -158,7 +159,7 @@ class BookingController extends Controller
         $remainingDays = array_values($remainingDays);
 
         if (count($remainingDays))
-            return api_response(['message' => trans('time_slots.not-match'), 'data' => $remainingDays], 409);
+            return api_response(['message' => trans('time_slots.not-match'), 'data' => $remainingDays], Response::HTTP_CONFLICT);
 
         return $this->updateBooking($request, $vehicle, $booking);
     }
@@ -175,10 +176,10 @@ class BookingController extends Controller
         $booking = Booking::whereId($id)->with('vehicle')->first();
 
         if (!$booking)
-            return abort(404);
+            return abort(Response::HTTP_NOT_FOUND);
 
         if ($this->validateBooking($booking, $request))
-            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->last_name]), 422);
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->last_name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $dates = $this->generateDateRange($booking->start_date, $booking->end_date);
 
