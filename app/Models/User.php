@@ -77,6 +77,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Get all bookings of vehicle
+     */
+    public function booking()
+    {
+        return $this->hasMany('Qwikkar\Models\Booking');
+    }
+
+    /**
+     * Get all of the promoCodes for the user.
+     */
+    public function promoCodes()
+    {
+        return $this->morphToMany('Qwikkar\Models\PromoCode', 'promo_codeable');
+    }
+
+    /**
      * Get the types a user has
      */
     public function types()
@@ -136,13 +152,5 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return in_array('admin', array_column($this->types->toArray(), 'name'));
-    }
-
-    /**
-     * Get all bookings of vehicle
-     */
-    public function booking()
-    {
-        return $this->hasMany('Qwikkar\Models\Booking');
     }
 }

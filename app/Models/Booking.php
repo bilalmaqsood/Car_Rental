@@ -53,4 +53,12 @@ class Booking extends Model
     {
         return $this->belongsTo('Qwikkar\Models\User');
     }
+
+    /**
+     * Get all of the promoCodes for the booking.
+     */
+    public function promoCodes()
+    {
+        return $this->morphToMany('Qwikkar\Models\PromoCode', 'promo_codeable');
+    }
 }

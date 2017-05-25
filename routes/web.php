@@ -12,6 +12,17 @@
 */
 
 Route::get('/test', function () {
+//    $promoCode = Qwikkar\Models\PromoCode::find(4);
+//    $booking = Qwikkar\Models\Booking::find(10);
+//    $user = Qwikkar\Models\User::find(1);
+//    d($user->promoCodes()->save($promoCode));
+//    d($booking->promoCodes()->save($promoCode));
+
+//    $user = Qwikkar\Models\User::find(1);
+//    $booking = Qwikkar\Models\Booking::find(10);
+//    d($user->promoCodes);
+//    d($booking->promoCodes);
+
     d(\Qwikkar\Concerns\Coupon::generate());
     d(\Illuminate\Support\Facades\Password::getRepository()->createNewToken());
     \DB::enableQueryLog();
