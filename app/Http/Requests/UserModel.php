@@ -29,6 +29,25 @@ class UserModel extends FormRequest
             'email' => 'required|email|unique:users,email',
             'phone' => 'phone:GB',
             'password' => 'required|string',
+
+            'postcode' => [
+                'required',
+                'Regex:/^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][‌​0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/'
+            ],
+
+            'promo_code' => 'exists:promo_codes,code',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'postcode.regex' => 'The postcode is invalid.',
         ];
     }
 }

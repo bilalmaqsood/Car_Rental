@@ -55,6 +55,8 @@ trait BookingOperations
         $booking->user()->associate($request->user());
         $booking->save();
 
+        Couponize::processPromoCode($booking, $request);
+
         return api_response(trans('booking.create', ['vehicle' => $vehicle->vehicle_name]));
     }
 

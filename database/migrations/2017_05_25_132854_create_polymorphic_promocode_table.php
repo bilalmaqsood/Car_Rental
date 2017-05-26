@@ -14,9 +14,11 @@ class CreatePolymorphicPromocodeTable extends Migration
     public function up()
     {
         Schema::create('promo_codeables', function (Blueprint $table) {
-            $table->integer('promo_code_id');
-            $table->integer('promo_codeable_id');
-            $table->string('promo_codeable_type');
+            $table->integer('promo_code_id')->index();
+            $table->integer('promo_codeable_id')->index();
+            $table->string('promo_codeable_type')->index();
+
+            $table->unique(['promo_code_id', 'promo_codeable_id', 'promo_codeable_type'], 'promo_code_id_able_id_able_type_unique');
         });
     }
 

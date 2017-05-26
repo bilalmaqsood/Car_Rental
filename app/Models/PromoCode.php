@@ -3,9 +3,12 @@
 namespace Qwikkar\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Qwikkar\Concerns\Couponize;
 
 class PromoCode extends Model
 {
+    use Couponize;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -14,7 +17,7 @@ class PromoCode extends Model
     protected $fillable = [
         'code',
         'reward',
-        'is_used',
+        'is_active',
         'expire_at',
     ];
 
@@ -35,7 +38,7 @@ class PromoCode extends Model
     protected $casts = [
         'expire_at' => 'datetime',
 
-        'is_used' => 'boolean',
+        'is_active' => 'boolean',
         'reward' => 'float',
     ];
 

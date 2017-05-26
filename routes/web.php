@@ -23,10 +23,12 @@ Route::get('/test', function () {
 //    d($user->promoCodes);
 //    d($booking->promoCodes);
 
+//    d(\Qwikkar\Models\PromoCode::generate(8, 11.45, \Carbon\Carbon::now()->addYear()));
+
     d(\Qwikkar\Concerns\Coupon::generate());
     d(\Illuminate\Support\Facades\Password::getRepository()->createNewToken());
     \DB::enableQueryLog();
-    dd(\DB::getQueryLog());
+    d(\DB::getQueryLog());
     d(storage_path('fonts'));
     dd(File::allFiles(storage_path('fonts')));
 });

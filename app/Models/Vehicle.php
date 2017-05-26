@@ -90,15 +90,6 @@ class Vehicle extends Model
     ];
 
     /**
-     * The model's attributes.
-     *
-     * @var array
-     */
-//    protected $attributes = [
-//        'vehicle_name'
-//    ];
-
-    /**
      * Get the vehicle's name.
      *
      * @return string

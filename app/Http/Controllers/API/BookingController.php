@@ -68,7 +68,8 @@ class BookingController extends Controller
             'vehicle_id' => 'required|numeric|exists:vehicles,id',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
-            'location' => 'required|string'
+            'location' => 'required|string',
+            'promo_code' => 'exists:promo_codes,code'
         ]);
 
         // validate minimum booking requirements

@@ -17,7 +17,7 @@ class CreatePromoCodesTable extends Migration
             $table->increments('id');
             $table->string('code', 64)->unique();
             $table->decimal('reward');
-            $table->boolean('is_used')->default(0);
+            $table->boolean('is_active')->default(1);
             $table->dateTime('expire_at');
             $table->timestamps();
         });

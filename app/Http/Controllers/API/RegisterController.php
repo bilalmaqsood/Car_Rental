@@ -7,6 +7,7 @@ use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Http\Requests\UserModel;
 use Qwikkar\Models\Client;
 use Qwikkar\Models\Owner;
+use Qwikkar\Models\PromoCode;
 use Qwikkar\Models\User;
 
 class RegisterController extends Controller
@@ -62,14 +63,13 @@ class RegisterController extends Controller
     {
         $this->validate($request, [
             'insurance' => 'string',
-            'postcode' => ['Regex:/^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][‌​0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/'],
             'driving' => 'string',
             'dvla' => 'string',
             'dob' => 'date',
             'pco_release_date' => 'date',
             'pco_expiry_date' => 'date',
             'pco_number' => 'string',
-        ], ['postcode.regex' => 'The postcode is invalid.']);
+        ]);
 
         $user->fill($request->all());
         $user->save();
@@ -81,6 +81,8 @@ class RegisterController extends Controller
         $client->fill($request->all());
 
         $user->client()->save($client);
+
+        PromoCode::processPromoCode($user, $request);
 
         return api_response($user->createToken('APIAccessToken')->accessToken);
     }
@@ -100,8 +102,7 @@ class RegisterController extends Controller
             'street' => 'string',
             'town' => 'string',
             'country' => 'string',
-            'postcode' => ['Regex:/^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][‌​0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/'],
-        ], ['postcode.regex' => 'The postcode is invalid.']);
+        ]);
 
         $user->fill($request->all());
         $user->save();
@@ -113,6 +114,8 @@ class RegisterController extends Controller
         $owner->fill($request->all());
 
         $user->owner()->save($owner);
+
+        PromoCode::processPromoCode($user, $request);
 
         return api_response($user->createToken('APIAccessToken')->accessToken);
     }
