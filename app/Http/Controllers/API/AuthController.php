@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         if ($user) {
             $user->tokens()->delete();
-            return api_response(['token' => $user->createToken('APIAccessToken')->accessToken, 'type' => $user->types->first()->name]);
+            return api_response(array_merge($this->userProfile($user), ['token' => $user->createToken('APIAccessToken')->accessToken, 'type' => $user->types->first()->name]));
         }
 
         return api_response(trans('auth.failed'), 406);
@@ -39,15 +39,26 @@ class AuthController extends Controller
      */
     public function info(Request $request)
     {
-        $user = $request->user()->toArray();
+        return api_response($this->userProfile($request->user()));
+    }
+
+    /**
+     * Get all user information according to type
+     *
+     * @param User $user
+     * @return array
+     */
+    protected function userProfile(User $user)
+    {
+        $userArray = $user->toArray();
 
         $profile = [];
-        if ($request->user()->isClient())
-            $profile = $request->user()->clinet->toArray();
-        else if ($request->user()->isOwner())
-            $profile = $request->user()->owner->toArray();
+        if ($user->isClient())
+            $profile = $user->client->toArray();
+        else if ($user->isOwner())
+            $profile = $user->owner->toArray();
 
-        return api_response(array_merge($user, $profile));
+        return array_merge($userArray, $profile);
     }
 
     /**

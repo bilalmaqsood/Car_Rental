@@ -56,7 +56,8 @@ trait Couponize
     {
         $promoCode = self::verify($request->promo_code);
 
-        $model->promoCodes()->save($promoCode);
+        if ($promoCode)
+            $model->promoCodes()->save($promoCode);
 
         return $promoCode;
     }
