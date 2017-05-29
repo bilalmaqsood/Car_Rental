@@ -21,9 +21,9 @@ class SearchController extends Controller
      */
     public function __construct(Request $request)
     {
-        if (!in_array($request->type, $this->types)) abort(404);
-
-        $this->middleware('client');
+        if (!in_array($request->type, $this->types)) {
+            abort(404);
+        }
     }
 
     /**
