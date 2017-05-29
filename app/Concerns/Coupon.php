@@ -2,7 +2,7 @@
 
 namespace Qwikkar\Concerns;
 
-//
+use Exception;
 
 class Coupon
 {

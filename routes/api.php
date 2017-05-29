@@ -18,6 +18,8 @@ Route::get('/terms/{type}', 'TermsController');
 Route::post('/auth', 'AuthController@login');
 Route::post('/register/{type}', 'RegisterController');
 
+Route::get('/search/{type}', 'SearchController');
+
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/user', 'AuthController@info');
@@ -32,9 +34,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/time-slot', 'TimeSlotController');
 
     Route::post('/upload/{type}', 'UploadController');
-
-    Route::get('/search/{type}', 'SearchController');
-
 
     /**
      * Contracts
