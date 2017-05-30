@@ -60,15 +60,15 @@ class SearchController extends Controller
     {
         $this->validate($request, [
             'search' => 'required|string',
-            'radius' => 'required|numeric',
-            'latitude' => 'required|regex:/^(\-?\d+(\.\d+)?)$/',
-            'longitude' => 'required|regex:/^(\-?\d+(\.\d+)?)$/',
-            'price_min' => 'required|numeric',
-            'price_max' => 'required|string',
+            'radius' => 'numeric',
+            'latitude' => 'regex:/^(\-?\d+(\.\d+)?)$/',
+            'longitude' => 'regex:/^(\-?\d+(\.\d+)?)$/',
+            'price_min' => 'numeric',
+            'price_max' => 'string',
             'booking_start' => 'required|date',
             'booking_end' => 'required|date',
-            'year_min' => 'required|digits:4',
-            'year_max' => 'required|digits:4',
+            'year_min' => 'digits:4',
+            'year_max' => 'digits:4',
         ], [
             'latitude.regex' => 'The latitude is invalid.',
             'longitude.regex' => 'The longitude is invalid.',
@@ -81,23 +81,38 @@ class SearchController extends Controller
         });
 
         $vehicles->where(function (Builder $q) use ($request) {
-            $q->where('rent', '>=', $request->price_min);
-            $q->where('rent', '<=', $request->price_max);
+
+            if ($request->price_min)
+                $q->where('rent', '>=', $request->price_min);
+
+            if ($request->price_max)
+                $q->where('rent', '<=', $request->price_max);
         });
 
         $vehicles->where(function (Builder $q) use ($request) {
-            $q->where('year', '>=', $request->year_min);
-            $q->where('year', '<=', $request->year_max);
+
+            if ($request->year_min)
+                $q->where('year', '>=', $request->year_min);
+
+            if ($request->year_max)
+                $q->where('year', '<=', $request->year_max);
         });
 
-        return $this->filterListRadius(
-            $request->radius,
-            (object)[
-                'lat' => $request->latitude,
-                'long' => $request->longitude
-            ],
-            $vehicles->simplePaginate(5)
-        );
+        $vehicles->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'delivery_charges', 'rent', 'location');
+
+        $vehiclesList = $vehicles->simplePaginate(20);
+
+        if ($request->latitude && $request->longitude)
+            $vehiclesList = $this->filterListRadius(
+                $request->radius,
+                (object)[
+                    'lat' => $request->latitude,
+                    'long' => $request->longitude
+                ],
+                $vehiclesList
+            );
+
+        return $vehiclesList;
     }
 
     /**
