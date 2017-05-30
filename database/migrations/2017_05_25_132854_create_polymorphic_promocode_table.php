@@ -29,6 +29,6 @@ class CreatePolymorphicPromocodeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('promo_codeable');
+        Schema::dropIfExists('promo_codeables');
     }
 }
