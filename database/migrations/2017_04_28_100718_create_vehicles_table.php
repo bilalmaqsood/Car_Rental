@@ -47,6 +47,7 @@ class CreateVehiclesTable extends Migration
             $table->integer('license_points')->nullable()->comment('maximum points on license');
             $table->string('no_fault_accident', 4)->nullable()->comment('year since last accident with no driver fault');
             $table->string('fault_accident', 4)->nullable()->comment('year since last accident with driver fault');
+            $table->text('notes')->nullable()->comment('important notes for vehicle');
             $table->timestamps();
         });
     }

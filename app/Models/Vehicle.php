@@ -43,6 +43,7 @@ class Vehicle extends Model
         'license_points',
         'no_fault_accident',
         'fault_accident',
+        'notes',
     ];
 
     /**
@@ -97,28 +98,6 @@ class Vehicle extends Model
     public function getVehicleNameAttribute()
     {
         return implode(' ', [$this->make, $this->model, $this->variant, $this->year]);
-    }
-
-    /**
-     * Get the formatted available from date.
-     *
-     * @param  string $value
-     * @return string
-     */
-    public function getAvailableFromAttribute($value)
-    {
-        return \Carbon\Carbon::parse($value)->format('m/d/Y');
-    }
-
-    /**
-     * Get the formatted available from date.
-     *
-     * @param  string $value
-     * @return string
-     */
-    public function getAvailableToAttribute($value)
-    {
-        return \Carbon\Carbon::parse($value)->format('m/d/Y');
     }
 
     /**
