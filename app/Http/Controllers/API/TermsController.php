@@ -33,6 +33,6 @@ class TermsController extends Controller
      */
     public function __invoke(Request $request, $type)
     {
-        return view("terms.{$type}");
+        return api_response(view("terms.{$type}")->render());
     }
 }
