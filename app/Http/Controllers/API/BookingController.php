@@ -77,20 +77,29 @@ class BookingController extends Controller
         if (count($dates) < 7)
             return api_response(trans('booking.minimum'), Response::HTTP_UNPROCESSABLE_ENTITY);
 
-        $vehicle = Vehicle::whereId($request->vehicle_id)->with(['timeSlots' => function ($with) {
-            $with->where('status', 1);
-            $with->whereDate('day', '>=', Carbon::now()->format('Y-m-d'));
+        $vehicle = Vehicle::whereId($request->vehicle_id)->with(['booking' => function ($with) use ($request) {
+            $with->whereDate('end_date', '>=', Carbon::parse($request->start_date));
         }])->first();
 
-        // validate days for free time slots
-        $vehicle->timeSlots->each(function ($ts) use (&$dates) {
-            if (false !== $key = array_search($ts->day->format('Y-m-d'), $dates))
-                unset($dates[$key]);
+        $invalidDates = [];
+        $bookingDates = [];
+        collect($dates)->map(function ($d) use ($vehicle, &$bookingDates, &$invalidDates) {
+            $time = strtotime($d);
+            if ($time >= $vehicle->available_from->getTimestamp() && $time <= $vehicle->available_to->getTimestamp()) {
+                $vehicle->booking->map(function ($b) use ($d, $time, &$bookingDates) {
+                    if ($time >= $b->start_date->getTimestamp() && $time <= $b->end_date->getTimestamp())
+                        $bookingDates[] = $d;
+                });
+            } else {
+                $invalidDates[] = $d;
+            }
         });
-        $dates = array_values($dates);
 
-        if (count($dates))
-            return api_response(['message' => trans('time_slots.not-match'), 'data' => $dates], Response::HTTP_CONFLICT);
+        if (count($invalidDates))
+            return api_response(['message' => trans('booking.not-match'), 'data' => $invalidDates], Response::HTTP_CONFLICT);
+
+        if (count($bookingDates))
+            return api_response(['message' => trans('booking.booked', ['vehicle' => $vehicle->vehicle_name]), 'data' => $bookingDates], Response::HTTP_CONFLICT);
 
         return $this->proceedToBooking($request, $vehicle);
     }
@@ -147,22 +156,31 @@ class BookingController extends Controller
 
         $remainingDays = array_values(array_diff($dates, $oldDates));
 
-        $vehicle = Vehicle::whereId($request->vehicle_id)->with(['timeSlots' => function ($with) use ($remainingDays) {
-            $with->where('status', 1);
-            $with->whereIn('day', $remainingDays);
+        $vehicle = Vehicle::whereId($request->vehicle_id)->with(['booking' => function ($with) use ($request) {
+            $with->whereDate('end_date', '>=', Carbon::parse($request->start_date));
         }])->first();
 
-        // validate days for free time slots
-        $vehicle->timeSlots->each(function ($ts) use (&$remainingDays) {
-            if (false !== $key = array_search($ts->day->format('Y-m-d'), $remainingDays))
-                unset($remainingDays[$key]);
+        $invalidDates = [];
+        $bookingDates = [];
+        collect($remainingDays)->map(function ($d) use ($vehicle, &$bookingDates, &$invalidDates) {
+            $time = strtotime($d);
+            if ($time >= $vehicle->available_from->getTimestamp() && $time <= $vehicle->available_to->getTimestamp()) {
+                $vehicle->booking->map(function ($b) use ($d, $time, &$bookingDates) {
+                    if ($time >= $b->start_date->getTimestamp() && $time <= $b->end_date->getTimestamp())
+                        $bookingDates[] = $d;
+                });
+            } else {
+                $invalidDates[] = $d;
+            }
         });
-        $remainingDays = array_values($remainingDays);
 
-        if (count($remainingDays))
-            return api_response(['message' => trans('time_slots.not-match'), 'data' => $remainingDays], Response::HTTP_CONFLICT);
+        if (count($invalidDates))
+            return api_response(['message' => trans('booking.not-match'), 'data' => $invalidDates], Response::HTTP_CONFLICT);
 
-        return $this->updateBooking($request, $vehicle, $booking);
+        if (count($bookingDates))
+            return api_response(['message' => trans('booking.booked', ['vehicle' => $vehicle->vehicle_name]), 'data' => $bookingDates], Response::HTTP_CONFLICT);
+
+        return $this->updateBooking($request, $booking);
     }
 
     /**
@@ -181,15 +199,6 @@ class BookingController extends Controller
 
         if ($this->validateBooking($booking, $request))
             return api_response(trans('booking.unauthenticated', ['name' => $request->user()->last_name]), Response::HTTP_UNPROCESSABLE_ENTITY);
-
-        $dates = $this->generateDateRange($booking->start_date, $booking->end_date);
-
-        $vehicle = Vehicle::whereId($booking->vehicle_id)->with(['timeSlots' => function ($with) use ($dates) {
-            $with->where('status', 2);
-            $with->whereIn('day', $dates);
-        }])->first();
-
-        $this->changeSlotsStatus($vehicle);
 
         $booking->delete();
 

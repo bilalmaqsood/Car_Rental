@@ -11,4 +11,7 @@ return [
 
     'delete' => 'Booking is deleted which is associated to :name.',
 
+    'booked' => ':vehicle is already booked on these dates.',
+    'not-match' => 'These dates are not available for booking.',
+
 ];

@@ -39,39 +39,16 @@ trait BookingOperations
      */
     protected function proceedToBooking(Request $request, Vehicle $vehicle)
     {
-        $this->changeSlotsStatus($vehicle, 2);
+        $booking = Booking::firstOrNew($request->all());
 
-        // validate if booking already exists
-        if (
-        $vehicle->booking
-            ->where('start_date', Carbon::parse($request->start_date))
-            ->where('end_date', Carbon::parse($request->end_date))
-            ->count()
-        )
-            return api_response(trans('booking.exist', ['vehicle' => $vehicle->vehicle_name]), 409);
-
-        $booking = new Booking($request->all());
         $booking->vehicle()->associate($vehicle);
         $booking->user()->associate($request->user());
+
         $booking->save();
 
         Couponize::processPromoCode($booking, $request);
 
         return api_response(trans('booking.create', ['vehicle' => $vehicle->vehicle_name]));
-    }
-
-    /**
-     * Change status of time slots
-     *
-     * @param Vehicle $vehicle
-     * @param int $status
-     */
-    protected function changeSlotsStatus(Vehicle $vehicle, $status = 1)
-    {
-        $vehicle->timeSlots->each(function ($ts) use ($status) {
-            $ts->status = $status;
-            $ts->save();
-        });
     }
 
     /**
@@ -93,17 +70,16 @@ trait BookingOperations
      * Update a booking with slots
      *
      * @param Request $request
-     * @param Vehicle $vehicle
      * @param Booking $booking
      * @return array|\Illuminate\Http\JsonResponse
      */
-    protected function updateBooking(Request $request, Vehicle $vehicle, Booking $booking)
+    protected function updateBooking(Request $request, Booking $booking)
     {
-        $this->changeSlotsStatus($vehicle, 2);
-
         $booking->fill($request->all());
         $booking->save();
 
-        return api_response($booking);
+        return api_response($booking->fresh(['vehicle' => function ($with) {
+            $with->select('id', 'make', 'model', 'variant', 'year', 'deposit');
+        }]));
     }
 }
