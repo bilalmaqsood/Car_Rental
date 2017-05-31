@@ -31,8 +31,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('booking', 'BookingController', ['except' => ['create', 'edit']]);
     Route::resource('credit-card', 'CreditCardController', ['except' => ['create', 'edit']]);
 
-    Route::post('/time-slot', 'TimeSlotController');
-
     Route::post('/upload/{type}', 'UploadController');
 
     /**
