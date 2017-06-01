@@ -12,6 +12,18 @@
 */
 
 Route::get('/test', function () {
+//    $user = Qwikkar\Models\User::find(1);
+//    $booking = Qwikkar\Models\Booking::find(1);
+//
+//    $balanceLog = \Qwikkar\Models\BalanceLog::firstOrNew(['amount' => 999.99, 'comment' => 'lorem ipsam sans emit']);
+//
+//    $balanceLog->balance()->associate($user->balance);
+//    $booking->balanceLogs()->save($balanceLog);
+//
+//    d($user->balance->logs->first()->loggable);
+//    d($user->balance->logs);
+//    d($booking->balanceLogs);
+
 //    $promoCode = Qwikkar\Models\PromoCode::find(4);
 //    $booking = Qwikkar\Models\Booking::find(10);
 //    $user = Qwikkar\Models\User::find(1);

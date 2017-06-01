@@ -59,6 +59,14 @@ class Booking extends Model
      */
     public function promoCodes()
     {
-        return $this->morphToMany('Qwikkar\Models\PromoCode', 'promo_codeable');
+        return $this->morphToMany('Qwikkar\Models\PromoCode', 'promo_code_able');
+    }
+
+    /**
+     * Get all of the balance logs for the booking.
+     */
+    public function balanceLogs()
+    {
+        return $this->morphMany('Qwikkar\Models\BalanceLog', 'loggable');
     }
 }

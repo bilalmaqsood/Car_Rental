@@ -37,6 +37,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get user's balance
+     */
+    public function balance()
+    {
+        return $this->hasOne('Qwikkar\Models\Balance');
+    }
+
+    /**
      * Relation with Accounts
      */
     public function creditCard()
@@ -89,7 +97,7 @@ class User extends Authenticatable
      */
     public function promoCodes()
     {
-        return $this->morphToMany('Qwikkar\Models\PromoCode', 'promo_codeable');
+        return $this->morphToMany('Qwikkar\Models\PromoCode', 'promo_code_able');
     }
 
     /**
