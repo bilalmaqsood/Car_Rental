@@ -16,7 +16,7 @@
     <link href="{{ mix('css/qwikkar.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
-    <script>
+    <script type="text/javascript">
         window.Qwikkar = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};

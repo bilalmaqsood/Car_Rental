@@ -1,5 +1,7 @@
 
 window._ = require('lodash');
+window.React = require('react');
+window.ReactDOM = require('react-dom');
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
