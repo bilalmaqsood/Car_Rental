@@ -105,7 +105,7 @@ class SearchController extends Controller
 
         $vehicles->orderBy('created_at', 'desc');
 
-        $vehiclesList = $vehicles->paginate(2);
+        $vehiclesList = $vehicles->paginate(20);
 
         if ($request->latitude && $request->longitude)
             $vehiclesList = $this->filterListRadius(
@@ -166,10 +166,13 @@ class SearchController extends Controller
     {
         $list->each(function ($each) use ($search, $radius) {
             $latLong = explode(',', $each->location);
-            $distance = $this->distanceGeoPoints($search, (object)['lat' => $latLong[0], 'long' => $latLong[1]]);
 
-            $each->inRadius = $distance <= $radius;
-            $each->distance = (float)number_format($distance, 2);
+            if (count($latLong) == 2) {
+                $distance = $this->distanceGeoPoints($search, (object)['lat' => $latLong[0], 'long' => $latLong[1]]);
+
+                $each->inRadius = $distance <= $radius;
+                $each->distance = (float)number_format($distance, 2);
+            }
         });
 
         return $list;
