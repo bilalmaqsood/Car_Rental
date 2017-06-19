@@ -25,6 +25,8 @@ class Vehicle extends Model
         'available_to',
         'pickup',
         'delivery',
+        'pickup_location',
+        'return_location',
         'location',
         'delivery_charges',
         'rent',

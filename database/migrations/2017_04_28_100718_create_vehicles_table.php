@@ -29,7 +29,9 @@ class CreateVehiclesTable extends Migration
             $table->date('available_to');
             $table->boolean('pickup')->comment('yes / no if pick by owner');
             $table->boolean('delivery')->comment('yes / no if delivery by owner');
-            $table->string('location', 100)->comment('vehicle pickup location in latitude and longitude');
+            $table->string('pickup_location', 100)->comment('vehicle pickup location in latitude and longitude');
+            $table->string('return_location', 100)->comment('vehicle return location in latitude and longitude');
+            $table->string('location', 100)->comment('vehicle location in latitude and longitude');
             $table->decimal('delivery_charges')->comment('delivery charges per week');
             $table->decimal('rent')->comment('rent per week');
             $table->decimal('insurance')->comment('insurance per week');

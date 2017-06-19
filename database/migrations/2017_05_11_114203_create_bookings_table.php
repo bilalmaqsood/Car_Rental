@@ -20,6 +20,7 @@ class CreateBookingsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('location');
+            $table->decimal('deposit');
             $table->boolean('status')->default(0)->comment('0=Requested, 1=Confirmed, 2=Accepted, 3=Canceled, 4=Extension');
             $table->timestamps();
         });

@@ -30,6 +30,7 @@ class Booking extends Model
         'start_date',
         'end_date',
         'location',
+        'deposit',
         'status',
     ];
 
@@ -41,6 +42,18 @@ class Booking extends Model
     protected $dates = [
         'start_date',
         'end_date',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'deposit' => 'float',
+
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 
     /**

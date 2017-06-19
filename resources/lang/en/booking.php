@@ -20,4 +20,6 @@ return [
 
     'log-fulfilled' => 'Owner (:user) has already updated the booking as :status.',
 
+    'deposit' => 'Your balance is insufficient for vehicle booking deposit.',
+
 ];

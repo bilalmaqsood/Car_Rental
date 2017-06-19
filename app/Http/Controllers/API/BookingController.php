@@ -104,6 +104,9 @@ class BookingController extends Controller
         if (count($bookingDates))
             return api_response(['message' => trans('booking.booked', ['vehicle' => $vehicle->vehicle_name]), 'data' => $bookingDates], Response::HTTP_CONFLICT);
 
+        if ($request->user()->current_balance < $vehicle->deposit)
+            return api_response(trans('booking.deposit'), Response::HTTP_PAYMENT_REQUIRED);
+
         return $this->proceedToBooking($request, $vehicle);
     }
 

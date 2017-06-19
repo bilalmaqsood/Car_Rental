@@ -42,6 +42,8 @@ trait BookingOperations
     {
         $booking = Booking::firstOrNew($request->all());
 
+        $booking->deposit = $vehicle->deposit;
+
         $booking->vehicle()->associate($vehicle);
         $booking->user()->associate($request->user());
 
@@ -49,7 +51,21 @@ trait BookingOperations
 
         Couponize::processPromoCode($booking, $request);
 
+        $this->deductDeposit($booking, $request);
+
         return api_response(trans('booking.create', ['vehicle' => $vehicle->vehicle_name]));
+    }
+
+    /**
+     * Validate booking according to user type
+     *
+     * @param Booking $booking
+     * @param Request $request
+     * @return bool
+     */
+    protected function deductDeposit(Booking $booking, Request $request)
+    {
+        //
     }
 
     /**

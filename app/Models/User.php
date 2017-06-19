@@ -47,6 +47,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the user's current balance.
+     *
+     * @return float
+     */
+    public function getCurrentBalanceAttribute()
+    {
+        return $this->balance ? $this->balance->current : 0;
+    }
+
+    /**
      * Get user's balance
      */
     public function balance()
