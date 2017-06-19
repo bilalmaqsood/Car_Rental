@@ -5,6 +5,7 @@ namespace Qwikkar\Concerns;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Qwikkar\Models\Booking;
+use Qwikkar\Models\BookingLog;
 use Qwikkar\Models\Vehicle;
 
 trait BookingOperations
@@ -81,5 +82,67 @@ trait BookingOperations
         return api_response($booking->fresh(['vehicle' => function ($with) {
             $with->select('id', 'make', 'model', 'variant', 'year', 'deposit');
         }]));
+    }
+
+    /**
+     * Update a booking against booking log
+     *
+     * @param BookingLog $log
+     */
+    protected function updateBookingFromLog(BookingLog $log)
+    {
+        $booking = $log->booking;
+
+        $booking->fill($log->requested_data);
+
+        if (isset($log->requested_data['start_date']) || isset($log->requested_data['end_date'])) {
+            $booking->status = 6;
+        } elseif ($log->requested_data['status'] == 3) {
+            $booking->status = 4;
+        }
+
+        $booking->save();
+    }
+
+    /**
+     * get notification string for requested data
+     *
+     * @param BookingLog $log
+     * @return \Illuminate\Contracts\Translation\Translator|string
+     */
+    protected function getStatusNotifyString(BookingLog $log)
+    {
+        $booking = $log->booking;
+        $data = $log->requested_data;
+
+        if (isset($data['start_date']) || isset($data['end_date'])) {
+            $status = 5;
+        } else {
+            $status = $data['status'];
+        }
+
+        $booking->status = $status;
+        $booking->save();
+
+        return trans('booking.requested', [
+            'user' => $log->requested->name,
+            'status' => strtolower($booking->statusTypes[$status])
+        ]);
+    }
+
+    /**
+     * get notification string for requested data
+     *
+     * @param BookingLog $log
+     * @return \Illuminate\Contracts\Translation\Translator|string
+     */
+    protected function getFulfillNotifyString(BookingLog $log)
+    {
+        $booking = $log->booking;
+
+        return trans('booking.fulfilled', [
+            'user' => $log->fulfilled->name,
+            'status' => strtolower($booking->statusTypes[$booking->status])
+        ]);
     }
 }

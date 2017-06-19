@@ -24,11 +24,18 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/user', 'AuthController@info');
 
+    Route::patch('/profile/client', 'ProfileController@updateClient')->middleware('client');
+    Route::patch('/profile/owner', 'ProfileController@updateOwner')->middleware('owner');
+
     Route::delete('/logout', 'AuthController@logout');
 
     Route::resource('account', 'AccountController', ['except' => ['create', 'edit']]);
     Route::resource('vehicle', 'VehicleController', ['except' => ['create', 'edit']]);
+
     Route::resource('booking', 'BookingController', ['except' => ['create', 'edit']]);
+    Route::post('booking/{id}/status', 'BookingController@updateStatusRequest');
+    Route::patch('booking/{id}/status', 'BookingController@updateStatusFulfill');
+
     Route::resource('credit-card', 'CreditCardController', ['except' => ['create', 'edit']]);
 
     Route::post('/upload/{type}', 'UploadController');

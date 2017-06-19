@@ -37,6 +37,16 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get the user's name.
+     *
+     * @return string
+     */
+    public function getNameAttribute()
+    {
+        return implode(' ', [$this->first_name, $this->last_name]);
+    }
+
+    /**
      * Get user's balance
      */
     public function balance()

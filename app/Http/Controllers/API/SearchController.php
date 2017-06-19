@@ -59,14 +59,14 @@ class SearchController extends Controller
     protected function getVehicleResults(Request $request)
     {
         $this->validate($request, [
-            'search' => 'required|string',
+            'search' => 'string',
             'radius' => 'numeric',
             'latitude' => 'regex:/^(\-?\d+(\.\d+)?)$/',
             'longitude' => 'regex:/^(\-?\d+(\.\d+)?)$/',
             'price_min' => 'numeric',
             'price_max' => 'string',
-            'booking_start' => 'required|date',
-            'booking_end' => 'required|date',
+            'booking_start' => 'date',
+            'booking_end' => 'date',
             'year_min' => 'digits:4',
             'year_max' => 'digits:4',
         ], [
@@ -74,11 +74,14 @@ class SearchController extends Controller
             'longitude.regex' => 'The longitude is invalid.',
         ]);
 
-        $vehicles = Vehicle::where(function (Builder $q) use ($request) {
-            $q->orWhere('make', 'like', '%' . $request->search . '%');
-            $q->orWhere('model', 'like', '%' . $request->search . '%');
-            $q->orWhere('variant', 'like', '%' . $request->search . '%');
-        });
+        $vehicles = new Vehicle();
+
+        if ($request->has('search'))
+            $vehicles = $vehicles->where(function (Builder $q) use ($request) {
+                $q->orWhere('make', 'like', '%' . $request->search . '%');
+                $q->orWhere('model', 'like', '%' . $request->search . '%');
+                $q->orWhere('variant', 'like', '%' . $request->search . '%');
+            });
 
         $vehicles->where(function (Builder $q) use ($request) {
 
@@ -100,7 +103,9 @@ class SearchController extends Controller
 
         $vehicles->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'delivery_charges', 'rent', 'location');
 
-        $vehiclesList = $vehicles->simplePaginate(20);
+        $vehicles->orderBy('created_at', 'desc');
+
+        $vehiclesList = $vehicles->paginate(2);
 
         if ($request->latitude && $request->longitude)
             $vehiclesList = $this->filterListRadius(

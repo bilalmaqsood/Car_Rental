@@ -17,4 +17,6 @@ return [
     'logout' => 'Successfully logout :name.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
+    'profile' => 'Profile has been updated successfully.'
+
 ];

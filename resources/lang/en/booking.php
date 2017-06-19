@@ -14,4 +14,10 @@ return [
     'booked' => ':vehicle is already booked on these dates.',
     'not-match' => 'These dates are not available for booking.',
 
+    'requested' => 'Driver (:user) want to :status the booking.',
+
+    'fulfilled' => 'Owner (:user) has updated the booking as :status.',
+
+    'log-fulfilled' => 'Owner (:user) has already updated the booking as :status.',
+
 ];

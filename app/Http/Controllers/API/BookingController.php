@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 use Qwikkar\Concerns\BookingOperations;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
+use Qwikkar\Models\BookingLog;
 use Qwikkar\Models\Vehicle;
 
 class BookingController extends Controller
@@ -21,7 +22,9 @@ class BookingController extends Controller
     {
         $this->middleware('not-admin')->only(['index', 'show']);
 
-        $this->middleware('client')->only(['store', 'update', 'destroy']);
+        $this->middleware('owner')->only(['destroy', 'updateStatusFulfill']);
+
+        $this->middleware('client')->only(['store', 'update', 'updateStatusRequest']);
     }
 
     /**
@@ -203,5 +206,92 @@ class BookingController extends Controller
         $booking->delete();
 
         return api_response(trans('booking.delete', ['name' => $request->user()->last_name]));
+    }
+
+    /**
+     * Update the status request of an open booking
+     *
+     * @param Request $request
+     * @param int $id
+     * @return string
+     */
+    public function updateStatusRequest(Request $request, $id, BookingLog $log)
+    {
+        $this->validate($request, [
+            'start_date' => 'date',
+            'end_date' => 'date',
+            'location' => 'string',
+            'note' => 'string',
+            'status' => 'in:3,5',
+        ]);
+
+        $booking = Booking::find($id);
+
+        $requestData = $request->all();
+        unset($requestData['note']);
+
+        $log->requested_note = $request->note;
+        $log->requested_data = $requestData;
+        $log->requested_time = Carbon::now();
+
+        $log->requested()->associate($request->user());
+
+        $booking->bookingLog()->save($log);
+
+        // notify owner of vehicle to complete the action
+
+        return api_response($this->getStatusNotifyString($log));
+    }
+
+    /**
+     * Update the status fulfill of an open booking
+     *
+     * @param Request $request
+     * @param int $id
+     * @param BookingLog $log
+     * @return string
+     */
+    public function updateStatusFulfill(Request $request, $id, BookingLog $log)
+    {
+        $this->validate($request, [
+            'log_id' => 'exists:booking_logs,id',
+            'status' => 'in:2,4,6',
+            'note' => 'string',
+        ]);
+
+        $booking = Booking::find($id);
+
+        if ($request->has('log_id'))
+            $log = BookingLog::find($request->log_id);
+
+        if ($log->status && $log->status == 2)
+            return api_response(trans('booking.log-fulfilled', [
+                'user' => $log->fulfilled->name,
+                'status' => strtolower($log->booking->statusTypes[$log->booking->status])
+            ]), Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $requestData = $request->all();
+        unset($requestData['note']);
+
+        $log->requested_data = $requestData;
+
+        $log->fulfilled_note = $request->note;
+        $log->fulfilled_data = $requestData;
+        $log->fulfilled_time = Carbon::now();
+
+        $log->status = 2;
+
+        $log->fulfilled()->associate($request->user());
+
+        if ($request->has('log_id'))
+            $log->save();
+        else
+            $booking->bookingLog()->save($log);
+
+        $this->updateBookingFromLog($log);
+
+        // notify driver of booking that drive request is fulfilled
+
+        return api_response($this->getFulfillNotifyString($log));
     }
 }

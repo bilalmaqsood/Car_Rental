@@ -7,6 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Booking extends Model
 {
     /**
+     * Booking statuses
+     *
+     * @var array
+     */
+    public $statusTypes = [
+        'Requested',
+        'Confirmed',
+        'Accepted',
+        'Cancel',
+        'Canceled',
+        'Extend',
+        'Extended'
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -37,6 +52,14 @@ class Booking extends Model
         'vehicle_id',
         'user_id',
     ];
+
+    /**
+     * Get user of the booking
+     */
+    public function bookingLog()
+    {
+        return $this->hasMany('Qwikkar\Models\BookingLog');
+    }
 
     /**
      * Get the vehicle of booking
