@@ -55,17 +55,12 @@ class VehicleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Request $request
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
-        $vehicle = $request->user()->owner->vehicles->where('id', $id)->first();
-
-        if (!$vehicle) abort(404);
-
-        return api_response($vehicle);
+        return api_response(Vehicle::findOrFail($id));
     }
 
     /**
