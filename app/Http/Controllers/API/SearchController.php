@@ -74,7 +74,7 @@ class SearchController extends Controller
             'longitude.regex' => 'The longitude is invalid.',
         ]);
 
-        $vehicles = new Vehicle();
+        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'rent', 'location', 'available_from', 'available_to');
 
         if ($request->has('search'))
             $vehicles = $vehicles->where(function (Builder $q) use ($request) {
@@ -101,11 +101,14 @@ class SearchController extends Controller
                 $q->where('year', '<=', $request->year_max);
         });
 
-        $vehicles->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'delivery_charges', 'rent', 'location');
+        $vehicles->with(['booking' => function ($with) {
+            $with->select('id', 'vehicle_id', 'start_date', 'end_date');
+//            $with->where('status', 2); // accepted booking from owner
+        }]);
 
         $vehicles->orderBy('created_at', 'desc');
 
-        $vehiclesList = $vehicles->paginate(20);
+        $vehiclesList = $vehicles->paginate(30);
 
         if ($request->latitude && $request->longitude)
             $vehiclesList = $this->filterListRadius(

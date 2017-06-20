@@ -14,7 +14,9 @@ class VehicleController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('owner');
+        $this->middleware('owner')->except('show');
+
+        $this->middleware('not-admin')->only('show');
     }
 
     /**

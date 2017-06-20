@@ -38,7 +38,8 @@ class AccountController extends Controller
         $this->validate($request, [
             'title' => 'required|string',
             'number' => 'required|string',
-            'sortcode' => 'required|string'
+            'sortcode' => 'required|string',
+            'default' => 'numeric',
         ]);
 
         $account = Account::firstOrNew(['title' => $request->title, 'number' => $request->number, 'sortcode' => $request->sortcode]);
@@ -75,9 +76,10 @@ class AccountController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => 'required|string',
-            'number' => 'required|string',
-            'sortcode' => 'required|string'
+            'title' => 'string',
+            'number' => 'string',
+            'sortcode' => 'string',
+            'default' => 'numeric',
         ]);
 
         $account = $request->user()->account->where('id', $id)->first();

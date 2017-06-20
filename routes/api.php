@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('/upload/{type}', 'UploadController');
 
+    Route::get('/booking/{id}/payment-weekly', 'FinancialController@paymentDetailWeekly')->middleware('not-admin');
+
     /**
      * Contracts
      */

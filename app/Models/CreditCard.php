@@ -16,6 +16,7 @@ class CreditCard extends Model
         'number',
         'expiry',
         'address',
+        'default',
     ];
 
     /**
@@ -25,6 +26,15 @@ class CreditCard extends Model
      */
     protected $hidden = [
         'user_id',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'default' => 'integer',
     ];
 
     /**

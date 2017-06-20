@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCreditCardsTable extends Migration
+class CreateBookingPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateCreditCardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('credit_cards', function (Blueprint $table) {
+        Schema::create('booking_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->string('name');
-            $table->text('number');
-            $table->text('expiry');
-            $table->text('address');
-            $table->boolean('default')->default(0);
+
+            $table->integer('booking_id');
+            $table->decimal('cost');
+            $table->dateTime('due_date');
+            $table->boolean('status')->default(0);
+
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateCreditCardsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('credit_cards');
+        Schema::dropIfExists('booking_payments');
     }
 }

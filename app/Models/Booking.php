@@ -52,6 +52,8 @@ class Booking extends Model
     protected $casts = [
         'deposit' => 'float',
 
+        'status' => 'boolean',
+
         'start_date' => 'datetime',
         'end_date' => 'datetime',
     ];
@@ -72,6 +74,14 @@ class Booking extends Model
     public function bookingLog()
     {
         return $this->hasMany('Qwikkar\Models\BookingLog');
+    }
+
+    /**
+     * Get user of the booking
+     */
+    public function payments()
+    {
+        return $this->hasMany('Qwikkar\Models\BookingPayment');
     }
 
     /**
@@ -96,13 +106,5 @@ class Booking extends Model
     public function promoCodes()
     {
         return $this->morphToMany('Qwikkar\Models\PromoCode', 'promo_code_able');
-    }
-
-    /**
-     * Get all of the balance logs for the booking.
-     */
-    public function balanceLogs()
-    {
-        return $this->morphMany('Qwikkar\Models\BalanceLog', 'loggable');
     }
 }

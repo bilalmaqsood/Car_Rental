@@ -14,6 +14,7 @@ class Account extends Model
     protected $fillable = [
         'title',
         'number',
+        'default',
         'sortcode',
     ];
 
@@ -24,6 +25,15 @@ class Account extends Model
      */
     protected $hidden = [
         'user_id',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'default'
     ];
 
     /**

@@ -104,8 +104,8 @@ class BookingController extends Controller
         if (count($bookingDates))
             return api_response(['message' => trans('booking.booked', ['vehicle' => $vehicle->vehicle_name]), 'data' => $bookingDates], Response::HTTP_CONFLICT);
 
-        if ($request->user()->current_balance < $vehicle->deposit)
-            return api_response(trans('booking.deposit'), Response::HTTP_PAYMENT_REQUIRED);
+//        if ($request->user()->current_balance < $vehicle->deposit && !$request->user()->creditCard->where('default', 1)->first())
+//            return api_response(trans('booking.deposit'), Response::HTTP_PAYMENT_REQUIRED);
 
         return $this->proceedToBooking($request, $vehicle);
     }
@@ -119,7 +119,9 @@ class BookingController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $booking = Booking::whereId($id)->with('vehicle')->first();
+        $booking = Booking::whereId($id)->with(['vehicle' => function ($with) {
+            $with->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'transmission', 'fuel', 'mile_cap', 'rent');
+        }])->first();
 
         if (!$booking)
             return abort(Response::HTTP_NOT_FOUND);

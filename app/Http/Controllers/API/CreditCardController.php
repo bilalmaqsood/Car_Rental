@@ -39,7 +39,8 @@ class CreditCardController extends Controller
             'name' => 'required|string',
             'number' => 'required|ccn',
             'expiry' => 'required|ccd',
-            'address' => 'required|string'
+            'address' => 'required|string',
+            'default' => 'numeric',
         ]);
 
         $creditCard = CreditCard::firstOrNew(['number' => $request->number, 'expiry' => $request->expiry]);
@@ -78,10 +79,11 @@ class CreditCardController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|string',
-            'number' => 'required|ccn',
-            'expiry' => 'required|ccd',
-            'address' => 'required|string'
+            'name' => 'string',
+            'number' => 'ccn',
+            'expiry' => 'ccd',
+            'address' => 'string',
+            'default' => 'numeric',
         ]);
 
         $creditCard = $request->user()->creditCard->where('id', $id)->first();
