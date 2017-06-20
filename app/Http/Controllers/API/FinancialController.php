@@ -8,19 +8,42 @@ use Qwikkar\Models\Booking;
 
 class FinancialController extends Controller
 {
-    public function paymentDetailWeekly(Request $request, $id)
+    /**
+     * All payments of a booking per weekly
+     *
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function paymentDetailWeekly($id)
     {
         $booking = Booking::findOrFail($id);
 
-        $vehicle = $booking->vehicle;
-
-        $balanceLogs = $booking->balanceLogs;
-
-        return api_response($balanceLogs);
+        return api_response($booking->payments);
     }
 
+    /**
+     * Earnings of owner
+     *
+     * @param Request $request
+     * @return array|\Illuminate\Http\JsonResponse
+     */
     public function incomeDetail(Request $request)
     {
-        return api_response($request->all());
+        $total = ['earnings' => 0, 'deposit' => 0, 'available' => 0];
+        $vehicles = $request->user()->owner->vehicles;
+
+        $vehicles->each(function ($v) use (&$total) {
+            $v->booking->each(function ($b) use (&$total) {
+                $b->payments->each(function ($p) use (&$total) {
+                    $total['earnings'] += $p->cost;
+                    if ($p->title == 'Deposit')
+                        $total['deposit'] += $p->cost;
+                });
+            });
+        });
+
+        $total['available'] = $total['earnings'] - $total['deposit'];
+
+        return api_response($total);
     }
 }

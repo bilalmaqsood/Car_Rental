@@ -5,10 +5,11 @@ namespace Qwikkar\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Qwikkar\Concerns\Balanceable;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasApiTokens, Balanceable;
 
     /**
      * The attributes that are mass assignable.
@@ -62,6 +63,14 @@ class User extends Authenticatable
     public function balance()
     {
         return $this->hasOne('Qwikkar\Models\Balance');
+    }
+
+    /**
+     * Get all of the balance logs for the booking.
+     */
+    public function balanceLogs()
+    {
+        return $this->morphMany('Qwikkar\Models\BalanceLog', 'loggable');
     }
 
     /**

@@ -17,6 +17,7 @@ class CreateBalancesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->decimal('current', 10);
+            $table->decimal('deposit', 10)->nullable();
             $table->timestamps();
         });
     }

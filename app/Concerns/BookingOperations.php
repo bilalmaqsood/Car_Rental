@@ -4,9 +4,10 @@ namespace Qwikkar\Concerns;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Qwikkar\Models\Balance;
+use Qwikkar\Models\BalanceLog;
 use Qwikkar\Models\Booking;
 use Qwikkar\Models\BookingLog;
+use Qwikkar\Models\BookingPayment;
 use Qwikkar\Models\User;
 use Qwikkar\Models\Vehicle;
 
@@ -53,7 +54,7 @@ trait BookingOperations
 
         Couponize::processPromoCode($booking, $request);
 
-//        $this->deductDeposit($booking, $request);
+        $this->deductDeposit($booking, $request);
 
         return api_response(trans('booking.create', ['vehicle' => $vehicle->vehicle_name]));
     }
@@ -69,22 +70,56 @@ trait BookingOperations
         $user = $request->user();
 
         if ($user->current_balance < $booking->deposit)
-            $this->makePaymentFromCard($user);
+            $this->makePaymentFromCard($user, $booking->deposit);
+
+        // deduct deposit from balance
+        $user->balance->current -= $booking->deposit;
+        $user->balance->save();
+
+        // add booking payment log
+        $payment = new BookingPayment([
+            'title' => 'Deposit',
+            'cost' => $booking->deposit,
+            'due_date' => $booking->start_date,
+            'paid' => 1,
+        ]);
+        $booking->payments()->save($payment);
+
+        // add first week rent
+        $rent = $booking->vehicle->rent;
+        foreach ($booking->vehicle->discounts as $discount) {
+            if ($discount['week'] == 1)
+                $rent -= (100 + $discount['percent']) / 100;
+        }
+        $booking->payments()->create([
+            'title' => 'Week 1',
+            'cost' => $rent,
+            'due_date' => $booking->start_date->addWeek()
+        ]);
+
+        // add log of balance of deposit deduction
+        $balanceLog = new BalanceLog([
+            'amount' => $booking->deposit,
+            'comment' => 'deduct payment for booking deposit',
+        ]);
+        $balanceLog->balance()->associate($user->balance);
+        $payment->balanceLogs()->save($balanceLog);
     }
 
     /**
      * Validate booking according to user type
      *
      * @param User $user
+     * @param float $amount
      */
-    protected function makePaymentFromCard(User $user)
+    protected function makePaymentFromCard(User $user, $amount)
     {
         if (!$user->balance) {
             $user->balance()->create(['current' => 0]);
             $user->load('balance');
         }
 
-        dd($user->balance);
+        $user->addBalance($amount);
     }
 
     /**

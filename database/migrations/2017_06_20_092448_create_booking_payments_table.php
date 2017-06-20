@@ -17,9 +17,10 @@ class CreateBookingPaymentsTable extends Migration
             $table->increments('id');
 
             $table->integer('booking_id');
+            $table->string('title');
             $table->decimal('cost');
             $table->dateTime('due_date');
-            $table->boolean('status')->default(0);
+            $table->boolean('paid')->default(0)->comment('1=paid');
 
             $table->timestamps();
         });

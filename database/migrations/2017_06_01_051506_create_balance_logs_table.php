@@ -24,7 +24,6 @@ class CreateBalanceLogsTable extends Migration
             $table->text('comment');
 
             $table->timestamps();
-            $table->unique(['balance_id', 'loggable_id', 'loggable_type'], 'balance_id_loggable_id_loggable_type_unique');
         });
     }
 

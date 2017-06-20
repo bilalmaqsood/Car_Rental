@@ -84,7 +84,6 @@ class BookingController extends Controller
             $with->whereDate('end_date', '>=', Carbon::parse($request->start_date));
         }])->first();
 
-//        return $this->proceedToBooking($request, $vehicle);
         $invalidDates = [];
         $bookingDates = [];
         collect($dates)->map(function ($d) use ($vehicle, &$bookingDates, &$invalidDates) {
@@ -105,8 +104,8 @@ class BookingController extends Controller
         if (count($bookingDates))
             return api_response(['message' => trans('booking.booked', ['vehicle' => $vehicle->vehicle_name]), 'data' => $bookingDates], Response::HTTP_CONFLICT);
 
-//        if ($request->user()->current_balance < $vehicle->deposit && !$request->user()->creditCard->where('default', 1)->first())
-//            return api_response(trans('booking.deposit'), Response::HTTP_PAYMENT_REQUIRED);
+        if ($request->user()->current_balance < $vehicle->deposit && !$request->user()->creditCard->where('default', 1)->first())
+            return api_response(trans('booking.deposit'), Response::HTTP_PAYMENT_REQUIRED);
 
         return $this->proceedToBooking($request, $vehicle);
     }

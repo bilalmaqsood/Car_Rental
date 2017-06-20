@@ -13,8 +13,8 @@ class BookingPayment extends Model
      */
     protected $fillable = [
         'cost',
+        'paid',
         'title',
-        'status',
         'due_date',
     ];
 
@@ -26,7 +26,7 @@ class BookingPayment extends Model
     protected $casts = [
         'cost' => 'float',
 
-        'status' => 'boolean',
+        'paid' => 'boolean',
 
         'due_date' => 'datetime',
     ];
