@@ -4,8 +4,10 @@ namespace Qwikkar\Concerns;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Qwikkar\Models\Balance;
 use Qwikkar\Models\Booking;
 use Qwikkar\Models\BookingLog;
+use Qwikkar\Models\User;
 use Qwikkar\Models\Vehicle;
 
 trait BookingOperations
@@ -51,7 +53,7 @@ trait BookingOperations
 
         Couponize::processPromoCode($booking, $request);
 
-        $this->deductDeposit($booking, $request);
+//        $this->deductDeposit($booking, $request);
 
         return api_response(trans('booking.create', ['vehicle' => $vehicle->vehicle_name]));
     }
@@ -61,11 +63,28 @@ trait BookingOperations
      *
      * @param Booking $booking
      * @param Request $request
-     * @return bool
      */
     protected function deductDeposit(Booking $booking, Request $request)
     {
-        //
+        $user = $request->user();
+
+        if ($user->current_balance < $booking->deposit)
+            $this->makePaymentFromCard($user);
+    }
+
+    /**
+     * Validate booking according to user type
+     *
+     * @param User $user
+     */
+    protected function makePaymentFromCard(User $user)
+    {
+        if (!$user->balance) {
+            $user->balance()->create(['current' => 0]);
+            $user->load('balance');
+        }
+
+        dd($user->balance);
     }
 
     /**

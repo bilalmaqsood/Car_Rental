@@ -74,7 +74,7 @@ class SearchController extends Controller
             'longitude.regex' => 'The longitude is invalid.',
         ]);
 
-        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'rent', 'location', 'available_from', 'available_to');
+        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'rent', 'location', 'available_from', 'available_to', 'images');
 
         if ($request->has('search'))
             $vehicles = $vehicles->where(function (Builder $q) use ($request) {

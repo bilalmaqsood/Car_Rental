@@ -84,6 +84,7 @@ class BookingController extends Controller
             $with->whereDate('end_date', '>=', Carbon::parse($request->start_date));
         }])->first();
 
+//        return $this->proceedToBooking($request, $vehicle);
         $invalidDates = [];
         $bookingDates = [];
         collect($dates)->map(function ($d) use ($vehicle, &$bookingDates, &$invalidDates) {
