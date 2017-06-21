@@ -23,5 +23,6 @@ mix
     .scripts([
         'public/js/jst.js'
     ], 'public/js/jst.js')
+    .copy('resources/assets/images', 'public/images')
     .version()
 ;

@@ -20,6 +20,8 @@ Route::post('/register/{type}', 'RegisterController');
 
 Route::get('/search/{type}', 'SearchController');
 
+Route::post('/contact', 'ContactController');
+
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/user', 'AuthController@info');
