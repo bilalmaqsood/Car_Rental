@@ -43,6 +43,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/earnings', 'FinancialController@incomeDetail')->middleware('owner');
     Route::get('/booking/{id}/payment-weekly', 'FinancialController@paymentDetailWeekly')->middleware('not-admin');
 
+    Route::resource('/booking/{booking_id}/inspection', 'InspectionController');
+
     /**
      * Contracts
      */

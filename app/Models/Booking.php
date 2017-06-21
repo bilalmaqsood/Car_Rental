@@ -51,9 +51,6 @@ class Booking extends Model
      */
     protected $casts = [
         'deposit' => 'float',
-
-        'status' => 'boolean',
-
         'start_date' => 'datetime',
         'end_date' => 'datetime',
     ];
@@ -82,6 +79,14 @@ class Booking extends Model
     public function payments()
     {
         return $this->hasMany('Qwikkar\Models\BookingPayment');
+    }
+
+    /**
+     * Get all inspections of the booking vehicle
+     */
+    public function inspection()
+    {
+        return $this->hasMany('Qwikkar\Models\Inspection');
     }
 
     /**
