@@ -60,6 +60,16 @@ class CreditCard extends Model
     }
 
     /**
+     * Get the credit card number.
+     *
+     * @return string
+     */
+    public function getLastNumbersAttribute()
+    {
+        return substr($this->number, -4);
+    }
+
+    /**
      * Set the credit card expiry date.
      *
      * @param  string $value

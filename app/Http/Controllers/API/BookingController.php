@@ -10,6 +10,7 @@ use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
 use Qwikkar\Models\BookingLog;
 use Qwikkar\Models\Vehicle;
+use Qwikkar\Notifications\BookingNotify;
 
 class BookingController extends Controller
 {
@@ -277,6 +278,7 @@ class BookingController extends Controller
 
         $requestData = $request->all();
         unset($requestData['note']);
+        unset($requestData['log_id']);
 
         $log->requested_data = $requestData;
 
@@ -293,9 +295,18 @@ class BookingController extends Controller
         else
             $booking->bookingLog()->save($log);
 
-        $this->updateBookingFromLog($log);
+        if ($booking->status == 1 && $request->status == 2)
+            $booking->user->notify(new BookingNotify([
+                'id' => $booking->id,
+                'title' => 'Booking approved',
+                'user' => $request->user()->name,
+                'vehicle' => $booking->vehicle->vehicle_name,
+                'contract_start' => $booking->start_date,
+                'contract_end' => $booking->end_date,
+                'deposit' => $booking->deposit,
+            ]));
 
-        // notify driver of booking that drive request is fulfilled
+        $this->updateBookingFromLog($log);
 
         return api_response($this->getFulfillNotifyString($log));
     }

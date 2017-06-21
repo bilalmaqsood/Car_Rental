@@ -10,6 +10,8 @@ use Qwikkar\Models\BookingLog;
 use Qwikkar\Models\BookingPayment;
 use Qwikkar\Models\User;
 use Qwikkar\Models\Vehicle;
+use Qwikkar\Notifications\BookingNotify;
+use Qwikkar\Notifications\BookingPaymentNotify;
 
 trait BookingOperations
 {
@@ -54,7 +56,7 @@ trait BookingOperations
 
         Couponize::processPromoCode($booking, $request);
 
-        $this->deductDeposit($booking, $request);
+        $this->deductDeposit($booking, $request->user());
 
         return api_response($booking->fresh(['vehicle' => function ($with) {
             $with->select('id', 'make', 'model', 'variant', 'year', 'deposit', 'images');
@@ -65,12 +67,10 @@ trait BookingOperations
      * Validate booking according to user type
      *
      * @param Booking $booking
-     * @param Request $request
+     * @param User $user
      */
-    protected function deductDeposit(Booking $booking, Request $request)
+    protected function deductDeposit(Booking $booking, User $user)
     {
-        $user = $request->user();
-
         if ($user->current_balance < $booking->deposit)
             $this->makePaymentFromCard($user, $booking->deposit);
 
@@ -86,6 +86,19 @@ trait BookingOperations
             'paid' => 1,
         ]);
         $booking->payments()->save($payment);
+
+        // notify driver for deposit deduction
+        $user->notify(new BookingPaymentNotify([
+            'id' => $payment->id,
+            'title' => 'Booking request deposit',
+            'user' => $user->name,
+            'vehicle' => $booking->vehicle->vehicle_name,
+            'deposit' => $booking->deposit,
+        ]));
+
+        // update booking status for confirmed to requested
+        $booking->status = 1;
+        $booking->save();
 
         // add first week rent
         $rent = $booking->vehicle->rent;
@@ -107,6 +120,16 @@ trait BookingOperations
         ]);
         $balanceLog->balance()->associate($user->balance);
         $payment->balanceLogs()->save($balanceLog);
+
+        $booking->vehicle->owner->user->notify(new BookingNotify([
+            'id' => $booking->id,
+            'title' => 'Booking requested',
+            'user' => $user->name,
+            'vehicle' => $booking->vehicle->vehicle_name,
+            'contract_start' => $booking->start_date,
+            'contract_end' => $booking->end_date,
+            'deposit' => $booking->deposit,
+        ]));
     }
 
     /**

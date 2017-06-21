@@ -16,7 +16,7 @@ class ContactUs extends Mailable
      *
      * @var array
      */
-    public $form;
+    public $form = [];
 
     /**
      * Create a new message instance.

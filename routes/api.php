@@ -24,6 +24,10 @@ Route::post('/contact', 'ContactController');
 
 Route::group(['middleware' => 'auth:api'], function () {
 
+    Route::get('/notifications', function (Request $request) {
+        return api_response($request->user()->notifications);
+    });
+
     Route::get('/user', 'AuthController@info');
 
     Route::patch('/profile/client', 'ProfileController@updateClient')->middleware('client');

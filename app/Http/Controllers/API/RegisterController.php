@@ -9,6 +9,7 @@ use Qwikkar\Models\Client;
 use Qwikkar\Models\Owner;
 use Qwikkar\Models\PromoCode;
 use Qwikkar\Models\User;
+use Qwikkar\Notifications\UserNotify;
 
 class RegisterController extends Controller
 {
@@ -84,6 +85,8 @@ class RegisterController extends Controller
 
         PromoCode::processPromoCode($user, $request);
 
+        $this->notifyWelcome($user);
+
         return api_response($user->createToken('APIAccessToken')->accessToken);
     }
 
@@ -117,6 +120,20 @@ class RegisterController extends Controller
 
         PromoCode::processPromoCode($user, $request);
 
+        $this->notifyWelcome($user);
+
         return api_response($user->createToken('APIAccessToken')->accessToken);
+    }
+
+    /**
+     * Send notification for new user
+     *
+     * @param User $user
+     */
+    protected function notifyWelcome(User $user)
+    {
+        $user->notify(new UserNotify([
+            'title' => 'Welcome to Qwikkar',
+        ]));
     }
 }

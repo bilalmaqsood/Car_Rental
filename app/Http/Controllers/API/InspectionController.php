@@ -19,7 +19,7 @@ class InspectionController extends Controller
     /**
      * Get all inspections of a booking
      *
-     * @param $id
+     * @param $booking_id
      * @return array|\Illuminate\Http\JsonResponse
      */
     public function index($booking_id)
