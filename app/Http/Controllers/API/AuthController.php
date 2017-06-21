@@ -25,7 +25,12 @@ class AuthController extends Controller
 
         if ($user) {
             $user->tokens()->delete();
-            return api_response(array_merge($this->userProfile($user), ['token' => $user->createToken('APIAccessToken')->accessToken, 'type' => $user->types->first()->name]));
+            return api_response(array_merge($this->userProfile($user), [
+                'token' => $user->createToken('APIAccessToken')->accessToken,
+                'type' => $user->types->first()->name,
+                'accounts' => $user->account,
+                'credit_cards' => $user->creditCard,
+            ]));
         }
 
         return api_response(trans('auth.failed'), 406);
