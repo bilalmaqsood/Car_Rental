@@ -17,10 +17,10 @@ class ContactController extends Controller
     public function __invoke(Request $request)
     {
         $this->validate($request, [
-            'name' => 'string',
+            'name' => 'required|string',
             'email' => 'required|email',
             'phone' => 'phone:GB',
-            'subject' => 'required|string',
+            'subject' => 'string',
             'message' => 'required|string',
         ]);
 
