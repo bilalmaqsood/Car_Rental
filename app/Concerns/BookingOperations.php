@@ -89,10 +89,11 @@ trait BookingOperations
 
         // add first week rent
         $rent = $booking->vehicle->rent;
-        foreach ($booking->vehicle->discounts as $discount) {
-            if ($discount['week'] == 1)
-                $rent -= (100 + $discount['percent']) / 100;
-        }
+        if (count($booking->vehicle->discounts))
+            foreach ($booking->vehicle->discounts as $discount) {
+                if ($discount['week'] == 1)
+                    $rent -= (100 + $discount['percent']) / 100;
+            }
         $booking->payments()->create([
             'title' => 'Week 1',
             'cost' => $rent,
