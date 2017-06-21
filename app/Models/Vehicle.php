@@ -19,6 +19,7 @@ class Vehicle extends Model
         'mileage',
         'fuel',
         'mpg',
+        'mpg_eco',
         'transmission',
         'seats',
         'available_from',
@@ -54,6 +55,8 @@ class Vehicle extends Model
      * @var array
      */
     protected $casts = [
+        'mpg' => 'float',
+        'mpg_eco' => 'float',
         'mileage' => 'float',
         'delivery_charges' => 'float',
         'rent' => 'float',

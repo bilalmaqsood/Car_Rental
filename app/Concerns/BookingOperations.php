@@ -56,7 +56,9 @@ trait BookingOperations
 
         $this->deductDeposit($booking, $request);
 
-        return api_response(trans('booking.create', ['vehicle' => $vehicle->vehicle_name]));
+        return api_response($booking->fresh(['vehicle' => function ($with) {
+            $with->select('id', 'make', 'model', 'variant', 'year', 'deposit', 'images');
+        }]));
     }
 
     /**

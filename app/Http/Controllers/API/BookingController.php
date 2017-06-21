@@ -38,7 +38,7 @@ class BookingController extends Controller
         if ($request->user()->isOwner()) {
             $result = $request->user()->owner->vehicles()->with(['booking' => function ($with) {
                 $with->with(['vehicle' => function ($vWith) {
-                    $vWith->select('id', 'make', 'model', 'variant', 'year');
+                    $vWith->select('id', 'make', 'model', 'variant', 'year', 'images');
                 }]);
             }])->get()->map(function ($v) {
                 return $v->booking;
@@ -53,7 +53,7 @@ class BookingController extends Controller
             });
         } else
             $bookingList = $request->user()->booking()->with(['vehicle' => function ($vWith) {
-                $vWith->select('id', 'make', 'model', 'variant', 'year');
+                $vWith->select('id', 'make', 'model', 'variant', 'year', 'images');
             }])->get();
 
         return api_response($bookingList);
