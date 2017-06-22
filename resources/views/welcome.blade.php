@@ -3,40 +3,7 @@
 @section('content')
 <div class="slide_wrapper">
     <div class="top_location">
-        <form class="form-inline">
-            <ul>
-                <li>
-                    <div class="form-group">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
-                        </svg>
-                        <input type="text" class="form-control" placeholder="vehicle">
-                    </div>
-                </li>
-                <li>
-                    <div class="form-group">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-                        </svg>
-                        <input type="text" class="form-control" placeholder="location">
-                    </div>
-                </li>
-                <li>
-                    <button class="secodery_btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <button class="primary_btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filters_icon"></use>
-                        </svg>
-                    </button>
-                </li>
-            </ul>
-        </form>
+        <vehicles-search-form></vehicles-search-form>
     </div>
 </div>
 
