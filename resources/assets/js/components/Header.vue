@@ -33,36 +33,59 @@
                             Login
                         </a>
                         <transition name="slide-fade">
-                            <div class="login-section" v-show="loginSection">
+                            <div class="login-section" v-show="loginSection||forgotSection">
                                 <div class="button_box">
-                                    <button class="secodery_btn">
+                                    <button class="secodery_btn" v-if="forgotSection">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                                        </svg>
+                                        done
+                                    </button>
+                                    <button class="secodery_btn" v-else-if="loginSection" @click="loginUser">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
                                         </svg>
                                         Login
                                     </button>
-                                    <button class="primary_btn">
+                                    <button class="primary_btn" @click="signUpSection">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" class="svg-icon">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#contract_view_icon"></use>
                                         </svg>
                                         Signup
                                     </button>
                                 </div>
-                                <div class="login_form">
+                                <div class="login_form" v-if="loginSection">
                                     <form class="form-inline">
-                                        <div class="form-group">
+                                        <div class="form-group" :class="{ 'has-error': $v.form.emailValue.$error }">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                             </svg>
-                                            <input class="form-control" placeholder="email" type="email">
+                                            <input class="form-control" placeholder="email" type="email" @blur="$v.form.emailValue.$touch()" v-model.trim="form.emailValue">
+                                        </div>
+                                        <div class="form-group" :class="{ 'has-error': $v.form.password.$error }">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon cursor-pointer" @click="forgotSection = true; loginSection = false">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
+                                            </svg>
+                                            <input class="form-control" placeholder="password" type="password" @blur="$v.form.password.$touch()" v-model.trim="form.password">
+                                        </div>
+                                        <p><span class="forgot-message">forgot your password? click the <span>padlock</span> icon to recover</span></p>
+                                    </form>
+                                </div>
+                                <div class="login_form" v-else-if="forgotSection">
+                                    <form class="form-inline">
+                                        <div class="form-group">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
+                                            </svg>
+                                            <input type="password" class="form-control" placeholder="new password">
                                         </div>
                                         <div class="form-group">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
                                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                                             </svg>
-                                            <input class="form-control" placeholder="password" type="password">
+                                            <input type="password" class="form-control" placeholder="re-type password">
                                         </div>
-                                        <p><a href="#">forgot your password? click the <span>padlock</span> icon to recover</a></p>
+                                        <p><span class="forgot-message">have a password? click <span class="cursor-pointer" @click="forgotSection = false; loginSection = true">here</span> to login</span></p>
                                     </form>
                                 </div>
                             </div>
@@ -75,12 +98,32 @@
 </template>
 
 <script>
+    const { required, email, minLength } = require("vuelidate/lib/validators");
+
     export default {
         data() {
             return {
                 message: null,
                 loginSection: false,
+                forgotSection: false,
+                form: {
+                    emailValue: '',
+                    password: ''
+                }
             };
+        },
+
+        validations: {
+            form: {
+                emailValue: {
+                    required,
+                    email
+                },
+                password: {
+                    required,
+                    minLength: minLength(6)
+                }
+            }
         },
 
         mounted() {
@@ -94,6 +137,19 @@
         methods: {
             prepareComponent() {
                 this.fetchAuthUser();
+            },
+
+            signUpSection() {
+                console.log('sign up section');
+            },
+
+//            forgotSection() {
+//                console.log('forgot section');
+//            },
+
+            loginUser() {
+                console.log(this.form);
+                console.log(this.$v.$invalid);
             },
 
             fetchAuthUser() {
