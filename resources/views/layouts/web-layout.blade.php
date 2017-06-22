@@ -24,44 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <div class="nav_wrapper">
-            <nav class="navbar navbar-default navbar-fixed-top">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">
-                        <img src="/images/white_logo.png" alt="" class="default_logo"/>
-                        <img src="/images/logo.png" alt="" class="hover_logo"/>
-                    </a>
-                </div>
-                <div id="navbar" class="customize_nav">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cog_setting"></use>
-                                </svg>
-                                about us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
-                                </svg>
-                                contact us
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
-                                </svg>
-                                Login
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
+        <app-header></app-header>
 
         @yield('content')
 
