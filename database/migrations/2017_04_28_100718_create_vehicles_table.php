@@ -22,8 +22,8 @@ class CreateVehiclesTable extends Migration
             $table->integer('year');
             $table->decimal('mileage')->nullable()->comment('mileage of vehicle');
             $table->string('fuel', 50)->nullable()->comment('fuel type of vehicle');
-            $table->decimal('mpg', 50)->nullable()->comment('fuel consumption');
-            $table->decimal('mpg_eco', 50)->nullable()->comment('fuel consumption');
+            $table->decimal('mpg')->nullable()->comment('fuel consumption');
+            $table->decimal('mpg_eco')->nullable()->comment('fuel consumption');
             $table->string('transmission')->nullable();
             $table->string('seats', 50)->nullable();
             $table->date('available_from');

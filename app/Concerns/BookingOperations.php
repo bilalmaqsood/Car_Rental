@@ -90,6 +90,7 @@ trait BookingOperations
         // notify driver for deposit deduction
         $user->notify(new BookingPaymentNotify([
             'id' => $payment->id,
+            'view_type' => '',
             'title' => 'Booking request deposit',
             'user' => $user->name,
             'vehicle' => $booking->vehicle->vehicle_name,

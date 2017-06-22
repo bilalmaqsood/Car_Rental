@@ -189,7 +189,7 @@ h3 {
 
 .login_form {
     float: left;
-    margin-top: 36px;
+    margin-top: 30px;
     margin-left: 15px;
     width: 70%;
     text-align: left;
@@ -233,7 +233,7 @@ h3 {
     color: #777;
     width: 85px;
     height: 70px;
-    padding: 7px 5px;
+    padding: 9px 5px 6px;
     font-size: 14px;
 }
 
@@ -664,6 +664,10 @@ h3 {
 .login-section .form-group .svg-icon {
     width: 20px;
     fill: #87af1e;
+    display: inline-block;
+    float: left;
+    margin-bottom: 0;
+    height: 32px;
 }
 
 .recover_password button svg {
@@ -679,7 +683,7 @@ h3 {
     fill: #87af1e;
 }
 
-.forget_password form-group .svg-icon {
+.forget_password .form-group .svg-icon {
     width: 20px;
     fill: #87af1e;
 }
