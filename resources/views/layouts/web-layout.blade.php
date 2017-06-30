@@ -13,7 +13,7 @@
     <title>{{ config('app.name', 'Qwikkar') }}</title>
 
     <!-- Styles -->
-    <link href="{{ mix('css/qwikkar.css') }}" rel="stylesheet">
+    <link href="{{ url(mix('css/qwikkar.css')) }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script type="text/javascript">
@@ -36,9 +36,9 @@
     @include('layouts.svgs')
 
     <!-- Scripts -->
-    <script src="{{ mix('js/jst.js') }}"></script>
-    <script src="{{ mix('js/manifest.js') }}"></script>
-    <script src="{{ mix('js/vendor.js') }}"></script>
-    <script src="{{ mix('js/qwikkar.js') }}"></script>
+    <script src="{{ url(mix('js/jst.js')) }}"></script>
+    <script src="{{ url(mix('js/manifest.js')) }}"></script>
+    <script src="{{ url(mix('js/vendor.js')) }}"></script>
+    <script src="{{ url(mix('js/qwikkar.js')) }}"></script>
 </body>
 </html>
