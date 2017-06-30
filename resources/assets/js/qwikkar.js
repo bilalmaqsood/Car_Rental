@@ -17,6 +17,8 @@ require('./design');
 
 Vue.component('app-header', require('./components/Header.vue'));
 Vue.component('vehicles-search-form', require('./components/SearchForm.vue'));
+Vue.component('search-listing', require('./components/SearchListing.vue'));
+Vue.component('search-listing-details', require('./components/SearchListingDetails.vue'));
 
 const app = new Vue({
     el: '#app'

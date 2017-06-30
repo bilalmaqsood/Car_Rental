@@ -25,11 +25,28 @@
                     </button>
                 </li>
                 <li>
-                    <button class="primary_btn">
+                    <button type="button" class="primary_btn" @click="searchFilters">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filters_icon"></use>
                         </svg>
                     </button>
+                </li>
+                <li v-show="advanceSearch">
+                    <div class="form-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                        </svg>
+                        <input type="text" class="form-control" placeholder="price" v-model="price">
+                    </div>
+                </li>
+
+                <li v-show="advanceSearch">
+                    <div class="form-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                        </svg>
+                        <input type="text" class="form-control" placeholder="Available" v-model="available">
+                    </div>
                 </li>
             </ul>
         </form>
@@ -40,7 +57,10 @@
         data() {
             return {
               vehicle: "",
-              location: ""
+              location: "",
+                available: "",
+                price: "",
+                advanceSearch: false,
             };
         },
 
@@ -56,21 +76,27 @@
             searchVehicles() {
                 this.fetchVehicles();
             },
+            searchFilters(){
+              this.advanceSearch=!this.advanceSearch;
+            },
+            searchListing(response) {
+                localStorage.setItem("search-list", JSON.stringify(response));
+                window.location="/search";
+            },
 
             fetchVehicles(params) {
                 var params = this.queryParams();
                 axios.get('/api/search/vehicle'+ params)
-                    .then(response => {
-                        console.log(response.data);
-                    });
+                    .then(this.searchListing);
             },
             queryParams(){
-                var params = "";
+                var params = {};
                 var lat = null;
                 var lng = null;
 
                 if(this.vehicle.length>0)
-                    params="?vehicle="+this.vehicle;
+                    params.vehicle=this.vehicle;
+
                 if(this.location.length>0) {
                     $.ajax({
                         url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + this.location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
@@ -79,17 +105,20 @@
                         async: false,
                     })
                         .done(function (response) {
-                            lat = response.results[0].geometry.location.lat;
-                            lng = response.results[0].geometry.location.lng;
+                            params.latitude = response.results[0].geometry.location.lat;
+                            params.longitude = response.results[0].geometry.location.lng;
                         });
-
-
-                    if (this.location.length > 0 && params.length>0)
-                        params = params + "&latitude=" + lat + "&longitude=" + lng;
-                    else
-                        params = "?latitude=" + lat + "&longitude=" + lng;
                 }
-                  return params;
+                if(this.price.length>0) {
+                    params.price=this.price;
+                }
+                if(this.available.length>0) {
+                    params.available=this.available;
+                }
+                if(!$.isEmptyObject(params)){
+                    return "?"+$.param(params);
+                }
+                  return "";
 
             }
         }

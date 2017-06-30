@@ -2767,6 +2767,23 @@ h3 {
     color: #fff;
 }
 
+
+.top_location ul li:nth-child(5) {
+    background: rgba(255, 255, 255, 0.78);
+    height: 130px;
+    width: 39%;
+    margin-right: 2px;
+    margin-top: 2px;
+    padding: 45px 30px;
+}
+.top_location ul li:nth-child(6) {
+    background: rgba(255, 255, 255, 0.78);
+    height: 130px;
+    width: 39% !important;
+    margin-top: 2px;
+    padding: 45px 30px;
+}
+
 @media all and (max-width: 1920px) and (min-width: 1600px) {
     .slide_wrapper {
         min-height: 850px;
