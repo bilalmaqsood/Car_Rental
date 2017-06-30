@@ -298,6 +298,8 @@ class BookingController extends Controller
         if ($booking->status == 1 && $request->status == 2)
             $booking->user->notify(new BookingNotify([
                 'id' => $booking->id,
+                'type' => 'Booking',
+                'image' => $booking->vehicle->images->first(),
                 'title' => 'Booking approved',
                 'user' => $request->user()->name,
                 'vehicle' => $booking->vehicle->vehicle_name,

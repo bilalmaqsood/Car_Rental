@@ -72,7 +72,7 @@ class Vehicle extends Model
 
         'discounts' => 'array',
         'uber_discount' => 'array',
-        'images' => 'array',
+        'images' => 'collection',
         'documents' => 'array',
     ];
 

@@ -124,6 +124,8 @@ trait BookingOperations
 
         $booking->vehicle->owner->user->notify(new BookingNotify([
             'id' => $booking->id,
+            'type' => 'Booking',
+            'image' => $booking->vehicle->images->first(),
             'title' => 'Booking requested',
             'user' => $user->name,
             'vehicle' => $booking->vehicle->vehicle_name,
