@@ -13,6 +13,7 @@
 Homestead.json
 Homestead.yaml
 .env
+/config/debugbar.php
 /config/ide-helper.php
 /public/mix-manifest.json
 /_ide_helper*.php

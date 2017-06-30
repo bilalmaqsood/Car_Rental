@@ -74,13 +74,14 @@ class SearchController extends Controller
             'longitude.regex' => 'The longitude is invalid.',
         ]);
 
-        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'rent', 'location', 'available_from', 'available_to', 'images');
+        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at');
 
         if ($request->has('search'))
             $vehicles = $vehicles->where(function (Builder $q) use ($request) {
-                $q->orWhere('make', 'like', '%' . $request->search . '%');
-                $q->orWhere('model', 'like', '%' . $request->search . '%');
-                $q->orWhere('variant', 'like', '%' . $request->search . '%');
+                $q->whereRaw('TRIM(BOTH \' \' FROM CONCAT_WS(\' \', `make`, `model`, `variant`, `year`)) like ?', ['%' . $request->search . '%']);
+//                $q->orWhere('make', 'like', '%' . $request->search . '%');
+//                $q->orWhere('model', 'like', '%' . $request->search . '%');
+//                $q->orWhere('variant', 'like', '%' . $request->search . '%');
             });
 
         $vehicles->where(function (Builder $q) use ($request) {
