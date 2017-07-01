@@ -25,4 +25,5 @@ mix
     ], 'public/js/jst.js')
     .copy('resources/assets/images', 'public/images')
     .version()
+    .copy('resources/assets/js/init-map.js', 'public/js/init-map.js')
 ;

@@ -25,14 +25,17 @@
 </head>
 <body>
     <div id="app">
+        <app-header></app-header>
 
-        {{--<app-header></app-header>--}}
         @include('layouts.header')
+
         @yield('content')
 
-        <div class="footer_wrapper">
-            <p>Copyright 2017 @ qwikkar ltd. All rights reserved</p>
-        </div>
+        @if(!request()->is('search'))
+            <div class="footer_wrapper">
+                <p>Copyright 2017 @ qwikkar ltd. All rights reserved</p>
+            </div>
+        @endif
     </div>
 
     @include('layouts.svgs')
@@ -42,5 +45,14 @@
     <script src="{{ url(mix('js/manifest.js')) }}"></script>
     <script src="{{ url(mix('js/vendor.js')) }}"></script>
     <script src="{{ url(mix('js/qwikkar.js')) }}"></script>
+    <script>
+        window.SearchMap = null;
+        function initMap() {
+            SearchMap = new google.maps.Map(document.getElementById('search_map'), {
+                zoom: 4,
+                center: {lat: -25.363, lng: 131.044}
+            });
+        }
+    </script>
 </body>
 </html>
