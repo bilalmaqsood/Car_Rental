@@ -98,6 +98,7 @@
 </template>
 
 <script>
+    import store from '../store';
     const { required, email, minLength } = require("vuelidate/lib/validators");
 
     export default {
@@ -143,11 +144,8 @@
                 console.log('sign up section');
             },
 
-//            forgotSection() {
-//                console.log('forgot section');
-//            },
-
             loginUser() {
+                console.log(store.state.count);
                 console.log(this.form);
                 console.log(this.$v.$invalid);
             },

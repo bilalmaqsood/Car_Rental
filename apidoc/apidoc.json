@@ -4,5 +4,6 @@
     "description": "Qwikkar App API Document",
     "title": "Qwikkar App API",
     "url": "http://qwikkar.zapro.uk",
-    "postman": "https://www.getpostman.com/collections/81507d6e346b634a33ce"
+    "postman_live": "https://www.getpostman.com/collections/7671316cbb5327a8202e",
+    "postman_local": "https://www.getpostman.com/collections/9e67d6715baab4f468e8"
 }

@@ -8,8 +8,6 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-@import "node_modules/sweetalert2/dist/sweetalert2";
-
 // Owl Carousel
 @import "node_modules/owl.carousel/src/scss/owl.carousel";
 
@@ -18,7 +16,6 @@
 
 // Designer styles
 @import "design";
-
 
 // Vue components styles
 @import "components/Header";

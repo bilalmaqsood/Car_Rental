@@ -27,8 +27,6 @@
     <div id="app">
         <app-header></app-header>
 
-        @include('layouts.header')
-
         @yield('content')
 
         @if(!request()->is('search'))
