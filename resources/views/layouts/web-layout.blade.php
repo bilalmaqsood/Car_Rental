@@ -20,12 +20,14 @@
         window.Qwikkar = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
+        window.baseUrl = '{{url('/')}}';
     </script>
 </head>
 <body>
     <div id="app">
-        <app-header></app-header>
 
+        {{--<app-header></app-header>--}}
+        @include('layouts.header')
         @yield('content')
 
         <div class="footer_wrapper">
