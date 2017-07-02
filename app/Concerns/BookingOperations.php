@@ -4,6 +4,7 @@ namespace Qwikkar\Concerns;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Qwikkar\Models\BalanceLog;
 use Qwikkar\Models\Booking;
 use Qwikkar\Models\BookingLog;
@@ -37,6 +38,20 @@ trait BookingOperations
     }
 
     /**
+     * Change status of time slots
+     *
+     * @param Vehicle $vehicle
+     * @param int $status
+     */
+    protected function changeSlotsStatus(Vehicle $vehicle, $status = 1)
+    {
+        $vehicle->timeSlots->each(function ($ts) use ($status) {
+            $ts->status = $status;
+            $ts->save();
+        });
+    }
+
+    /**
      * Start the booking of provided Vehicle
      *
      * @param Request $request
@@ -45,7 +60,18 @@ trait BookingOperations
      */
     protected function proceedToBooking(Request $request, Vehicle $vehicle)
     {
-        $booking = Booking::firstOrNew($request->all());
+        $this->changeSlotsStatus($vehicle, 2);
+
+        // validate if booking already exists
+        if (
+        $vehicle->booking
+            ->where('start_date', Carbon::parse($request->start_date))
+            ->where('end_date', Carbon::parse($request->end_date))
+            ->count()
+        )
+            return api_response(trans('booking.exist', ['vehicle' => $vehicle->vehicle_name]), Response::HTTP_CONFLICT);
+
+        $booking = new Booking($request->all());
 
         $booking->deposit = $vehicle->deposit;
 
@@ -173,8 +199,10 @@ trait BookingOperations
      * @param Booking $booking
      * @return array|\Illuminate\Http\JsonResponse
      */
-    protected function updateBooking(Request $request, Booking $booking)
+    protected function updateBooking(Request $request, Vehicle $vehicle, Booking $booking)
     {
+        $this->changeSlotsStatus($vehicle, 2);
+
         $booking->fill($request->all());
         $booking->save();
 

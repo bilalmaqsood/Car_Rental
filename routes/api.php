@@ -38,6 +38,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('account', 'AccountController', ['except' => ['create', 'edit']]);
     Route::resource('vehicle', 'VehicleController', ['except' => ['create', 'edit']]);
 
+    Route::post('/time-slot', 'TimeSlotController');
+
     Route::resource('booking', 'BookingController', ['except' => ['create', 'edit']]);
     Route::post('booking/{id}/status', 'BookingController@updateStatusRequest');
     Route::patch('booking/{id}/status', 'BookingController@updateStatusFulfill');

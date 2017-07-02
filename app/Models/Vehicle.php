@@ -120,4 +120,12 @@ class Vehicle extends Model
     {
         return $this->hasMany('Qwikkar\Models\Booking');
     }
+
+    /**
+     * Get all time slots of vehicle
+     */
+    public function timeSlots()
+    {
+        return $this->hasMany('Qwikkar\Models\TimeSlot');
+    }
 }

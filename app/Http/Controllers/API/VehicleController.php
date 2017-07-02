@@ -60,7 +60,7 @@ class VehicleController extends Controller
      */
     public function show($id)
     {
-        return api_response(Vehicle::findOrFail($id));
+        return api_response(Vehicle::whereId($id)->with('timeSlots')->first());
     }
 
     /**
