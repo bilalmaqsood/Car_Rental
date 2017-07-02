@@ -135,13 +135,13 @@
 </template>
 
 <script>
-    import {User, App} from '../user';
+    import User from '../user';
     import {required, email, minLength} from 'vuelidate/lib/validators';
 
     export default {
         data() {
             return {
-                baseURL: App.state.baseUrl,
+                baseURL: window.Qwikkar.baseUrl,
                 message: null,
                 authSection: false,
                 authSectionView: 'login',

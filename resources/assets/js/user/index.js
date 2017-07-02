@@ -6,11 +6,7 @@ const state = {
     auth: null
 };
 
-export const User = new Vuex.Store({
+export default new Vuex.Store({
     state,
     mutations
-});
-
-export const App = new Vuex.Store({
-    state: window.Qwikkar
 });
