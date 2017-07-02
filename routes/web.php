@@ -12,6 +12,7 @@
 */
 
 Route::get('/test', function () {
+//    $vehicle = Qwikkar\Models\Vehicle::find(1);
 //    $user = Qwikkar\Models\User::find(1);
 //    $booking = Qwikkar\Models\Booking::find(1);
 

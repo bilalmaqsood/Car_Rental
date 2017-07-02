@@ -24,8 +24,7 @@ class UserModel extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|alpha',
-            'last_name' => 'required|alpha',
+            'name' => 'required|alpha_spaces',
             'email' => 'required|email|unique:users,email',
             'phone' => 'phone:GB',
             'password' => 'required|string',

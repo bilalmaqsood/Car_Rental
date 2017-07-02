@@ -36,7 +36,7 @@ class VehicleController extends Controller
      */
     public function store(VehicleModel $request)
     {
-        $vehicle = Vehicle::firstOrNew([
+        $vehicle = new Vehicle([
             'make' => $request->make,
             'model' => $request->model,
             'variant' => $request->variant,

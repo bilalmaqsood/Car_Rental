@@ -3,6 +3,7 @@
 namespace Qwikkar\Providers;
 
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 
@@ -16,6 +17,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        Validator::extend('alpha_spaces', function($attribute, $value)
+        {
+            return preg_match('/^[\pL\s]+$/u', $value);
+        });
 
 //        Passport::tokensCan([
 //            'client' => 'Clients Requests',

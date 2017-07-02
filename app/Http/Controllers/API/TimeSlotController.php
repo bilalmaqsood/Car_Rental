@@ -3,6 +3,7 @@
 namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\TimeSlot;
 
@@ -24,11 +25,8 @@ class TimeSlotController extends Controller
 
         $vehicle = $request->user()->owner->vehicles->where('id', $request->vehicle_id)->first();
 
-        if(!$vehicle)
-            return response()
-                ->json(['vehicle_id' => [
-                    trans('vehicle.not-associated', ['name' => $request->user()->last_name])
-                ]], 422);
+        if (!$vehicle)
+            return api_response(trans('vehicle.not-associated', ['name' => $request->user()->last_name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $days = collect($request->days)->map(function ($date) {
             return new TimeSlot(['day' => $date]);

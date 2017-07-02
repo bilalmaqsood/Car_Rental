@@ -77,16 +77,21 @@ h3 {
     position: relative;
 }
 
-.login-section {
-    z-index: 1050;
-    width: 62%;
-    float: right;
-    background: #525252;
-    height: 90px;
-    text-align: right;
-    display: block;
+.auth-container {
     position: fixed;
     right: 0;
+    z-index: 1050;
+    text-align: right;
+    width: 100%;
+    display: block;
+}
+
+.login-section {
+    width: 62%;
+    background: #525252;
+    height: 90px;
+    display: inline-block;
+    overflow: hidden;
 }
 
 .recover_password {

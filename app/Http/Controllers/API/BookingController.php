@@ -70,8 +70,8 @@ class BookingController extends Controller
     {
         $this->validate($request, [
             'vehicle_id' => 'required|numeric|exists:vehicles,id',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
+            'start_date' => 'required|date|after_or_equal:today',
+            'end_date' => 'required|date|after_or_equal:today',
             'location' => 'required|string',
             'promo_code' => 'exists:promo_codes,code'
         ]);
@@ -81,9 +81,9 @@ class BookingController extends Controller
         if (count($dates) < 7)
             return api_response(trans('booking.minimum'), Response::HTTP_UNPROCESSABLE_ENTITY);
 
-        $vehicle = Vehicle::whereId($request->vehicle_id)->with(['timeSlots' => function ($with) {
+        $vehicle = Vehicle::whereId($request->vehicle_id)->with(['timeSlots' => function ($with) use ($request) {
             $with->where('status', 1);
-            $with->whereDate('day', '>=', Carbon::now()->format('Y-m-d'));
+            $with->whereBetween('day', [Carbon::parse($request->start_date), Carbon::parse($request->end_date)]);
         }])->first();
 
         // validate days for free time slots

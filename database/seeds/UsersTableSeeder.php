@@ -12,8 +12,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         \Qwikkar\Models\User::create([
-            'first_name' => 'Qwikkar',
-            'last_name' => 'Application',
+            'name' => 'Qwikkar Application',
             'email' => 'hello@qwikkar.co.uk',
             'phone' => '+442037145675',
             'password' => bcrypt('secret'),

@@ -1,7 +1,7 @@
 
 window._ = require('lodash');
-window.React = require('react');
-window.ReactDOM = require('react-dom');
+// window.React = require('react');
+// window.ReactDOM = require('react-dom');
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -37,6 +37,7 @@ Vue.use(Vuelidate);
 
 window.axios = require('axios');
 
+window.axios.defaults.baseURL = window.Qwikkar.baseUrl;
 window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Qwikkar.csrfToken;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 

@@ -19,8 +19,8 @@
     <script type="text/javascript">
         window.Qwikkar = {!! json_encode([
             'csrfToken' => csrf_token(),
+            'baseUrl' => url('/'),
         ]) !!};
-        window.baseUrl = '{{url('/')}}';
     </script>
 </head>
 <body>

@@ -60,16 +60,17 @@ trait BookingOperations
      */
     protected function proceedToBooking(Request $request, Vehicle $vehicle)
     {
-        $this->changeSlotsStatus($vehicle, 2);
-
         // validate if booking already exists
         if (
-        $vehicle->booking
+            $vehicle->booking()
             ->where('start_date', Carbon::parse($request->start_date))
             ->where('end_date', Carbon::parse($request->end_date))
+            ->whereNotIn('status', [3,4,7])
             ->count()
         )
             return api_response(trans('booking.exist', ['vehicle' => $vehicle->vehicle_name]), Response::HTTP_CONFLICT);
+
+        $this->changeSlotsStatus($vehicle, 2);
 
         $booking = new Booking($request->all());
 

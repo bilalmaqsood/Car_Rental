@@ -3,8 +3,8 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">
-                    <img src="/images/white_logo.png" alt="" class="default_logo"/>
-                    <img src="/images/logo.png" alt="" class="hover_logo"/>
+                    <img :src="baseURL + '/images/white_logo.png'" alt="" class="default_logo">
+                    <img :src="baseURL + '/images/logo.png'" alt="" class="hover_logo">
                 </a>
             </div>
             <div id="navbar" class="customize_nav">
@@ -26,70 +26,107 @@
                         </a>
                     </li>
                     <li class="active">
-                        <a href="javascript:;" @click="loginSection = !loginSection">
+                        <a href="javascript:;" @click="authSection = !authSection">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                             </svg>
                             Login
                         </a>
                         <transition name="slide-fade">
-                            <div class="login-section" v-show="loginSection||forgotSection">
-                                <div class="button_box">
-                                    <button class="secodery_btn" v-if="forgotSection">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
-                                        </svg>
-                                        done
-                                    </button>
-                                    <button class="secodery_btn" v-else-if="loginSection" @click="loginUser">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
-                                        </svg>
-                                        Login
-                                    </button>
-                                    <button class="primary_btn" @click="signUpSection">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" class="svg-icon">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#contract_view_icon"></use>
-                                        </svg>
-                                        Signup
-                                    </button>
-                                </div>
-                                <div class="login_form" v-if="loginSection">
-                                    <form class="form-inline">
-                                        <div class="form-group" :class="{ 'has-error': $v.form.emailValue.$error }">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
-                                            </svg>
-                                            <input class="form-control" placeholder="email" type="email" @blur="$v.form.emailValue.$touch()" v-model.trim="form.emailValue">
+                            <div v-if="authSection" class="auth-container">
+                                <transition name="flip" mode="in-out">
+
+                                    <div v-if="authSectionView=='signup'" key="signup">
+                                        <div class="user_type_selection text-left">
+                                            <p class="cursor-pointer">I want to rent</p>
+                                            <button class="secodery_btn" @click="authSectionView='login'">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                                                </svg>
+                                                login
+                                            </button>
                                         </div>
-                                        <div class="form-group" :class="{ 'has-error': $v.form.password.$error }">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon cursor-pointer" @click="forgotSection = true; loginSection = false">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
-                                            </svg>
-                                            <input class="form-control" placeholder="password" type="password" @blur="$v.form.password.$touch()" v-model.trim="form.password">
+                                        <div class="user_type_selection text-left">
+                                            <p class="cursor-pointer">I own a car</p>
+                                            <button class="secodery_btn">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                                                </svg>
+                                                done
+                                            </button>
                                         </div>
-                                        <p><span class="forgot-message">forgot your password? click the <span>padlock</span> icon to recover</span></p>
-                                    </form>
-                                </div>
-                                <div class="login_form" v-else-if="forgotSection">
-                                    <form class="form-inline">
-                                        <div class="form-group">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
-                                            </svg>
-                                            <input type="password" class="form-control" placeholder="new password">
+                                    </div>
+
+                                    <div class="login-section" v-if="authSectionView!='signup'" key="not-signup">
+                                        <div class="button_box">
+
+                                            <transition name="flip" mode="in-out">
+
+                                                <button class="secodery_btn" v-if="authSectionView=='forgot'" key="forgot">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                                                    </svg>
+                                                    done
+                                                </button>
+
+                                                <button class="secodery_btn" v-if="authSectionView=='login'" @click="loginUser" key="login">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                                                    </svg>
+                                                    Login
+                                                </button>
+
+                                            </transition>
+
+                                            <button class="primary_btn" @click="authSectionView='signup'">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" class="svg-icon">
+                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#contract_view_icon"></use>
+                                                </svg>
+                                                Signup
+                                            </button>
                                         </div>
-                                        <div class="form-group">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
-                                            </svg>
-                                            <input type="password" class="form-control" placeholder="re-type password">
+
+                                        <div class="login_form" v-if="authSectionView=='login'">
+                                            <form class="form-inline">
+                                                <div class="form-group" :class="{ 'has-error': $v.form.emailValue.$error }">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
+                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                                                    </svg>
+                                                    <input class="form-control" placeholder="email" type="email" @blur="$v.form.emailValue.$touch()" v-model.trim="form.emailValue">
+                                                </div>
+                                                <div class="form-group" :class="{ 'has-error': $v.form.password.$error }">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon cursor-pointer" @click="authSectionView='forgot'">
+                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
+                                                    </svg>
+                                                    <input class="form-control" placeholder="password" type="password" @blur="$v.form.password.$touch()" v-model.trim="form.password">
+                                                </div>
+                                                <p><span class="forgot-message">forgot your password? click the <span>padlock</span> icon to recover</span></p>
+                                            </form>
                                         </div>
-                                        <p><span class="forgot-message">have a password? click <span class="cursor-pointer" @click="forgotSection = false; loginSection = true">here</span> to login</span></p>
-                                    </form>
-                                </div>
+
+                                        <div class="login_form" v-if="authSectionView=='forgot'">
+                                            <form class="form-inline">
+                                                <div class="form-group">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
+                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
+                                                    </svg>
+                                                    <input type="password" class="form-control" placeholder="new password">
+                                                </div>
+                                                <div class="form-group">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
+                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
+                                                    </svg>
+                                                    <input type="password" class="form-control" placeholder="re-type password">
+                                                </div>
+                                                <p><span class="forgot-message">have a password? click <span class="cursor-pointer" @click="authSectionView='login'">here</span> to login</span></p>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </transition>
+
                             </div>
                         </transition>
+
                     </li>
                 </ul>
             </div>
@@ -98,15 +135,16 @@
 </template>
 
 <script>
-    import store from '../store';
-    const { required, email, minLength } = require("vuelidate/lib/validators");
+    import {User, App} from '../user';
+    import {required, email, minLength} from 'vuelidate/lib/validators';
 
     export default {
         data() {
             return {
+                baseURL: App.state.baseUrl,
                 message: null,
-                loginSection: false,
-                forgotSection: false,
+                authSection: false,
+                authSectionView: 'login',
                 form: {
                     emailValue: '',
                     password: ''
@@ -131,31 +169,37 @@
             this.prepareComponent();
         },
 
-        ready() {
-            this.prepareComponent();
-        },
-
         methods: {
             prepareComponent() {
                 this.fetchAuthUser();
             },
 
-            signUpSection() {
+            signUpUser() {
                 console.log('sign up section');
             },
 
             loginUser() {
-                console.log(store.state.count);
+                console.log(User.state.auth);
                 console.log(this.form);
                 console.log(this.$v.$invalid);
             },
 
             fetchAuthUser() {
-                axios.get('/api/user')
-                    .then(response => {
-                        console.log(response.data);
-                        this.message = JSON.stringify(response.data, null, 4);
-                    });
+                let userLocal = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+
+                if (!userLocal)
+                    this.refreshUserData();
+                else
+                    User.commit('update', userLocal);
+            },
+
+            refreshUserData() {
+                axios.get('/api/user').then(this.setUserData);
+            },
+
+            setUserData(r) {
+                User.commit('update', r.data);
+                localStorage.setItem('user', JSON.stringify(r.data));
             }
         }
     }
