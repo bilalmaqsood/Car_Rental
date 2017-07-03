@@ -57,6 +57,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Qwikkar\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin' => \Qwikkar\Http\Middleware\VerifyAdminUser::class,
         'owner' => \Qwikkar\Http\Middleware\VerifyOwnerUser::class,
         'client' => \Qwikkar\Http\Middleware\VerifyClientUser::class,
         'not-admin' => \Qwikkar\Http\Middleware\VerifyNotAdminUser::class,

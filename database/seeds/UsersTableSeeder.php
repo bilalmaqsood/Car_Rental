@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
             'name' => 'Qwikkar Application',
             'email' => 'hello@qwikkar.co.uk',
             'phone' => '+442037145675',
-            'password' => bcrypt('secret'),
+            'password' => 'secret',
         ]);
     }
 }

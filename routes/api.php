@@ -15,14 +15,20 @@ use Illuminate\Http\Request;
 
 Route::get('/terms/{type}', 'TermsController');
 
-Route::post('/auth', 'AuthController@login');
+Route::post('/auth', '\Qwikkar\Http\Controllers\Auth\LoginController@login');
+
 Route::post('/register/{type}', 'RegisterController');
 
 Route::get('/search/{type}', 'SearchController');
 
+Route::post('/forgot', '\Qwikkar\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail');
+
 Route::post('/contact', 'ContactController');
 
 Route::get('vehicle/{id}', 'VehicleController@show');
+
+Route::get('faq', 'FaqController@index');
+Route::post('faq', 'FaqController@store');
 
 Route::group(['middleware' => 'auth:api'], function () {
 
@@ -30,12 +36,16 @@ Route::group(['middleware' => 'auth:api'], function () {
         return api_response($request->user()->notifications);
     });
 
+    Route::patch('faq/{id}', 'FaqController@update');
+
+    Route::delete('faq/{id}', 'FaqController@destroy');
+
     Route::get('/user', 'AuthController@info');
 
     Route::patch('/profile/client', 'ProfileController@updateClient')->middleware('client');
     Route::patch('/profile/owner', 'ProfileController@updateOwner')->middleware('owner');
 
-    Route::delete('/logout', 'AuthController@logout');
+    Route::delete('/logout', '\Qwikkar\Http\Controllers\Auth\LoginController@logout');
 
     Route::resource('account', 'AccountController', ['except' => ['create', 'edit']]);
     Route::resource('vehicle', 'VehicleController', ['except' => ['create', 'edit']]);

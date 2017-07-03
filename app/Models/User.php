@@ -21,6 +21,7 @@ class User extends Authenticatable
         'password',
         'email',
         'phone',
+        'device_id',
     ];
 
     /**
@@ -37,6 +38,17 @@ class User extends Authenticatable
     ];
 
     /**
+     * encrypt password for user.
+     *
+     * @param  string $value
+     * @return void
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    /**
      * Get the user's current balance.
      *
      * @return float
@@ -44,6 +56,14 @@ class User extends Authenticatable
     public function getCurrentBalanceAttribute()
     {
         return $this->balance ? $this->balance->current : 0;
+    }
+
+    /**
+     * Get user's balance
+     */
+    public function faq()
+    {
+        return $this->hasMany('Qwikkar\Models\Faq', 'answered_by');
     }
 
     /**

@@ -13,7 +13,16 @@
 
 Route::get('/test', function () {
 //    $vehicle = Qwikkar\Models\Vehicle::find(1);
-//    $user = Qwikkar\Models\User::find(1);
+    $user = Qwikkar\Models\User::find(2);
+
+    $faq = Qwikkar\Models\Faq::findOrFail(1);
+
+    $faq->answer = 'lorem ipsam dlor sans emit oknasir.';
+    $faq->user()->associate($user);
+
+    $faq->save();
+    dd($faq);
+
 //    $booking = Qwikkar\Models\Booking::find(1);
 
 //    $balanceLog = \Qwikkar\Models\BalanceLog::firstOrNew(['amount' => 999.99, 'comment' => 'lorem ipsam sans emit']);
@@ -49,6 +58,8 @@ Route::get('/test', function () {
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
 Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');

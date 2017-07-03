@@ -22,7 +22,9 @@ class AuthController extends Controller
             'device_id' => 'string'
         ]);
 
-        $user = User::whereEmail($request->email)->wherePassword($request->password)->first();
+        d(bcrypt($request->password));
+        $user = User::whereEmail($request->email)->first();
+        dd($user);
 
         if ($user) {
             $user->tokens()->delete();
@@ -41,6 +43,17 @@ class AuthController extends Controller
         }
 
         return api_response(trans('auth.failed'), 406);
+    }
+
+    /**
+     * Send reset password link email
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function forgot(Request $request)
+    {
+        return api_response($request->all());
     }
 
     /**
