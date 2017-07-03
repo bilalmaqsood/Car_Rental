@@ -16,14 +16,15 @@ class ProfileController extends Controller
     protected function updateClient(Request $request)
     {
         $this->validate($request, [
-            'first_name' => 'alpha',
-            'last_name' => 'alpha',
+            'name' => 'alpha_spaces',
             'email' => 'email|unique:users,email',
             'phone' => 'phone:GB',
 
             'postcode' => [
                 'Regex:/^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][‌​0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/'
             ],
+
+            'device_id' => 'string',
 
             'insurance' => 'string',
             'driving' => 'string',
@@ -57,14 +58,15 @@ class ProfileController extends Controller
     protected function updateOwner(Request $request)
     {
         $this->validate($request, [
-            'first_name' => 'alpha',
-            'last_name' => 'alpha',
+            'name' => 'alpha_spaces',
             'email' => 'email|unique:users,email',
             'phone' => 'phone:GB',
 
             'postcode' => [
                 'Regex:/^([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][‌​0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z])))) [0-9][A-Za-z]{2})$/'
             ],
+
+            'device_id' => 'string',
 
             'company' => 'string',
             'address' => 'string',

@@ -2,6 +2,7 @@
 
 namespace Qwikkar\Http\Controllers\API;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
@@ -72,7 +73,7 @@ class InspectionController extends Controller
         $inspection = $booking->inspection()->where('id', $id)->first();
 
         if (!$inspection)
-            return abort(404);
+            throw new ModelNotFoundException();
 
         return api_response($inspection);
     }
@@ -92,7 +93,7 @@ class InspectionController extends Controller
         $inspection = $booking->inspection()->where('id', $id)->first();
 
         if (!$inspection)
-            return abort(404);
+            throw new ModelNotFoundException();
 
         $inspection->fill($request->all());
         $inspection->save();
@@ -114,7 +115,7 @@ class InspectionController extends Controller
         $inspection = $booking->inspection()->where('id', $id)->first();
 
         if (!$inspection)
-            return abort(404);
+            throw new ModelNotFoundException();
 
         return api_response($inspection->delete());
     }

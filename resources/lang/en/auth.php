@@ -17,6 +17,8 @@ return [
     'logout' => 'Successfully logout :name.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
-    'profile' => 'Profile has been updated successfully.'
+    'profile' => 'Profile has been updated successfully.',
+
+    'device' => 'Successfully updated device in Qwikkar Application for :name.',
 
 ];

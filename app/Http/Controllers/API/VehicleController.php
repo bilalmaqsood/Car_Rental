@@ -2,7 +2,9 @@
 
 namespace Qwikkar\Http\Controllers\API;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Http\Requests\VehicleModel;
 use Qwikkar\Models\Vehicle;
@@ -60,7 +62,14 @@ class VehicleController extends Controller
      */
     public function show($id)
     {
-        return api_response(Vehicle::whereId($id)->with('timeSlots')->first());
+        $vehicle = Vehicle::whereId($id)->with(['owner' => function ($with) {
+            $with->with('user');
+        }, 'timeSlots'])->first();
+
+        if (!$vehicle)
+            throw new ModelNotFoundException();
+
+        return api_response($vehicle);
     }
 
     /**
@@ -74,7 +83,7 @@ class VehicleController extends Controller
     {
         $vehicle = $request->user()->owner->vehicles->where('id', $id)->first();
 
-        if (!$vehicle) abort(404);
+        if (!$vehicle) throw new ModelNotFoundException();
 
         $vehicle->fill($request->all());
 
@@ -94,10 +103,10 @@ class VehicleController extends Controller
     {
         $vehicle = $request->user()->owner->vehicles->where('id', $id)->first();
 
-        if (!$vehicle) abort(404);
+        if (!$vehicle) throw new ModelNotFoundException();
 
         $vehicle->delete();
 
-        return api_response(trans('vehicle.deleted', ['name' => $request->user()->last_name]));
+        return api_response(trans('vehicle.deleted', ['name' => $request->user()->name]));
     }
 }

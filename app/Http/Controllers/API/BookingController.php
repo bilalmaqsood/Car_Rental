@@ -3,6 +3,7 @@
 namespace Qwikkar\Http\Controllers\API;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Qwikkar\Concerns\BookingOperations;
@@ -116,10 +117,10 @@ class BookingController extends Controller
         }])->first();
 
         if (!$booking)
-            return abort(Response::HTTP_NOT_FOUND);
+            throw new ModelNotFoundException();
 
         if ($this->validateBooking($booking, $request))
-            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->last_name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         return api_response($booking);
     }
@@ -143,10 +144,10 @@ class BookingController extends Controller
         $booking = Booking::whereId($id)->with('vehicle')->first();
 
         if (!$booking)
-            return abort(Response::HTTP_NOT_FOUND);
+            throw new ModelNotFoundException();
 
         if ($this->validateBooking($booking, $request))
-            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->last_name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $oldDates = $this->generateDateRange($booking->start_date, $booking->end_date);
 
@@ -186,10 +187,10 @@ class BookingController extends Controller
         $booking = Booking::whereId($id)->with('vehicle')->first();
 
         if (!$booking)
-            return abort(Response::HTTP_NOT_FOUND);
+            throw new ModelNotFoundException();
 
         if ($this->validateBooking($booking, $request))
-            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->last_name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $dates = $this->generateDateRange($booking->start_date, $booking->end_date);
 
@@ -202,7 +203,7 @@ class BookingController extends Controller
 
         $booking->delete();
 
-        return api_response(trans('booking.delete', ['name' => $request->user()->last_name]));
+        return api_response(trans('booking.delete', ['name' => $request->user()->name]));
     }
 
     /**

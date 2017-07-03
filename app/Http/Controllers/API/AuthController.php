@@ -18,13 +18,20 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'email' => 'required|email|exists:users,email',
-            'password' => 'required'
+            'password' => 'required',
+            'device_id' => 'string'
         ]);
 
         $user = User::whereEmail($request->email)->wherePassword($request->password)->first();
 
         if ($user) {
             $user->tokens()->delete();
+
+            if ($request->has('device_id')) {
+                $user->device_id = $request->device_id;
+                $user->save();
+            }
+
             return api_response(array_merge($this->userProfile($user), [
                 'token' => $user->createToken('APIAccessToken')->accessToken,
                 'type' => $user->types->first()->name,
@@ -75,6 +82,10 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
-        return api_response(trans('auth.logout', ['name' => $request->user()->last_name]));
+
+        $request->user()->device_id = '';
+        $request->user()->save();
+
+        return api_response(trans('auth.logout', ['name' => $request->user()->name]));
     }
 }

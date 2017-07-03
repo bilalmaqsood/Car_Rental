@@ -2,6 +2,7 @@
 
 namespace Qwikkar\Http\Controllers\API;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\CreditCard;
@@ -50,7 +51,7 @@ class CreditCardController extends Controller
             $request->user()->creditCard()->save($creditCard);
         }
 
-        return api_response(trans('credit_card.created', ['name' => $request->user()->last_name]));
+        return api_response(trans('credit_card.created', ['name' => $request->user()->name]));
     }
 
     /**
@@ -64,7 +65,7 @@ class CreditCardController extends Controller
     {
         $creditCard = $request->user()->creditCard->where('id', $id)->first();
 
-        if (!$creditCard) abort(404);
+        if (!$creditCard) throw new ModelNotFoundException();
 
         return api_response($creditCard);
     }
@@ -88,7 +89,7 @@ class CreditCardController extends Controller
 
         $creditCard = $request->user()->creditCard->where('id', $id)->first();
 
-        if (!$creditCard) abort(404);
+        if (!$creditCard) throw new ModelNotFoundException();
 
         $creditCard->fill($request->all());
 
@@ -108,10 +109,10 @@ class CreditCardController extends Controller
     {
         $creditCard = $request->user()->creditCard->where('id', $id)->first();
 
-        if (!$creditCard) abort(404);
+        if (!$creditCard) throw new ModelNotFoundException();
 
         $creditCard->delete();
 
-        return api_response(trans('credit_card.deleted', ['name' => $request->user()->last_name]));
+        return api_response(trans('credit_card.deleted', ['name' => $request->user()->name]));
     }
 }

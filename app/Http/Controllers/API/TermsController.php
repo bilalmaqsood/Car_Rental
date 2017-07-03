@@ -3,6 +3,7 @@
 namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Qwikkar\Http\Controllers\Controller;
 
 class TermsController extends Controller
@@ -21,7 +22,7 @@ class TermsController extends Controller
      */
     public function __construct(Request $request)
     {
-        if (!in_array($request->type, $this->types)) abort(404);
+        if (!in_array($request->type, $this->types)) abort(Response::HTTP_NOT_FOUND);
     }
 
     /**

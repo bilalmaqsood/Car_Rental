@@ -3,6 +3,7 @@
 namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Http\Requests\UserModel;
 use Qwikkar\Models\Client;
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      */
     public function __construct(Request $request)
     {
-        if (!in_array($request->type, $this->userTypes)) abort(404);
+        if (!in_array($request->type, $this->userTypes)) abort(Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -50,7 +51,7 @@ class RegisterController extends Controller
                 break;
         }
 
-        return abort(404);
+        return abort(Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -77,9 +78,7 @@ class RegisterController extends Controller
 
         $user->addType(3);
 
-        $client = new Client();
-
-        $client->fill($request->all());
+        $client = new Client($request->all());
 
         $user->client()->save($client);
 
@@ -112,9 +111,7 @@ class RegisterController extends Controller
 
         $user->addType(2);
 
-        $owner = new Owner();
-
-        $owner->fill($request->all());
+        $owner = new Owner($request->all());
 
         $user->owner()->save($owner);
 

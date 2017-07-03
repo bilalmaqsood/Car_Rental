@@ -4,6 +4,7 @@ namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Vehicle;
 
@@ -22,7 +23,7 @@ class SearchController extends Controller
     public function __construct(Request $request)
     {
         if (!in_array($request->type, $this->types)) {
-            abort(404);
+            abort(Response::HTTP_NOT_FOUND);
         }
     }
 
@@ -74,7 +75,7 @@ class SearchController extends Controller
             'longitude.regex' => 'The longitude is invalid.',
         ]);
 
-        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at');
+        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at');
 
         if ($request->has('search'))
             $vehicles = $vehicles->where(function (Builder $q) use ($request) {

@@ -22,6 +22,8 @@ Route::get('/search/{type}', 'SearchController');
 
 Route::post('/contact', 'ContactController');
 
+Route::get('vehicle/{id}', 'VehicleController@show');
+
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/notifications', function (Request $request) {

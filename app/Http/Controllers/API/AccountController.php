@@ -2,6 +2,7 @@
 
 namespace Qwikkar\Http\Controllers\API;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Account;
@@ -47,7 +48,7 @@ class AccountController extends Controller
         if (!$account->exists)
             $request->user()->account()->save($account);
 
-        return api_response(trans('account.created', ['name' => $request->user()->last_name]));
+        return api_response(trans('account.created', ['name' => $request->user()->name]));
     }
 
     /**
@@ -61,7 +62,7 @@ class AccountController extends Controller
     {
         $account = $request->user()->account->where('id', $id)->first();
 
-        if (!$account) abort(404);
+        if (!$account) throw new ModelNotFoundException();
 
         return api_response($account);
     }
@@ -84,7 +85,7 @@ class AccountController extends Controller
 
         $account = $request->user()->account->where('id', $id)->first();
 
-        if (!$account) abort(404);
+        if (!$account) throw new ModelNotFoundException();
 
         $account->fill($request->all());
 
@@ -104,10 +105,10 @@ class AccountController extends Controller
     {
         $account = $request->user()->account->where('id', $id)->first();
 
-        if (!$account) abort(404);
+        if (!$account) throw new ModelNotFoundException();
 
         $account->delete();
 
-        return api_response(trans('account.deleted', ['name' => $request->user()->last_name]));
+        return api_response(trans('account.deleted', ['name' => $request->user()->name]));
     }
 }

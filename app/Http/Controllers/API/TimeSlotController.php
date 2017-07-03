@@ -26,7 +26,7 @@ class TimeSlotController extends Controller
         $vehicle = $request->user()->owner->vehicles->where('id', $request->vehicle_id)->first();
 
         if (!$vehicle)
-            return api_response(trans('vehicle.not-associated', ['name' => $request->user()->last_name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+            return api_response(trans('vehicle.not-associated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $days = collect($request->days)->map(function ($date) {
             return new TimeSlot(['day' => $date]);
