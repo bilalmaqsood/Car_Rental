@@ -22,4 +22,10 @@ return [
 
     'deposit' => 'Your balance is insufficient for vehicle booking and also you do not have any default credit card.',
 
+    'in-progress' => 'You cannot give feedback because booking is not close.',
+
+    'feedback' => [
+        'exist' => 'Feedback is already exist for current booking.',
+    ],
+
 ];
