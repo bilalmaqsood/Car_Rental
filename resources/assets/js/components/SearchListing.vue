@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <search-listing-details :item="item" v-if="detailsDisplay"></search-listing-details>
+                <search-listing-details :vehicle="item" v-if="detailsDisplay"></search-listing-details>
                 <div class="car_detail_thumb" v-show="detailsDisplay">
                     <a v-for="item in items" href="javascript:void(0)" @click="itemDetails(item)">
                         <img  src="http://img.autobytel.com//2016/bmw/228/2-376-threequartersview101-77888.jpg" alt="">
