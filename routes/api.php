@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('vehicle/{id}', 'VehicleController@show');
 
 Route::get('/terms/{type}', 'TermsController');
 

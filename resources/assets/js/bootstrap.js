@@ -13,6 +13,10 @@ window.$ = window.jQuery = require('jquery');
 
 require('bootstrap-sass');
 
+require('moment');
+
+require('eonasdan-bootstrap-datetimepicker');
+
 require('jquery.easing');
 
 require('owl.carousel');

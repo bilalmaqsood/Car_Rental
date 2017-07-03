@@ -1,30 +1,31 @@
 <template>
     <div>
-        <div class="car_detail_container">
+        <div v-show="!isBooking" class="car_detail_container">
             <div class="detail_img">
-                <img :src="item.images[0]" alt="">
+                <!-- To Do -->
+                <img :src="vehicle.images" alt="">
             </div>
             <div class="car_detail">
                 <div class="availablity_detail">
-                    <h3>{{item.make}} {{item.model}} {{item.variant}}</h3>
+                    <h3>{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
                     <ul>
-                        <li><p>Year: {{item.year}} </p><p>Mileage: {{item.mileage}}</p>
-                         <p>Seats: {{item.seats}} </p><p>Transmission: {{item.transmission}}</p></li>
-                        <li><p>Seats: {{item.seats}} </p><p>Transmission: {{item.transmission}}</p></li>
-                        <li><p>Fuel type: {{item.fuel}} </p><p>Consumption: {{item.mpg}} mpg (ec.)</p></li>
+                        <li><p>Year: {{vehicle.year}} </p><p>Mileage: {{vehicle.mileage}}</p>
+                         <p>Seats: {{vehicle.seats}} </p><p>Transmission: {{vehicle.transmission}}</p></li>
+                        <li><p>Seats: {{vehicle.seats}} </p><p>Transmission: {{vehicle.transmission}}</p></li>
+                        <li><p>Fuel type: {{vehicle.fuel}} </p><p>Consumption: {{vehicle.mpg}} mpg (ec.)</p></li>
                     </ul>
                     <div class="availabe">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                         </svg>
-                        <p>available from: <span>{{item.available_from}}</span></p>
+                        <p>available from: <span>{{vehicle.available_from}}</span></p>
                     </div>
                 </div>
                 <div class="availablity_price">
                     <div class="availabe_item_price">
-                        <h3>£ {{item.rent}}</h3>
+                        <h3>£ {{vehicle.rent}}</h3>
                         <span>/week</span>
-                        <span v-if="item.insurance>0.0">insurance included</span>
+                        <span v-if="vehicle.insurance>0.0">insurance included</span>
                     </div>
                 </div>
             </div>
@@ -35,12 +36,13 @@
                     </svg>
                 </button>
                 <ul>
-                    <li><span>Pickup from:</span> {{item.pickup_location}}</li>
-                    <li><span>Return to:</span> {{item.return_location}}</li>
+                    <li><span>Pickup from:</span> {{vehicle.pickup_location}}</li>
+                    <li><span>Return to:</span> {{vehicle.return_location}}</li>
                 </ul>
             </div>
             <div class="pickup_loction_map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d4825851.352956702!2d-4.064941!3d53.800650999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2suk!4v1495513518623" width="100%" frameborder="0" style="border:0" allowfullscreen=""></iframe>
+                <iframe width="100%" height="450" frameborder="0" style="border:0" v-bind:src="'https://www.google.com/maps/embed/v1/place?q='+vehicle.location.split(',')[0]+','+vehicle.location.split(',')[1]+'&amp;key=AIzaSyDFkedYDgj286xDo9Sp9XRWsOiPfu9T3Ak'"></iframe>
+
                 <p>Phasellus nisi leo, aliquet ac erat ut, moles2e ma3s enim. Proin sit amet tempor mi, a egestas tortor. Ves2bulum et congue urna. Nunc elementum por3tor
                     urna sed euismod. Curabitur bibendum leo iaculis pulvinar fringilla. Nullam eu interdum lectus. Duis posuere, enim at fermentum efficitur, magna nisl lobor2s
                     metus, in hendrerit est ante et magna. Ut ma3s, justo non por3tor suscipit, augue ipsum sodales justo, a rutrum.</p>
@@ -54,7 +56,7 @@
             <div class="pickup_loction_btn">
                 <ul>
                     <li>
-                        <button onclick="location.href='search_result_booking_calender.html'" type="button">
+                        <button @click="doBooking" type="button">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 20" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#issue"></use>
                             </svg>
@@ -62,7 +64,7 @@
                         </button>
                     </li>
                     <li>
-                        <button>
+                        <button type="button">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
                             </svg>
@@ -72,14 +74,19 @@
                 </ul>
             </div>
         </div>
+
+        <search-listing-booking  v-show="isBooking" :vehicle="vehicle"></search-listing-booking>
+
+
     </div>
+
 </template>
 
 <script>
     export default {
-        props: ['item'],
+        props: ['vehicle'],
         data() {
-            return this.item;
+          return { isBooking: false };
         },
 
         mounted() {
@@ -87,7 +94,9 @@
         },
 
         methods:{
-
+            doBooking(){
+                this.isBooking=true;
+            }
         }
     }
 </script>
