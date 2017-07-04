@@ -142,12 +142,24 @@
 
         methods: {
             postForm(){
-                axios.post('/api/contact', this.form)
+
+                axios.post('/api/contact', this.prepareForm())
                     .then(response => {
                         console.log(response);
                         this.response=response.data.success;
                         this.postSuccess=true;
                     });
+            },
+            prepareForm(){
+                var input = this.form;
+                Object.keys(input).forEach(function(key) {
+                    console.log(key, input[key]);
+                    if(input[key].length<=0){
+                        delete input[key];
+                    }
+
+                });
+                return input;
             }
         }
     }
