@@ -11,7 +11,7 @@
                 <transition name="flip" mode="out-in">
                     <ul class="nav navbar-nav navbar-right" key="unauthenticated" v-if="storage.auth==null">
                         <li>
-                            <a href="javascript:;" @click="resetAuthView">
+                            <a href="javascript:;" @click="scrollOnPage('about_section_wrapper')">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cog_setting"></use>
                                 </svg>
@@ -19,7 +19,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="javascript:;" @click="scrollOnPage('contact_us')">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
                                 </svg>
@@ -41,10 +41,10 @@
                                             <div class="user_type_selection text-left user-want-rent">
                                                 <div class="btn-group" data-toggle="buttons" style="padding-top: 1rem">
                                                     <label class="btn btn-primary">
-                                                        <input name="stylist" autocomplete="off" value="on" type="checkbox"> I want to rent
+                                                        <input name="type" autocomplete="off" type="radio"> I want to rent
                                                     </label>
                                                     <label class="btn btn-primary">
-                                                        <input name="beautician" autocomplete="off" value="on" type="checkbox"> I own a car
+                                                        <input name="type" autocomplete="off" type="radio"> I own a car
                                                     </label>
                                                 </div>
                                             </div>
@@ -287,6 +287,10 @@
                 }
             },
 
+            scrollOnPage(to) {
+                $("html, body").animate({scrollTop: $('#' + to).offset().top - 50}, 1000);
+            },
+
             signUpUser() {
                 console.log('sign up section');
                 new Noty({
@@ -327,10 +331,16 @@
             },
 
             resetUserPassword(e) {
+                let $this = this;
                 let $btn = $(e.target).button('loading');
-                axios.post('/forgot', this.forgot).then(function (r) {
+                axios.post('/password/reset', this.forgot).then(function (r) {
                     $btn.button('reset');
-                    console.log(r);
+                    new Noty({
+                        type: 'information',
+                        text: r.data.success,
+                    }).show();
+                    $this.resetAuthView();
+                    window.location.href = '/';
                 }).catch(function (r) {
                     $btn.button('reset');
                 });
