@@ -36,33 +36,7 @@
                             <transition name="slide-fade">
                                 <div v-if="authSection" class="auth-container">
                                     <transition name="flip" mode="in-out">
-
-                                        <div class="user-want-container" v-if="authSectionView=='signup'" key="signup">
-                                            <div class="user_type_selection text-left user-want-rent">
-                                                <div class="btn-group" data-toggle="buttons" style="padding-top: 1rem">
-                                                    <label class="btn btn-primary">
-                                                        <input name="type" autocomplete="off" type="radio"> I want to rent
-                                                    </label>
-                                                    <label class="btn btn-primary">
-                                                        <input name="type" autocomplete="off" type="radio"> I own a car
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <div class="user_type_selection text-left user-rent-btn">
-                                                <button class="primary_btn" @click="authSectionView='login'">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
-                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
-                                                    </svg>
-                                                    login
-                                                </button>
-                                                <button class="secodery_btn">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
-                                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
-                                                    </svg>
-                                                    done
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <user-register @updateView="updateAuthViewChild" v-if="authSectionView=='signup'" key="signup"></user-register>
 
                                         <div class="login-section" v-if="authSectionView!='signup'" key="not-signup" :style="{width:(authSectionView=='reset' ? '40%' : '')}">
                                             <div class="button_box">
@@ -276,6 +250,10 @@
                 this.refreshUserData();
                 this.renderResetPasswordIf();
                 this.height = window.innerHeight - $('.nav.navbar-nav.navbar-right').height();
+            },
+
+            updateAuthViewChild() {
+                this.authSectionView = 'login';
             },
 
             renderResetPasswordIf: function () {
