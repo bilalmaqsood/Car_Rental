@@ -25,12 +25,19 @@ class TimeSlotController extends Controller
 
         $vehicle = $request->user()->owner->vehicles->where('id', $request->vehicle_id)->first();
 
+        $filtered = $vehicle->timeSlots()->whereIn('day', $request->days)->get()->map(function ($ts) {
+            return $ts->day->format('Y-m-d');
+        });
+
         if (!$vehicle)
             return api_response(trans('vehicle.not-associated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
-        $days = collect($request->days)->map(function ($date) {
-            return new TimeSlot(['day' => $date]);
-        });
+        $days = collect($request->days)->map(function ($date) use ($filtered) {
+            if (false === $filtered->search($date))
+                return new TimeSlot(['day' => $date]);
+        })->reject(function ($TimeSlot) {
+            return empty($TimeSlot);
+        })->values();
 
         $vehicle->timeSlots()->saveMany($days);
 
