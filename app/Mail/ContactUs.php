@@ -38,7 +38,7 @@ class ContactUs extends Mailable
         return $this
             ->markdown('mail.contact-us')
             ->from($this->form['email'], $this->form['name'])
-            ->subject('ContactUsQwikkar: ' . $this->form['subject'])
+            ->subject('ContactUsQwikkar: ' . (isset($this->form['subject']) ? $this->form['subject'] : ''))
             ->to(config('mail.from.address'), config('mail.from.name'));
     }
 }

@@ -20,7 +20,7 @@ class FaqController extends Controller
 
     public function index()
     {
-        return api_response(Faq::all());
+        return api_response(Faq::whereNotNull('answer')->get());
     }
 
     public function store(Request $request)
