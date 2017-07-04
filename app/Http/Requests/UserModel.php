@@ -37,6 +37,8 @@ class UserModel extends FormRequest
             'promo_code' => 'exists:promo_codes,code',
 
             'device_id' => 'string',
+
+            'avatar' => 'string',
         ];
     }
 

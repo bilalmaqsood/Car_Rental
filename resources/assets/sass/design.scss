@@ -1,6 +1,3 @@
-body {
-    font: 400 18px 'Lato', sans-serif;
-}
 
 h2 {
     font-size: 42px;
@@ -818,11 +815,9 @@ h3 {
 }
 
 .search_map {
-    float: left;
+    position: fixed;
+    right: 0;
     width: 100%;
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
 }
 
 .search_map iframe {
@@ -1471,7 +1466,6 @@ h3 {
     right: 0;
     height: 100vh;
     overflow-y: scroll;
-    padding-top: 71px;
     top: 0;
 }
 
@@ -1610,10 +1604,6 @@ h3 {
     color: #db2022;
 }
 
-/*.pofile_content_wrapper:nth-child(1n+4) .img_box{
-	width: 50%;
-	float: right;
-}*/
 .green_border .profile_content {
     width: 100%;
 }
@@ -2772,7 +2762,6 @@ h3 {
     color: #fff;
 }
 
-
 .top_location ul li:nth-child(5) {
     background: rgba(255, 255, 255, 0.78);
     height: 130px;
@@ -2781,6 +2770,7 @@ h3 {
     margin-top: 2px;
     padding: 45px 30px;
 }
+
 .top_location ul li:nth-child(6) {
     background: rgba(255, 255, 255, 0.78);
     height: 130px;
@@ -2788,10 +2778,12 @@ h3 {
     margin-top: 2px;
     padding: 45px 30px;
 }
-.user-want-container{
+
+.user-want-container {
     width: 340px;
     float: right;
 }
+
 .user-rent-btn {
     float: right;
     background: #525252;
@@ -2801,17 +2793,20 @@ h3 {
     clear: inherit;
     height: auto;
 }
-.user-want-rent{
+
+.user-want-rent {
     width: 250px;
     float: left;
     height: 180px;
     padding-left: 0;
 }
-.user-rent-btn .primary_btn{
+
+.user-rent-btn .primary_btn {
     float: right;
     width: 90px;
 }
-.user-want-rent .btn{
+
+.user-want-rent .btn {
     background: inherit;
     border: none;
     text-align: left;
@@ -2824,16 +2819,20 @@ h3 {
     height: 90px;
     font-size: 16px;
 }
-.user-want-rent .btn-primary.active:hover{
+
+.user-want-rent .btn-primary.active:hover {
     box-shadow: none;
- }
-.user-want-rent .btn-primary:active:hover{
+}
+
+.user-want-rent .btn-primary:active:hover {
     box-shadow: none;
- }
- .user-want-rent .btn-group{
+}
+
+.user-want-rent .btn-group {
     padding-top: 0 !important;
     display: block;
 }
+
 @media all and (max-width: 1920px) and (min-width: 1600px) {
     .slide_wrapper {
         min-height: 850px;
@@ -3061,9 +3060,6 @@ h3 {
     }
     .car_detail_container {
         width: 83.5%;
-    }
-    .main_profile_container {
-        padding-top: 130px;
     }
     .main_booking_container .booking_container {
         padding-top: 130px;
@@ -3598,9 +3594,6 @@ h3 {
     }
     .profile_content {
         width: 100%;
-    }
-    .main_profile_container {
-        padding-top: 50px;
     }
     .navbar-default .navbar-nav > li > a {
         width: 60px;

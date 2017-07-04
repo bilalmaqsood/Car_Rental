@@ -1,7 +1,4 @@
-
 window._ = require('lodash');
-// window.React = require('react');
-// window.ReactDOM = require('react-dom');
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -22,6 +19,20 @@ require('jquery.easing');
 require('owl.carousel');
 
 /**
+ * NOTY is a notification library that makes it easy to
+ * create alert - success - error - warning - information - confirmation
+ * messages as an alternative the standard alert dialog.
+ */
+
+window.Noty = require('noty');
+
+Noty.overrideDefaults({
+    layout: 'topRight',
+    theme: 'mint',
+    timeout: 4000
+});
+
+/**
  * Vue is a modern JavaScript library for building interactive web interfaces
  * using reactive data binding and reusable components. Vue's API is clean
  * and simple, leaving you to focus on building your next great project.
@@ -29,7 +40,7 @@ require('owl.carousel');
 
 window.Vue = require('vue');
 
-const { Vuelidate } = require('vuelidate');
+const {Vuelidate} = require('vuelidate');
 
 Vue.use(Vuelidate);
 

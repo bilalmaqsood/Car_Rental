@@ -17,9 +17,7 @@ Mixer.run();
 
 mix
     .js('resources/assets/js/qwikkar.js', 'public/js')
-    .extract(['lodash', 'jquery', 'vue', 'vuelidate', 'axios'])
-    // .extract(['lodash', 'jquery', 'vue', 'vuelidate', 'axios', 'react', 'react-dom'])
-    // .react('resources/assets/js/react-app.jsx', 'public/js')
+    .extract(['lodash', 'jquery', 'vue', 'vuelidate', 'axios', 'noty'])
     .sass('resources/assets/sass/qwikkar.scss', 'public/css')
     .scripts([
         'public/js/jst.js'
