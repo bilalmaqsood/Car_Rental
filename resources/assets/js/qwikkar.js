@@ -19,6 +19,9 @@ Vue.component('app-header', require('./components/Header.vue'));
 Vue.component('vehicles-search-form', require('./components/SearchForm.vue'));
 Vue.component('search-listing', require('./components/SearchListing.vue'));
 Vue.component('search-listing-details', require('./components/SearchListingDetails.vue'));
+Vue.component('contact-us-form', require('./components/ContactForm.vue'));
+Vue.component('search-listing-booking', require('./components/BookVehicle.vue'));
+Vue.component('search-listing-card-details', require('./components/CardDetails.vue'));
 
 const app = new Vue({
     el: '#app'

@@ -10,6 +10,7 @@ use Qwikkar\Concerns\BookingOperations;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
 use Qwikkar\Models\BookingLog;
+use Qwikkar\Models\Feedback;
 use Qwikkar\Models\Vehicle;
 use Qwikkar\Notifications\BookingNotify;
 
@@ -223,7 +224,7 @@ class BookingController extends Controller
             'status' => 'in:3,5',
         ]);
 
-        $booking = Booking::find($id);
+        $booking = Booking::findOrFail($id);
 
         $requestData = $request->all();
         unset($requestData['note']);
@@ -236,7 +237,17 @@ class BookingController extends Controller
 
         $booking->bookingLog()->save($log);
 
-        // notify owner of vehicle to complete the action
+        $booking->vehicle->owner->user->notify(new BookingNotify([
+            'id' => $booking->id,
+            'type' => 'Booking',
+            'image' => $booking->vehicle->images->first(),
+            'title' => 'Booking ' . strtolower($booking->statusTypes[$request->status]) . ' request',
+            'user' => $request->user()->name,
+            'vehicle' => $booking->vehicle->vehicle_name,
+            'contract_start' => $booking->start_date,
+            'contract_end' => $booking->end_date,
+            'deposit' => $booking->deposit,
+        ]));
 
         return api_response($this->getStatusNotifyString($log));
     }
@@ -253,11 +264,11 @@ class BookingController extends Controller
     {
         $this->validate($request, [
             'log_id' => 'exists:booking_logs,id',
-            'status' => 'in:2,4,6',
+            'status' => 'in:2,4,6,7',
             'note' => 'string',
         ]);
 
-        $booking = Booking::find($id);
+        $booking = Booking::findOrFail($id);
 
         if ($request->has('log_id'))
             $log = BookingLog::find($request->log_id);
@@ -292,7 +303,7 @@ class BookingController extends Controller
                 'id' => $booking->id,
                 'type' => 'Booking',
                 'image' => $booking->vehicle->images->first(),
-                'title' => 'Booking approved',
+                'title' => 'Booking ' . strtolower($booking->statusTypes[$booking->status]) . ' request approved',
                 'user' => $request->user()->name,
                 'vehicle' => $booking->vehicle->vehicle_name,
                 'contract_start' => $booking->start_date,
@@ -303,5 +314,32 @@ class BookingController extends Controller
         $this->updateBookingFromLog($log);
 
         return api_response($this->getFulfillNotifyString($log));
+    }
+
+    /**
+     * Add feedback for booking
+     *
+     * @param Request $request
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function giveFeedback(Request $request, $id)
+    {
+        $booking = Booking::findOrFail($id);
+
+        if (!in_array($booking->status, [4,7]))
+            api_response(trans('booking.in-progress'), Response::HTTP_BAD_REQUEST);
+
+        if (Feedback::whereBookingId($booking->id)->whereUserId($request->user()->id)->count())
+            return api_response(trans('booking.feedback.exist'), Response::HTTP_BAD_REQUEST);
+
+        $feedback = new Feedback($request->all());
+
+        $feedback->booking()->associate($booking);
+        $feedback->user()->associate($request->user());
+
+        $feedback->save();
+
+        return api_response($feedback);
     }
 }

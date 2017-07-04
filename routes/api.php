@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::get('vehicle/{id}', 'VehicleController@show');
+
+Route::post('/driver-and-vehicle-licensing-agency', 'ExternalRequestController');
 
 Route::get('/terms/{type}', 'TermsController');
 
@@ -55,6 +58,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('booking', 'BookingController', ['except' => ['create', 'edit']]);
     Route::post('booking/{id}/status', 'BookingController@updateStatusRequest');
     Route::patch('booking/{id}/status', 'BookingController@updateStatusFulfill');
+    Route::post('booking/{id}/feedback', 'BookingController@giveFeedback');
 
     Route::resource('credit-card', 'CreditCardController', ['except' => ['create', 'edit']]);
 

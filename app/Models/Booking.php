@@ -18,7 +18,8 @@ class Booking extends Model
         'Cancel',
         'Canceled',
         'Extend',
-        'Extended'
+        'Extended',
+        'Close'
     ];
 
     /**

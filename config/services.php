@@ -14,6 +14,14 @@ return [
     |
     */
 
+    'ukvd' => [
+        'key' => env('UK_VEHICLE_DATA_KEY'),
+    ],
+
+    'android' => [
+        'key' => env('PUSH_NOTIFICATION_ANDROID_KEY'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

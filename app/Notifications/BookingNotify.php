@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Qwikkar\Channels\PushNotificationAndroid;
 
 class BookingNotify extends Notification
 {
@@ -36,7 +37,18 @@ class BookingNotify extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', PushNotificationAndroid::class];
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed $notifiable
+     * @return array
+     */
+    public function toAndroid($notifiable)
+    {
+        return $this->options;
     }
 
     /**
