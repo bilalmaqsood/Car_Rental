@@ -55,6 +55,19 @@ window.axios = require('axios');
 window.axios.defaults.baseURL = window.Qwikkar.baseUrl;
 window.axios.defaults.headers.common['X-CSRF-TOKEN'] = window.Qwikkar.csrfToken;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.interceptors.response.use(function (response) {
+    return response;
+}, function (error) {
+    if (error.response && error.response.status === 422) {
+        $.each(error.response.data, function (k, v) {
+            new Noty({
+                type: 'error',
+                text: '<div><p class="m-0"><b>' + k.toCapitalizeCase() + ' : </b></p><p class="m-0">' + v + '</p></div>'
+            }).show();
+        });
+    }
+    return Promise.reject(error);
+});
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -70,3 +83,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
+
+/**
+ * Define prototypes for Class objects
+ */
+
+String.prototype.toCapitalizeCase = function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+};
