@@ -36,18 +36,24 @@
                             <div v-if="authSection" class="auth-container">
                                 <transition name="flip" mode="in-out">
 
-                                    <div v-if="authSectionView=='signup'" key="signup">
-                                        <div class="user_type_selection text-left">
-                                            <p class="cursor-pointer">I want to rent</p>
-                                            <button class="secodery_btn" @click="authSectionView='login'">
+                                    <div class="user-want-container" v-if="authSectionView=='signup'" key="signup">
+                                        <div class="user_type_selection text-left user-want-rent">
+                                            <div class="btn-group" data-toggle="buttons" style="padding-top: 1rem">
+                                               <label class="btn btn-primary">
+                                                   <input name="stylist" autocomplete="off" value="on" type="checkbox"> I want to rent
+                                               </label>
+                                               <label class="btn btn-primary">
+                                                   <input name="beautician" autocomplete="off" value="on" type="checkbox"> I own a car
+                                               </label>
+                                           </div>
+                                        </div>
+                                        <div class="user_type_selection text-left user-rent-btn">
+                                            <button class="primary_btn" @click="authSectionView='login'">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                                 </svg>
                                                 login
                                             </button>
-                                        </div>
-                                        <div class="user_type_selection text-left">
-                                            <p class="cursor-pointer">I own a car</p>
                                             <button class="secodery_btn">
                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
@@ -57,6 +63,7 @@
                                         </div>
                                     </div>
 
+                                
                                     <div class="login-section" v-if="authSectionView!='signup'" key="not-signup">
                                         <div class="button_box">
 
