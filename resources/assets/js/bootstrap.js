@@ -18,6 +18,8 @@ require('jquery.easing');
 
 require('owl.carousel');
 
+window.Inputmask = require('inputmask');
+
 /**
  * NOTY is a notification library that makes it easy to
  * create alert - success - error - warning - information - confirmation

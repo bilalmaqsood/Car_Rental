@@ -27,48 +27,97 @@
             </div>
 
             <div class="basic_info" key="step-2" v-if="step=='basic_info'">
-                <div class="form-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
-                    </svg>
-                    <input type="text" class="form-control" placeholder="full name">
-                </div>
-                <div class="form-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 25" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#form_envelope"></use>
-                    </svg>
-                    <input type="email" class="form-control" placeholder="e-mail">
-                </div>
-                <div class="form-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 25" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
-                    </svg>
-                    <input type="text" class="form-control" placeholder="phone number">
-                </div>
-                <div class="form-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                    </svg>
-                    <input type="text" class="form-control" placeholder="date of birth">
-                </div>
-                <div class="form-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
-                    </svg>
-                    <input type="password" class="form-control" placeholder="password">
-                </div>
-                <button class="secodery_btn" @click="changeStep">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
-                    </svg>
-                    next
-                </button>
-                <button class="primary_btn" @click="changeView">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
-                    </svg>
-                    Login
-                </button>
+                <form>
+                    <div class="form-group" :class="{ 'has-error': $v.basic_info.name.$error }">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                        </svg>
+                        <input v-model="basic_info.name" @blur="$v.basic_info.name.$touch()" type="text" class="form-control" placeholder="full name">
+                    </div>
+                    <div class="form-group" :class="{ 'has-error': $v.basic_info.email.$error }">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 25" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#form_envelope"></use>
+                        </svg>
+                        <input v-model="basic_info.email" @blur="$v.basic_info.email.$touch()" type="email" class="form-control" placeholder="e-mail">
+                    </div>
+                    <div class="form-group" :class="{ 'has-error': $v.basic_info.phone.$error }">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 25" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
+                        </svg>
+                        <input v-model="basic_info.phone" @blur="$v.basic_info.phone.$touch()" type="text" class="form-control phone-number" placeholder="phone number">
+                    </div>
+                    <div class="form-group" :class="{ 'has-error': $v.basic_info.dob.$error }" v-if="user_type=='client'">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                        </svg>
+                        <input type="text" @blur="updateDOB" class="form-control date-of-birth" placeholder="date of birth">
+                    </div>
+                    <div class="form-group" :class="{ 'has-error': $v.basic_info.password.$error }">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
+                        </svg>
+                        <input v-model="basic_info.password" @blur="$v.basic_info.password.$touch()" type="password" class="form-control" placeholder="password">
+                    </div>
+                    <button type="button" class="secodery_btn" @click="changeStep" :disabled="$v.basic_info.$invalid" data-loading-text="owner signing up ...">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                        </svg>
+                        next
+                    </button>
+                    <button type="button" class="primary_btn" @click="changeView">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                        </svg>
+                        Login
+                    </button>
+                </form>
+            </div>
+
+            <div class="basic_info" key="step-3" v-if="step=='driver_info'">
+                <form>
+                    <div class="form-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon svg-icon-booking">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
+                        </svg>
+                        <input type="text" class="form-control" placeholder="national insurance number" v-model="driver_info.insurance">
+                    </div>
+                    <div class="form-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon svg-icon-booking">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
+                        </svg>
+                        <input type="text" class="form-control" placeholder="PCO certificate number" v-model="driver_info.pco_number">
+                    </div>
+                    <div class="form-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                        </svg>
+                        <input type="text" class="form-control certificate-expiration" placeholder="PCO certificate expiration date" @blur="updateCertificateExpiration">
+                    </div>
+                    <div class="form-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                        </svg>
+                        <input type="text" class="form-control" placeholder="driver’s license number" v-model="driver_info.driving">
+                    </div>
+                    <div class="form-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                        </svg>
+                        <input type="text" class="form-control" placeholder="postcode on driver’s license" v-model="driver_info.postcode">
+                    </div>
+                    <button type="button" class="secodery_btn" @click="changeStep" data-loading-text="driver signing up ...">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                        </svg>
+                        done
+                    </button>
+                    <button type="button" class="primary_btn" @click="changeView">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                        </svg>
+                        Login
+                    </button>
+                </form>
             </div>
 
         </transition>
@@ -77,12 +126,58 @@
 </template>
 
 <script>
+    import User from '../user';
+    import {DateValidator, AlphaSpaceValidator} from '../validators';
+    import {required, email, minLength, sameAs} from 'vuelidate/lib/validators';
+
     export default {
         data() {
             return {
                 step: 'type',
                 user_type: 'client',
+                basic_info: {
+                    name: 'nasir mehmood',
+                    email: 'oknasir@gmail.com',
+                    phone: '+44 (203) 714 5688',
+                    dob: '07/05/2017',
+                    password: 'yarias'
+                },
+                driver_info: {
+                    driving: '',
+                    postcode: '',
+                    insurance: '',
+                    pco_number: '',
+                    pco_expiry_date: ''
+                }
             };
+        },
+
+        validations: {
+            basic_info: {
+                name: {
+                    required,
+                    AlphaSpaceValidator
+                },
+                email: {
+                    required,
+                    email
+                },
+                phone: {},
+                dob: {
+                    DateValidator,
+                },
+                password: {
+                    required,
+                    minLength: minLength(6)
+                }
+            },
+            driver_info: {
+                driving: {},
+                postcode: {},
+                insurance: {},
+                pco_number: {},
+                pco_expiry_date: {}
+            }
         },
 
         mounted() {
@@ -94,19 +189,101 @@
                 console.log('register componenet mounted');
             },
 
+            updateCertificateExpiration(e) {
+                this.driver_info.pco_expiry_date = e.target.value;
+            },
+
+            updateDOB(e) {
+                this.basic_info.dob = e.target.value;
+            },
+
             changeView() {
                 this.$emit('updateView');
             },
 
-            changeStep() {
+            changeStep(e) {
                 switch (this.step) {
                     case 'type':
                         this.step = 'basic_info';
+
+                        setTimeout(function () {
+                            new Inputmask({
+                                mask: [{mask: '+44 (###) ### ####'}],
+                                greedy: false,
+                                definitions: {'#': {validator: "[0-9]", cardinality: 1}}
+                            }).mask(document.querySelector('.phone-number'));
+
+                            $('.date-of-birth').datetimepicker({
+                                format: 'MM/DD/YYYY',
+                                viewMode: 'years'
+                            });
+                        }, 455);
+
+                        break;
+
+                    case 'basic_info':
+                        this.process2ndStep(e);
+                        break;
+
+                    case 'driver_info':
+                        let $btn = $(e.target).button('loading');
+
+                        let postData = JSON.parse(JSON.stringify(_.merge(this.basic_info, this.driver_info)));
+                        postData.phone = postData.phone.replace(/[\s\(\)]/g, '');
+
+                        axios.post('/api/register/' + this.user_type, postData).then(function (r) {
+                            $btn.button('reset');
+                        }).catch(function (r) {
+                            $btn.button('reset');
+                        });
                         break;
                 }
-//                if (this.step === 'type') {
-//                    this.step = 'basic_info';
-//                }
+            },
+
+            process2ndStep(e) {
+                if (this.user_type === 'owner') {
+                    let $t = this;
+                    let $btn = $(e.target).button('loading');
+
+                    let postData = JSON.parse(JSON.stringify(this.basic_info));
+                    postData.phone = postData.phone.replace(/[\s\(\)]/g, '');
+
+                    axios.post('/api/register/' + this.user_type, postData).then(function (r) {
+                        $t.successRegister();
+                        $btn.button('reset');
+                    }).catch(function (r) {
+                        $btn.button('reset');
+                    });
+                }
+                else if (this.user_type === 'client') {
+                    this.step = 'driver_info';
+                    setTimeout(function () {
+                        $('.certificate-expiration').datetimepicker({
+                            format: 'MM/DD/YYYY',
+                            viewMode: 'years'
+                        });
+                    }, 455);
+                }
+            },
+
+            successRegister() {
+                let $t = this;
+
+                new Noty({
+                    type: 'information',
+                    text: this.basic_info.name + ' has been registered successfully.',
+                }).show();
+
+                setTimeout(function () {
+                    $t.$emit('hideView');
+                }, 150);
+
+                axios.post('/login', {
+                    email: this.basic_info.email,
+                    password: this.basic_info.password
+                }).then(function (r) {
+                    User.commit('update', r.data.success);
+                });
             }
         }
     }

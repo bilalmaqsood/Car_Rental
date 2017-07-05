@@ -36,7 +36,7 @@
                             <transition name="slide-fade">
                                 <div v-if="authSection" class="auth-container">
                                     <transition name="flip" mode="in-out">
-                                        <user-register @updateView="updateAuthViewChild" v-if="authSectionView=='signup'" key="signup"></user-register>
+                                        <user-register @hideView="hideViewParentChild" @updateView="updateAuthViewChild" v-if="authSectionView=='signup'" key="signup"></user-register>
 
                                         <div class="login-section" v-if="authSectionView!='signup'" key="not-signup" :style="{width:(authSectionView=='reset' ? '40%' : '')}">
                                             <div class="button_box">
@@ -197,7 +197,7 @@
                 baseURL: window.Qwikkar.baseUrl,
                 message: null,
                 authSection: false,
-                authSectionView: 'signup',
+                authSectionView: 'login',
                 profile: false,
                 height: 0,
                 login: {
@@ -250,6 +250,11 @@
                 this.refreshUserData();
                 this.renderResetPasswordIf();
                 this.height = window.innerHeight - $('.nav.navbar-nav.navbar-right').height();
+            },
+
+            hideViewParentChild() {
+                this.authSection = false;
+                this.authSectionView = 'login';
             },
 
             updateAuthViewChild() {
