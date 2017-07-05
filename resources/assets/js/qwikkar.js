@@ -24,6 +24,7 @@ Vue.component('search-listing-details', require('./components/SearchListingDetai
 Vue.component('contact-us-form', require('./components/ContactForm.vue'));
 Vue.component('search-listing-booking', require('./components/BookVehicle.vue'));
 Vue.component('search-listing-card-details', require('./components/CardDetails.vue'));
+Vue.component('user-settings', require('./components/Settings.vue'));
 
 const app = new Vue({
     el: '#app'

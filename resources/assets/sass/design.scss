@@ -2088,6 +2088,7 @@ h3 {
     box-shadow: 1px 1px 3px #000;
     background: #fff;
     border-bottom: 1px solid rgba(230, 230, 230, 0.32);
+    text-align:left;
 }
 
 .setting_wrapper ul li span {
@@ -2098,7 +2099,8 @@ h3 {
 
 .setting_wrapper ul li .svg-icon {
     width: 26px;
-    height: 26px;;
+    height: 26px;
+    display:inline;
 }
 
 .setting_wrapper ul li:first-child p {
