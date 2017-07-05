@@ -556,7 +556,7 @@
         </div>
     </div>
 
-    <div class="about_section_wrapper">
+    <div class="about_section_wrapper" id="about_section_wrapper">
         <h2>About Qwik<span>k</span>ar</h2>
         <div class="about_content_section">
             <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis convallis iactulis commodo. Nam augue lacus, tempor id metus sed, dignissim imperdiet nunc. Cras preEum

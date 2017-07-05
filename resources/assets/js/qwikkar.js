@@ -16,6 +16,7 @@ require('./design');
  */
 
 Vue.component('app-header', require('./components/Header.vue'));
+Vue.component('user-register', require('./components/Register.vue'));
 Vue.component('user-profile', require('./components/Profile.vue'));
 Vue.component('vehicles-search-form', require('./components/SearchForm.vue'));
 Vue.component('search-listing', require('./components/SearchListing.vue'));

@@ -89,6 +89,7 @@ h3 {
     height: 90px;
     display: inline-block;
     overflow: hidden;
+    transition: width .3s ease;
 }
 
 .recover_password {
