@@ -16,7 +16,7 @@ trait Balanceable
     {
         $creditCard = $this->creditCard->where('default', 1)->first();
 
-        // TODO: add payment method GoCardLess|Paypal|Stripe
+        $pay_rsp = $this->processPayment($creditCard,$amount);
 
         $this->notify(new CreditCardNotify([
             'id' => $creditCard->id,
@@ -27,6 +27,7 @@ trait Balanceable
 
         $balanceLog = new BalanceLog([
             'amount' => $amount,
+            'payment_response' => \GuzzleHttp\json_encode($pay_rsp),
             'comment' => 'add payment from card',
         ]);
 
@@ -37,5 +38,32 @@ trait Balanceable
         $this->balance->current += $amount;
 
         $this->balance->save();
+    }
+
+    public function processPayment($creditCard,$amount){
+
+        $key = env('STRIPE_KEY');
+        $secret = env('STRIPE_SECRET');
+
+        \Stripe\Stripe::setApiKey($key);
+
+        $month = explode("/",$creditCard->expiry)[0];
+        $year = explode("/",$creditCard->expiry)[1];
+
+        $token = \Stripe\Token::create(array(
+            "card" => array(
+                "number"    => $creditCard->number,
+                "exp_month" => $month,
+                "exp_year"  => $year,
+                "cvc"       => 123, //TODO: make it dynamic
+                "name"      => $creditCard->name
+            )));
+
+        $options = array(
+            'source' => $token,
+            'description' => "Charge ".$amount." against rent a car on Qwikkar"
+        );
+        return $this->charge($amount, $options );
+
     }
 }
