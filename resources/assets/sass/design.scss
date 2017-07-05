@@ -2665,6 +2665,7 @@ h3 {
     width: 20px;
     fill: #87af1e;
     height: 20px;
+    display: inline-block;
 }
 
 .basic_info .form-group .form-control {
@@ -2688,12 +2689,14 @@ h3 {
     position: absolute;
     top: 0;
     right: 0;
+    width: 85px;
 }
 
 .basic_info .secodery_btn {
     position: absolute;
     right: 0;
     bottom: 0;
+    width: 85px;
 }
 
 .terms_conditions {
@@ -2791,14 +2794,14 @@ h3 {
     float: right;
     background: #525252;
     height: inherit;
-    width: 90px;
+    width: 85px;
     padding-left: 0;
     clear: inherit;
     height: auto;
 }
 
 .user-want-rent {
-    width: 250px;
+    width: 255px;
     float: left;
     height: 180px;
     padding-left: 0;
@@ -2806,9 +2809,11 @@ h3 {
 
 .user-rent-btn .primary_btn {
     float: right;
-    width: 90px;
+    width: 85px;
 }
-
+.user-rent-btn .secodery_btn {
+    width: 85px;
+}
 .user-want-rent .btn {
     background: inherit;
     border: none;
