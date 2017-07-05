@@ -57,7 +57,7 @@
                                                         login
                                                     </button>
 
-                                                    <button data-loading-text="resetting ..." :disabled="$v.login.email.$invalid" class="secodery_btn" v-if="authSectionView=='reset'" @click="resetUser" key="login">
+                                                    <button data-loading-text="resetting ..." :disabled="$v.login.email.$invalid" class="secodery_btn" v-if="authSectionView=='reset'" @click="resetUser" key="reset">
                                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
                                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
                                                         </svg>
@@ -197,7 +197,7 @@
                 baseURL: window.Qwikkar.baseUrl,
                 message: null,
                 authSection: false,
-                authSectionView: 'login',
+                authSectionView: 'signup',
                 profile: false,
                 height: 0,
                 login: {
