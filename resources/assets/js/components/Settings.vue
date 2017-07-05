@@ -13,10 +13,10 @@
                         <p>E-mail<span>{{User.state.auth.email}}</span></p>
                         <p>Phone no.<span>{{User.state.auth.phone}}</span></p>
                         <p v-if="User.state.auth.insurance">NINo.<span>{{User.state.auth.insurance}}</span></p>
-                        <p>Driver’s license no.<span>DOEJ01233245756734R</span></p>
-                        <p>Postcode on license<span>EC4r 9AN</span></p>
-                        <p>PCO cerSficate no.<span>9817283561726543827</span></p>
-                        <p>PCO cerSficate exp. date<span>01.05.2020</span></p>
+                        <p v-if="User.state.auth.driving">Driver’s license no.<span>{{User.state.auth.driving}}</span></p>
+                        <p v-if="User.state.auth.postcode">Postcode on license<span>{{ User.state.auth.postcode }}</span></p>
+                        <p v-if="User.state.auth.pco_number">PCO cerSficate no.<span>{{User.state.auth.pco_number}}</span></p>
+                        <p v-if="User.state.auth.pco_expiry_date">PCO cerSficate exp. date<span>{{date_format(User.state.auth.pco_expiry_date)}}</span></p>
                     </li>
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" class="svg-icon">
@@ -30,7 +30,7 @@
                         </svg>
                         <span>Privacy Policy</span>
                     </li>
-                    <li>
+                    <li @click="logout" style="cursor: pointer;">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#log_out_icon"></use>
                         </svg>
@@ -52,31 +52,25 @@
 
         data() {
             return {
-                notifications: "",
                 User: User,
             };
         },
 
         mounted() {
-            console.log(User.state);
             $scope=this;
-            console.log(this.profileHeight);
             this.prepareComponent();
-            axios.get('/api/notifications')
-                .then(function (response) {
-                    $scope.notifications = response.data.success;
-                });
         },
 
         methods: {
             prepareComponent() {
                 console.log('profile componenet mounted');
             },
-            isBooking(notification){
-                return notification.data.type=='Booking';
-            },
+
             date_format(date){
-                return moment(date.date).format("D.M.Y");
+                return moment(date).format("D.M.Y");
+            },
+            logout(){
+                window.location="/logout";
             }
         }
     }
