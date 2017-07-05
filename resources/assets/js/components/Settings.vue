@@ -9,10 +9,10 @@
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                         </svg>
                         <span>Profile settings</span>
-                        <p>Full name<span>John Doe</span></p>
-                        <p>E-mail<span>Johndoe@e-mail.com</span></p>
-                        <p>Phone no.<span>0123 456 7890</span></p>
-                        <p>NINo.<span>SS01234567D</span></p>
+                        <p>Full name<span>{{User.state.auth.name}}</span></p>
+                        <p>E-mail<span>{{User.state.auth.email}}</span></p>
+                        <p>Phone no.<span>{{User.state.auth.phone}}</span></p>
+                        <p v-if="User.state.auth.insurance">NINo.<span>{{User.state.auth.insurance}}</span></p>
                         <p>Driver’s license no.<span>DOEJ01233245756734R</span></p>
                         <p>Postcode on license<span>EC4r 9AN</span></p>
                         <p>PCO cerSficate no.<span>9817283561726543827</span></p>
