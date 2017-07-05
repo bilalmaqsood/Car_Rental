@@ -14,50 +14,25 @@
                 </div>
             </div>
 
-            <div v-for="notification in notifications" class="pofile_content_wrapper" v-if="isBooking(notification)">
+            <div v-for="notification in notifications" :class="notification.data.noti_type" class="pofile_content_wrapper" >
 
-                <div class="img_box" v-bind:style="{ 'background-image': 'url(' + notification.data.image + ')' }">
+                <div v-if="propExist(notification.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notification.data.image + ')' }">
                     <img :src="notification.data.image" alt="">
                 </div>
+
                 <div class="profile_content">
-                    <h3>{{notification.data.title}}</h3>
-                    <p><span>{{notification.data.user}}</span> sent you booking request</p>
-                    <p>{{notification.data.vehicle}}</p>
-                    <p>Contract start: {{ date_format(notification.data.contract_start) }} </p>
-                    <p>Contract end: {{ date_format(notification.data.contract_end) }}</p>
-                    <p>You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>£{{ notification.data.deposit }}</span> have been taken from your card ending in <span>1234</span></p>
+                    <h3  v-if="propExist(notification.data,'title')">{{notification.data.title}}</h3>
+                    <p v-if="propExist(notification.data,'user')" ><span>{{notification.data.user}}</span> sent you booking request</p>
+                    <p v-if="propExist(notification.data,'vehicle')">{{notification.data.vehicle}}</p>
+                    <p v-if="propExist(notification.data,'contract_start')">Contract start: {{ date_format(notification.data.contract_start) }} </p>
+                    <p v-if="propExist(notification.data,'contract_end')">Contract end: {{ date_format(notification.data.contract_end) }}</p>
+                    <p v-if="propExist(notification.data,'deposit')">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>£{{ notification.data.deposit }}</span> have been taken from your card ending in <span>1234</span></p>
                 </div>
 
             </div>
 
-            <div class="pofile_content_wrapper oring_border">
-                <div class="profile_content">
-                    <h3>Contract ending</h3>
-                    <p>Your contract for <span>Toyota Prius 1.8 Hybrid</span> will end in <span>1 day(s) - Contract ending:</span> 06.05.2017</p>
-                    <p>You can request to extend or renew the contract. If you do not take any acHons, then please return the vehicle at the pre-set date and locaHon.</p>
-                </div>
-            </div>
 
-            <div class="pofile_content_wrapper green_border">
-                <div class="profile_content">
-                    <h3>You have new messages</h3>
-                    <p>On 05.05.2017 <span>Mike Myers</span> wrote:</p>
-                    <p>Hello Andrei. I made the required changes to the contract and it is ready for you to sign it. If you have any further inquiries, do not hesitate to get in touch. </p>
-                </div>
-            </div>
 
-            <div class="pofile_content_wrapper white_boredr">
-                <div class="img_box" style="background: url(/images/car_img_1.png)">
-                    <img src="/images/car_img_1.png" alt="">
-                </div>
-                <div class="profile_content">
-                    <h3>Request unsuccessfull</h3>
-                    <p>Unfortunately, your request to book</p>
-                    <p><span>Toyota Prius 1.8 Hybrid </span></p>
-                    <p>has beenunsuccessful.</p>
-                    <p>Please check our vehicles database for a similar vehicle that you can book.</p>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -91,8 +66,8 @@
             prepareComponent() {
                 console.log('profile componenet mounted');
             },
-            isBooking(notification){
-                return notification.data.type=='Booking';
+            propExist(obj,prop){
+                return obj.hasOwnProperty(prop);;
             },
             date_format(date){
                 return moment(date.date).format("D.M.Y");
