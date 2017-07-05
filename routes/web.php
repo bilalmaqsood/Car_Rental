@@ -66,3 +66,4 @@ Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/search', 'HomeController@search')->name('search');
+Route::get('/vehicles', 'HomeController@topVehicles')->name('top-vehicles');

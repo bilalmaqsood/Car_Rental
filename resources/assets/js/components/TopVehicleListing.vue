@@ -1,0 +1,118 @@
+<template>
+    <div class="vehicles_tabs">
+        <h2>Top vehicles</h2>
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a @click="queryVehicles('location')" href="javascript:void(0)" aria-controls="by_location" role="tab" data-toggle="tab">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                    </svg>
+                    by location
+                </a>
+            </li>
+            <li role="presentation">
+                <a @click="queryVehicles('rent')" href="javascript:void(0)" aria-controls="by_price" role="tab" data-toggle="tab">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                    </svg>
+                    by price
+                </a>
+            </li>
+            <li role="presentation">
+                <a @click="queryVehicles('rating')" href="javascript:void(0)" aria-controls="by_rating" role="tab" data-toggle="tab">
+                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                    by rating
+                </a>
+            </li>
+        </ul>
+
+
+        <div class="tab-content">
+
+            <div role="tabpanel" class="tab-pane active" id="by_location">
+                <div class="main_vehicles_container">
+
+                    <div v-for="vehicle in vehicles " class="main_vehicles">
+                        <div class="owl-carousel owl-slider">
+
+                            <div v-for="img in vehicle.images " class="item"><img :src="img" alt=""></div>
+                        </div>
+                        <h3><a  href="javascript:void(0)" @click="itemDetails(vehicle)" >{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</a>
+                        </h3>
+                        <ul>
+                            <li>
+                                <p>Year: {{vehicle.year}} </p>
+                                <p>Mileage: {{vehicle.mileage}}</p>
+                            </li>
+                            <li>
+                                <p>Seats: {{vehicle.seats}}</p>
+                                <p>Transmission: manual</p>
+                            </li>
+                            <li>
+                                <p>Fuel type: {{vehicle.fuel}} </p>
+                                <p>Consumption: {{vehicle.mpg}} mpg (ec.)</p>
+                            </li>
+                        </ul>
+                        <div class="availablity_box">
+                            <div class="availabe">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                </svg>
+                                <p>available from: <span>{{vehicle.available_from}}</span></p>
+                            </div>
+                            <div class="availabe_item_price">
+                                <h3>&pound; {{vehicle.rent}}</h3>
+                                <span>/week</span>
+                                <span v-if="vehicle.insurance>0.0">insurance included</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</template>
+
+<script>
+    var $scope;
+
+    export default {
+
+        data() {
+            return {
+                vehicles: "",
+            }
+
+        },
+
+        computed: {
+            // a computed getter
+            images: function () {
+                console.log(this.vehicle);
+            }
+            },
+        mounted() {
+            $scope=this;
+            this.queryVehicles('location');
+        },
+
+
+    methods: {
+        queryVehicles(param){
+            var params = "?"+param+'=desc' ;
+            if(param=="rent")
+                params = "?"+param+'=asc' ;
+
+            axios.get('/vehicles'+params).then(function (response) {
+                $scope.vehicles = response.data.success;
+            });
+        }
+    }
+  }
+</script>
