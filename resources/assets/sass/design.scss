@@ -2647,7 +2647,9 @@ h3 {
     width: 40%;
     background: #525252;
     padding: 10px;
-    position: relative;
+    position: absolute;
+    right: 0;
+    text-align: left;
 }
 
 .basic_info .form-group {
