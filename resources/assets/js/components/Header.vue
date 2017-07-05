@@ -274,14 +274,6 @@
                 $("html, body").animate({scrollTop: $('#' + to).offset().top - 50}, 1000);
             },
 
-            signUpUser() {
-                console.log('sign up section');
-                new Noty({
-                    type: 'information',
-                    text: 'Some notification text',
-                }).show();
-            },
-
             loginUser(e) {
                 let $this = this;
                 let $btn = $(e.target).button('loading');
