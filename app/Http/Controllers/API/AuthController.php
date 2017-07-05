@@ -64,7 +64,11 @@ class AuthController extends Controller
      */
     public function info(Request $request)
     {
-        return api_response($this->userProfile($request->user()));
+        return api_response(array_merge($this->userProfile($request->user()), [
+            'type' => $request->user()->types->first()->name,
+            'accounts' => $request->user()->account,
+            'credit_cards' => $request->user()->creditCard,
+        ]));
     }
 
     /**
