@@ -28,12 +28,6 @@
         <app-header></app-header>
 
         @yield('content')
-
-        @if(!request()->is('search'))
-            <div class="footer_wrapper">
-                <p>Copyright 2017 @ qwikkar ltd. All rights reserved</p>
-            </div>
-        @endif
     </div>
 
     @include('layouts.svgs')
@@ -43,6 +37,8 @@
     <script src="{{ url(mix('js/manifest.js')) }}"></script>
     <script src="{{ url(mix('js/vendor.js')) }}"></script>
     <script src="{{ url(mix('js/qwikkar.js')) }}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0"></script>
+
     <script>
         window.SearchMap = null;
         function initMap() {
@@ -52,5 +48,6 @@
             });
         }
     </script>
+
 </body>
 </html>

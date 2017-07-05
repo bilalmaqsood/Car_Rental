@@ -692,6 +692,7 @@ h3 {
 
 .top_location .secodery_btn {
     background: #4a4a4a;
+    color: #98b927;
 }
 
 .top_location .secodery_btn .svg-icon {
@@ -821,10 +822,6 @@ h3 {
     width: 100%;
 }
 
-.search_map iframe {
-    height: 100vh;
-}
-
 .nav_wrapper .navbar-brand .default_logo {
     display: block;
 }
@@ -919,12 +916,16 @@ h3 {
     top: -5px;
 }
 
+.search_map #search_map {
+    width: 50% !important;
+    height: 100vh !important;
+}
+
 .search_container {
     width: 50%;
     position: absolute;
     z-index: 60;
     background: rgba(255, 255, 255, 0.91);
-    float: right;
     right: 0;
     height: 100vh;
     overflow-y: scroll;
@@ -3561,7 +3562,7 @@ h3 {
         right: 15px;
         bottom: 12px;
     }
-    .search_map iframe {
+    .search_map #search_map {
         displaY: none;
     }
     .search_container {

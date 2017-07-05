@@ -5,20 +5,26 @@
             <div class="search_container">
                 <div class="search_car" v-for="item in items" v-if="!detailsDisplay">
                     <a href="javascript:void(0)" @click="itemDetails(item)">
-                    <div class="search_car_img" v-bind:style="{ 'background-image': 'url(' + item.images[0] + ')' }">
-                        <img v-bind:src="item.images[0]" alt="">
-                    </div>
+                        <div class="search_car_img" v-bind:style="{ 'background-image': 'url(' + item.images[0] + ')' }">
+                            <img v-bind:src="item.images[0]" alt="">
+                        </div>
                     </a>
                     <div class="search_car_content">
-                        <h3><a  href="javascript:void(0)" @click="itemDetails(item)" >{{item.make}} {{item.model}} {{item.variant}}</a>
+                        <h3><a href="javascript:void(0)" @click="itemDetails(item)">{{item.make}} {{item.model}} {{item.variant}}</a>
                         </h3>
                         <ul>
-                            <li><p>Year: {{item.year}} </p>
-                                <p>Mileage: {{item.mileage}}</p></li>
-                            <li><p>Seats: 5 </p>
-                                <p>Transmission: manual</p></li>
-                            <li><p>Fuel type: hybrid </p>
-                                <p>Consumption: 95.2 mpg (ec.)</p></li>
+                            <li>
+                                <p>Year: {{item.year}} </p>
+                                <p>Mileage: {{item.mileage}}</p>
+                            </li>
+                            <li>
+                                <p>Seats: 5 </p>
+                                <p>Transmission: manual</p>
+                            </li>
+                            <li>
+                                <p>Fuel type: hybrid </p>
+                                <p>Consumption: 95.2 mpg (ec.)</p>
+                            </li>
                         </ul>
                         <div class="availablity_box">
                             <div class="availabe">
@@ -35,10 +41,12 @@
                         </div>
                     </div>
                 </div>
+
                 <search-listing-details :vehicle="item" v-if="detailsDisplay"></search-listing-details>
+
                 <div class="car_detail_thumb" v-show="detailsDisplay">
                     <a v-for="item in items" href="javascript:void(0)" @click="itemDetails(item)">
-                        <img  src="http://img.autobytel.com//2016/bmw/228/2-376-threequartersview101-77888.jpg" alt="">
+                        <img src="http://img.autobytel.com//2016/bmw/228/2-376-threequartersview101-77888.jpg" alt="">
                     </a>
                 </div>
             </div>
@@ -47,6 +55,8 @@
 </template>
 
 <script>
+    import User from '../user';
+
     export default {
         data() {
             return {
@@ -58,6 +68,7 @@
                 item: {},
                 filterDisplay: 'none',
                 detailsDisplay: false,
+                SearchMap: null
             };
         },
 
@@ -67,63 +78,69 @@
 
         methods: {
             prepareComponent(){
-                var items = localStorage.getItem('search-list');
-                this.items = JSON.parse(items).data.success.data;
+                let $t = this;
+                this.items = User.state.searchResults.data;
+                User.commit('listing', []);
+
+                setTimeout(function () {
+                    $t.SearchMap = new google.maps.Map(document.getElementById('search_map'), {
+                        zoom: 10,
+                        center: {
+                            lat: 51.508653,
+                            lng: -0.083792
+                        }
+                    });
+                    google.maps.event.addListenerOnce($t.SearchMap, 'idle', function () {
+                        setTimeout(function () {
+                            $t.drawMarker();
+                        }, 500);
+                    });
+                }, 500);
             },
-            showFiltersForm(){
-                this.filterDisplay = this.filterDisplay == 'none' ? 'block' : 'none';
-            },
+
             searchVehicles() {
                 this.fetchVehicles();
             },
+
             drawMarker() {
-                this.items.forEach(function (item, index) {
-                    var lat = parseFloat(item.location.split(",")[0]);
-                    var lng = parseFloat(item.location.split(",")[1]);
+                let $t = this;
+                _.map($t.items, function (v) {
+                    let lat = parseFloat(v.location.split(",")[0]);
+                    let lng = parseFloat(v.location.split(",")[1]);
                     console.log(lat + "-" + lng);
                     new google.maps.Marker({
                         position: {lat: lat, lng: lng},
-                        map: SearchMap,
-                        title: item.make + " " + " " + item.model + " " + item.variant,
+                        map: $t.SearchMap,
+                        title: v.make + " " + v.model + " " + v.variant + " " + v.year,
                     });
                 });
+            },
 
-            },
-            checkMap() {
-                console.log(SearchMap);
-            },
-            initMap() {
-                let $map = document.createElement('script');
-                $map.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0&callback=initMap';
-                $map.async = true;
-                $map.defer = true;
-                document.body.appendChild($map);
-            },
             searchFilters(){
                 this.advanceSearch = !this.advanceSearch;
             },
-            itemDetails(item){
-                this.detailsDisplay=true;
-                axios.get('/api/vehicle/'+item.id)
-                    .then(response => {
-                       this.item=response.data.success;
 
+            itemDetails(item){
+                this.detailsDisplay = true;
+                axios
+                    .get('/api/vehicle/' + item.id)
+                    .then(response => {
+                        this.item = response.data.success;
                     });
             },
 
             searchListing(response) {
-                localStorage.setItem("search-list", JSON.stringify(response));
-                window.location = "/search";
+                this.items = response.data.success.data;
             },
-            fetchVehicles(params) {
-                var params = this.queryParams();
-                axios.get('/api/search/vehicle' + params)
+
+            fetchVehicles() {
+                axios
+                    .get('/api/search/vehicle' + this.queryParams())
                     .then(this.searchListing);
             },
+
             queryParams(){
-                var params = {};
-                var lat = null;
-                var lng = null;
+                let params = {};
 
                 if (this.vehicle.length > 0)
                     params.vehicle = this.vehicle;
@@ -140,17 +157,20 @@
                             params.longitude = response.results[0].geometry.location.lng;
                         });
                 }
+
                 if (this.price.length > 0) {
                     params.price = this.price;
                 }
+
                 if (this.available.length > 0) {
                     params.available = this.available;
                 }
+
                 if (!$.isEmptyObject(params)) {
                     return "?" + $.param(params);
                 }
-                return "";
 
+                return "";
             }
         }
     }

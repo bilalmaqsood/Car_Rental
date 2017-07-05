@@ -18,7 +18,7 @@
                 </div>
             </li>
             <li>
-                <button type="button" class="secodery_btn" @click="searchVehicles">
+                <button type="button" class="secodery_btn" @click="searchVehicles" data-loading-text="searching ...">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
                     </svg>
@@ -53,6 +53,8 @@
 </template>
 
 <script>
+    import User from '../user';
+
     export default {
         data() {
             return {
@@ -65,22 +67,24 @@
         },
 
         methods: {
-            searchVehicles() {
-                this.fetchVehicles();
+            searchVehicles(e) {
+                this.fetchVehicles(e);
             },
 
             searchFilters() {
                 this.advanceSearch = !this.advanceSearch;
             },
 
-            searchListing(response) {
-                console.log(response.data.success);
-            },
-
-            fetchVehicles() {
+            fetchVehicles(e) {
+                let $t = this;
+                let $btn = $(e.target).button('loading');
                 axios
                     .get('/api/search/vehicle' + this.queryParams())
-                    .then(this.searchListing);
+                    .then(function (r) {
+                        User.commit('listing', r.data.success);
+                        $t.$emit('showListing');
+                        $btn.button('reset');
+                    });
             },
 
             queryParams() {

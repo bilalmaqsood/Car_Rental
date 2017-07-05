@@ -13,16 +13,6 @@
 
 Route::get('/test', function () {
 //    $vehicle = Qwikkar\Models\Vehicle::find(1);
-    $user = Qwikkar\Models\User::find(2);
-
-    $faq = Qwikkar\Models\Faq::findOrFail(1);
-
-    $faq->answer = 'lorem ipsam dlor sans emit oknasir.';
-    $faq->user()->associate($user);
-
-    $faq->save();
-    dd($faq);
-
 //    $booking = Qwikkar\Models\Booking::find(1);
 
 //    $balanceLog = \Qwikkar\Models\BalanceLog::firstOrNew(['amount' => 999.99, 'comment' => 'lorem ipsam sans emit']);
@@ -67,3 +57,7 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/vehicles', 'HomeController@topVehicles')->name('top-vehicles');
+
+Route::get('/vehicle/image/hash', function () {
+    return response(File::get(resource_path('assets/images/car_img.png')), 200, array('content-type' => 'image/png'));
+});
