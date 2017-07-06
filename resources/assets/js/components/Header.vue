@@ -7,9 +7,20 @@
                     <img :src="baseURL + '/images/logo.png'" alt="" class="hover_logo">
                 </a>
             </div>
+
+            <transition name="flip">
+                <div class="search_filter" v-if="storage.state.searchView" @click="showAdvanceForm">
+                    <button class="search_filter_btn primary_btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filters_icon"></use>
+                        </svg>
+                    </button>
+                </div>
+            </transition>
+
             <div id="navbar" class="customize_nav">
                 <transition name="flip" mode="out-in">
-                    <ul class="nav navbar-nav navbar-right" key="unauthenticated" v-if="storage.auth==null">
+                    <ul class="nav navbar-nav navbar-right" key="unauthenticated" v-if="storage.state.auth==null">
                         <li>
                             <a href="javascript:;" @click="scrollOnPage('about_section_wrapper')">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
@@ -193,7 +204,7 @@
     export default {
         data() {
             return {
-                storage: User.state,
+                storage: User,
                 baseURL: window.Qwikkar.baseUrl,
                 message: null,
                 authSection: false,
@@ -332,6 +343,10 @@
 
             setUserData(r) {
                 User.commit('update', r.data.success);
+            },
+
+            showAdvanceForm(e) {
+                User.commit('advance');
             }
         }
     }

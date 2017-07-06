@@ -4,6 +4,8 @@ import mutations from './mutations';
 
 const state = {
     auth: null,
+    searchView: false,
+    showAdvance: false,
     searchResults: []
 };
 

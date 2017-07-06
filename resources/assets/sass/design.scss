@@ -868,11 +868,6 @@ h3 {
 }
 
 .filter_hied_btn {
-    display: none;
-}
-
-.filter_hied_btn {
-    display: none;
     width: 50%;
     position: absolute;
     z-index: 100;
@@ -921,33 +916,63 @@ h3 {
     height: 100vh !important;
 }
 
+.search_container:after,
+.search_container:before {
+    content: " ";
+    display: table;
+}
+
+.search_container:after {
+    clear: both;
+}
+
 .search_container {
     width: 50%;
     position: absolute;
     z-index: 60;
     background: rgba(255, 255, 255, 0.91);
     right: 0;
-    height: 100vh;
+    height: 89.5vh;
     overflow-y: scroll;
-    padding-top: 70px;
+    margin-top: 70px;
     top: 0;
     box-shadow: 1px 1px 3px #000;
 }
 
+.search_car:after,
+.search_car:before {
+    content: " ";
+    display: table;
+}
+
+.search_car:after {
+    clear: both;
+}
+
 .search_car {
-    float: left;
-    width: 100%;
-    border-left: 2px solid #fff;
-    border-bottom: 2px solid #fff;
-    box-shadow: 1px 1px 3px #000;
+    //border-left: 2px solid #fff;
+    //border-bottom: 2px solid #fff;
+    //box-shadow: 0 1px 5px #000;
+    //margin-bottom: 1rem;
 }
 
 .search_car_img {
-    float: left;
+    float: right;
     width: 30%;
     background-size: cover !important;
     background-position-x: center !important;
-    min-height: 150px;
+    min-height: 158px;
+    transition: width .3s ease;
+    position: relative;
+}
+
+.highlight-vehicle {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(135, 175, 30, 0.4);
 }
 
 .search_car_img img {
@@ -956,10 +981,12 @@ h3 {
 }
 
 .search_car_content {
-    float: left;
+    float: right;
     width: 70%;
     background: #fff;
-    padding: 5px 0 0;
+    padding: 0;
+    transition: width .3s ease;
+    overflow: hidden;
 }
 
 .search_car_content ul {
@@ -990,7 +1017,7 @@ h3 {
 }
 
 .search_car_content h3 {
-    margin-top: 0;
+    margin-top: 0.8rem;
     font-size: 20px;
     padding-left: 5px;
     margin-bottom: 6px;
@@ -1058,9 +1085,11 @@ h3 {
 }
 
 .car_detail_container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
     width: 80%;
-    float: left;
-    /*height: 100vh;*/
 }
 
 .detail_img img {
@@ -2812,9 +2841,11 @@ h3 {
     float: right;
     width: 85px;
 }
+
 .user-rent-btn .secodery_btn {
     width: 85px;
 }
+
 .user-want-rent .btn {
     background: inherit;
     border: none;

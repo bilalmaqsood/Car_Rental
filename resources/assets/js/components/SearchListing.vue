@@ -1,21 +1,61 @@
 <template>
     <div>
+        <transition name="slide-fade">
+            <div class="filter_hied_btn" v-if="user.state.showAdvance">
+                <form>
+                    <ul>
+                        <li>
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
+                                </svg>
+                                <input type="text" class="form-control" placeholder="vehicle" v-model.trim="vehicle">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                                </svg>
+                                <input type="text" class="form-control" placeholder="location" v-model.trim="location">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                                </svg>
+                                <input type="text" class="form-control" placeholder="price range" v-model.trim="price">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                </svg>
+                                <input type="text" class="form-control available-from" placeholder="available from" v-model.trim="available">
+                            </div>
+                        </li>
+                        <li>
+                            <button type="button" class="submit" @click="searchVehicles">Apply filters</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </transition>
+
         <div class="search_map">
             <div id="search_map" style="width: 100%; height: 100%;"></div>
+
             <div class="search_container">
-                <div class="search_car" v-for="item in items" v-if="!detailsDisplay">
-                    <a href="javascript:void(0)" @click="itemDetails(item)">
-                        <div class="search_car_img" v-bind:style="{ 'background-image': 'url(' + item.images[0] + ')' }">
-                            <img v-bind:src="item.images[0]" alt="">
-                        </div>
-                    </a>
-                    <div class="search_car_content">
-                        <h3><a href="javascript:void(0)" @click="itemDetails(item)">{{item.make}} {{item.model}} {{item.variant}}</a>
+                <div class="search_car" v-for="i in items">
+                    <div class="search_car_content" :style="{width: detailsDisplay ? '0px' : '', height: detailsDisplay ? '0px' : ''}">
+                        <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a>
                         </h3>
                         <ul>
                             <li>
-                                <p>Year: {{item.year}} </p>
-                                <p>Mileage: {{item.mileage}}</p>
+                                <p>Year: {{i.year}} </p>
+                                <p>Mileage: {{i.mileage}}</p>
                             </li>
                             <li>
                                 <p>Seats: 5 </p>
@@ -29,25 +69,32 @@
                         <div class="availablity_box">
                             <div class="availabe">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                         xlink:href="#availability_results"></use>
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
                                 <p>available from: <span>now</span></p>
                             </div>
                             <div class="availabe_item_price">
-                                <h3>£ {{item.rent }}</h3>
+                                <h3>£ {{i.rent }}</h3>
                                 <span>/week</span>
                             </div>
                         </div>
                     </div>
+
+                    <a href="javascript:void(0)" @click="itemDetails(i)">
+                        <div class="search_car_img" v-bind:style="{'background-image': 'url(' + i.images[0] + ')', width: detailsDisplay ? '20%' : '', 'min-height':  detailsDisplay ? '100px' : ''}">
+                            <img class="img-responsive" v-bind:src="i.images[0]" alt="">
+                            <div class="highlight-vehicle" v-if="i.id == item.id"></div>
+                        </div>
+                    </a>
                 </div>
 
                 <search-listing-details :vehicle="item" v-if="detailsDisplay"></search-listing-details>
+            </div>
 
-                <div class="car_detail_thumb" v-show="detailsDisplay">
-                    <a v-for="item in items" href="javascript:void(0)" @click="itemDetails(item)">
-                        <img src="http://img.autobytel.com//2016/bmw/228/2-376-threequartersview101-77888.jpg" alt="">
-                    </a>
+            <div class="spinner-container side-loader" id="sideLoader">
+                <div class="spinner-frame">
+                    <div class="spinner-cover"></div>
+                    <div class="spinner-bar"></div>
                 </div>
             </div>
         </div>
@@ -60,6 +107,7 @@
     export default {
         data() {
             return {
+                user: User,
                 vehicle: "",
                 location: "",
                 available: "",
@@ -121,19 +169,27 @@
             },
 
             itemDetails(item){
-                this.detailsDisplay = true;
+                let $t = this;
+                let $s = $('#sideLoader').show();
                 axios
                     .get('/api/vehicle/' + item.id)
                     .then(response => {
-                        this.item = response.data.success;
+                        $t.detailsDisplay = true;
+                        $t.item = response.data.success;
+                        $s.hide();
                     });
             },
 
             searchListing(response) {
                 this.items = response.data.success.data;
+                setTimeout(function () {
+                    $('#sideLoader').hide();
+                    User.commit('advance');
+                }, 800);
             },
 
             fetchVehicles() {
+                $('#sideLoader').show();
                 axios
                     .get('/api/search/vehicle' + this.queryParams())
                     .then(this.searchListing);

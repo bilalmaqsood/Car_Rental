@@ -81,6 +81,7 @@
                 axios
                     .get('/api/search/vehicle' + this.queryParams())
                     .then(function (r) {
+                        User.commit('view');
                         User.commit('listing', r.data.success);
                         $t.$emit('showListing');
                         $btn.button('reset');
