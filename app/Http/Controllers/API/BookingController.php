@@ -240,6 +240,7 @@ class BookingController extends Controller
         $booking->vehicle->owner->user->notify(new BookingNotify([
             'id' => $booking->id,
             'type' => 'Booking',
+            'status' => $booking->vehicle->status,
             'image' => $booking->vehicle->images->first(),
             'title' => 'Booking ' . strtolower($booking->statusTypes[$request->status]) . ' request',
             'user' => $request->user()->name,
@@ -302,6 +303,7 @@ class BookingController extends Controller
             $booking->user->notify(new BookingNotify([
                 'id' => $booking->id,
                 'type' => 'Booking',
+                'status' => $booking->vehicle->status,
                 'image' => $booking->vehicle->images->first(),
                 'title' => 'Booking ' . strtolower($booking->statusTypes[$booking->status]) . ' request approved',
                 'user' => $request->user()->name,

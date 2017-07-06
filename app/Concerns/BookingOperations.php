@@ -152,6 +152,7 @@ trait BookingOperations
         $booking->vehicle->owner->user->notify(new BookingNotify([
             'id' => $booking->id,
             'type' => 'Booking',
+            'status' => $booking->vehicle->status,
             'image' => $booking->vehicle->images->first(),
             'title' => 'Booking requested',
             'user' => $user->name,
