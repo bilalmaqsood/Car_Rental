@@ -6,7 +6,7 @@
                 <div v-for="booking in bookings" v-if="booking.status==BOOKING_CONFIRM">
                     <h2>Current booking</h2>
                     <div class="search_car">
-                    <div class="search_car_img" v-bind:style="{ 'background-image': 'url(' + booking.vehicle.images[0] + ')' }">
+                    <div class="search_car_img" v-bind:style="imgStyle(booking)">
                         <img :src="booking.vehicle.images[0]" alt="">
                     </div>
                     <div class="search_car_content">
@@ -300,7 +300,7 @@
                 <h2>Past booking</h2>
 
                 <div v-for="booking in bookings" v-if="booking.status==BOOKING_CLOSED"  class="search_car">
-                    <div class="search_car_img past_booking_car" v-bind:style="{ 'background-image': 'url(' + booking.vehicle.images[0] + ')' }">
+                    <div class="search_car_img past_booking_car" v-bind:style="imgStyle(booking)">
                         <img :src="booking.vehicle.images[0]" alt="">
                     </div>
                     <div class="search_car_content">
@@ -383,6 +383,11 @@
         },
 
         methods: {
+            imgStyle(booking) {
+                if($scope.USER_TYPE=='client')
+                    return { 'background-image': 'url(' + booking.vehicle.images[0] + ')', };
+                return { 'background-image': 'url(' + booking.vehicle.images[0] + ')', 'min-height' : '236px'};
+            },
             date_format(date){
                 return moment(date).format("D.M.Y");
             },
