@@ -152,13 +152,16 @@
                                 payment
                             </a>
                         </li>
-                        <li>
-                            <a href="#">
+                        <li :class="{active: booking}">
+                            <a href="javascript:;" @click="booking=!booking">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon svg-icon-booking">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                 </svg>
                                 bookings
                             </a>
+                            <transition name="slide-fade">
+                                <booking-listing v-if="booking" :profileHeight="height"></booking-listing>
+                            </transition>
                         </li>
                         <li>
                             <a href="#">
@@ -199,6 +202,7 @@
                 authSection: false,
                 authSectionView: 'login',
                 profile: false,
+                booking: false,
                 height: 0,
                 login: {
                     email: '',
