@@ -143,6 +143,10 @@ h3 {
 
 .login-section .primary_btn {
     float: right;
+    width: 85px;
+}
+.login-section .secodery_btn {
+    width: 85px;
 }
 
 .recover_password .primary_btn {
@@ -2363,6 +2367,8 @@ h3 {
 }
 
 .table-condensed > thead > tr > th {
+    background: #87af1e;
+    border-radius: 0;
     color: #fff;
 }
 
@@ -2393,8 +2399,12 @@ h3 {
 .bootstrap-datetimepicker-widget table thead tr:first-child th:hover {
     background: #87af1e;
     border-radius: 0;
+    color: #fff;
 }
-
+.bootstrap-datetimepicker-widget table td span.active{
+    background: #87af1e; 
+    color: #fff;
+}
 .extend_booking .extend_booking_content {
     list-style-type: none;
     font-size: 16px;
@@ -2995,7 +3005,7 @@ h3 {
     }
     .search_container {
         padding-top: 130px;
-        width: 46%;
+        width: 50%;
     }
     .search_car_content .availablity_box {
         margin-top: 21px;
@@ -3301,7 +3311,7 @@ h3 {
         width: 80%;
     }
     .search_container {
-        width: 80%;
+        width: 50%;
     }
     .search_filter {
         left: 20%;
@@ -3341,7 +3351,7 @@ h3 {
         left: 20%;
     }
     .search_container {
-        width: 80%;
+        width: 50%;
     }
 }
 
@@ -3847,4 +3857,19 @@ h3 {
     .navbar-default .navbar-nav > li > a {
         width: 52px;
     }
+}
+.has-error{
+    border-left: 5px solid #ff0101 !important;
+}
+.has-error .form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: #ff0101;
+}
+.has-error .form-control::-moz-placeholder { /* Firefox 19+ */
+  color: #ff0101;
+}
+.has-error .form-control:-ms-input-placeholder { /* IE 10+ */
+  color: #ff0101;
+}
+.has-error .form-control:-moz-placeholder { /* Firefox 18- */
+  color: #ff0101;
 }
