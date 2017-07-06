@@ -12,7 +12,7 @@ require('bootstrap-sass');
 
 window.moment = require('moment');
 
-require('eonasdan-bootstrap-datetimepicker');
+window.datetimepicker = require('eonasdan-bootstrap-datetimepicker');
 
 require('jquery.easing');
 

@@ -77,7 +77,7 @@
                         </transition><transition name="slide-fade">
                         <booking-chat  v-show="booking_chat" ></booking-chat>
                         </transition><transition name="slide-fade">
-                        <extend-cancel-booking v-show="extend_cancel"></extend-cancel-booking>
+                        <extend-cancel-booking v-show="extend_cancel" :CURRENT_BOOKING="CURRENT_BOOKING"></extend-cancel-booking>
                         </transition>
                     </div>
 
@@ -153,6 +153,7 @@
                 User: User,
                 BOOKING_CONFIRM: 1,
                 BOOKING_CLOSED: 7,
+                CURRENT_BOOKING: "",
                 USER_TYPE: User.state.auth.type,
                 payment_logs: false,
                 car_inpec: false,
@@ -170,6 +171,7 @@
                     active_id = response.data.success.filter(function (item) {
                         return item.status.match($scope.BOOKING_CONFIRM)
                     });
+                    $scope.CURRENT_BOOKING = active_id[0]?active_id[0]:undefined;
                 }).then(this.getWeeklyPayment);
 
         },
@@ -184,10 +186,12 @@
                 return moment(date).format("D.M.Y");
             },
             getWeeklyPayment(){
-                if(active_id[0] !== undefined ){
-               return axios.get('/api/booking/'+active_id[0].id+'/payment-weekly')
+                if($scope.CURRENT_BOOKING !== undefined ){
+               return axios.get('/api/booking/'+$scope.CURRENT_BOOKING.id+'/payment-weekly')
                     .then(function (response) {
+                        if(response.data.success.length>0)
                         $scope.payment_logs = response.data.success;
+                        $scope.payment_logs = false;
                     });
                 }
 
