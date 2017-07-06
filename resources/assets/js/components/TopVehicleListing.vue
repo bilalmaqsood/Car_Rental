@@ -1,6 +1,7 @@
 <template>
     <div class="vehicles_tabs">
         <h2>Top vehicles</h2>
+
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
                 <a @click="queryVehicles('location')" href="javascript:void(0)" aria-controls="by_location" role="tab" data-toggle="tab">
@@ -26,93 +27,95 @@
             </li>
         </ul>
 
-
         <div class="tab-content">
-
             <div role="tabpanel" class="tab-pane active" id="by_location">
                 <div class="main_vehicles_container">
-
-                    <div v-for="vehicle in vehicles " class="main_vehicles">
-                        <div class="owl-carousel owl-slider">
-
-                            <div v-for="img in vehicle.images " class="item"><img :src="img" alt=""></div>
-                        </div>
-                        <h3><a  href="javascript:void(0)" @click="itemDetails(vehicle)" >{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</a>
-                        </h3>
-                        <ul>
-                            <li>
-                                <p>Year: {{vehicle.year}} </p>
-                                <p>Mileage: {{vehicle.mileage}}</p>
-                            </li>
-                            <li>
-                                <p>Seats: {{vehicle.seats}}</p>
-                                <p>Transmission: manual</p>
-                            </li>
-                            <li>
-                                <p>Fuel type: {{vehicle.fuel}} </p>
-                                <p>Consumption: {{vehicle.mpg}} mpg (ec.)</p>
-                            </li>
-                        </ul>
-                        <div class="availablity_box">
-                            <div class="availabe">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                                </svg>
-                                <p>available from: <span>{{vehicle.available_from}}</span></p>
+                    <transition-group name="list" tag="div">
+                        <div v-for="vehicle in vehicles" :key="vehicle" class="main_vehicles list-item">
+                            <div class="owl-carousel owl-slider">
+                                <div v-for="img in vehicle.images " class="item"><img :src="img" alt=""></div>
                             </div>
-                            <div class="availabe_item_price">
-                                <h3>&pound; {{vehicle.rent}}</h3>
-                                <span>/week</span>
-                                <span v-if="vehicle.insurance>0.0">insurance included</span>
+                            <h3 @click="itemDetails(vehicle)">{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
+                            <ul>
+                                <li>
+                                    <p>Year: {{vehicle.year}} </p>
+                                    <p>Mileage: {{vehicle.mileage}}</p>
+                                </li>
+                                <li>
+                                    <p>Seats: {{vehicle.seats}}</p>
+                                    <p>Transmission: {{vehicle.transmission}}</p>
+                                </li>
+                                <li>
+                                    <p>Fuel type: {{vehicle.fuel}} </p>
+                                    <p>Consumption: {{vehicle.mpg_eco}} mpg (ec.)</p>
+                                </li>
+                            </ul>
+                            <div class="availablity_box">
+                                <div class="availabe">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                    </svg>
+                                    <p>available from: <span>{{vehicle.available_from}}</span></p>
+                                </div>
+                                <div class="availabe_item_price">
+                                    <h3>&pound; {{vehicle.rent}}</h3>
+                                    <span>/week</span>
+                                    <span v-if="vehicle.insurance>0.0">insurance included</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-
-
+                    </transition-group>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </template>
 
 <script>
-    var $scope;
-
     export default {
-
         data() {
             return {
-                vehicles: "",
-            }
-
+                vehicles: [],
+            };
         },
 
-        computed: {
-            // a computed getter
-            images: function () {
-                console.log(this.vehicle);
-            }
-            },
         mounted() {
-            $scope=this;
             this.queryVehicles('location');
         },
 
+        methods: {
+            queryVehicles(by) {
+                $('#sideLoader').show();
+                let params = "?" + by + '=desc';
 
-    methods: {
-        queryVehicles(param){
-            var params = "?"+param+'=desc' ;
-            if(param=="rent")
-                params = "?"+param+'=asc' ;
+                if (by === "rent")
+                    params = "?" + by + '=asc';
 
-            axios.get('/vehicles'+params).then(function (response) {
-                $scope.vehicles = response.data.success;
-            });
+                axios.get('/vehicles' + params).then(this.listVehicles);
+            },
+
+            listVehicles(response) {
+                this.vehicles = [];
+
+                $.each(response.data.success, this.setDate);
+
+                setTimeout(function () {
+                    $(".owl-slider").owlCarousel({
+                        items: 1,
+                        margin: 0,
+                        navigation: false
+                    });
+                    $('#sideLoader').hide();
+                }, 10);
+            },
+
+            setDate(i, vehicle) {
+                let availableDate = moment(vehicle.available_from);
+
+                vehicle.available_from = availableDate.isValid() ? availableDate.fromNow() : 'not set by owner';
+
+                this.vehicles.push(vehicle);
+            }
         }
     }
-  }
 </script>

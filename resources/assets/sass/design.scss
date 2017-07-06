@@ -145,6 +145,7 @@ h3 {
     float: right;
     width: 85px;
 }
+
 .login-section .secodery_btn {
     width: 85px;
 }
@@ -962,11 +963,11 @@ h3 {
 
 .search_car_img {
     float: right;
-    width: 30%;
+    width: 40%;
     background-size: cover !important;
     background-position-x: center !important;
-    min-height: 158px;
-    transition: width .3s ease;
+    min-height: 173px;
+    transition: all .3s ease;
     position: relative;
 }
 
@@ -986,10 +987,10 @@ h3 {
 
 .search_car_content {
     float: right;
-    width: 70%;
+    width: 60%;
     background: #fff;
     padding: 0;
-    transition: width .3s ease;
+    transition: all .3s ease;
     overflow: hidden;
 }
 
@@ -1035,7 +1036,7 @@ h3 {
 .search_car_content .availablity_box {
     display: block;
     background: #525252;
-    padding: 7px 10px;
+    padding: 7px 10px 0;
     margin-top: 12px;
     float: left;
 }
@@ -1280,6 +1281,7 @@ h3 {
     border: 1px solid #525252;
     text-align: center;
     height: 80px;
+    line-height: 1rem;
 }
 
 .pickup_loction_btn ul li button:hover {
@@ -2367,7 +2369,9 @@ h3 {
     color: #87af1e;
 }
 
-.bootstrap-datetimepicker-widget table td.active, .bootstrap-datetimepicker-widget table td.active:hover {
+.bootstrap-datetimepicker-widget table td.active,
+.bootstrap-datetimepicker-widget table td.active:hover,
+.bootstrap-datetimepicker-widget table td.highlight-day {
     background-color: #87af1e;
     color: #ffffff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -2430,10 +2434,12 @@ h3 {
     border-radius: 0;
     color: #fff;
 }
-.bootstrap-datetimepicker-widget table td span.active{
-    background: #87af1e; 
+
+.bootstrap-datetimepicker-widget table td span.active {
+    background: #87af1e;
     color: #fff;
 }
+
 .extend_booking .extend_booking_content {
     list-style-type: none;
     font-size: 16px;
@@ -3889,18 +3895,23 @@ h3 {
         width: 52px;
     }
 }
-.has-error{
+
+.has-error {
     border-left: 5px solid #ff0101 !important;
 }
+
 .has-error .form-control::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: #ff0101;
+    color: #ff0101;
 }
+
 .has-error .form-control::-moz-placeholder { /* Firefox 19+ */
-  color: #ff0101;
+    color: #ff0101;
 }
+
 .has-error .form-control:-ms-input-placeholder { /* IE 10+ */
-  color: #ff0101;
+    color: #ff0101;
 }
+
 .has-error .form-control:-moz-placeholder { /* Firefox 18- */
-  color: #ff0101;
+    color: #ff0101;
 }

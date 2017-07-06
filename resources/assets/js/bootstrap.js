@@ -68,6 +68,7 @@ axios.interceptors.response.use(function (response) {
             }).show();
         });
     }
+    $('#sideLoader').hide();
     return Promise.reject(error);
 });
 

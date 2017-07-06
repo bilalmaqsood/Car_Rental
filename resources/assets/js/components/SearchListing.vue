@@ -48,54 +48,48 @@
             <div id="search_map" style="width: 100%; height: 100%;"></div>
 
             <div class="search_container">
-                <div class="search_car" v-for="i in items">
-                    <div class="search_car_content" :style="{width: detailsDisplay ? '0px' : '', height: detailsDisplay ? '0px' : ''}">
-                        <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a>
-                        </h3>
-                        <ul>
-                            <li>
-                                <p>Year: {{i.year}} </p>
-                                <p>Mileage: {{i.mileage}}</p>
-                            </li>
-                            <li>
-                                <p>Seats: 5 </p>
-                                <p>Transmission: manual</p>
-                            </li>
-                            <li>
-                                <p>Fuel type: hybrid </p>
-                                <p>Consumption: 95.2 mpg (ec.)</p>
-                            </li>
-                        </ul>
-                        <div class="availablity_box">
-                            <div class="availabe">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                                </svg>
-                                <p>available from: <span>now</span></p>
-                            </div>
-                            <div class="availabe_item_price">
-                                <h3>£ {{i.rent }}</h3>
-                                <span>/week</span>
+                <transition-group name="list" tag="div">
+                    <div class="search_car" v-for="i in items" :key="i">
+                        <div class="search_car_content" :style="{width: user.state.detailsDisplay ? '0px' : '', height: user.state.detailsDisplay ? '0px' : ''}">
+                            <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a></h3>
+                            <ul>
+                                <li>
+                                    <p>Year: {{i.year}} </p>
+                                    <p>Mileage: {{i.mileage}}</p>
+                                </li>
+                                <li>
+                                    <p>Seats: {{i.seats}}</p>
+                                    <p>Transmission: {{i.transmission}}</p>
+                                </li>
+                                <li>
+                                    <p>Fuel type: {{i.fuel}} </p>
+                                    <p>Consumption: {{i.mpg_eco}} mpg (ec.)</p>
+                                </li>
+                            </ul>
+                            <div class="availablity_box">
+                                <div class="availabe">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                    </svg>
+                                    <p>available from: <span>{{i.available_from}}</span></p>
+                                </div>
+                                <div class="availabe_item_price">
+                                    <h3>£ {{i.rent }}</h3>
+                                    <span>/week</span>
+                                </div>
                             </div>
                         </div>
+
+                        <a href="javascript:void(0)" @click="itemDetails(i)">
+                            <div class="search_car_img" v-bind:style="{'background-image': 'url(' + i.images[0] + ')', width: user.state.detailsDisplay ? '20%' : '', 'min-height':  user.state.detailsDisplay ? '100px' : ''}">
+                                <img class="img-responsive" v-bind:src="i.images[0]" alt="">
+                                <div class="highlight-vehicle" v-if="user.state.detailsDisplay && i.id == item.id"></div>
+                            </div>
+                        </a>
                     </div>
+                </transition-group>
 
-                    <a href="javascript:void(0)" @click="itemDetails(i)">
-                        <div class="search_car_img" v-bind:style="{'background-image': 'url(' + i.images[0] + ')', width: detailsDisplay ? '20%' : '', 'min-height':  detailsDisplay ? '100px' : ''}">
-                            <img class="img-responsive" v-bind:src="i.images[0]" alt="">
-                            <div class="highlight-vehicle" v-if="i.id == item.id"></div>
-                        </div>
-                    </a>
-                </div>
-
-                <search-listing-details :vehicle="item" v-if="detailsDisplay"></search-listing-details>
-            </div>
-
-            <div class="spinner-container side-loader" id="sideLoader">
-                <div class="spinner-frame">
-                    <div class="spinner-cover"></div>
-                    <div class="spinner-bar"></div>
-                </div>
+                <search-listing-details :user="user" :vehicle="item" v-if="user.state.detailsDisplay"></search-listing-details>
             </div>
         </div>
     </div>
@@ -127,7 +121,7 @@
         methods: {
             prepareComponent(){
                 let $t = this;
-                this.items = User.state.searchResults.data;
+                this.listVehicles(User.state.searchResults.data);
                 User.commit('listing', []);
 
                 setTimeout(function () {
@@ -144,6 +138,20 @@
                         }, 500);
                     });
                 }, 500);
+            },
+
+            listVehicles(data) {
+                this.items = [];
+
+                $.each(data, this.setDate);
+            },
+
+            setDate(i, vehicle) {
+                let availableDate = moment(vehicle.available_from);
+
+                vehicle.available_from = availableDate.isValid() ? availableDate.fromNow() : 'not set by owner';
+
+                this.items.push(vehicle);
             },
 
             searchVehicles() {
@@ -164,24 +172,30 @@
                 });
             },
 
-            searchFilters(){
+            searchFilters() {
                 this.advanceSearch = !this.advanceSearch;
             },
 
-            itemDetails(item){
+            itemDetails(item) {
+                User.commit('details', false);
                 let $t = this;
                 let $s = $('#sideLoader').show();
                 axios
                     .get('/api/vehicle/' + item.id)
                     .then(response => {
-                        $t.detailsDisplay = true;
+                        setTimeout(function () {
+                            $s.hide();
+                            User.commit('details', true);
+                        }, 500);
                         $t.item = response.data.success;
-                        $s.hide();
+                        $t.item.available_from = moment(response.data.success.available_from).fromNow();
+                        $t.item.available_to = moment(response.data.success.available_to).fromNow();
                     });
             },
 
             searchListing(response) {
-                this.items = response.data.success.data;
+                this.listVehicles(response.data.success.data);
+
                 setTimeout(function () {
                     $('#sideLoader').hide();
                     User.commit('advance');
@@ -195,7 +209,7 @@
                     .then(this.searchListing);
             },
 
-            queryParams(){
+            queryParams() {
                 let params = {};
 
                 if (this.vehicle.length > 0)

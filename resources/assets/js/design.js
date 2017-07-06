@@ -1,5 +1,4 @@
 jQuery(document).ready(function ($) {
-
     $(window).scroll(function () {
         if ($(".navbar").offset().top > 50) {
             $(".navbar-fixed-top").addClass("top-nav-collapse");
@@ -14,12 +13,5 @@ jQuery(document).ready(function ($) {
             scrollTop: $($anchor.attr('href')).offset().top
         }, 1500, 'easeInOutExpo');
         event.preventDefault();
-    });
-
-    $(".owl-slider").owlCarousel({
-        items: 1,
-        lazyLoad: true,
-        navigation: false,
-        margin: 0
     });
 });

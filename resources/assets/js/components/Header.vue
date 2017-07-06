@@ -8,11 +8,18 @@
                 </a>
             </div>
 
-            <transition name="flip">
-                <div class="search_filter" v-if="storage.state.searchView" @click="showAdvanceForm">
+            <transition name="flip" mode="out-in">
+                <div class="search_filter" v-if="storage.state.searchView && !storage.state.detailsDisplay" @click="showAdvanceForm" key="advance">
                     <button class="search_filter_btn primary_btn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filters_icon"></use>
+                        </svg>
+                    </button>
+                </div>
+                <div class="search_filter" v-if="storage.state.detailsDisplay" @click="closeDetailForm" key="close">
+                    <button class="search_filter_btn primary_btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use>
                         </svg>
                     </button>
                 </div>
@@ -193,6 +200,13 @@
                     </ul>
                 </transition>
             </div>
+
+            <div class="spinner-container side-loader" id="sideLoader">
+                <div class="spinner-frame">
+                    <div class="spinner-cover"></div>
+                    <div class="spinner-bar"></div>
+                </div>
+            </div>
         </nav>
     </div>
 </template>
@@ -347,6 +361,10 @@
 
             showAdvanceForm(e) {
                 User.commit('advance');
+            },
+
+            closeDetailForm(e) {
+                User.commit('details', false);
             }
         }
     }
