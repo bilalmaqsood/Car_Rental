@@ -27,6 +27,10 @@ Vue.component('search-listing-booking', require('./components/BookVehicle.vue'))
 Vue.component('search-listing-card-details', require('./components/CardDetails.vue'));
 Vue.component('top-vehicles-listing', require('./components/TopVehicleListing.vue'));
 Vue.component('booking-listing', require('./components/Booking.vue'));
+Vue.component('car-inspection', require('./components/CarInspection.vue'));
+Vue.component('booking-documents', require('./components/Documents.vue'));
+Vue.component('booking-chat', require('./components/Chat.vue'));
+Vue.component('extend-cancel-booking', require('./components/ExtendCancel.vue'));
 
 const app = new Vue({
     el: '#app'
