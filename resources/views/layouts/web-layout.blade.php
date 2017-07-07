@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="{!! url("/favicon-32x32.png") !!}" sizes="32x32">
-    <link rel="icon" type="image/png" href="{!! url("/favicon-16x16.png") !!}" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -13,7 +13,7 @@
     <title>{{ config('app.name', 'Qwikkar') }}</title>
 
     <!-- Styles -->
-    <link href="{{ url(mix('css/qwikkar.css')) }}" rel="stylesheet">
+    <link href="{{ mix('css/qwikkar.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script type="text/javascript">
@@ -33,21 +33,11 @@
     @include('layouts.svgs')
 
     <!-- Scripts -->
-    <script src="{{ url(mix('js/jst.js')) }}"></script>
-    <script src="{{ url(mix('js/manifest.js')) }}"></script>
-    <script src="{{ url(mix('js/vendor.js')) }}"></script>
-    <script src="{{ url(mix('js/qwikkar.js')) }}"></script>
+    <script src="{{ mix('js/jst.js') }}"></script>
+    <script src="{{ mix('js/manifest.js') }}"></script>
+    <script src="{{ mix('js/vendor.js') }}"></script>
+    <script src="{{ mix('js/qwikkar.js') }}"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0"></script>
-
-    <script>
-        window.SearchMap = null;
-        function initMap() {
-            SearchMap = new google.maps.Map(document.getElementById('search_map'), {
-                zoom: 4,
-                center: {lat: -25.363, lng: 131.044}
-            });
-        }
-    </script>
 
 </body>
 </html>

@@ -10,8 +10,6 @@ window.$ = window.jQuery = require('jquery');
 
 require('bootstrap-sass');
 
-window.moment = require('moment');
-
 require('eonasdan-bootstrap-datetimepicker');
 
 require('jquery.easing');
@@ -19,6 +17,8 @@ require('jquery.easing');
 require('owl.carousel');
 
 window.Inputmask = require('inputmask');
+window.numeral = require('numeral');
+window.moment = require('moment');
 
 /**
  * NOTY is a notification library that makes it easy to

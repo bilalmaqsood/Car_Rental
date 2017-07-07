@@ -1,7 +1,8 @@
 <template>
-    <div>
-        <div v-show="!isBooking" class="car_detail_container">
-            <div class="car_detail_clander">
+    <div class="car_detail_container">
+
+        <transition name="flip" mode="out-in">
+            <div class="car_detail_clander" v-if="!isCard" key="booking_detail">
                 <ul>
                     <li>
                         <div class="book_now_calender">
@@ -26,7 +27,7 @@
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tag_icon"></use>
                                     </svg>
                                 </div>
-                                <input class="form-control" placeholder="promotional code" type="text">
+                                <input class="form-control" placeholder="promotional code" type="text" v-model.trim="promo_code">
                             </div>
                         </div>
                     </li>
@@ -43,35 +44,90 @@
                     </li>
                 </ul>
             </div>
-            <div class="car_cost_tabel">
-                <ul>
-                    <li>
-                        <p><label>Rental cost </label><label>&pound;{{totalRent}}</label></p>
-                        <span>{{days}} days * &pound;{{vehicle.rent}}</span>
-                    </li>
-                    <li>
-                        <p><label>Insurance</label><label>&pound;{{totalInsurance}}</label></p>
-                        <span>{{days}} days * &pound;{{vehicle.insurance}}</span>
-                    </li>
-                    <li>
-                        <p><label>Deposit</label><label>&pound;{{vehicle.deposit}}</label></p>
-                        <span>will be paid when placing the request</span>
-                    </li>
-                    <li>
-                        <p><label>Total</label> <label>&pound;{{ totalBooking }}</label></p>
-                        <span>amount that will be paid by the end of the contract</span>
-                    </li>
-                </ul>
-                <button class="secodery_btn" @click="processBooking" type="button">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
-                    </svg>
-                    <span>Proceed to deposit</span>
-                </button>
-            </div>
-        </div>
 
-        <search-listing-card-details v-if="isBooking" :start_date="start_date" :end_date="end_date" :vehicle="vehicle"></search-listing-card-details>
+            <div key="card_detail" v-else>
+                <div class="fill_card">
+                </div>
+                <div class="card_recured">
+                    <ul>
+                        <li>
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                                </svg>
+                                <input type="text" class="form-control" placeholder="name on card" name="name">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                                </svg>
+                                <input type="text" class="form-control" placeholder="card number" name="number">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                </svg>
+                                <input type="text" class="form-control" placeholder="card expira/on date" name="expiry">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
+                                </svg>
+                                <input type="password" class="form-control" placeholder="cvc" name="cvc">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                                </svg>
+                                <input type="text" class="form-control" placeholder="billing address">
+                            </div>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                            </svg>
+                            <p>I have read and understood the</p>
+                            <a href="/terms-and-conditions" target="_blank">Terms & Conditions</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </transition>
+
+        <div class="car_cost_tabel">
+            <ul>
+                <li>
+                    <p><label>Rental cost </label><label>{{totalRent | currency}}</label></p>
+                    <span>{{days}} days * {{vehicle.rent | currency}}</span>
+                </li>
+                <li>
+                    <p><label>Insurance</label><label>{{totalInsurance | currency}}</label></p>
+                    <span>{{days}} days * {{vehicle.insurance | currency}}</span>
+                </li>
+                <li>
+                    <p><label>Deposit</label><label>{{vehicle.deposit | currency}}</label></p>
+                    <span>will be paid when placing the request</span>
+                </li>
+                <li>
+                    <p><label>Total</label> <label>{{ totalBooking | currency }}</label></p>
+                    <span>amount that will be paid by the end of the contract</span>
+                </li>
+            </ul>
+            <button class="secodery_btn" @click="processBooking" type="button" :disabled="!validBooking">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                </svg>
+                <span>Proceed to deposit</span>
+            </button>
+        </div>
     </div>
 </template>
 
@@ -81,14 +137,22 @@
 
         data() {
             return {
-                isBooking: false,
+                isCard: false,
+                location: null,
+                promo_code: null,
                 start_date: null,
-                end_date: null,
-                days: 0
+                end_date: null
             };
         },
 
         computed: {
+            days() {
+                if (this.start_date && this.end_date)
+                    return this.end_date.diff(this.start_date, 'days') + 1;
+                else
+                    return 0;
+            },
+
             totalRent() {
                 return this.vehicle.rent * this.days;
             },
@@ -103,6 +167,10 @@
                     (this.vehicle.insurance * this.days) +
                     this.vehicle.deposit
                 );
+            },
+
+            validBooking() {
+                return this.days >= 7;
             }
         },
 
@@ -117,6 +185,21 @@
                     sideBySide: false
                 }).on('dp.change', this.calenderChange);
                 $('[data-toggle="tooltip"]').tooltip();
+            },
+
+            resetDatesLessSeven: function () {
+                let $t = this;
+                this.start_date = null;
+                this.end_date = null;
+
+                new Noty({
+                    type: 'warning',
+                    text: 'Booking should be at least one week.'
+                }).show();
+
+                setTimeout(function () {
+                    $t.highlightDays(false);
+                }, 1000);
             },
 
             resetDates(e) {
@@ -165,10 +248,13 @@
                                 $elem.addClass('highlight-day');
                         });
 
-                        new Noty({
-                            type: 'information',
-                            text: '<div><p><b>Selected Start Date:</b> ' + this.start_date.format('M/D/Y') + '</p><p><b>Selected End Date:</b> ' + this.end_date.format('M/D/Y') + '</p></div>',
-                        }).show();
+                        if (this.end_date.diff(this.start_date, 'days') < 6)
+                            this.resetDatesLessSeven();
+                        else
+                            new Noty({
+                                type: 'information',
+                                text: '<div><p><b>Selected Start Date:</b> ' + this.start_date.format('M/D/Y') + '</p><p><b>Selected End Date:</b> ' + this.end_date.format('M/D/Y') + '</p></div>',
+                            }).show();
                     } else {
                         new Noty({
                             type: 'warning',
@@ -178,12 +264,18 @@
                         this.end_date = null;
                         $e.find('td').removeClass('highlight-day');
                     }
-                } else
+                } else {
                     $e.find('td').removeClass('highlight-day');
+                    new Noty({
+                        type: 'information',
+                        text: 'Dates are reset.',
+                        timeout: 600
+                    }).show();
+                }
             },
 
             processBooking() {
-                this.days++;
+                this.isCard = !this.isCard;
             }
         }
     }
