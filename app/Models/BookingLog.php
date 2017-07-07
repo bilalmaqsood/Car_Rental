@@ -32,9 +32,6 @@ class BookingLog extends Model
     protected $casts = [
         'requested_data' => 'array',
         'fulfilled_data' => 'array',
-
-        'status' => 'boolean',
-
         'requested_time' => 'datetime',
         'fulfilled_time' => 'datetime',
     ];

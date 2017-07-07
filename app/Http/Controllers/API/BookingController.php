@@ -345,7 +345,7 @@ class BookingController extends Controller
 
     public function lastBookingLog($id){
         $booking = Booking::whereId($id)->with(['bookingLog' => function ($query){
-                                $query->latest()->first();
+                                $query->whereNull('fulfilled_data')->latest()->first();
         }])->first();
 
         return  api_response($booking);
