@@ -5,7 +5,8 @@
                 <ul>
                     <li>
                         <div class="book_now_calender">
-                            <p>Select first and last day of booking</p>
+                            <p class="m-b-1">Select first and last day of booking <i @click="resetDates" class="fa fa-undo cursor-pointer pull-right m-r-1" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="reset booking first and last date"></i></p>
+                            <div class="clearfix"></div>
                             <div style="overflow:hidden;">
                                 <div class="form-group">
                                     <div class="row">
@@ -115,11 +116,29 @@
                     inline: true,
                     sideBySide: false
                 }).on('dp.change', this.calenderChange);
+                $('[data-toggle="tooltip"]').tooltip();
+            },
+
+            resetDates(e) {
+                let $btn = $(e.target);
+
+                $btn.removeClass('fa-undo').addClass('fa-refresh fa-spin');
+
+                this.start_date = null;
+                this.end_date = null;
+                this.highlightDays(false);
+
+                setTimeout(function () {
+                    $btn.removeClass('fa-refresh fa-spin').addClass('fa-undo');
+                    new Noty({
+                        type: 'information',
+                        text: 'Dates are reset.',
+                        timeout: 600
+                    }).show();
+                }, 600);
             },
 
             calenderChange(e) {
-                console.log(e);
-
                 if (!this.start_date)
                     this.start_date = e.date;
                 else if (!this.end_date) {
@@ -133,22 +152,34 @@
             },
 
             highlightDays(bool) {
-                let $t = this;
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
 
-                if (bool)
-                $e.find('td').each(function (i, e) {
-                    let $elem = $(e);
-                    let eDate = moment($elem.data('day'), 'MM/DD/YYYY', true);
-                    if (eDate.isValid() && $t.start_date.format('Y-M-D') >= eDate.format('Y-M-D'))
-                        $elem.addClass('highlight-day');
-                    console.log(i);
-                    console.log(e);
-                });
-                else
+                if (bool) {
+                    if (this.start_date.format('X') < this.end_date.format('X')) {
+                        let StartDate = moment(this.start_date.format()).subtract(1, 'days');
+                        let EndDate = this.end_date;
+                        $e.find('td').each(function (i, e) {
+                            let $elem = $(e);
+                            let eDate = moment($elem.data('day'), 'MM/DD/YYYY', true);
+                            if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X'))
+                                $elem.addClass('highlight-day');
+                        });
+
+                        new Noty({
+                            type: 'information',
+                            text: '<div><p><b>Selected Start Date:</b> ' + this.start_date.format('M/D/Y') + '</p><p><b>Selected End Date:</b> ' + this.end_date.format('M/D/Y') + '</p></div>',
+                        }).show();
+                    } else {
+                        new Noty({
+                            type: 'warning',
+                            text: '<div><p>Start date should greater than end date.</p><p>Please select dates again.</p></div>',
+                        }).show();
+                        this.start_date = null;
+                        this.end_date = null;
+                        $e.find('td').removeClass('highlight-day');
+                    }
+                } else
                     $e.find('td').removeClass('highlight-day');
-                console.log(this.start_date);
-                console.log();
             },
 
             processBooking() {

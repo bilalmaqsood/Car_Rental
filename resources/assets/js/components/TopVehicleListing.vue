@@ -35,7 +35,7 @@
                             <div class="owl-carousel owl-slider">
                                 <div v-for="img in vehicle.images " class="item"><img :src="img" alt=""></div>
                             </div>
-                            <h3 @click="itemDetails(vehicle)">{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
+                            <h3>{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
                             <ul>
                                 <li>
                                     <p>Year: {{vehicle.year}} </p>
