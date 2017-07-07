@@ -74,7 +74,7 @@
             },
             cancleBooking(){
                 if(this.CURRENT_BOOKING !== undefined ) {
-                    axios.patch('/api/booking/' + this.CURRENT_BOOKING.id + '/status', this.cancleParams())
+                    axios.post('/api/booking/' + this.CURRENT_BOOKING.id + '/status', this.cancleParams())
                         .then(response => {
                             console.log(response);
                         });
