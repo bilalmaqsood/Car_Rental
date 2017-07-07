@@ -186,6 +186,17 @@
                                 search
                             </a>
                         </li>
+                        <li class="active">
+                            <a href="javascript:;" @click="vehicles = !vehicles">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
+                            </svg>
+                            vehicles</a>
+                            <transition name="slide-fade">
+                                <vehicle-crud v-if="vehicles" :profileHeight="height"></vehicle-crud>
+                            </transition>
+                        </li>
+
                         <li :class="{active: profile}">
                             <a href="javascript:;" @click="profile = !profile">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
@@ -223,6 +234,7 @@
                 message: null,
                 authSectionView: 'login',
                 profile: false,
+                vehicles: false,
                 height: 0,
                 login: {
                     email: '',
