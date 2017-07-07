@@ -342,4 +342,12 @@ class BookingController extends Controller
 
         return api_response($feedback);
     }
+
+    public function lastBookingLog($id){
+        $booking = Booking::whereId($id)->with(['bookingLog' => function ($query){
+                                $query->latest()->first();
+        }])->first();
+
+        return  api_response($booking);
+    }
 }

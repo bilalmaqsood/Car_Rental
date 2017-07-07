@@ -14,14 +14,14 @@
                 </div>
             </div>
 
-            <div v-for="notification in notifications" :class="notification.data.noti_type" class="pofile_content_wrapper" >
+            <div v-for="notification in notifications" :class="notification.data.noti_type" class=" pofile_content_wrapper" >
 
                 <div v-if="propExist(notification.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notification.data.image + ')' }">
                     <img :src="notification.data.image" alt="">
                 </div>
 
                 <div class="profile_content">
-                    <h3  v-if="propExist(notification.data,'title')">{{notification.data.title}}</h3>
+                    <h3 :class="{clickable: notification.data.vehicle}" v-if="notification.data.title" @click="notify_action(notification)">{{notification.data.title}}</h3>
                     <p v-if="propExist(notification.data,'user')" ><span>{{notification.data.user}}</span> sent you booking request</p>
                     <p v-if="propExist(notification.data,'vehicle')">{{notification.data.vehicle}}</p>
                     <p v-if="propExist(notification.data,'contract_start')">Contract start: {{ date_format(notification.data.contract_start) }} </p>
@@ -48,6 +48,7 @@
             return {
                 notifications: "",
                 User: User,
+                booking_log: "",
             };
         },
 
@@ -71,6 +72,14 @@
             },
             date_format(date){
                 return moment(date.date).format("D.M.Y");
+            },
+            notify_action(notification){
+                if(notification.data.id){
+                    axios.get('/api/booking/'+notification.data.id+'/logs')
+                        .then(function (response) {
+                            $scope.booking_log = response.data.success;
+                        });
+                }
             }
         }
     }
