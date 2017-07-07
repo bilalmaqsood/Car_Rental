@@ -172,8 +172,12 @@
                 }
             },
             driver_info: {
-                driving: {},
-                postcode: {},
+                driving: {
+                    required
+                },
+                postcode: {
+                    required
+                },
                 insurance: {},
                 pco_number: {},
                 pco_expiry_date: {}
@@ -226,12 +230,14 @@
                         break;
 
                     case 'driver_info':
+                        let $t = this;
                         let $btn = $(e.target).button('loading');
 
                         let postData = JSON.parse(JSON.stringify(_.merge(this.basic_info, this.driver_info)));
                         postData.phone = postData.phone.replace(/[\s\(\)]/g, '');
 
-                        axios.post('/api/register/' + this.user_type, postData).then(function (r) {
+                        axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
+                            $t.successRegister();
                             $btn.button('reset');
                         }).catch(function (r) {
                             $btn.button('reset');
@@ -248,7 +254,7 @@
                     let postData = JSON.parse(JSON.stringify(this.basic_info));
                     postData.phone = postData.phone.replace(/[\s\(\)]/g, '');
 
-                    axios.post('/api/register/' + this.user_type, postData).then(function (r) {
+                    axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
                         $t.successRegister();
                         $btn.button('reset');
                     }).catch(function (r) {
@@ -264,6 +270,19 @@
                         });
                     }, 455);
                 }
+            },
+
+            cleanParams(data) {
+                let cleaned = {};
+
+                _.each(data, function (v, k) {
+                    if (v && (k === 'dob' || k === 'pco_expiry_date'))
+                        v = moment(v, 'MM/DD/YYYY', true).format('YYYY-MM-DD');
+                    if (v)
+                        cleaned[k] = v;
+                });
+
+                return cleaned;
             },
 
             successRegister() {
@@ -282,7 +301,7 @@
                     email: this.basic_info.email,
                     password: this.basic_info.password
                 }).then(function (r) {
-                    User.commit('update', r.data.success);
+                    window.location.href = '/';
                 });
             }
         }

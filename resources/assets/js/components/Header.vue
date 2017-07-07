@@ -44,15 +44,15 @@
                                 contact us
                             </a>
                         </li>
-                        <li :class="{active: authSection}">
-                            <a href="javascript:;" @click="authSection = !authSection">
+                        <li :class="{active: storage.state.authSection}">
+                            <a href="javascript:;" @click="changeView">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                 </svg>
                                 login
                             </a>
                             <transition name="slide-fade">
-                                <div v-if="authSection" class="auth-container">
+                                <div v-if="storage.state.authSection" class="auth-container">
                                     <transition name="flip" mode="in-out">
                                         <user-register @hideView="hideViewParentChild" @updateView="updateAuthViewChild" v-if="authSectionView=='signup'" key="signup"></user-register>
 
@@ -221,7 +221,6 @@
                 storage: User,
                 baseURL: window.Qwikkar.baseUrl,
                 message: null,
-                authSection: false,
                 authSectionView: 'login',
                 profile: false,
                 height: 0,
@@ -278,8 +277,12 @@
             },
 
             hideViewParentChild() {
-                this.authSection = false;
+                User.commit('updateAuthView', false);
                 this.authSectionView = 'login';
+            },
+
+            changeView() {
+                User.commit('updateAuthView', !User.state.authSection);
             },
 
             updateAuthViewChild() {
@@ -290,7 +293,7 @@
                 let hash = window.location.hash;
                 if (hash.indexOf('#reset-password-') !== -1) {
                     this.forgot.token = hash.replace('#reset-password-', '');
-                    this.authSection = true;
+                    User.commit('updateAuthView', true);
                     this.authSectionView = 'forgot';
                 }
             },
@@ -303,16 +306,23 @@
                 let $this = this;
                 let $btn = $(e.target).button('loading');
                 axios.post('/login', this.login).then(function (r) {
+                    console.log(r);
                     $btn.button('reset');
-                    $this.setUserData(r);
+//                    $this.setUserData(r);
                     new Noty({
                         type: 'information',
                         text: '<b>' + r.data.success.name + '</b> has been logged in.',
                     }).show();
                     $this.resetAuthView();
+                    $this.saveSettingsLocally();
+                    window.location.href = '/';
                 }).catch(function (r) {
                     $btn.button('reset');
                 });
+            },
+
+            saveSettingsLocally() {
+                localStorage.reloadData = JSON.stringify(User.state);
             },
 
             resetUser(e) {
@@ -351,12 +361,15 @@
             },
 
             resetAuthView() {
-                this.authSection = false;
+                User.commit('updateAuthView', false);
                 this.authSectionView = 'login';
             },
 
             setUserData(r) {
-                User.commit('update', r.data.success);
+                if (r.data.success.type === 'owner' || r.data.success.type === 'client')
+                    User.commit('update', r.data.success);
+                else
+                    window.location.href = '/logout';
             },
 
             showAdvanceForm(e) {

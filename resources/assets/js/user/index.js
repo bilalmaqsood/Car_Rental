@@ -6,9 +6,12 @@ const state = {
     auth: null,
     bookNow: false,
     searchView: false,
+    authSection: false,
     showAdvance: false,
     detailsDisplay: false,
-    searchResults: []
+    searchResults: [],
+    vehicleData: {},
+    bookingData: {}
 };
 
 export default new Vuex.Store({

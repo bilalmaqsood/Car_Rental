@@ -16,6 +16,8 @@ require('jquery.easing');
 
 require('owl.carousel');
 
+require('jquery.payment');
+
 window.Inputmask = require('inputmask');
 window.numeral = require('numeral');
 window.moment = require('moment');
@@ -69,6 +71,7 @@ axios.interceptors.response.use(function (response) {
         });
     }
     $('#sideLoader').hide();
+    console.log(error);
     return Promise.reject(error);
 });
 

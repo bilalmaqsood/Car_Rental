@@ -3,6 +3,7 @@
 namespace Qwikkar\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Qwikkar\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Qwikkar\Models\User;
@@ -80,6 +81,13 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+        if ($user->isAdmin()) {
+            \Auth::logout();
+            return $request->expectsJson() ?
+                api_response(trans('auth.admin_fail'), Response::HTTP_UNPROCESSABLE_ENTITY) :
+                redirect()->intended($this->redirectPath());
+        }
+
         return $request->expectsJson() ?
             $this->setAPIResponse($request, $user) :
             redirect()->intended($this->redirectPath());
@@ -97,9 +105,9 @@ class LoginController extends Controller
 
         $profile = [];
         if ($user->isClient())
-            $profile = $user->client->toArray();
+            $profile = $user->client ? $user->client->toArray() : [];
         else if ($user->isOwner())
-            $profile = $user->owner->toArray();
+            $profile = $user->owner ? $user->owner->toArray() : [];
 
         return array_merge($userArray, $profile);
     }
@@ -145,7 +153,7 @@ class LoginController extends Controller
         }
 
         return $request->expectsJson() ?
-            api_response(trans('auth.logout', ['name' => $request->user()->name])) :
+            api_response(['message' => trans('auth.logout', ['name' => $request->user()->name]), 'csrf' => csrf_token()]) :
             redirect('/');
     }
 }

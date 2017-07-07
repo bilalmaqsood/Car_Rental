@@ -1,6 +1,10 @@
 
 export default {
 
+    updateAuthView (state) {
+        state.authSection = !state.authSection;
+    },
+
     update (state, user) {
         state.auth = user;
     },
@@ -26,6 +30,13 @@ export default {
 
     listing (state, data) {
         state.searchResults = data;
-    }
+    },
 
+    vehicle (state, data) {
+        state.vehicleData = data;
+    },
+
+    saveBooking (state, data) {
+        state.bookingData = data;
+    }
 }

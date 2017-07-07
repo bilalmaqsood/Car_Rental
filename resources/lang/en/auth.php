@@ -21,4 +21,6 @@ return [
 
     'device' => 'Successfully updated device in Qwikkar Application for :name.',
 
+    'admin_fail' => 'Admin user cannot login to website.',
+
 ];

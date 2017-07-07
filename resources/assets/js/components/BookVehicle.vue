@@ -12,7 +12,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <input type="hidden" id="datetimepicker12">
+                                            <input type="hidden" id="booking_range_calender">
                                         </div>
                                     </div>
                                 </div>
@@ -27,7 +27,7 @@
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tag_icon"></use>
                                     </svg>
                                 </div>
-                                <input class="form-control" placeholder="promotional code" type="text" v-model.trim="promo_code">
+                                <input class="form-control" placeholder="promotional code" type="text" @blur="checkPromoCode" v-model.trim="promo_code">
                             </div>
                         </div>
                     </li>
@@ -55,7 +55,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                 </svg>
-                                <input type="text" class="form-control" placeholder="name on card" name="name">
+                                <input @keyup="card.name = $event.target.value.toUpperCase()" @blur="$v.card.name.$touch()" v-model.trim="card.name" type="text" class="form-control" placeholder="name on card" name="name">
                             </div>
                         </li>
                         <li>
@@ -63,7 +63,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                                 </svg>
-                                <input type="text" class="form-control" placeholder="card number" name="number">
+                                <input @blur="$v.card.number.$touch()" v-model.trim="card.number" type="text" class="form-control cc-num" placeholder="card number" name="number">
                             </div>
                         </li>
                         <li>
@@ -71,7 +71,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
-                                <input type="text" class="form-control" placeholder="card expira/on date" name="expiry">
+                                <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="card expira/on date" name="expiry">
                             </div>
                         </li>
                         <li>
@@ -79,15 +79,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                                 </svg>
-                                <input type="password" class="form-control" placeholder="cvc" name="cvc">
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-                                </svg>
-                                <input type="text" class="form-control" placeholder="billing address">
+                                <input @blur="$v.card.cvc.$touch()" v-model.trim="card.cvc" type="password" class="form-control cc-cvc" placeholder="cvc" name="cvc">
                             </div>
                         </li>
                         <li>
@@ -121,17 +113,30 @@
                     <span>amount that will be paid by the end of the contract</span>
                 </li>
             </ul>
-            <button class="secodery_btn" @click="processBooking" type="button" :disabled="!validBooking">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
-                </svg>
-                <span>Proceed to deposit</span>
-            </button>
+
+            <transition name="flip" mode="out-in">
+                <button class="secodery_btn" key="deposit_button" v-if="!isCard" @click="processBooking" type="button" :disabled="!validBooking">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                    </svg>
+                    <span>Proceed to deposit</span>
+                </button>
+
+                <button data-loading-text="&lt;span class=&quot;fa fa-refresh fa-2x fa-spin&quot;&gt;&lt;/span&gt; &lt;span class=&quot;fa-2x&quot;&gt;confirming booking and deposit ...&lt;/span&gt;" class="secodery_btn" key="card_button" v-else @click="processPayment" type="button" :disabled="$v.card.$invalid">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                    </svg>
+                    <span>Confirm deposit payment</span>
+                </button>
+            </transition>
         </div>
     </div>
 </template>
 
 <script>
+    import User from '../user';
+    import {required, minLength} from 'vuelidate/lib/validators';
+
     export default {
         props: ['vehicle'],
 
@@ -141,8 +146,34 @@
                 location: null,
                 promo_code: null,
                 start_date: null,
-                end_date: null
+                end_date: null,
+                card: {
+                    name: '',
+                    number: '',
+                    expiry: '',
+                    cvc: '',
+                }
             };
+        },
+
+        validations: {
+            card: {
+                name: {
+                    required
+                },
+                number: {
+                    required,
+                    minLength: minLength(19)
+                },
+                expiry: {
+                    required,
+                    minLength: minLength(9)
+                },
+                cvc: {
+                    required,
+                    minLength: minLength(3)
+                },
+            }
         },
 
         computed: {
@@ -180,7 +211,12 @@
 
         methods: {
             prepareComponent() {
-                $('#datetimepicker12').datetimepicker({
+                User.commit('vehicle', this.vehicle);
+                this.initializeJquery();
+            },
+
+            initializeJquery() {
+                $('#booking_range_calender').datetimepicker({
                     inline: true,
                     sideBySide: false
                 }).on('dp.change', this.calenderChange);
@@ -275,7 +311,51 @@
             },
 
             processBooking() {
-                this.isCard = !this.isCard;
+                let $t = this;
+
+                if (User.state.auth) {
+                    this.isCard = !this.isCard;
+
+                    if (this.isCard) {
+                        setTimeout(function () {
+                            $('input.cc-num').payment('formatCardNumber');
+                            $('input.cc-exp').payment('formatCardExpiry');
+                            $('input.cc-cvc').payment('formatCardCVC');
+                        }, 450);
+                    } else
+                        setTimeout(function () {
+                            $t.initializeJquery();
+                        }, 450);
+                } else {
+                    new Noty({
+                        type: 'warning',
+                        text: '<div class="text-center"><b>Please login or register first to proceed next.</b></div>'
+                    }).show();
+                    this.saveBookingToStorage();
+                    User.commit('updateAuthView', true);
+                }
+            },
+
+            checkPromoCode() {
+                console.log('process promo code');
+            },
+
+            processPayment(e) {
+                let $btn = $(e.target).button('loading');
+                setTimeout(function () {
+                    $btn.button('reset');
+                    console.log(JSON.stringify(User.state));
+                }, 1000);
+                console.log('process payment');
+            },
+
+            saveBookingToStorage() {
+                User.commit('saveBooking', {
+                    start_date: this.start_date.format('MM/DD/YYYY'),
+                    end_date: this.end_date.format('MM/DD/YYYY'),
+                    promo_code: this.promo_code,
+                    location: this.location
+                });
             }
         }
     }

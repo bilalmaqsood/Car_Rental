@@ -44,6 +44,12 @@ class CreditCardController extends Controller
             'default' => 'numeric',
         ]);
 
+        if ($request->has('default') && $request->default == 1)
+            $request->user()->creditCard->each(function ($card) {
+                $card->default = 0;
+                $card->save();
+            });
+
         $creditCard = CreditCard::firstOrNew(['number' => $request->number, 'expiry' => $request->expiry]);
 
         if (!$creditCard->exists) {
@@ -51,7 +57,7 @@ class CreditCardController extends Controller
             $request->user()->creditCard()->save($creditCard);
         }
 
-        return api_response(trans('credit_card.created', ['name' => $request->user()->name]));
+        return api_response($creditCard);
     }
 
     /**
@@ -87,7 +93,13 @@ class CreditCardController extends Controller
             'default' => 'numeric',
         ]);
 
-        $creditCard = $request->user()->creditCard->where('id', $id)->first();
+        if ($request->has('default') && $request->default == 1)
+            $request->user()->creditCard->each(function ($card) {
+                $card->default = 0;
+                $card->save();
+            });
+
+        $creditCard = $request->user()->creditCard()->where('id', $id)->first();
 
         if (!$creditCard) throw new ModelNotFoundException();
 
