@@ -55,10 +55,10 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                     </svg>
-                                    <p>available from: <span>{{vehicle.available_from}}</span></p>
+                                    <p>available from: <span>{{vehicle.available_from | date('fromNow')}}</span></p>
                                 </div>
                                 <div class="availabe_item_price">
-                                    <h3>&pound; {{vehicle.rent}}</h3>
+                                    <h3>&pound; {{vehicle.rent | currency}}</h3>
                                     <span>/week</span>
                                     <span v-if="vehicle.insurance>0.0">insurance included</span>
                                 </div>
@@ -95,9 +95,7 @@
             },
 
             listVehicles(response) {
-                this.vehicles = [];
-
-                $.each(response.data.success, this.setDate);
+                this.vehicles = response.data.success;
 
                 setTimeout(function () {
                     $(".owl-slider").owlCarousel({
@@ -107,14 +105,6 @@
                     });
                     $('#sideLoader').hide();
                 }, 10);
-            },
-
-            setDate(i, vehicle) {
-                let availableDate = moment(vehicle.available_from);
-
-                vehicle.available_from = availableDate.isValid() ? availableDate.fromNow() : 'not set by owner';
-
-                this.vehicles.push(vehicle);
             }
         }
     }

@@ -289,7 +289,7 @@
                         else
                             new Noty({
                                 type: 'information',
-                                text: '<div><p><b>Selected Start Date:</b> ' + this.start_date.format('M/D/Y') + '</p><p><b>Selected End Date:</b> ' + this.end_date.format('M/D/Y') + '</p></div>',
+                                text: '<div><p><b>Selected Start Date:</b> ' + this.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + this.end_date.format('M/D/Y') + '</p></div>',
                             }).show();
                     } else {
                         new Noty({

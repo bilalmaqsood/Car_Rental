@@ -29,6 +29,7 @@ Vue.component('user-settings', require('./components/Settings.vue'));
 Vue.component('vehicle-crud', require('./components/vehicles.vue'));
 Vue.component('vehicle-input-form', require('./components/VehiclesInputForm.vue'));
 
+Vue.filter('date', require('./filters/date'));
 Vue.filter('currency', require('./filters/currency'));
 
 const app = new Vue({

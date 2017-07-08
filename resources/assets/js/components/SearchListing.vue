@@ -49,7 +49,7 @@
 
             <div class="search_container">
                 <transition-group name="list" tag="div">
-                    <div class="search_car" v-for="i in items" :key="i">
+                    <div class="search_car" v-for="i in user.state.searchResults" :key="i">
                         <div class="search_car_content" :style="{width: user.state.detailsDisplay ? '0px' : '', height: user.state.detailsDisplay ? '0px' : ''}">
                             <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a></h3>
                             <ul>
@@ -71,7 +71,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                     </svg>
-                                    <p>available from: <span>{{i.available_from}}</span></p>
+                                    <p>available from: <span>{{i.available_from | date('fromNow')}}</span></p>
                                 </div>
                                 <div class="availabe_item_price">
                                     <h3>£ {{i.rent }}</h3>
@@ -89,7 +89,7 @@
                     </div>
                 </transition-group>
 
-                <search-listing-details :user="user" :vehicle="item" v-if="user.state.detailsDisplay"></search-listing-details>
+                <search-listing-details :user="user" v-if="user.state.detailsDisplay"></search-listing-details>
             </div>
         </div>
     </div>
@@ -106,7 +106,6 @@
                 location: "",
                 available: "",
                 price: "",
-                items: {},
                 item: {},
                 filterDisplay: 'none',
                 detailsDisplay: false,
@@ -121,7 +120,6 @@
         methods: {
             prepareComponent(){
                 let $t = this;
-                this.listVehicles(User.state.searchResults);
 
                 setTimeout(function () {
                     $t.SearchMap = new google.maps.Map(document.getElementById('search_map'), {
@@ -137,22 +135,6 @@
                         }, 500);
                     });
                 }, 500);
-            },
-
-            listVehicles(data) {
-                this.items = [];
-
-                $.each(data, this.setDate);
-
-                User.commit('listing', this.items);
-            },
-
-            setDate(i, vehicle) {
-                let availableDate = moment(vehicle.available_from);
-
-                vehicle.available_from = availableDate.isValid() ? availableDate.fromNow() : 'not set by owner';
-
-                this.items.push(vehicle);
             },
 
             searchVehicles() {
@@ -188,14 +170,12 @@
                             $s.hide();
                             User.commit('details', true);
                         }, 500);
-                        $t.item = response.data.success;
-                        $t.item.available_from = moment(response.data.success.available_from).fromNow();
-                        $t.item.available_to = moment(response.data.success.available_to).fromNow();
+                        User.commit('vehicle', response.data.success);
                     });
             },
 
             searchListing(response) {
-                this.listVehicles(response.data.success.data);
+                User.commit('listing', response.data.success.data);
 
                 setTimeout(function () {
                     $('#sideLoader').hide();

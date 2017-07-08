@@ -4,34 +4,34 @@
             <div key="detail" v-if="!user.state.bookNow" class="car_detail_container">
 
                 <div class="detail_img">
-                    <img :src="vehicle.images[0]" alt="">
+                    <img :src="user.state.vehicleData.images[0]" alt="">
                 </div>
 
                 <div class="car_detail">
                     <div class="availablity_detail">
-                        <h3>{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
+                        <h3>{{user.state.vehicleData.make}} {{user.state.vehicleData.model}} {{user.state.vehicleData.variant}}</h3>
                         <ul>
-                            <li><p>Year: {{vehicle.year}} </p>
-                                <p>Mileage: {{vehicle.mileage}}</p>
-                                <p>Seats: {{vehicle.seats}} </p>
-                                <p>Transmission: {{vehicle.transmission}}</p></li>
-                            <li><p>Seats: {{vehicle.seats}} </p>
-                                <p>Transmission: {{vehicle.transmission}}</p></li>
-                            <li><p>Fuel type: {{vehicle.fuel}} </p>
-                                <p>Consumption: {{vehicle.mpg}} mpg (ec.)</p></li>
+                            <li><p>Year: {{user.state.vehicleData.year}} </p>
+                                <p>Mileage: {{user.state.vehicleData.mileage}}</p>
+                                <p>Seats: {{user.state.vehicleData.seats}} </p>
+                                <p>Transmission: {{user.state.vehicleData.transmission}}</p></li>
+                            <li><p>Seats: {{user.state.vehicleData.seats}} </p>
+                                <p>Transmission: {{user.state.vehicleData.transmission}}</p></li>
+                            <li><p>Fuel type: {{user.state.vehicleData.fuel}} </p>
+                                <p>Consumption: {{user.state.vehicleData.mpg}} mpg (ec.)</p></li>
                         </ul>
                         <div class="availabe">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                             </svg>
-                            <p>available from: <span>{{vehicle.available_from}}</span></p>
+                            <p>available from: <span>{{user.state.vehicleData.available_from | date('fromNow')}}</span></p>
                         </div>
                     </div>
                     <div class="availablity_price">
                         <div class="availabe_item_price">
-                            <h3>£ {{vehicle.rent}}</h3>
+                            <h3>£ {{user.state.vehicleData.rent | currency}}</h3>
                             <span>/week</span>
-                            <span v-if="vehicle.insurance>0.0">insurance included</span>
+                            <span v-if="user.state.vehicleData.insurance>0.0">insurance included</span>
                         </div>
                     </div>
                 </div>
@@ -43,13 +43,13 @@
                         </svg>
                     </button>
                     <ul>
-                        <li><span>Pickup from:</span> <span class="pickup_location">{{vehicle.pickup_location}}</span></li>
-                        <li><span>Return to:</span> <span class="return_location">{{vehicle.return_location}}</span></li>
+                        <li><span>Pickup from:</span> <span class="pickup_location">{{pickup_location}}</span></li>
+                        <li><span>Return to:</span> <span class="return_location">{{return_location}}</span></li>
                     </ul>
                 </div>
 
                 <div class="pickup_loction_map">
-                    <iframe width="100%" height="450" frameborder="0" style="border:0" v-bind:src="'https://www.google.com/maps/embed/v1/place?q='+vehicle.location.split(',')[0]+','+vehicle.location.split(',')[1]+'&amp;key=AIzaSyDFkedYDgj286xDo9Sp9XRWsOiPfu9T3Ak'"></iframe>
+                    <iframe width="100%" height="450" frameborder="0" style="border:0" v-bind:src="'https://www.google.com/maps/embed/v1/place?q='+user.state.vehicleData.location.split(',')[0]+','+user.state.vehicleData.location.split(',')[1]+'&amp;key=AIzaSyDFkedYDgj286xDo9Sp9XRWsOiPfu9T3Ak'"></iframe>
 
                     <p>Phasellus nisi leo, aliquet ac erat ut, moles2e ma3s enim. Proin sit amet tempor mi, a egestas tortor. Ves2bulum et congue urna. Nunc elementum por3tor urna sed euismod. Curabitur bibendum leo iaculis pulvinar fringilla. Nullam eu interdum lectus. Duis posuere, enim at fermentum efficitur, magna nisl lobor2s metus, in hendrerit est ante et magna. Ut ma3s, justo non por3tor suscipit, augue ipsum sodales justo, a rutrum.</p>
                 </div>
@@ -90,7 +90,7 @@
                 </div>
             </div>
 
-            <search-listing-booking key="booking" v-if="user.state.bookNow" :vehicle="vehicle"></search-listing-booking>
+            <search-listing-booking key="booking" v-if="user.state.bookNow" :vehicle="user.state.vehicleData"></search-listing-booking>
         </transition>
     </div>
 
@@ -98,11 +98,13 @@
 
 <script>
     export default {
-        props: ['vehicle', 'user'],
+        props: ['user'],
 
         data() {
             return {
-                isBooking: false
+                isBooking: false,
+                pickup_location: '',
+                return_location: ''
             };
         },
 
@@ -114,20 +116,20 @@
             prepareComponent() {
                 let $t = this;
                 $.ajax({
-                    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.vehicle.pickup_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
+                    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.pickup_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
                     type: 'GET',
                     dataType: 'json',
                     async: false,
                 }).done(function (r) {
-                    $t.vehicle.pickup_location = r.results[0].formatted_address;
+                    $t.pickup_location = r.results[0].formatted_address;
                 });
                 $.ajax({
-                    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.vehicle.return_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
+                    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.return_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
                     type: 'GET',
                     dataType: 'json',
                     async: false,
                 }).done(function (r) {
-                    $t.vehicle.return_location = r.results[0].formatted_address;
+                    $t.return_location = r.results[0].formatted_address;
                 });
             },
 
