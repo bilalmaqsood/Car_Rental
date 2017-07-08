@@ -155,13 +155,17 @@
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right" key="authenticated" v-else>
-                            <li>
-                                <a href="#">
+                            <li :class="{active: settings}">
+                                <a href="javascript:;" @click="settings = !settings">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cog_setting"></use>
                                     </svg>
                                     settings
                                 </a>
+                                <transition name="slide-fade">
+                                    <user-settings v-if="settings" :profileHeight="height"></user-settings>
+                                </transition>
+
                             </li>
                             <li>
                                 <a href="#">
@@ -227,6 +231,7 @@
                 message: null,
                 authSectionView: 'login',
                 profile: false,
+                settings: false,
                 height: 0,
                 login: {
                     email: '',
