@@ -26,6 +26,8 @@ Vue.component('contact-us-form', require('./components/ContactForm.vue'));
 Vue.component('search-listing-booking', require('./components/BookVehicle.vue'));
 Vue.component('top-vehicles-listing', require('./components/TopVehicleListing.vue'));
 Vue.component('user-settings', require('./components/Settings.vue'));
+Vue.component('vehicle-crud', require('./components/vehicles.vue'));
+Vue.component('vehicle-input-form', require('./components/VehiclesInputForm.vue'));
 
 Vue.filter('currency', require('./filters/currency'));
 
