@@ -97,6 +97,8 @@
 </template>
 
 <script>
+    import Local from '../local';
+
     export default {
         props: ['user'],
 
@@ -115,22 +117,29 @@
         methods: {
             prepareComponent() {
                 let $t = this;
-                $.ajax({
-                    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.pickup_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
-                    type: 'GET',
-                    dataType: 'json',
-                    async: false,
-                }).done(function (r) {
-                    $t.pickup_location = r.results[0].formatted_address;
-                });
-                $.ajax({
-                    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.return_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
-                    type: 'GET',
-                    dataType: 'json',
-                    async: false,
-                }).done(function (r) {
-                    $t.return_location = r.results[0].formatted_address;
-                });
+                let bookingData = Local.get('bookingData');
+                if (bookingData) {
+                    setTimeout(function () {
+                        $t.doBooking();
+                    }, 500);
+                } else {
+                    $.ajax({
+                        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.pickup_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
+                        type: 'GET',
+                        dataType: 'json',
+                        async: false,
+                    }).done(function (r) {
+                        $t.pickup_location = r.results[0].formatted_address;
+                    });
+                    $.ajax({
+                        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.return_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
+                        type: 'GET',
+                        dataType: 'json',
+                        async: false,
+                    }).done(function (r) {
+                        $t.return_location = r.results[0].formatted_address;
+                    });
+                }
             },
 
             doBooking() {

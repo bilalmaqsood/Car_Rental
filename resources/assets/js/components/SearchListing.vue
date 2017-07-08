@@ -96,6 +96,7 @@
 </template>
 
 <script>
+    import Local from '../local';
     import User from '../user';
 
     export default {
@@ -134,6 +135,13 @@
                             $t.drawMarker();
                         }, 500);
                     });
+                    let vehicleData = Local.get('vehicleData');
+                    if (vehicleData) {
+                        setTimeout(function () {
+                            User.commit('details', true);
+                        }, 500);
+                        User.commit('vehicle', vehicleData);
+                    }
                 }, 500);
             },
 

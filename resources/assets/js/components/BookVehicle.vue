@@ -135,6 +135,7 @@
 
 <script>
     import User from '../user';
+    import Local from '../local';
     import {required, minLength} from 'vuelidate/lib/validators';
 
     export default {
@@ -211,8 +212,20 @@
 
         methods: {
             prepareComponent() {
-                User.commit('vehicle', this.vehicle);
                 this.initializeJquery();
+                let $t = this;
+                let bookingData = Local.get('bookingData');
+                if (bookingData) {
+                    setTimeout(function () {
+                        $t.calenderChange({date:moment(bookingData.start_date, 'MM/DD/YYYY', true)});
+                        $t.calenderChange({date:moment(bookingData.end_date, 'MM/DD/YYYY', true)});
+                        $t.location = bookingData.location;
+                        $t.promo_code = bookingData.promo_code;
+                        setTimeout(function () {
+                            $t.isCard = true;
+                        }, 500);
+                    }, 500);
+                }
             },
 
             initializeJquery() {

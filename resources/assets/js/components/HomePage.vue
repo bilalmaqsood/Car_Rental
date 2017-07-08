@@ -34,6 +34,7 @@
 </template>
 
 <script>
+    import Local from '../local';
     import User from '../user';
 
     export default {
@@ -49,13 +50,10 @@
         methods: {
             prepareComponent() {
                 console.log('home page componenet');
-                let localData = localStorage.reloadData;
-                if (localData) {
-                    localData = JSON.parse(localData);
-                    if (localData.searchResults && localData.searchResults.length) {
-                        User.commit('listing', localData.searchResults);
-                        this.switchToListing();
-                    }
+                let searchResults = Local.get('searchResults');
+                if (searchResults && searchResults.length) {
+                    User.commit('listing', searchResults);
+                    this.switchToListing();
                 }
             },
 

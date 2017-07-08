@@ -36,10 +36,6 @@ export default {
         state.vehicleData = data;
     },
 
-    location (state, data) {
-        state.vehicleData[data.type] = data.value;
-    },
-
     saveBooking (state, data) {
         state.bookingData = data;
     }
