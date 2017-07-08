@@ -300,7 +300,8 @@
                 axios.post('/login', {
                     email: this.basic_info.email,
                     password: this.basic_info.password
-                }).then(function (r) {
+                }).then(function () {
+                    localStorage.reloadData = JSON.stringify(User.state);
                     window.location.href = '/';
                 });
             }

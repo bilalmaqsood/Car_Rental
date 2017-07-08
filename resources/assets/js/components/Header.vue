@@ -30,7 +30,7 @@
                     <transition name="flip" mode="out-in">
                         <ul class="nav navbar-nav navbar-right" key="unauthenticated" v-if="storage.state.auth==null">
                             <li>
-                                <a href="javascript:;" @click="scrollOnPage('about_section_wrapper')">
+                                <a href="javascript:" @click="scrollOnPage('about_section_wrapper')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cog_setting"></use>
                                     </svg>
@@ -38,7 +38,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:;" @click="scrollOnPage('contact_us')">
+                                <a href="javascript:" @click="scrollOnPage('contact_us')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
                                     </svg>
@@ -46,7 +46,7 @@
                                 </a>
                             </li>
                             <li :class="{active: storage.state.authSection}">
-                                <a href="javascript:;" @click="changeView">
+                                <a href="javascript:" @click="changeView">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                     </svg>
@@ -156,7 +156,7 @@
 
                         <ul class="nav navbar-nav navbar-right" key="authenticated" v-else>
                             <li :class="{active: settings}">
-                                <a href="javascript:;" @click="settings = !settings">
+                                <a href="javascript:" @click="settings = !settings">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cog_setting"></use>
                                     </svg>
@@ -191,19 +191,19 @@
                                     search
                                 </a>
                             </li>
-                        <li :class="{active: vehicles}" v-if="isOwner()">
-                            <a href="javascript:;" @click="vehicles = !vehicles">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
-                            </svg>
-                            vehicles</a>
-                            <transition name="slide-fade">
-                                <vehicle-crud v-if="vehicles" :profileHeight="height"></vehicle-crud>
-                            </transition>
-                        </li>
+                            <li :class="{active: vehicles}" v-if="isOwner()">
+                                <a href="javascript:" @click="vehicles = !vehicles">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
+                                    </svg>
+                                    vehicles</a>
+                                <transition name="slide-fade">
+                                    <vehicle-crud v-if="vehicles" :profileHeight="height"></vehicle-crud>
+                                </transition>
+                            </li>
 
                             <li :class="{active: profile}">
-                                <a href="javascript:;" @click="profile = !profile">
+                                <a href="javascript:" @click="profile = !profile">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                     </svg>
@@ -329,21 +329,16 @@
                 axios.post('/login', this.login).then(function (r) {
                     console.log(r);
                     $btn.button('reset');
-//                    $this.setUserData(r);
                     new Noty({
                         type: 'information',
                         text: '<b>' + r.data.success.name + '</b> has been logged in.',
                     }).show();
                     $this.resetAuthView();
-                    $this.saveSettingsLocally();
+                    localStorage.reloadData = JSON.stringify(User.state);
                     window.location.href = '/';
-                }).catch(function (r) {
+                }).catch(function () {
                     $btn.button('reset');
                 });
-            },
-
-            saveSettingsLocally() {
-                localStorage.reloadData = JSON.stringify(User.state);
             },
 
             resetUser(e) {
@@ -356,7 +351,7 @@
                         text: r.data.success,
                     }).show();
                     $this.resetAuthView();
-                }).catch(function (r) {
+                }).catch(function () {
                     $btn.button('reset');
                 });
             },
@@ -372,7 +367,7 @@
                     }).show();
                     $this.resetAuthView();
                     window.location.href = '/';
-                }).catch(function (r) {
+                }).catch(function () {
                     $btn.button('reset');
                 });
             },
@@ -394,19 +389,21 @@
                     window.location.href = '/logout';
             },
 
-            showAdvanceForm(e) {
+            showAdvanceForm() {
                 User.commit('advance');
             },
 
-            closeDetailForm(e) {
+            closeDetailForm() {
                 User.commit('details', false);
             },
-            isOwner(){
-                if(this.storage && this.storage.state.auth.type==='owner')
-                  return true;
+
+            isOwner() {
+                if (this.storage && this.storage.state.auth.type === 'owner')
+                    return true;
             },
-            isClient(){
-                if(this.storage && this.storage.state.auth.type==='client')
+
+            isClient() {
+                if (this.storage && this.storage.state.auth.type === 'client')
                     return true;
             }
         }

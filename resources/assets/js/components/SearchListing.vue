@@ -81,9 +81,9 @@
                         </div>
 
                         <a href="javascript:void(0)" @click="itemDetails(i)">
-                            <div class="search_car_img" v-bind:style="{'background-image': 'url(' + i.images[0] + ')', width: user.state.detailsDisplay ? '20%' : '', 'min-height':  user.state.detailsDisplay ? '100px' : ''}">
-                                <img class="img-responsive" v-bind:src="i.images[0]" alt="">
-                                <div class="highlight-vehicle" v-if="user.state.detailsDisplay && i.id == item.id"></div>
+                            <div class="search_car_img" :style="{'background-image': 'url(' + i.images[0] + ')', width: user.state.detailsDisplay ? '20%' : '', 'min-height':  user.state.detailsDisplay ? '100px' : ''}">
+                                <img class="img-responsive" :src="i.images[0]" alt="">
+                                <div class="highlight-vehicle" v-if="user.state.detailsDisplay && i.id == user.state.vehicleData.id"></div>
                             </div>
                         </a>
                     </div>

@@ -223,6 +223,7 @@
                         $t.promo_code = bookingData.promo_code;
                         setTimeout(function () {
                             $t.isCard = true;
+                            localStorage.removeItem('reloadData');
                         }, 500);
                     }, 500);
                 }

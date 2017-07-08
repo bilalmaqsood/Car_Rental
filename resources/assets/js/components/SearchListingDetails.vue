@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="pickup_loction_map">
-                    <iframe width="100%" height="450" frameborder="0" style="border:0" v-bind:src="'https://www.google.com/maps/embed/v1/place?q='+user.state.vehicleData.location.split(',')[0]+','+user.state.vehicleData.location.split(',')[1]+'&amp;key=AIzaSyDFkedYDgj286xDo9Sp9XRWsOiPfu9T3Ak'"></iframe>
+                    <iframe width="100%" height="450" frameborder="0" style="border:0" :src="'https://www.google.com/maps/embed/v1/place?q='+user.state.vehicleData.location.split(',')[0]+','+user.state.vehicleData.location.split(',')[1]+'&amp;key=AIzaSyDFkedYDgj286xDo9Sp9XRWsOiPfu9T3Ak'"></iframe>
 
                     <p>Phasellus nisi leo, aliquet ac erat ut, moles2e ma3s enim. Proin sit amet tempor mi, a egestas tortor. Ves2bulum et congue urna. Nunc elementum por3tor urna sed euismod. Curabitur bibendum leo iaculis pulvinar fringilla. Nullam eu interdum lectus. Duis posuere, enim at fermentum efficitur, magna nisl lobor2s metus, in hendrerit est ante et magna. Ut ma3s, justo non por3tor suscipit, augue ipsum sodales justo, a rutrum.</p>
                 </div>
@@ -71,7 +71,7 @@
                 <div class="pickup_loction_btn">
                     <ul>
                         <li>
-                            <button @click="doBooking" type="button">
+                            <button @click="doBooking" type="button" v-if="user.state.auth === null || user.state.auth.type === 'client'">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 20" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#issue"></use>
                                 </svg>
@@ -118,11 +118,13 @@
             prepareComponent() {
                 let $t = this;
                 let bookingData = Local.get('bookingData');
-                if (bookingData) {
+
+                if (bookingData && this.user.state.auth.type === 'client') {
                     setTimeout(function () {
                         $t.doBooking();
                     }, 500);
                 } else {
+                    localStorage.removeItem('reloadData');
                     $.ajax({
                         url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.pickup_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
                         type: 'GET',
