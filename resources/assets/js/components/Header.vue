@@ -178,7 +178,7 @@
                                 bookings
                             </a>
                         </li>
-                        <li>
+                        <li v-if="isClient()">
                             <a href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
@@ -186,7 +186,7 @@
                                 search
                             </a>
                         </li>
-                        <li class="active">
+                        <li :class="{active: vehicles}" v-if="isOwner()">
                             <a href="javascript:;" @click="vehicles = !vehicles">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
@@ -390,6 +390,14 @@
 
             closeDetailForm(e) {
                 User.commit('details', false);
+            },
+            isOwner(){
+                if(this.storage && this.storage.state.auth.type=='owner')
+                  return true;
+            },
+            isClient(){
+                if(this.storage && this.storage.state.auth.type=='client')
+                    return true;
             }
         }
     }
