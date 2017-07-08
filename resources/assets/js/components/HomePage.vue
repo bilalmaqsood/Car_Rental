@@ -34,8 +34,9 @@
 </template>
 
 <script>
-    export default {
+    import User from '../user';
 
+    export default {
         data() {
             return {
                 home: true
@@ -43,10 +44,21 @@
         },
 
         mounted() {
-            console.log('home page componenet');
         },
 
         methods: {
+            prepareComponent() {
+                console.log('home page componenet');
+                let localData = localStorage.reloadData;
+                if (localData) {
+                    localData = JSON.parse(localData);
+                    if (localData.searchResults && localData.searchResults.length) {
+                        User.commit('listing', localData.searchResults);
+                        this.switchToListing();
+                    }
+                }
+            },
+
             switchToListing() {
                 console.log('switched');
                 this.home = false;

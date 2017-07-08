@@ -83,9 +83,9 @@ class AuthController extends Controller
 
         $profile = [];
         if ($user->isClient())
-            $profile = $user->client->toArray();
+            $profile = $user->client ? $user->client->toArray() : [];
         else if ($user->isOwner())
-            $profile = $user->owner->toArray();
+            $profile = $user->owner ? $user->owner->toArray() : [];
 
         return array_merge($userArray, $profile);
     }

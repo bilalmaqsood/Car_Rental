@@ -121,8 +121,7 @@
         methods: {
             prepareComponent(){
                 let $t = this;
-                this.listVehicles(User.state.searchResults.data);
-                User.commit('listing', []);
+                this.listVehicles(User.state.searchResults);
 
                 setTimeout(function () {
                     $t.SearchMap = new google.maps.Map(document.getElementById('search_map'), {
@@ -144,6 +143,8 @@
                 this.items = [];
 
                 $.each(data, this.setDate);
+
+                User.commit('listing', this.items);
             },
 
             setDate(i, vehicle) {
