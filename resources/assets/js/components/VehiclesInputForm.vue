@@ -12,22 +12,22 @@
                     <ul>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="vehicle make">
+                                <input type="text" class="form-control" placeholder="vehicle make" v-model="form.make">
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="vehicle model">
+                                <input type="text" class="form-control" placeholder="vehicle model" v-model="form.model"  >
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="vehicle variant">
+                                <input type="text" class="form-control" placeholder="vehicle variant" v-model="form.variant">
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="registration year">
+                                <input type="text" class="form-control" placeholder="registration year" v-model="form.year">
                                 <span>
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -37,17 +37,17 @@
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="starting mileage">
+                                <input type="text" class="form-control" placeholder="starting mileage" v-model="form.starting_mileage">
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="service mileage">
+                                <input type="text" class="form-control" placeholder="service mileage" v-model="form.service_mileage">
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="fuel type">
+                                <input type="text" class="form-control" placeholder="fuel type" v-model="form.fuel">
                                 <span>
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#add_icon"></use>
@@ -57,27 +57,22 @@
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="mpg">
+                                <input type="text" class="form-control" placeholder="mpg" v-model="form.mpg">
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="mpg (economy)">
+                                <input type="text" class="form-control" placeholder="mpg (economy)" v-model="form.mpg_eco">
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="5 seats">
+                                <input type="text" class="form-control" placeholder="5 seats" v-model="form.seats">
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="7 seats">
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="availability">
+                                <input type="text" class="form-control" placeholder="availability" v-model="form.availability">
                                 <span>
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -87,7 +82,7 @@
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="pickup location">
+                                <input type="text" class="form-control" placeholder="pickup location" v-model="form.pickup_location">
                                 <span>
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
@@ -97,7 +92,7 @@
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="return location">
+                                <input type="text" class="form-control" placeholder="return location" v-model="form.return_location">
                                 <span>
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
@@ -107,22 +102,22 @@
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="rental cost/week">
+                                <input type="text" class="form-control" placeholder="rental cost/week" v-model="form.rent">
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="insurance cost/week">
+                                <input type="text" class="form-control" placeholder="insurance cost/week" v-model="form.insurance">
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="deposit">
+                                <input type="text" class="form-control" placeholder="deposit" v-model="form.deposit">
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="discounts">
+                                <input type="text" class="form-control" placeholder="discounts" v-model="form.discounts">
                                 <span>
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#add_icon"></use>
@@ -239,6 +234,7 @@
 </template>
 
 <script>
+    import {required, email, minLength} from 'vuelidate/lib/validators';
     import User from '../user';
 
     var $scope;
@@ -247,32 +243,91 @@
 
         data() {
             return {
-                notifications: "",
                 User: User,
+                form: {
+                    make: '',
+                    model: '',
+                    variant: '',
+                    year: '',
+                    starting_mileage: '',
+                    service_mileage: '',
+                    fuel: '',
+                    mpg: '',
+                    mpg_eco: '',
+                    seats: '',
+                    availability: '',
+                    pickup_location: '',
+                    return_location: '',
+                    rent: '',
+                    insurance: '',
+                    deposit: '',
+                    discounts:'',
+
+
+                },
             };
         },
 
+        validations: {
+            form: {
+                make: {
+                    required,
+                    minLength: minLength(6)
+                },
+                model: {
+                    minLength: minLength(6)
+                },
+                year: {
+                    minLength: minLength(6)
+                },
+                starting_mileage: {
+                    minLength: minLength(3)
+                },
+                service_mileage: {
+                    minLength: minLength(6)
+                },
+                fuel: {
+                    minLength: minLength(6)
+                },
+                    mpg: {
+                    minLength: minLength(6)
+                },
+                    mpg_eco: {
+                    minLength: minLength(6)
+                },
+                    seats: {
+                    minLength: minLength(6)
+                },
+                    availability: {
+                    minLength: minLength(6)
+                },
+                    pickup_location: {
+                    minLength: minLength(6)
+                },
+                    return_location: {
+                    minLength: minLength(6)
+                },
+                    rent: {
+                    minLength: minLength(6)
+                },
+                    insurance: {
+                    minLength: minLength(6)
+                },
+                    deposit: {
+                    minLength: minLength(6)
+                },
+                    discounts:{
+                    minLength: minLength(6)
+                },
+            }
+        },
+
         mounted() {
-            console.log(User.state);
-            $scope=this;
-            console.log(this.profileHeight);
-            this.prepareComponent();
-            axios.get('/api/notifications')
-                .then(function (response) {
-                    $scope.notifications = response.data.success;
-                });
+
         },
 
         methods: {
-            prepareComponent() {
-                console.log('profile componenet mounted');
-            },
-            propExist(obj,prop){
-                return obj.hasOwnProperty(prop);;
-            },
-            date_format(date){
-                return moment(date.date).format("D.M.Y");
-            }
+
         }
     }
 </script>
