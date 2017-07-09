@@ -12,3 +12,11 @@
         background: none;
     }
 }
+
+.svg-icon:hover {
+    fill: #87af1e !important;
+}
+
+.svg-icon.active {
+    fill: #a4cf1f !important;
+}

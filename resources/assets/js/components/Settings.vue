@@ -67,7 +67,7 @@
             },
 
             date_format(date){
-                return moment(date).format("D.M.Y");
+                return moment.utc(date).format("D.M.Y");
             },
             logout(){
                 window.location="/logout";

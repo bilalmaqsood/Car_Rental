@@ -35,7 +35,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                         </svg>
-                        <span>Pick up from: {{vehicle.pickup_location}}</span>
+                        <span>Pick up from: {{pickup_location}}</span>
                     </li>
                     <li>
                         <div class="pickup_loction_map">
@@ -47,6 +47,14 @@
 
             <div key="card_detail" v-else>
                 <div class="fill_card">
+                    <div class="list-group">
+                        <transition-group name="list" tag="div">
+                            <a href="javascript:" @click="fillCard(c, $event)" class="list-group-item" v-for="c in credit_cards" :key="c" :class="{active: c.id == card.id}">
+                                <h4 class="list-group-item-heading">{{ c.expiry }}</h4>
+                                <p class="list-group-item-text">{{ c.number }}</p>
+                            </a>
+                        </transition-group>
+                    </div>
                 </div>
                 <div class="card_recured">
                     <ul>
@@ -83,9 +91,10 @@
                             </div>
                         </li>
                         <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                            <svg @click="card.terms = !card.terms" :class="{active: card.terms}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon cursor-pointer">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
                             </svg>
+
                             <p>I have read and understood the</p>
                             <a href="/terms-and-conditions" target="_blank">Terms & Conditions</a>
                         </li>
@@ -136,10 +145,11 @@
 <script>
     import User from '../user';
     import Local from '../local';
+    import {Boolean} from '../validators';
     import {required, minLength} from 'vuelidate/lib/validators';
 
     export default {
-        props: ['vehicle'],
+        props: ['vehicle', 'pickup_location'],
 
         data() {
             return {
@@ -148,11 +158,14 @@
                 promo_code: null,
                 start_date: null,
                 end_date: null,
+                credit_cards: null,
                 card: {
+                    id: '',
                     name: '',
                     number: '',
                     expiry: '',
                     cvc: '',
+                    terms: false,
                 }
             };
         },
@@ -164,15 +177,19 @@
                 },
                 number: {
                     required,
-                    minLength: minLength(19)
+                    minLength: minLength(14)
                 },
                 expiry: {
                     required,
-                    minLength: minLength(9)
+                    minLength: minLength(7)
                 },
                 cvc: {
                     required,
                     minLength: minLength(3)
+                },
+                terms: {
+                    required,
+                    Boolean
                 },
             }
         },
@@ -217,13 +234,13 @@
                 let bookingData = Local.get('bookingData');
                 if (bookingData) {
                     setTimeout(function () {
-                        $t.calenderChange({date:moment(bookingData.start_date, 'MM/DD/YYYY', true)});
-                        $t.calenderChange({date:moment(bookingData.end_date, 'MM/DD/YYYY', true)});
+                        $t.calenderChange({date: moment(bookingData.start_date + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true)});
+                        $t.calenderChange({date: moment(bookingData.end_date + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true)});
                         $t.location = bookingData.location;
                         $t.promo_code = bookingData.promo_code;
                         setTimeout(function () {
-                            $t.isCard = true;
-                            localStorage.removeItem('reloadData');
+                            $t.processBooking();
+//                            localStorage.removeItem('reloadData');
                         }, 500);
                     }, 500);
                 }
@@ -273,9 +290,9 @@
 
             calenderChange(e) {
                 if (!this.start_date)
-                    this.start_date = e.date;
+                    this.start_date = e.date.utc().startOf('day');
                 else if (!this.end_date) {
-                    this.end_date = e.date;
+                    this.end_date = e.date.utc().endOf('day');
                     this.highlightDays(true);
                 } else {
                     this.highlightDays(false);
@@ -289,13 +306,12 @@
 
                 if (bool) {
                     if (this.start_date.format('X') < this.end_date.format('X')) {
-                        let StartDate = moment(this.start_date.format()).subtract(1, 'days');
+                        let StartDate = this.start_date;
                         let EndDate = this.end_date;
                         $e.find('td').each(function (i, e) {
                             let $elem = $(e);
-                            let eDate = moment($elem.data('day'), 'MM/DD/YYYY', true);
-                            if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X'))
-                                $elem.addClass('highlight-day');
+                            let eDate = moment.utc($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
+                            if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
                         });
 
                         if (this.end_date.diff(this.start_date, 'days') < 6)
@@ -330,6 +346,8 @@
                 if (User.state.auth) {
                     this.isCard = !this.isCard;
 
+                    this.getListCreditCards();
+
                     if (this.isCard) {
                         setTimeout(function () {
                             $('input.cc-num').payment('formatCardNumber');
@@ -348,6 +366,21 @@
                     this.saveBookingToStorage();
                     User.commit('updateAuthView', true);
                 }
+            },
+
+            getListCreditCards() {
+                axios.get('/api/credit-card').then(this.listCreditCards);
+            },
+
+            listCreditCards(r) {
+                this.credit_cards = r.data.success;
+            },
+
+            fillCard(card, e) {
+                this.card.name = card.name;
+                this.card.number = card.number;
+                this.card.expiry = card.expiry;
+                this.card.id = card.id;
             },
 
             checkPromoCode() {

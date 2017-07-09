@@ -14,15 +14,15 @@
                 </div>
             </div>
 
-            <div v-for="notification in notifications" :class="notification.data.noti_type" class="pofile_content_wrapper" >
+            <div v-for="notification in notifications" :class="notification.data.noti_type" class="pofile_content_wrapper">
 
                 <div v-if="propExist(notification.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notification.data.image + ')' }">
                     <img :src="notification.data.image" alt="">
                 </div>
 
                 <div class="profile_content">
-                    <h3  v-if="propExist(notification.data,'title')">{{notification.data.title}}</h3>
-                    <p v-if="propExist(notification.data,'user')" ><span>{{notification.data.user}}</span> sent you booking request</p>
+                    <h3 v-if="propExist(notification.data,'title')">{{notification.data.title}}</h3>
+                    <p v-if="propExist(notification.data,'user')"><span>{{notification.data.user}}</span> sent you booking request</p>
                     <p v-if="propExist(notification.data,'vehicle')">{{notification.data.vehicle}}</p>
                     <p v-if="propExist(notification.data,'contract_start')">Contract start: {{ date_format(notification.data.contract_start) }} </p>
                     <p v-if="propExist(notification.data,'contract_end')">Contract end: {{ date_format(notification.data.contract_end) }}</p>
@@ -32,7 +32,6 @@
             </div>
 
 
-
         </div>
     </div>
 </template>
@@ -40,37 +39,35 @@
 <script>
     import User from '../user';
 
-    var $scope;
     export default {
         props: ['profileHeight'],
 
         data() {
             return {
-                notifications: "",
+                notifications: '',
                 User: User,
             };
         },
 
         mounted() {
-            console.log(User.state);
-            $scope=this;
-            console.log(this.profileHeight);
             this.prepareComponent();
-            axios.get('/api/notifications')
-                .then(function (response) {
-                    $scope.notifications = response.data.success;
-                });
         },
 
         methods: {
             prepareComponent() {
-                console.log('profile componenet mounted');
+                let $scope = this;
+                axios.get('/api/notifications')
+                    .then(response => {
+                        $scope.notifications = response.data.success;
+                    });
             },
-            propExist(obj,prop){
-                return obj.hasOwnProperty(prop);;
+
+            propExist(obj, prop) {
+                return obj.hasOwnProperty(prop);
             },
-            date_format(date){
-                return moment(date.date).format("D.M.Y");
+
+            date_format(date) {
+                return moment.utc(date.date).format("D.M.Y");
             }
         }
     }

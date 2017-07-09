@@ -3,38 +3,56 @@
         <div class="vehicles_container">
             <div class="car_detail_container">
                 <div class="detail_img">
-                    <img src="images/car_img.png" alt="" />
+                    <img src="/images/car_img.png" alt="">
                 </div>
                 <div class="booking_tab">
                     <ul class="nav nav-tabs">
-                        <li><a data-toggle="tab" href="#car_inspection">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
-                            </svg>
-                            add new
-                        </a></li>
-                        <li><a data-toggle="tab" href="#extend_cancel">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
-                            </svg>
-                            edit vehicle
-                        </a></li>
-                        <li><a data-toggle="tab" href="#chat_tab">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" class="svg-icon">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete_icon"></use>
-                            </svg>
-                            delete
-                        </a></li>
+                        <li>
+                            <a data-toggle="tab" href="#car_inspection">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
+                                </svg>
+                                add new
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#extend_cancel">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
+                                </svg>
+                                edit vehicle
+                            </a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#chat_tab">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete_icon"></use>
+                                </svg>
+                                delete
+                            </a>
+                        </li>
                     </ul>
+
                     <vehicle-input-form></vehicle-input-form>
-                </div><!--booking_tab-->
+                </div>
                 <div class="car_detail">
                     <div class="availablity_detail">
                         <h3>Toyota Prius 1.8 Hybrid</h3>
                         <ul>
-                            <li><p>Year: 2015 </p><p>Mileage: 35,044</p><p>Seats: 5 </p><p>Transmission: manual</p></li>
-                            <li><p>Seats: 5 </p><p>Transmission: manual</p></li>
-                            <li><p>Fuel type: hybrid </p><p>Consumption: 95.2 mpg (ec.)</p></li>
+                            <li>
+                                <p>Year: 2015 </p>
+                                <p>Mileage: 35,044</p>
+                                <p>Seats: 5 </p>
+                                <p>Transmission: manual</p>
+                            </li>
+                            <li>
+                                <p>Seats: 5 </p>
+                                <p>Transmission: manual</p>
+                            </li>
+                            <li>
+                                <p>Fuel type: hybrid </p>
+                                <p>Consumption: 95.2 mpg (ec.)</p>
+                            </li>
                         </ul>
                         <div class="availabe">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
@@ -76,7 +94,7 @@
                 </div>
                 <div class="pofile_content_wrapper">
                     <div class="img_box" style="background: url(images/car_img_1.png)">
-                        <img src="images/car_img_1.png" alt="" />
+                        <img src="/images/car_img_1.png" alt=""/>
                     </div>
                     <div class="profile_content">
                         <h3>Booking approved</h3>
@@ -84,14 +102,16 @@
                         <p>Toyota Prius 1.8 Hybrid</p>
                         <p>Contract start: 06.05.2017 </p>
                         <p>Contract end: 20.05.2017</p>
-                        <p>You can now check and sign the contract and set your
+                        <p>
+                            You can now check and sign the contract and set your
                             <span>Direct Debit.</span> A deposit of <span>£250.00</span> have been taken
-                            from your card ending in <span>1234</span></p>
+                            from your card ending in <span>1234</span>
+                        </p>
                     </div>
                 </div>
                 <div class="pofile_content_wrapper">
                     <div class="img_box" style="background: url(images/car_img_1.png)">
-                        <img src="images/car_img_1.png" alt="" />
+                        <img src="/images/car_img_1.png" alt=""/>
                     </div>
                     <div class="profile_content">
                         <h3>Booking approved</h3>
@@ -99,9 +119,11 @@
                         <p>Toyota Prius 1.8 Hybrid</p>
                         <p>Contract start: 06.05.2017 </p>
                         <p>Contract end: 20.05.2017</p>
-                        <p>You can now check and sign the contract and set your
+                        <p>
+                            You can now check and sign the contract and set your
                             <span>Direct Debit.</span> A deposit of <span>£250.00</span> have been taken
-                            from your card ending in <span>1234</span></p>
+                            from your card ending in <span>1234</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -110,23 +132,18 @@
 </template>
 
 <script>
-    import User from '../user';
-
-    var $scope;
     export default {
         props: ['profileHeight'],
 
         data() {
             return {
-                notifications: "",
-                User: User,
+                notifications: ''
             };
         },
 
         mounted() {
-            console.log(User.state);
-            $scope=this;
-            console.log(this.profileHeight);
+            let $scope = this;
+
             this.prepareComponent();
             axios.get('/api/notifications')
                 .then(function (response) {
@@ -138,11 +155,13 @@
             prepareComponent() {
                 console.log('profile componenet mounted');
             },
-            propExist(obj,prop){
-                return obj.hasOwnProperty(prop);;
+
+            propExist(obj, prop){
+                return obj.hasOwnProperty(prop);
             },
+
             date_format(date){
-                return moment(date.date).format("D.M.Y");
+                return moment.utc(date.date).format("D.M.Y");
             }
         }
     }

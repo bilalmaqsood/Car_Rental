@@ -74,7 +74,7 @@
                                     <p>available from: <span>{{i.available_from | date('fromNow')}}</span></p>
                                 </div>
                                 <div class="availabe_item_price">
-                                    <h3>£ {{i.rent }}</h3>
+                                    <h3>{{i.rent | currency}}</h3>
                                     <span>/week</span>
                                 </div>
                             </div>

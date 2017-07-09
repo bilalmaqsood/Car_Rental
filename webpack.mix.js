@@ -23,5 +23,8 @@ mix
         'public/js/jst.js'
     ], 'public/js/jst.js')
     .copy('resources/assets/images', 'public/images')
-    .version()
 ;
+
+if (mix.Mix.inProduction) {
+    mix.version();
+}

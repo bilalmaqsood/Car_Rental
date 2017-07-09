@@ -29,7 +29,7 @@
                     </div>
                     <div class="availablity_price">
                         <div class="availabe_item_price">
-                            <h3>£ {{user.state.vehicleData.rent | currency}}</h3>
+                            <h3>{{user.state.vehicleData.rent | currency}}</h3>
                             <span>/week</span>
                             <span v-if="user.state.vehicleData.insurance>0.0">insurance included</span>
                         </div>
@@ -90,7 +90,7 @@
                 </div>
             </div>
 
-            <search-listing-booking key="booking" v-if="user.state.bookNow" :vehicle="user.state.vehicleData"></search-listing-booking>
+            <search-listing-booking key="booking" v-if="user.state.bookNow" :vehicle="user.state.vehicleData" :pickup_location="pickup_location"></search-listing-booking>
         </transition>
     </div>
 

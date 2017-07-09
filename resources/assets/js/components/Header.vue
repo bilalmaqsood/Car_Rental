@@ -373,7 +373,10 @@
             },
 
             refreshUserData() {
-                axios.get('/api/user').then(this.setUserData);
+                axios.get('/api/user').then(this.setUserData).catch(function (r) {
+                    if (r.response.status === 401)
+                        localStorage.removeItem('reloadData');
+                });
             },
 
             resetAuthView() {

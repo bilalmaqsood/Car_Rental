@@ -277,7 +277,7 @@
 
                 _.each(data, function (v, k) {
                     if (v && (k === 'dob' || k === 'pco_expiry_date'))
-                        v = moment(v, 'MM/DD/YYYY', true).format('YYYY-MM-DD');
+                        v = moment.utc(v, 'MM/DD/YYYY', true).format('YYYY-MM-DD');
                     if (v)
                         cleaned[k] = v;
                 });
