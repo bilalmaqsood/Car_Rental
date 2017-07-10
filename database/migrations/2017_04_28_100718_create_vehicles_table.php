@@ -20,6 +20,7 @@ class CreateVehiclesTable extends Migration
             $table->string('model', 50);
             $table->string('variant', 50);
             $table->integer('year');
+            $table->decimal('mileage_service')->nullable()->comment('mileage to service');
             $table->decimal('mileage')->nullable()->comment('mileage of vehicle');
             $table->string('fuel', 50)->nullable()->comment('fuel type of vehicle');
             $table->decimal('mpg')->nullable()->comment('fuel consumption');

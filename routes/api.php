@@ -33,6 +33,10 @@ Route::get('vehicle/{id}', 'VehicleController@show');
 Route::get('faq', 'FaqController@index');
 Route::post('faq', 'FaqController@store');
 
+Route::post('/time-slot/verify', 'TimeSlotController@verifySlots');
+
+Route::post('/promo-code/verify', 'PromoCodeController');
+
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/notifications', function (Request $request) {
@@ -53,13 +57,14 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('account', 'AccountController', ['except' => ['create', 'edit']]);
     Route::resource('vehicle', 'VehicleController', ['except' => ['create', 'edit']]);
 
-    Route::post('/time-slot', 'TimeSlotController');
+    Route::post('/time-slot', 'TimeSlotController@addSlots');
 
     Route::resource('booking', 'BookingController', ['except' => ['create', 'edit']]);
     Route::post('booking/{id}/status', 'BookingController@updateStatusRequest');
     Route::patch('booking/{id}/status', 'BookingController@updateStatusFulfill');
     Route::post('booking/{id}/feedback', 'BookingController@giveFeedback');
 
+    Route::post('credit-card/{id}/default', 'CreditCardController@defaultCard');
     Route::resource('credit-card', 'CreditCardController', ['except' => ['create', 'edit']]);
 
     Route::post('/upload/{type}', 'UploadController');

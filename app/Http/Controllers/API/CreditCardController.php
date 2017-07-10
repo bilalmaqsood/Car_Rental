@@ -40,7 +40,8 @@ class CreditCardController extends Controller
             'name' => 'required|string',
             'number' => 'required|ccn',
             'expiry' => 'required|ccd',
-            'address' => 'required|string',
+            'cvc' => 'required|cvc',
+            'address' => 'string',
             'default' => 'numeric',
         ]);
 
@@ -89,6 +90,7 @@ class CreditCardController extends Controller
             'name' => 'string',
             'number' => 'ccn',
             'expiry' => 'ccd',
+            'cvc' => 'cvc',
             'address' => 'string',
             'default' => 'numeric',
         ]);
@@ -111,6 +113,30 @@ class CreditCardController extends Controller
     }
 
     /**
+     * Change default card for user
+     *
+     * @param Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function defaultCard(Request $request, $id)
+    {
+        $request->user()->creditCard->each(function ($c) {
+            $c->default = 0;
+            $c->save();
+        });
+
+        $creditCard = $request->user()->creditCard()->where('id', $id)->first();
+
+        if (!$creditCard) throw new ModelNotFoundException();
+
+        $creditCard->default = 0;
+        $creditCard->save();
+
+        return api_response(trans('credit_card.default', ['name' => $request->user()->name]));
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param Request $request
@@ -119,7 +145,7 @@ class CreditCardController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $creditCard = $request->user()->creditCard->where('id', $id)->first();
+        $creditCard = $request->user()->creditCard()->where('id', $id)->first();
 
         if (!$creditCard) throw new ModelNotFoundException();
 

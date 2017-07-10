@@ -153,7 +153,7 @@ class LoginController extends Controller
         }
 
         return $request->expectsJson() ?
-            api_response(['message' => trans('auth.logout', ['name' => $request->user()->name]), 'csrf' => csrf_token()]) :
+            api_response(trans('auth.logout', ['name' => $request->user()->name])) :
             redirect('/');
     }
 }

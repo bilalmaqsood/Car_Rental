@@ -14,7 +14,7 @@ trait Balanceable
      */
     public function addBalance($amount)
     {
-        $creditCard = $this->creditCard->where('default', 1)->first();
+        $creditCard = $this->creditCard()->where('default', 1)->first();
 
         // TODO: add payment method GoCardLess|Paypal|Stripe
 

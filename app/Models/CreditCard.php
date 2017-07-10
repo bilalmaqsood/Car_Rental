@@ -15,6 +15,7 @@ class CreditCard extends Model
         'name',
         'number',
         'expiry',
+        'cvc',
         'address',
         'default',
     ];
@@ -109,6 +110,28 @@ class CreditCard extends Model
      * @return string
      */
     public function getAddressAttribute($value)
+    {
+        return decrypt($value);
+    }
+
+    /**
+     * Set the credit card cvc number.
+     *
+     * @param  string $value
+     * @return void
+     */
+    public function setCvcAttribute($value)
+    {
+        $this->attributes['cvc'] = encrypt($value);
+    }
+
+    /**
+     * Get the credit card cvc number.
+     *
+     * @param  string $value
+     * @return string
+     */
+    public function getCvcAttribute($value)
     {
         return decrypt($value);
     }

@@ -240,7 +240,7 @@
                         $t.promo_code = bookingData.promo_code;
                         setTimeout(function () {
                             $t.processBooking();
-//                            localStorage.removeItem('reloadData');
+                            localStorage.removeItem('reloadData');
                         }, 500);
                     }, 500);
                 }
@@ -254,15 +254,10 @@
                 $('[data-toggle="tooltip"]').tooltip();
             },
 
-            resetDatesLessSeven: function () {
+            resetDatesLessSeven() {
                 let $t = this;
                 this.start_date = null;
                 this.end_date = null;
-
-                new Noty({
-                    type: 'warning',
-                    text: 'Booking should be at least one week.'
-                }).show();
 
                 setTimeout(function () {
                     $t.highlightDays(false);
@@ -302,6 +297,7 @@
             },
 
             highlightDays(bool) {
+                let $t = this;
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
 
                 if (bool) {
@@ -314,13 +310,32 @@
                             if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
                         });
 
-                        if (this.end_date.diff(this.start_date, 'days') < 6)
-                            this.resetDatesLessSeven();
-                        else
+                        if (this.end_date.diff(this.start_date, 'days') < 6) {
                             new Noty({
-                                type: 'information',
-                                text: '<div><p><b>Selected Start Date:</b> ' + this.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + this.end_date.format('M/D/Y') + '</p></div>',
+                                type: 'warning',
+                                text: 'Booking should be at least one week.'
                             }).show();
+
+                            this.resetDatesLessSeven();
+                        } else
+                            axios.post('/api/time-slot/verify', {
+                                vehicle_id: this.vehicle.id,
+                                start_date: this.start_date.format('YYYY-MM-DD'),
+                                end_date: this.end_date.format('YYYY-MM-DD')
+                            }).then(r => {
+                                if (r.data.success)
+                                    new Noty({
+                                        type: 'information',
+                                        text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
+                                    }).show();
+                                else {
+                                    new Noty({
+                                        type: 'warning',
+                                        text: 'Requested time slots are not available for booking.'
+                                    }).show();
+                                    $t.resetDatesLessSeven();
+                                }
+                            });
                     } else {
                         new Noty({
                             type: 'warning',
@@ -384,16 +399,68 @@
             },
 
             checkPromoCode() {
-                console.log('process promo code');
+                let $t = this;
+
+                if (this.promo_code)
+                    axios.post('/api/promo-code/verify', {
+                        promo_code: this.promo_code
+                    }).then(r => {
+                        if (r.data.success)
+                            new Noty({
+                                type: 'information',
+                                text: 'Promo code available.'
+                            }).show();
+                    }).catch(r => {
+                        if (r.response.status === 422) {
+                            $t.promo_code = null;
+                        }
+                    });
             },
 
             processPayment(e) {
+                let $t = this;
                 let $btn = $(e.target).button('loading');
-                setTimeout(function () {
+
+                if (this.card.id)
+                    axios
+                        .post('/api/credit-card/' + this.card.id + '/default')
+                        .then(() => {
+                            $t.bookingRequest($btn);
+                        });
+                else
+                    axios
+                        .post('/api/credit-card', {
+                            name: this.card.name,
+                            number: this.card.number.replace(/\s/g, ''),
+                            expiry: this.card.expiry.replace(/\s/g, ''),
+                            cvc: this.card.cvc,
+                            default: 1
+                        }).then(() => {
+                        $t.bookingRequest($btn);
+                    });
+            },
+
+            bookingRequest($btn) {
+                let data = {
+                    vehicle_id: this.vehicle.id,
+                    start_date: this.start_date.format('YYYY-MM-DD'),
+                    end_date: this.end_date.format('YYYY-MM-DD')
+                };
+
+                if (this.location)
+                    data.location = this.location;
+
+                if (this.promo_code)
+                    data.promo_code = this.promo_code;
+
+                axios.post('/api/booking', data).then((r) => {
                     $btn.button('reset');
-                    console.log(JSON.stringify(User.state));
-                }, 1000);
-                console.log('process payment');
+                    User.commit('details', false);
+                    new Noty({
+                        type: 'information',
+                        text: 'Booking created successfully for ' + User.state.auth.name,
+                    }).show();
+                });
             },
 
             saveBookingToStorage() {

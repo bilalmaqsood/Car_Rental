@@ -19,7 +19,8 @@ class CreateCreditCardsTable extends Migration
             $table->string('name');
             $table->text('number');
             $table->text('expiry');
-            $table->text('address');
+            $table->text('address')->nullable();
+            $table->text('cvc');
             $table->boolean('default')->default(0);
             $table->timestamps();
         });

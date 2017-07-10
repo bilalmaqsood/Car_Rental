@@ -74,7 +74,7 @@ class BookingController extends Controller
             'vehicle_id' => 'required|numeric|exists:vehicles,id',
             'start_date' => 'required|date|after_or_equal:today',
             'end_date' => 'required|date|after_or_equal:today',
-            'location' => 'required|string',
+            'location' => 'string',
             'promo_code' => 'exists:promo_codes,code'
         ]);
 

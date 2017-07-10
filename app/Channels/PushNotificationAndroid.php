@@ -16,10 +16,11 @@ class PushNotificationAndroid
      */
     public function send($notifiable, Notification $notification)
     {
-        $this->android(
-            $notifiable->device_id,
-            $notification->toAndroid($notifiable)
-        );
+        if ($notifiable->device_id)
+            $this->android(
+                $notifiable->device_id,
+                $notification->toAndroid($notifiable)
+            );
     }
 
     /**
