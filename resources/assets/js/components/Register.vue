@@ -136,18 +136,18 @@
                 step: 'type',
                 user_type: 'client',
                 basic_info: {
-                    name: 'nasir mehmood',
-                    email: 'oknasir@gmail.com',
-                    phone: '+44 (203) 714 5688',
-                    dob: '07/05/2017',
-                    password: 'yarias'
+                    name: null,
+                    email: null,
+                    phone: null,
+                    dob: null,
+                    password: null
                 },
                 driver_info: {
-                    driving: '',
-                    postcode: '',
-                    insurance: '',
-                    pco_number: '',
-                    pco_expiry_date: ''
+                    driving: null,
+                    postcode: null,
+                    insurance: null,
+                    pco_number: null,
+                    pco_expiry_date: null
                 }
             };
         },

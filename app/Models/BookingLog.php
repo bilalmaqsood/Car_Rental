@@ -33,10 +33,19 @@ class BookingLog extends Model
         'requested_data' => 'array',
         'fulfilled_data' => 'array',
 
-        'status' => 'boolean',
-
         'requested_time' => 'datetime',
         'fulfilled_time' => 'datetime',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'fulfilled_id',
+        'requested_id',
+        'booking_id',
     ];
 
     /**

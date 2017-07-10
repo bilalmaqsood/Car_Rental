@@ -152,7 +152,8 @@ trait BookingOperations
         $booking->vehicle->owner->user->notify(new BookingNotify([
             'id' => $booking->id,
             'type' => 'Booking',
-            'status' => $booking->vehicle->status,
+            'status' => $booking->status,
+            'old_status' => $booking->status,
             'image' => $booking->vehicle->images->first(),
             'title' => 'Booking requested',
             'user' => $user->name,
@@ -218,7 +219,7 @@ trait BookingOperations
      *
      * @param BookingLog $log
      */
-    protected function updateBookingFromLog(BookingLog $log)
+    protected function updateBookingFromLog(BookingLog $log, Request $request)
     {
         $booking = $log->booking;
 
@@ -228,6 +229,8 @@ trait BookingOperations
             $booking->status = 6;
         } elseif ($log->requested_data['status'] == 3) {
             $booking->status = 4;
+        } else {
+            $booking->status = $request->status;
         }
 
         $booking->save();

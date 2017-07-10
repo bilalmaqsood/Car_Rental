@@ -115,6 +115,8 @@ class BookingController extends Controller
     {
         $booking = Booking::whereId($id)->with(['vehicle' => function ($with) {
             $with->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'transmission', 'fuel', 'mile_cap', 'rent');
+        }, 'bookingLog' => function ($with) {
+            $with->with(['requested', 'fulfilled']);
         }])->first();
 
         if (!$booking)
@@ -224,6 +226,13 @@ class BookingController extends Controller
             'status' => 'in:3,5',
         ]);
 
+        $status = 0;
+        if ($request->has('start_date') && $request->has('end_date'))
+            $status = 5;
+        else
+            $status = $request->status;
+
+
         $booking = Booking::findOrFail($id);
 
         $requestData = $request->all();
@@ -240,9 +249,10 @@ class BookingController extends Controller
         $booking->vehicle->owner->user->notify(new BookingNotify([
             'id' => $booking->id,
             'type' => 'Booking',
-            'status' => $booking->vehicle->status,
+            'status' => $booking->status,
+            'old_status' => $booking->status,
             'image' => $booking->vehicle->images->first(),
-            'title' => 'Booking ' . strtolower($booking->statusTypes[$request->status]) . ' request',
+            'title' => 'Booking ' . strtolower($booking->statusTypes[$status]) . ' request',
             'user' => $request->user()->name,
             'vehicle' => $booking->vehicle->vehicle_name,
             'contract_start' => $booking->start_date,
@@ -265,7 +275,7 @@ class BookingController extends Controller
     {
         $this->validate($request, [
             'log_id' => 'exists:booking_logs,id',
-            'status' => 'in:2,4,6,7',
+            'status' => 'required|in:2,4,6,7',
             'note' => 'string',
         ]);
 
@@ -299,21 +309,21 @@ class BookingController extends Controller
         else
             $booking->bookingLog()->save($log);
 
-        if ($booking->status == 1 && $request->status == 2)
-            $booking->user->notify(new BookingNotify([
-                'id' => $booking->id,
-                'type' => 'Booking',
-                'status' => $booking->vehicle->status,
-                'image' => $booking->vehicle->images->first(),
-                'title' => 'Booking ' . strtolower($booking->statusTypes[$booking->status]) . ' request approved',
-                'user' => $request->user()->name,
-                'vehicle' => $booking->vehicle->vehicle_name,
-                'contract_start' => $booking->start_date,
-                'contract_end' => $booking->end_date,
-                'deposit' => $booking->deposit,
-            ]));
+        $booking->user->notify(new BookingNotify([
+            'id' => $booking->id,
+            'type' => 'Booking',
+            'status' => $request->status,
+            'old_status' => $booking->status,
+            'image' => $booking->vehicle->images->first(),
+            'title' => 'Booking ' . strtolower($booking->statusTypes[$request->status]),
+            'user' => $request->user()->name,
+            'vehicle' => $booking->vehicle->vehicle_name,
+            'contract_start' => $booking->start_date,
+            'contract_end' => $booking->end_date,
+            'deposit' => $booking->deposit,
+        ]));
 
-        $this->updateBookingFromLog($log);
+        $this->updateBookingFromLog($log, $request);
 
         return api_response($this->getFulfillNotifyString($log));
     }
@@ -329,7 +339,7 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
 
-        if (!in_array($booking->status, [4,7]))
+        if (!in_array($booking->status, [4, 7]))
             api_response(trans('booking.in-progress'), Response::HTTP_BAD_REQUEST);
 
         if (Feedback::whereBookingId($booking->id)->whereUserId($request->user()->id)->count())
