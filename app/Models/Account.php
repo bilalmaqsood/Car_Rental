@@ -44,7 +44,7 @@ class Account extends Model
      */
     public function setNumberAttribute($value)
     {
-        $this->attributes['number'] = encrypt($value);
+        $this->attributes['number'] = $value ? encrypt($value) : '';
     }
 
     /**
@@ -55,7 +55,7 @@ class Account extends Model
      */
     public function getNumberAttribute($value)
     {
-        return decrypt($value);
+        return $value ? decrypt($value) : '';
     }
 
     /**
@@ -66,7 +66,7 @@ class Account extends Model
      */
     public function setSortcodeAttribute($value)
     {
-        $this->attributes['sortcode'] = encrypt($value);
+        $this->attributes['sortcode'] = $value ? encrypt($value) : '';
     }
 
     /**
@@ -77,7 +77,7 @@ class Account extends Model
      */
     public function getSortcodeAttribute($value)
     {
-        return decrypt($value);
+        return $value ? decrypt($value) : '';
     }
 
     /**

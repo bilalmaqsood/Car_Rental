@@ -57,7 +57,7 @@ class CreditCard extends Model
      */
     public function getNumberAttribute($value)
     {
-        return decrypt($value);
+        return $value ? decrypt($value) : '';
     }
 
     /**
@@ -78,7 +78,7 @@ class CreditCard extends Model
      */
     public function setExpiryAttribute($value)
     {
-        $this->attributes['expiry'] = encrypt($value);
+        $this->attributes['expiry'] = $value ? encrypt($value) : '';
     }
 
     /**
@@ -89,7 +89,7 @@ class CreditCard extends Model
      */
     public function getExpiryAttribute($value)
     {
-        return decrypt($value);
+        return $value ? decrypt($value) : '';
     }
 
     /**
@@ -100,7 +100,7 @@ class CreditCard extends Model
      */
     public function setAddressAttribute($value)
     {
-        $this->attributes['address'] = encrypt($value);
+        $this->attributes['address'] = $value ? encrypt($value) : '';
     }
 
     /**
@@ -111,7 +111,7 @@ class CreditCard extends Model
      */
     public function getAddressAttribute($value)
     {
-        return decrypt($value);
+        return $value ? decrypt($value) : '';
     }
 
     /**
@@ -122,7 +122,7 @@ class CreditCard extends Model
      */
     public function setCvcAttribute($value)
     {
-        $this->attributes['cvc'] = encrypt($value);
+        $this->attributes['cvc'] = $value ? encrypt($value) : '';
     }
 
     /**
@@ -133,7 +133,7 @@ class CreditCard extends Model
      */
     public function getCvcAttribute($value)
     {
-        return decrypt($value);
+        return $value ? decrypt($value) : '';
     }
 
     /**
