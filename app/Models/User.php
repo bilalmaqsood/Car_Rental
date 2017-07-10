@@ -10,7 +10,7 @@ use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens, Balanceable,Billable;
+    use Notifiable, HasApiTokens, Balanceable, Billable;
 
     /**
      * The attributes that are mass assignable.

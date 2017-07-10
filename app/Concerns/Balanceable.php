@@ -3,6 +3,7 @@
 namespace Qwikkar\Concerns;
 
 use Qwikkar\Models\BalanceLog;
+use Qwikkar\Models\CreditCard;
 use Qwikkar\Notifications\CreditCardNotify;
 
 trait Balanceable
@@ -16,7 +17,7 @@ trait Balanceable
     {
         $creditCard = $this->creditCard()->where('default', 1)->first();
 
-        $pay_rsp = $this->processPayment($creditCard,$amount);
+        $pay_rsp = $this->processPayment($creditCard, $amount);
 
         $this->notify(new CreditCardNotify([
             'id' => $creditCard->id,
@@ -40,30 +41,38 @@ trait Balanceable
         $this->balance->save();
     }
 
-    public function processPayment($creditCard,$amount){
+    /**
+     * Charge user with strip
+     *
+     * @param $creditCard
+     * @param $amount
+     * @return mixed
+     */
+    public function processPayment(CreditCard $creditCard, $amount)
+    {
+        \Stripe\Stripe::setApiKey(config('services.stripe.key'));
 
-        $key = env('STRIPE_KEY');
-        $secret = env('STRIPE_SECRET');
+        $listDate = explode("/", $creditCard->expiry);
+        $month = $listDate[0];
+        $year = $listDate[1];
 
-        \Stripe\Stripe::setApiKey($key);
-
-        $month = explode("/",$creditCard->expiry)[0];
-        $year = explode("/",$creditCard->expiry)[1];
-
-        $token = \Stripe\Token::create(array(
-            "card" => array(
-                "number"    => $creditCard->number,
-                "exp_month" => $month,
-                "exp_year"  => $year,
-                "cvc"       => 123, //TODO: make it dynamic
-                "name"      => $creditCard->name
-            )));
-
-        $options = array(
-            'source' => $token,
-            'description' => "Charge ".$amount." against rent a car on Qwikkar"
+        $token = \Stripe\Token::create(
+            [
+                'card' => [
+                    'name' => $creditCard->name,
+                    'number' => $creditCard->number,
+                    'exp_month' => $month,
+                    'exp_year' => $year,
+                    'cvc' => $creditCard->cvc,
+                ]
+            ]
         );
-        return $this->charge($amount, $options );
 
+        $options = [
+            'source' => $token,
+            'description' => "Charge " . $amount . " against rent a car on Qwikkar"
+        ];
+
+        return $this->charge($amount, $options);
     }
 }
