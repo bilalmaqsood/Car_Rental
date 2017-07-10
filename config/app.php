@@ -171,6 +171,7 @@ return [
         Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
         Rap2hpoutre\LaravelCreditCardValidator\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
 
         /*
          * Application Service Providers...
