@@ -76,6 +76,10 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::resource('/booking/{booking_id}/inspection', 'InspectionController');
 
+    Route::post('withdraw', 'WithdrawController');
+
+    Route::post('update/device_id', 'AuthController@updateDeviceID')->middleware('not-admin');
+
     /**
      * Contracts
      */

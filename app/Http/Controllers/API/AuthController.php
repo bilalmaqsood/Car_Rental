@@ -9,54 +9,6 @@ use Qwikkar\Models\User;
 class AuthController extends Controller
 {
     /**
-     * Authenticate user and return Bearer Token
-     *
-     * @param Request $request
-     * @return array
-     */
-    public function login(Request $request)
-    {
-        $this->validate($request, [
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required',
-            'device_id' => 'string'
-        ]);
-
-        d(bcrypt($request->password));
-        $user = User::whereEmail($request->email)->first();
-        dd($user);
-
-        if ($user) {
-            $user->tokens()->delete();
-
-            if ($request->has('device_id')) {
-                $user->device_id = $request->device_id;
-                $user->save();
-            }
-
-            return api_response(array_merge($this->userProfile($user), [
-                'token' => $user->createToken('APIAccessToken')->accessToken,
-                'type' => $user->types->first()->name,
-                'accounts' => $user->account,
-                'credit_cards' => $user->creditCard,
-            ]));
-        }
-
-        return api_response(trans('auth.failed'), 406);
-    }
-
-    /**
-     * Send reset password link email
-     *
-     * @param Request $request
-     * @return array
-     */
-    public function forgot(Request $request)
-    {
-        return api_response($request->all());
-    }
-
-    /**
      * Get all information of Authenticated user
      *
      * @param Request $request
@@ -96,13 +48,15 @@ class AuthController extends Controller
      * @param Request $request
      * @return array
      */
-    public function logout(Request $request)
+    public function updateDeviceID(Request $request)
     {
-        $request->user()->tokens()->delete();
+        $this->validate($request, [
+            'device_id' => 'required|string'
+        ]);
 
-        $request->user()->device_id = '';
+        $request->user()->device_id = $request->device_id;
         $request->user()->save();
 
-        return api_response(trans('auth.logout', ['name' => $request->user()->name]));
+        return api_response(trans('auth.device', ['name' => $request->user()->name]));
     }
 }

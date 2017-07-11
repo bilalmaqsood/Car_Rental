@@ -19,7 +19,7 @@ return [
 
     'profile' => 'Profile has been updated successfully.',
 
-    'device' => 'Successfully updated device in Qwikkar Application for :name.',
+    'device' => 'Successfully updated device id in Qwikkar Application for :name.',
 
     'admin_fail' => 'Admin user cannot login to website.',
 

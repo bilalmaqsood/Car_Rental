@@ -95,6 +95,14 @@ class User extends Authenticatable
     /**
      * Relation with Accounts
      */
+    public function withdraw()
+    {
+        return $this->hasMany('Qwikkar\Models\Withdraw');
+    }
+
+    /**
+     * Relation with Accounts
+     */
     public function account()
     {
         return $this->hasMany('Qwikkar\Models\Account');
