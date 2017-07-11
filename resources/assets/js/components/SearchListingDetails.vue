@@ -11,14 +11,18 @@
                     <div class="availablity_detail">
                         <h3>{{user.state.vehicleData.make}} {{user.state.vehicleData.model}} {{user.state.vehicleData.variant}}</h3>
                         <ul>
-                            <li><p>Year: {{user.state.vehicleData.year}} </p>
+                            <li>
+                                <p>Year: {{user.state.vehicleData.year}} </p>
                                 <p>Mileage: {{user.state.vehicleData.mileage}}</p>
+                            </li>
+                            <li>
                                 <p>Seats: {{user.state.vehicleData.seats}} </p>
-                                <p>Transmission: {{user.state.vehicleData.transmission}}</p></li>
-                            <li><p>Seats: {{user.state.vehicleData.seats}} </p>
-                                <p>Transmission: {{user.state.vehicleData.transmission}}</p></li>
-                            <li><p>Fuel type: {{user.state.vehicleData.fuel}} </p>
-                                <p>Consumption: {{user.state.vehicleData.mpg}} mpg (ec.)</p></li>
+                                <p>Transmission: {{user.state.vehicleData.transmission}}</p>
+                            </li>
+                            <li>
+                                <p>Fuel type: {{user.state.vehicleData.fuel}} </p>
+                                <p>Consumption: {{user.state.vehicleData.mpg}} mpg (ec.)</p>
+                            </li>
                         </ul>
                         <div class="availabe">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">

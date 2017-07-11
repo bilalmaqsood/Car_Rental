@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPaymentResponseColumnToBalanceLogsTable extends Migration
+class CreateWithdrawsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddPaymentResponseColumnToBalanceLogsTable extends Migration
      */
     public function up()
     {
-        Schema::table('balance_logs', function (Blueprint $table) {
-            $table->text("payment_response")->nullable();
+        Schema::create('withdraws', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +26,6 @@ class AddPaymentResponseColumnToBalanceLogsTable extends Migration
      */
     public function down()
     {
-        Schema::table('balance_logs', function (Blueprint $table) {
-            $table->dropColumn("payment_response");
-        });
+        Schema::dropIfExists('withdraws');
     }
 }

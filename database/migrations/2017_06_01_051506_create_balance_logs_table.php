@@ -23,6 +23,8 @@ class CreateBalanceLogsTable extends Migration
             $table->decimal('amount');
             $table->text('comment');
 
+            $table->text('payment_response')->nullable();
+
             $table->timestamps();
         });
     }
