@@ -26,7 +26,7 @@
                     <p v-if="propExist(notification.data,'vehicle')">{{notification.data.vehicle}}</p>
                     <p v-if="propExist(notification.data,'contract_start')">Contract start: {{ date_format(notification.data.contract_start) }} </p>
                     <p v-if="propExist(notification.data,'contract_end')">Contract end: {{ date_format(notification.data.contract_end) }}</p>
-                    <p v-if="propExist(notification.data,'deposit')">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>£{{ notification.data.deposit }}</span> have been taken from your card ending in <span>1234</span></p>
+                    <p v-if="propExist(notification.data,'deposit')">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notification.data.deposit | currency }}</span> have been taken from your card ending in <span>1234</span></p>
                     <div v-if="notification.data.title.includes('request')" class="btn-group">
                     <button v-if="notification.data.vehicle" @click="approve_action(notification)">Approve</button>
                     <button v-if="notification.data.vehicle"  @click="cancle_action(notification)">Cancle</button>
