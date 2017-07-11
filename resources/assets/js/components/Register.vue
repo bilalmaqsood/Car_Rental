@@ -234,7 +234,7 @@
                         let $btn = $(e.target).button('loading');
 
                         let postData = JSON.parse(JSON.stringify(_.merge(this.basic_info, this.driver_info)));
-                        postData.phone = postData.phone.replace(/[\s\(\)]/g, '');
+                        postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
 
                         axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
                             $t.successRegister();
@@ -252,7 +252,7 @@
                     let $btn = $(e.target).button('loading');
 
                     let postData = JSON.parse(JSON.stringify(this.basic_info));
-                    postData.phone = postData.phone.replace(/[\s\(\)]/g, '');
+                    postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
 
                     axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
                         $t.successRegister();

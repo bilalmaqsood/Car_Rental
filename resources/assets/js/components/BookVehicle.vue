@@ -460,6 +460,8 @@
                         type: 'information',
                         text: 'Booking created successfully for ' + User.state.auth.name,
                     }).show();
+                }).catch(r => {
+                    $btn.button('reset');
                 });
             },
 

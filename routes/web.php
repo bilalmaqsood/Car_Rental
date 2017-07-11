@@ -24,3 +24,12 @@ Route::get('/vehicles', 'HomeController@topVehicles');
 Route::get('/vehicle/image/hash', function () {
     return response(File::get(resource_path('assets/images/car_img.png')), 200, array('content-type' => 'image/png'));
 });
+
+Route::get('test', function () {
+    $blade = '
+    <h1>Hello, \'{{$planet}}\'!</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet aspernatur iure magnam magni odit quibusdam sit velit veritatis vitae?</p>
+    ';
+    $php = Blade::compileString($blade);
+    return render($php, ['planet' => 'World']);
+});

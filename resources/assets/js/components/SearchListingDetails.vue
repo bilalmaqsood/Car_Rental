@@ -129,22 +129,26 @@
                     }, 500);
                 } else {
                     localStorage.removeItem('reloadData');
-                    $.ajax({
-                        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.pickup_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
-                        type: 'GET',
-                        dataType: 'json',
-                        async: false,
-                    }).done(function (r) {
-                        $t.pickup_location = r.results[0].formatted_address;
-                    });
-                    $.ajax({
-                        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.return_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
-                        type: 'GET',
-                        dataType: 'json',
-                        async: false,
-                    }).done(function (r) {
-                        $t.return_location = r.results[0].formatted_address;
-                    });
+
+                    if ($t.user.state.vehicleData.pickup_location)
+                        $.ajax({
+                            url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.pickup_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
+                            type: 'GET',
+                            dataType: 'json',
+                            async: false,
+                        }).done(function (r) {
+                            $t.pickup_location = r.results[0].formatted_address;
+                        });
+
+                    if ($t.user.state.vehicleData.return_location)
+                        $.ajax({
+                            url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.return_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
+                            type: 'GET',
+                            dataType: 'json',
+                            async: false,
+                        }).done(function (r) {
+                            $t.return_location = r.results[0].formatted_address;
+                        });
                 }
             },
 

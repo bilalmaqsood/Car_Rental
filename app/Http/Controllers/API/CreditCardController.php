@@ -130,7 +130,7 @@ class CreditCardController extends Controller
 
         if (!$creditCard) throw new ModelNotFoundException();
 
-        $creditCard->default = 0;
+        $creditCard->default = 1;
         $creditCard->save();
 
         return api_response(trans('credit_card.default', ['name' => $request->user()->name]));
