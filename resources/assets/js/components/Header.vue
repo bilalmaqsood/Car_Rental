@@ -175,13 +175,16 @@
                                     payment
                                 </a>
                             </li>
-                            <li>
-                                <a href="#">
+                            <li :class="{active: booking}">
+                                <a href="javascript:;" @click="booking=!booking">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon svg-icon-booking">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                     </svg>
                                     bookings
                                 </a>
+                            <transition name="slide-fade">
+                                <booking-listing v-if="booking" :profileHeight="height"></booking-listing>
+                            </transition>
                             </li>
                             <li v-if="isClient()">
                                 <a href="#">
@@ -242,6 +245,7 @@
                 message: null,
                 authSectionView: 'login',
                 profile: false,
+                booking: false,
                 settings: false,
                 vehicles: false,
                 height: 0,
@@ -327,7 +331,6 @@
                 let $this = this;
                 let $btn = $(e.target).button('loading');
                 axios.post('/login', this.login).then(function (r) {
-                    console.log(r);
                     $btn.button('reset');
                     new Noty({
                         type: 'information',

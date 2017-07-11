@@ -307,7 +307,9 @@ h3 {
     height: 90px;
     margin-right: 2px;
 }
-
+.clickable{
+    cursor: pointer;
+}
 .top_location ul li:nth-child(2n) {
     background: rgba(255, 255, 255, 0.78);
     height: 90px;

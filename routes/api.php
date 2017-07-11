@@ -63,6 +63,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('booking/{id}/status', 'BookingController@updateStatusRequest');
     Route::patch('booking/{id}/status', 'BookingController@updateStatusFulfill');
     Route::post('booking/{id}/feedback', 'BookingController@giveFeedback');
+    Route::get('booking/{id}/logs', 'BookingController@lastBookingLog')->middleware('owner');
+
 
     Route::post('credit-card/{id}/default', 'CreditCardController@defaultCard');
     Route::resource('credit-card', 'CreditCardController', ['except' => ['create', 'edit']]);

@@ -41,7 +41,7 @@ class BookingController extends Controller
         if ($request->user()->isOwner()) {
             $result = $request->user()->owner->vehicles()->with(['booking' => function ($with) {
                 $with->with(['vehicle' => function ($vWith) {
-                    $vWith->select('id', 'make', 'model', 'variant', 'year', 'images');
+                    $vWith->select('id', 'make', 'model', 'variant', 'year', 'images','rent','seats','mpg','fuel','transmission','mileage');
                 }]);
             }])->get()->map(function ($v) {
                 return $v->booking;
@@ -56,7 +56,7 @@ class BookingController extends Controller
             });
         } else
             $bookingList = $request->user()->booking()->with(['vehicle' => function ($vWith) {
-                $vWith->select('id', 'make', 'model', 'variant', 'year', 'images');
+                $vWith->select('id', 'make', 'model', 'variant', 'year', 'images','rent','seats','mpg','fuel','transmission','mileage');
             }])->get();
 
         return api_response($bookingList);
@@ -353,5 +353,13 @@ class BookingController extends Controller
         $feedback->save();
 
         return api_response($feedback);
+    }
+
+    public function lastBookingLog($id){
+        $booking = Booking::whereId($id)->with(['bookingLog' => function ($query){
+                                $query->whereNull('fulfilled_data')->latest()->first();
+        }])->first();
+
+        return  api_response($booking);
     }
 }

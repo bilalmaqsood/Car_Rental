@@ -28,6 +28,11 @@ Vue.component('top-vehicles-listing', require('./components/TopVehicleListing.vu
 Vue.component('user-settings', require('./components/Settings.vue'));
 Vue.component('vehicle-crud', require('./components/vehicles.vue'));
 Vue.component('vehicle-input-form', require('./components/VehiclesInputForm.vue'));
+Vue.component('booking-listing', require('./components/Booking.vue'));
+Vue.component('car-inspection', require('./components/CarInspection.vue'));
+Vue.component('booking-documents', require('./components/Documents.vue'));
+Vue.component('booking-chat', require('./components/Chat.vue'));
+Vue.component('extend-cancel-booking', require('./components/ExtendCancel.vue'));
 
 Vue.filter('date', require('./filters/date'));
 Vue.filter('currency', require('./filters/currency'));
