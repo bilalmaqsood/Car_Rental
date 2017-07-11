@@ -130,4 +130,12 @@ class Vehicle extends Model
     {
         return $this->hasMany('Qwikkar\Models\TimeSlot');
     }
+
+    /**
+     * Get contract template of vehicle
+     */
+    public function contractTemplate()
+    {
+        return $this->hasOne('Qwikkar\Models\ContractTemplate');
+    }
 }

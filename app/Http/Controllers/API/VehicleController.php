@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Http\Requests\VehicleModel;
+use Qwikkar\Models\ContractTemplate;
 use Qwikkar\Models\Vehicle;
 
 class VehicleController extends Controller
@@ -101,12 +102,66 @@ class VehicleController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $vehicle = $request->user()->owner->vehicles->where('id', $id)->first();
+        $vehicle = $request->user()->owner->vehicles()->where('id', $id)->first();
 
         if (!$vehicle) throw new ModelNotFoundException();
 
         $vehicle->delete();
 
         return api_response(trans('vehicle.deleted', ['name' => $request->user()->name]));
+    }
+
+    /**
+     * Add contract template for vehicle
+     *
+     * @param Request $request
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function contractTemplate(Request $request, $id)
+    {
+        $vehicle = $request->user()->owner->vehicles()->where('id', $id)->first();
+
+        $contractTemplate = $vehicle->contractTemplate;
+        if (!$contractTemplate)
+            $contractTemplate = new ContractTemplate();
+
+        $contractTemplate->template = $request->getContent();
+
+        if ($vehicle->contractTemplate)
+            $contractTemplate->save();
+        else
+            $vehicle->contractTemplate()->save($contractTemplate);
+
+        return api_response(trans('vehicle.contract.added', ['vehicle' => $vehicle->vehicle_name]));
+    }
+
+    /**
+     * Add contract template for vehicle
+     *
+     * @param Request $request
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function contractSignature(Request $request, $id)
+    {
+        $this->validate($request, [
+            'signature' => 'required|string'
+        ]);
+
+        $vehicle = $request->user()->owner->vehicles()->where('id', $id)->first();
+
+        $contractTemplate = $vehicle->contractTemplate;
+        if (!$contractTemplate)
+            $contractTemplate = new ContractTemplate();
+
+        $contractTemplate->owner_signature = $request->signature;
+
+        if ($vehicle->contractTemplate)
+            $contractTemplate->save();
+        else
+            $vehicle->contractTemplate()->save($contractTemplate);
+
+        return api_response(trans('vehicle.contract.signature', ['vehicle' => $vehicle->vehicle_name]));
     }
 }

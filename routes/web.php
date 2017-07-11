@@ -26,10 +26,24 @@ Route::get('/vehicle/image/hash', function () {
 });
 
 Route::get('test', function () {
-    $blade = '
-    <h1>Hello, \'{{$planet}}\'!</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam amet aspernatur iure magnam magni odit quibusdam sit velit veritatis vitae?</p>
-    ';
-    $php = Blade::compileString($blade);
-    return render($php, ['planet' => 'World']);
+    $vehicle = \Qwikkar\Models\Vehicle::find(1);
+
+    $compiledString = \Blade::compileString($vehicle->contractTemplate->template);
+
+    $dataPlaced = render($compiledString, [
+        'owner_company' => 'owner_company',
+        'owner_name' => 'owner_name',
+        'owner_email' => 'owner_email',
+        'owner_contact_number' => 'owner_contact_number',
+        'driver_name' => 'driver_name',
+        'driver_email' => 'driver_email',
+        'driver_contact_number' => 'driver_contact_number',
+    ]);
+
+    $dataPlaced = str_replace("\n", '<br>', $dataPlaced);
+
+    PDF::loadView('pdf.contract', [
+        'owner_signature' => $vehicle->contractTemplate->owner_signature,
+        'content' => $dataPlaced
+    ])->save(storage_path('app/public/document/' . md5($vehicle->vehicle_name) . '.pdf'));
 });

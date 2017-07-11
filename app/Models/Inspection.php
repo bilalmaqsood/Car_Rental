@@ -24,4 +24,13 @@ class Inspection extends Model
     protected $casts = [
         'data' => 'array',
     ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'booking_id',
+    ];
 }

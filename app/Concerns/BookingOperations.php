@@ -62,10 +62,10 @@ trait BookingOperations
     {
         // validate if booking already exists
         if (
-            $vehicle->booking()
+        $vehicle->booking()
             ->where('start_date', Carbon::parse($request->start_date))
             ->where('end_date', Carbon::parse($request->end_date))
-            ->whereNotIn('status', [3,4,7])
+            ->whereNotIn('status', [3, 4, 7])
             ->count()
         )
             return api_response(trans('booking.exist', ['vehicle' => $vehicle->vehicle_name]), Response::HTTP_CONFLICT);
@@ -85,13 +85,15 @@ trait BookingOperations
 
         $this->deductDeposit($booking, $request->user());
 
+        $this->generateContract($booking);
+
         return api_response($booking->fresh(['vehicle' => function ($with) {
             $with->select('id', 'make', 'model', 'variant', 'year', 'deposit', 'images');
         }]));
     }
 
     /**
-     * Validate booking according to user type
+     * Deduct deposit from driver's account
      *
      * @param Booking $booking
      * @param User $user
@@ -165,7 +167,34 @@ trait BookingOperations
     }
 
     /**
-     * Validate booking according to user type
+     * Generate booking contract for driver
+     *
+     * @param Booking $booking
+     */
+    protected function generateContract(Booking $booking)
+    {
+        $compiledString = \Blade::compileString($booking->vehicle->contractTemplate->template);
+
+        $dataPlaced = render($compiledString, [
+            'owner_company' => 'owner_company',
+            'owner_name' => 'owner_name',
+            'owner_email' => 'owner_email',
+            'owner_contact_number' => 'owner_contact_number',
+            'driver_name' => 'driver_name',
+            'driver_email' => 'driver_email',
+            'driver_contact_number' => 'driver_contact_number',
+        ]);
+
+        $dataPlaced = str_replace("\n", '<br>', $dataPlaced);
+
+        \PDF::loadView('pdf.contract', [
+            'content' => $dataPlaced,
+            'owner_signature' => $booking->vehicle->contractTemplate->owner_signature
+        ])->save(storage_path('app/public/document/' . md5($booking->vehicle->vehicle_name . '-' . $booking->id) . '.pdf'));
+    }
+
+    /**
+     * Make a payment from default credit card
      *
      * @param User $user
      * @param float $amount
