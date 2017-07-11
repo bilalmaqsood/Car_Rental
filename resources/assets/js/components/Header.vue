@@ -167,13 +167,16 @@
                                 </transition>
 
                             </li>
-                            <li>
-                                <a href="#">
+                            <li @click="payment=!payment">
+                                <a href="javascript:;">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                                     </svg>
                                     payment
                                 </a>
+                                <transition name="slide-fade">
+                                    <payment-card-listing v-if="payment" :profileHeight="height"></payment-card-listing>
+                                </transition>
                             </li>
                             <li :class="{active: booking}">
                                 <a href="javascript:;" @click="booking=!booking">
@@ -248,6 +251,7 @@
                 booking: false,
                 settings: false,
                 vehicles: false,
+                payment: false,
                 height: 0,
                 login: {
                     email: '',
