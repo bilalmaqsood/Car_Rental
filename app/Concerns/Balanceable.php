@@ -70,9 +70,9 @@ trait Balanceable
 
         $options = [
             'source' => $token,
-            'description' => "Charge " . $amount . " against rent a car on Qwikkar"
+            'description' => 'Charge ' . $amount . ' against rent a car on Qwikkar'
         ];
 
-        return $this->charge($amount, $options);
+        return $this->charge($amount * 100, $options);
     }
 }
