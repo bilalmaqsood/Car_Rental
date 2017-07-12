@@ -30,6 +30,7 @@ class VehicleModel extends FormRequest
             'year' => 'required|date_format:Y|max:50',
             'mileage' => 'numeric',
             'fuel' => 'string|max:50',
+            'registration_number' => 'string',
             'mpg' => 'numeric',
             'mpg_eco' => 'numeric',
             'transmission' => 'string|max:255',

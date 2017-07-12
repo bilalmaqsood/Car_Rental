@@ -19,6 +19,7 @@ class Vehicle extends Model
         'mileage_service',
         'mileage',
         'fuel',
+        'registration_number',
         'mpg',
         'mpg_eco',
         'transmission',

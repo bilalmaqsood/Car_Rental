@@ -112,6 +112,22 @@ class VehicleController extends Controller
     }
 
     /**
+     * Get contract template for vehicle
+     *
+     * @param Request $request
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function getContractTemplate(Request $request, $id)
+    {
+        $vehicle = $request->user()->owner->vehicles()->where('id', $id)->first();
+
+        if (!$vehicle) throw new ModelNotFoundException();
+
+        return response($vehicle->contractTemplate ? $vehicle->contractTemplate->template : '')->header('Content-Type', 'text/plain');
+    }
+
+    /**
      * Add contract template for vehicle
      *
      * @param Request $request

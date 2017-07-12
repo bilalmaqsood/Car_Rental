@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::resource('account', 'AccountController', ['except' => ['create', 'edit']]);
     Route::resource('vehicle', 'VehicleController', ['except' => ['create', 'edit']]);
+    Route::get('vehicle/{id}/contract-template', 'VehicleController@getContractTemplate');
     Route::post('vehicle/{id}/contract-template', 'VehicleController@contractTemplate');
     Route::post('vehicle/{id}/contract-signature', 'VehicleController@contractSignature');
 
