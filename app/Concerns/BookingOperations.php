@@ -238,12 +238,12 @@ trait BookingOperations
 
         if ($signatures->has('client')) {
             $booking->status = 3;
-            $pdfData['driver_signature'] = $booking->signatures->get('client');
+            $pdfData['driver_signature'] = $signatures->get('client');
         }
 
         if ($signatures->has('owner')) {
             $booking->status = 2;
-            $pdfData['owner_signature'] = $booking->signatures->get('owner');
+            $pdfData['owner_signature'] = $signatures->get('owner');
         }
 
         if ($signatures->has('owner') && $signatures->has('client')) $booking->status = 4;
