@@ -4,12 +4,19 @@
             <div class="vehicle_registration">
                 <div class="registration_number">
                     Vehicle registration number
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
-                    </svg>
+                    <a href="javascript:void(0);" @click="processForm">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                        </svg>
+                    </a>
                 </div>
                 <div class="card_recured">
                     <ul>
+                        <li>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="registration number" v-model="form.registration">
+                            </div>
+                        </li>
                         <li>
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="vehicle make" v-model="form.make">
@@ -27,7 +34,7 @@
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="registration year" v-model="form.year">
+                                <input type="text" class="form-control registration_year" placeholder="registration year" v-model="form.year">
                                 <span>
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -37,7 +44,7 @@
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="starting mileage" v-model="form.starting_mileage">
+                                <input type="text" class="form-control" placeholder="starting mileage" v-model="form.mileage">
                             </div>
                         </li>
                         <li>
@@ -72,7 +79,12 @@
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="availability" v-model="form.availability">
+                                <input type="text" class="form-control" placeholder="7 seats">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-group">
+                                <input type="text" class="form-control availability" placeholder="availability" v-model="form.availability">
                                 <span>
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -249,7 +261,7 @@
                     model: '',
                     variant: '',
                     year: '',
-                    starting_mileage: '',
+                    mileage: '',
                     service_mileage: '',
                     fuel: '',
                     mpg: '',
@@ -262,8 +274,7 @@
                     insurance: '',
                     deposit: '',
                     discounts:'',
-
-
+                    registration: '',
                 },
             };
         },
@@ -280,7 +291,7 @@
                 year: {
                     minLength: minLength(6)
                 },
-                starting_mileage: {
+                mileage: {
                     minLength: minLength(3)
                 },
                 service_mileage: {
@@ -323,11 +334,40 @@
         },
 
         mounted() {
+            $scope=this;
+
+            $('.registration_year').datetimepicker({
+                format: 'MM/DD/YYYY',
+                viewMode: 'years'
+            });
+            $('.availability').datetimepicker({
+                format: 'MM/DD/YYYY',
+            });
 
         },
 
         methods: {
+            processForm(){
+                $scope.postForm();
+            },
+            postForm() {
+                axios.post('/api/vehicle', this.prepareForm())
+                    .then(response => {
+                        this.response = response.data.success;
+                        this.postSuccess = true;
+                    });
+            },
+            prepareForm() {
+                let input = this.form;
 
+                Object.keys(input).forEach(function (key) {
+                    if (input[key].length <= 0) {
+                        delete input[key];
+                    }
+                });
+
+                return input;
+            }
         }
     }
 </script>
