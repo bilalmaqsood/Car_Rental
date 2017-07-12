@@ -90,7 +90,7 @@
             cancleParams(){
                 return {
                     note: $scope.cancle_note,
-                    status: 4
+                    status: 3
                 }
             }
 
