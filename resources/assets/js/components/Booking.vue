@@ -21,10 +21,10 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
-                                <p>available from: <span>now</span></p>
+                                <p>available from: <span>{{booking.vehicle.available_from | date('fromNow')}}</span></p>
                             </div>
                             <div class="availabe_item_price">
-                                <h3>£ {{ booking.vehicle.rent }}</h3>
+                                <h3>{{ booking.vehicle.rent | currency }}</h3>
                                 <span>/week</span>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                     <h3>Rent book</h3>
                     <ul>
                         <li><span>Week no.</span><span>Cost</span><span>Due date</span><span>Status</span></li>
-                        <li v-for="item in payment_logs"><span>{{item.title}}</span><span>£ {{item.cost}}</span><span>{{date_format(item.due_date)}}</span><span>{{ item.paid?'Paid':'Pending'}}</span></li>
+                        <li v-for="item in payment_logs"><span>{{item.title}}</span><span>{{item.cost | currency  }}</span><span>{{date_format(item.due_date)}}</span><span>{{ item.paid?'Paid':'Pending'}}</span></li>
                     </ul>
                 </div><!--rent_tabel-->
 
@@ -103,10 +103,10 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
-                                <p>available from: <span>now</span></p>
+                                <p>available from: <span>{{booking.vehicle.available_from | date('fromNow')}}</span></p>
                             </div>
                             <div class="availabe_item_price">
-                                <h3>£ {{ booking.vehicle.rent }} </h3>
+                                <h3>{{ booking.vehicle.rent | currency  }} </h3>
                                 <span>/week</span>
                             </div>
                         </div>
@@ -191,6 +191,7 @@
                     .then(function (response) {
                         if(response.data.success.length>0)
                         $scope.payment_logs = response.data.success;
+                    else
                         $scope.payment_logs = false;
                     });
                 }

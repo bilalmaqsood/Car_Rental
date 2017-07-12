@@ -45,7 +45,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                     </svg>
-                    <input type="text" class="form-control" placeholder="Available" v-model="available">
+                    <input type="text" class="form-control available" placeholder="Available" v-model="available">
                 </div>
             </li>
         </ul>
@@ -65,7 +65,12 @@
                 advanceSearch: false,
             };
         },
-
+        mounted() {
+            $('.available').datetimepicker({
+                inline: true,
+                sideBySide: false
+            });
+        },
         methods: {
             searchVehicles(e) {
                 this.fetchVehicles(e);

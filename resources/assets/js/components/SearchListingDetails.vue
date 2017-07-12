@@ -60,7 +60,7 @@
 
                 <div class="pickup_loction_datebox">
                     <div class="availabe">
-                        <p>John Doe <span>16.05.2017</span></p>
+                        <p>{{ user.state.vehicleData.owner.user.name }} <span> {{ date_format(user.state.vehicleData.owner.created_at) }}</span></p>
                     </div>
                     <div class="ratting" data-score="1" style="cursor: pointer;">
                         <i class="fa fa-fw fa-star" title="bad" data-score="1"></i>
@@ -102,6 +102,7 @@
 
 <script>
     import Local from '../local';
+    import User from '../user';
 
     export default {
         props: ['user'],
@@ -154,7 +155,10 @@
 
             doBooking() {
                 this.user.commit('booking', true);
-            }
+            },
+            date_format(date){
+                return moment.utc(date).format("D.M.Y");
+            },
         }
     }
 </script>

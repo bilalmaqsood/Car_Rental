@@ -58,7 +58,7 @@
                                     <p>available from: <span>{{vehicle.available_from | date('fromNow')}}</span></p>
                                 </div>
                                 <div class="availabe_item_price">
-                                    <h3>&pound; {{vehicle.rent | currency}}</h3>
+                                    <h3>{{vehicle.rent | currency}}</h3>
                                     <span>/week</span>
                                     <span v-if="vehicle.insurance>0.0">insurance included</span>
                                 </div>
