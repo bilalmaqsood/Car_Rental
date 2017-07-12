@@ -14,7 +14,7 @@ class AddRegistrationNumber extends Migration
     public function up()
     {
         Schema::table('vehicles', function (Blueprint $table) {
-            $table->string('registration_number');
+            $table->string('registration_number')->nullable();
         });
     }
 

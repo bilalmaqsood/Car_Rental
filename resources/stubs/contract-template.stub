@@ -1,0 +1,19 @@
+{{$owner_company}}
+{{$owner_name}}
+{{$owner_email}}
+{{$owner_contact_number}}
+
+
+
+Good Day Sir/Madam!
+
+I am {{$owner_name}}, This is the contract between {{$owner_name}} and the {{$driver_name}} for the rental of car with {{$vehicle_registration}}. Starting from {{$contract_start_date}} and ending on {{$contract_end_date}}.
+
+Thank you for the opportunity, I am hoping that you can give us the opportunity for this.
+
+
+
+Yours Truly,
+{{$driver_name}}
+{{$driver_email}}
+{{$driver_contact_number}}

@@ -54,6 +54,8 @@ class Booking extends Model
         'deposit' => 'float',
         'start_date' => 'datetime',
         'end_date' => 'datetime',
+
+        'documents' => 'collection',
     ];
 
     /**

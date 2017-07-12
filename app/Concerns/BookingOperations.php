@@ -176,21 +176,30 @@ trait BookingOperations
         $compiledString = \Blade::compileString($booking->vehicle->contractTemplate->template);
 
         $dataPlaced = render($compiledString, [
-            'owner_company' => 'owner_company',
-            'owner_name' => 'owner_name',
-            'owner_email' => 'owner_email',
-            'owner_contact_number' => 'owner_contact_number',
-            'driver_name' => 'driver_name',
-            'driver_email' => 'driver_email',
-            'driver_contact_number' => 'driver_contact_number',
+            'owner_company' => $booking->vehicle->owner->company ?: '',
+            'owner_name' => $booking->vehicle->owner->user->name ?: '',
+            'owner_email' => $booking->vehicle->owner->user->email ?: '',
+            'owner_contact_number' => $booking->vehicle->owner->user->phone ?: '',
+            'driver_name' => $booking->user->name ?: '',
+            'driver_email' => $booking->user->email ?: '',
+            'driver_contact_number' => $booking->user->phone ?: '',
+            'vehicle_registration' => $booking->vehicle->registration_number ?: '',
+            'contract_start_date' => $booking->start_date->format('l jS \\of F Y'),
+            'contract_end_date' => $booking->end_date->format('l jS \\of F Y'),
         ]);
 
         $dataPlaced = str_replace("\n", '<br>', $dataPlaced);
 
+        $fileName = '/document/' . md5($booking->vehicle->vehicle_name . '-' . $booking->id) . '.pdf';
+
         \PDF::loadView('pdf.contract', [
-            'content' => $dataPlaced,
-            'owner_signature' => $booking->vehicle->contractTemplate->owner_signature
-        ])->save(storage_path('app/public/document/' . md5($booking->vehicle->vehicle_name . '-' . $booking->id) . '.pdf'));
+            'content' => $dataPlaced
+        ])->save(storage_path('app/public' . $fileName));
+
+        $fileName = '/storage' . $fileName;
+
+        $booking->documents = collect([$fileName]);
+        $booking->save();
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Http\Requests\VehicleModel;
 use Qwikkar\Models\ContractTemplate;
@@ -50,6 +50,10 @@ class VehicleController extends Controller
             $vehicle->fill($request->all());
 
             $request->user()->owner->vehicles()->save($vehicle);
+
+            $vehicle->contractTemplate()->create([
+                'template' => File::get(resource_path('stubs/contract-template.stub'))
+            ]);
         }
 
         return api_response($vehicle);
