@@ -49,11 +49,17 @@
                             </svg>
                             car inspection
                         </a></li>
-                        <li><a href="javascript:void(0)" @click="extend_cancel=!extend_cancel">
+                        <li v-if="User.state.auth.type=='client'"><a href="javascript:void(0)" @click="extend_cancel=!extend_cancel">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                             </svg>
                             extend/cancel
+                        </a></li>
+                        <li v-if="User.state.auth.type=='owner'"><a href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                            </svg>
+                            cancel
                         </a></li>
                         <li><a href="javascript:void(0)" @click="booking_docs=!booking_docs">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" class="svg-icon">
