@@ -14,6 +14,8 @@ class Booking extends Model
     public $statusTypes = [
         'Requested',
         'Confirmed',
+        'Signed by client',
+        'Signed by owner',
         'Accepted',
         'Cancel',
         'Canceled',
@@ -56,6 +58,7 @@ class Booking extends Model
         'end_date' => 'datetime',
 
         'documents' => 'collection',
+        'signatures' => 'collection',
     ];
 
     /**

@@ -51,12 +51,12 @@
 <br>
 <div style="clear: both;"></div>
 <div>
-    @if(isset($owner_signature) && $owner_signature)
-        <img src="{!! storage_path('app/public/'.$owner_signature) !!}" alt="owner signature logo" style="float: left; height: 150px;">
-    @endif
-
     @if(isset($driver_signature) && $driver_signature)
         <img src="{!! storage_path('app/public/'.$driver_signature) !!}" alt="driver signature logo" style="float: left; height: 150px;">
+    @endif
+
+    @if(isset($owner_signature) && $owner_signature)
+        <img src="{!! storage_path('app/public/'.$owner_signature) !!}" alt="owner signature logo" style="float: right; height: 150px;">
     @endif
     <div style="clear: both;"></div>
 </div>

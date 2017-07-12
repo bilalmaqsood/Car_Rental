@@ -41,7 +41,7 @@ class BookingController extends Controller
         if ($request->user()->isOwner()) {
             $result = $request->user()->owner->vehicles()->with(['booking' => function ($with) {
                 $with->with(['vehicle' => function ($vWith) {
-                    $vWith->select('id', 'make', 'model', 'variant', 'year', 'images','rent','seats','mpg','fuel','transmission','mileage','available_from');
+                    $vWith->select('id', 'make', 'model', 'variant', 'year', 'images', 'rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
                 }]);
             }])->get()->map(function ($v) {
                 return $v->booking;
@@ -56,7 +56,7 @@ class BookingController extends Controller
             });
         } else
             $bookingList = $request->user()->booking()->with(['vehicle' => function ($vWith) {
-                $vWith->select('id', 'make', 'model', 'variant', 'year', 'images','rent','seats','mpg','fuel','transmission','mileage','available_from');
+                $vWith->select('id', 'make', 'model', 'variant', 'year', 'images', 'rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
             }])->get();
 
         return api_response($bookingList);
@@ -223,17 +223,18 @@ class BookingController extends Controller
             'end_date' => 'date',
             'location' => 'string',
             'note' => 'string',
-            'status' => 'in:3,5',
+            'status' => 'in:5,7',
         ]);
 
-        $status = 0;
         if ($request->has('start_date') && $request->has('end_date'))
-            $status = 5;
+            $status = 7;
         else
             $status = $request->status;
 
-
         $booking = Booking::findOrFail($id);
+
+        if ($this->validateBooking($booking, $request))
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $requestData = $request->all();
         unset($requestData['note']);
@@ -275,11 +276,14 @@ class BookingController extends Controller
     {
         $this->validate($request, [
             'log_id' => 'exists:booking_logs,id',
-            'status' => 'required|in:2,4,6,7',
+            'status' => 'required|in:6,8,9',
             'note' => 'string',
         ]);
 
         $booking = Booking::findOrFail($id);
+
+        if ($this->validateBooking($booking, $request))
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         if ($request->has('log_id'))
             $log = BookingLog::find($request->log_id);
@@ -339,7 +343,10 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
 
-        if (!in_array($booking->status, [4, 7]))
+        if ($this->validateBooking($booking, $request))
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        if (!in_array($booking->status, [6, 9]))
             api_response(trans('booking.in-progress'), Response::HTTP_BAD_REQUEST);
 
         if (Feedback::whereBookingId($booking->id)->whereUserId($request->user()->id)->count())
@@ -355,11 +362,48 @@ class BookingController extends Controller
         return api_response($feedback);
     }
 
-    public function lastBookingLog($id){
-        $booking = Booking::whereId($id)->with(['bookingLog' => function ($query){
-                                $query->whereNull('fulfilled_data')->latest()->first();
+    /**
+     * Get latest booking log
+     *
+     * @param Request $request
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function lastBookingLog(Request $request, $id)
+    {
+        $booking = Booking::whereId($id)->with(['bookingLog' => function ($query) {
+            $query->whereNull('fulfilled_data')->latest()->first();
         }])->first();
 
-        return  api_response($booking);
+        if ($this->validateBooking($booking, $request))
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        return api_response($booking);
+    }
+
+    /**
+     * Sign contract from user of booking
+     *
+     * @param Request $request
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function signatureBooking(Request $request, $id)
+    {
+        $this->validate($request, [
+            'signature' => 'required|image'
+        ]);
+
+        $booking = Booking::findOrFail($id);
+
+        if ($this->validateBooking($booking, $request))
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        if (!in_array($booking->status, [1, 2, 3]))
+            api_response(trans('booking.sign', ['status' => strtolower($booking->statusTypes[$booking->status])]), Response::HTTP_BAD_REQUEST);
+
+        $this->signContract($request, $booking);
+
+        return api_response(trans('booking.signature', ['name' => $request->user()->name]));
     }
 }

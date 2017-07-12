@@ -173,6 +173,28 @@ trait BookingOperations
      */
     protected function generateContract(Booking $booking)
     {
+        $dataPlaced = $this->compileTemplate($booking);
+
+        $fileName = '/document/' . md5($booking->vehicle->vehicle_name . '-' . $booking->id) . '.pdf';
+
+        \PDF::loadView('pdf.contract', [
+            'content' => $dataPlaced
+        ])->save(storage_path('app/public' . $fileName));
+
+        $fileName = '/storage' . $fileName;
+
+        $booking->documents = collect([$fileName]);
+        $booking->save();
+    }
+
+    /**
+     * Compile template of contract
+     *
+     * @param Booking $booking
+     * @return mixed
+     */
+    protected function compileTemplate(Booking $booking)
+    {
         $compiledString = \Blade::compileString($booking->vehicle->contractTemplate->template);
 
         $dataPlaced = render($compiledString, [
@@ -188,18 +210,48 @@ trait BookingOperations
             'contract_end_date' => $booking->end_date->format('l jS \\of F Y'),
         ]);
 
-        $dataPlaced = str_replace("\n", '<br>', $dataPlaced);
+        return str_replace("\n", '<br>', $dataPlaced);
+    }
+
+    /**
+     * Sign the contract according to user type
+     *
+     * @param Request $request
+     * @param Booking $booking
+     */
+    protected function signContract(Request $request, Booking $booking)
+    {
+        $dataPlaced = $this->compileTemplate($booking);
 
         $fileName = '/document/' . md5($booking->vehicle->vehicle_name . '-' . $booking->id) . '.pdf';
 
-        \PDF::loadView('pdf.contract', [
-            'content' => $dataPlaced
-        ])->save(storage_path('app/public' . $fileName));
+        $pdfData = ['content' => $dataPlaced];
 
-        $fileName = '/storage' . $fileName;
+        $signatures = $booking->signatures;
 
-        $booking->documents = collect([$fileName]);
+        if($signatures)
+            $signatures->put($request->user()->types->first()->name, $request->signature->store('images', 'public'));
+        else
+            $signatures = collect([
+                $request->user()->types->first()->name => $request->signature->store('images', 'public')
+            ]);
+
+        if ($signatures->has('client')) {
+            $booking->status = 3;
+            $pdfData['driver_signature'] = $booking->signatures->get('client');
+        }
+
+        if ($signatures->has('owner')) {
+            $booking->status = 2;
+            $pdfData['owner_signature'] = $booking->signatures->get('owner');
+        }
+
+        if ($signatures->has('owner') && $signatures->has('client')) $booking->status = 4;
+
+        $booking->signatures = $signatures;
         $booking->save();
+
+        \PDF::loadView('pdf.contract', $pdfData)->save(storage_path('app/public' . $fileName));
     }
 
     /**
@@ -264,9 +316,9 @@ trait BookingOperations
         $booking->fill($log->requested_data);
 
         if (isset($log->requested_data['start_date']) || isset($log->requested_data['end_date'])) {
+            $booking->status = 8;
+        } elseif ($log->requested_data['status'] == 5) {
             $booking->status = 6;
-        } elseif ($log->requested_data['status'] == 3) {
-            $booking->status = 4;
         } else {
             $booking->status = $request->status;
         }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRegistrationNumber extends Migration
+class AddSignaturesOfBooking extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddRegistrationNumber extends Migration
      */
     public function up()
     {
-        Schema::table('vehicles', function (Blueprint $table) {
-            $table->string('registration_number')->nullable()->after('year');
+        Schema::table('bookings', function (Blueprint $table) {
+            $table->json('signatures')->nullable()->after('deposit');
         });
     }
 
@@ -25,8 +25,8 @@ class AddRegistrationNumber extends Migration
      */
     public function down()
     {
-        Schema::table('vehicles', function (Blueprint $table) {
-            $table->dropColumn('registration_number');
+        Schema::table('bookings', function (Blueprint $table) {
+            $table->dropColumn('signatures');
         });
     }
 }

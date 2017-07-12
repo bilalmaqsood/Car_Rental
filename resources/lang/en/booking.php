@@ -24,6 +24,10 @@ return [
 
     'in-progress' => 'You cannot give feedback because booking is not close.',
 
+    'sign' => 'You cannot sign booking contract because booking is <b>:status</b>.',
+
+    'signature' => 'Successfully contract signed by :name.',
+
     'feedback' => [
         'exist' => 'Feedback is already exist for current booking.',
     ],
