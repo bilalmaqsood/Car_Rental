@@ -42,8 +42,8 @@ Route::group(['middleware' => 'auth:api'], function () {
         return api_response($request->user()->unreadNotifications);
     });
     Route::post('/notifications', function (Request $request) {
-        $notification = Illuminate\Notifications\DatabaseNotification::find(request('notify_id'));
-        if($notification)
+        $notification = $request->user()->notifications()->where('id', $request->notify_id)->first();
+        if ($notification)
             $notification->update(['read_at' => Carbon\Carbon::now()]);
 
     });
