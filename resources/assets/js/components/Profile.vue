@@ -14,27 +14,29 @@
                 </div>
             </div>
 
-            <div v-for="notification in notifications" :class="notification.data.noti_type" class=" pofile_content_wrapper">
+            <transition-group  name="slide-fade" tag="div">
+            <div v-for="notif in notifications" :class="notif.data.noti_type"  v-bind:key="notif" class=" pofile_content_wrapper">
 
-                <div v-if="propExist(notification.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notification.data.image + ')' }">
-                    <img :src="notification.data.image" alt="">
+                <div v-if="propExist(notif.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notif.data.image + ')' }">
+                    <img :src="notif.data.image" alt="">
                 </div>
 
                 <div class="profile_content">
-                    <h3  :class="{clickable: notification.data.vehicle}"v-if="notification.data.title" @click="notify_action(notification)">{{notification.data.title}}</h3>
-                    <p v-if="propExist(notification.data,'user')" ><span>{{notification.data.user}}</span> sent you booking request</p>
-                    <p v-if="propExist(notification.data,'vehicle')">{{notification.data.vehicle}}</p>
-                    <p v-if="propExist(notification.data,'contract_start')">Contract start: {{ date_format(notification.data.contract_start) }} </p>
-                    <p v-if="propExist(notification.data,'contract_end')">Contract end: {{ date_format(notification.data.contract_end) }}</p>
-                    <p v-if="propExist(notification.data,'deposit')">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notification.data.deposit | currency }}</span> have been taken from your card ending in <span>1234</span></p>
-                    <div v-if="isActionable(notification)" class="btn-group">
-                    <button v-if="notification.data.vehicle" @click="approve_action(notification)">Approve</button>
-                    <button v-if="notification.data.vehicle"  @click="cancle_action(notification)">Cancle</button>
+                    <h3  :class="{clickable: notif.data.vehicle}"v-if="notif.data.title" @click="notify_action(notif)">{{notif.data.title}}</h3>
+                    <p v-if="propExist(notif.data,'user')" ><span>{{notif.data.user}}</span> sent you booking request</p>
+                    <p v-if="propExist(notif.data,'vehicle')">{{notif.data.vehicle}}</p>
+                    <p v-if="propExist(notif.data,'contract_start')">Contract start: {{ date_format(notif.data.contract_start) }} </p>
+                    <p v-if="propExist(notif.data,'contract_end')">Contract end: {{ date_format(notif.data.contract_end) }}</p>
+                    <p v-if="propExist(notif.data,'deposit')">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notif.data.deposit | currency }}</span> have been taken from your card ending in <span>1234</span></p>
+                    <p><a href="javascript:;" class="pull-right" @click="markRead(notif)">Mark read</a></p>
+                    <div v-if="isActionable(notif)" class="btn-group">
+                    <button v-if="notif.data.vehicle" @click="approve_action(notif)">Approve</button>
+                    <button v-if="notif.data.vehicle"  @click="cancle_action(notif)">Cancle</button>
                     </div>
                 </div>
 
             </div>
-
+            </transition-group >
 
         </div>
     </div>
@@ -65,7 +67,7 @@
         methods: {
             isActionable(notification){
                 let allowed = [3,5];
-                if(notification.data.old_status){
+                if(notification.data.old_status && User.state.auth.type=='owner'){
                     let status = parseInt(notification.data.old_status);
                     return allowed.includes(status);
                 }
@@ -75,7 +77,6 @@
                 axios.get('/api/notifications')
                     .then(response => {
                         $scope.notifications = response.data.success;
-                        console.log(response);
                     });
             },
 
@@ -110,29 +111,35 @@
                     let params = {log_id: log_id, status: ""};
                     console.log(response.data.success);
                     if (status === 5) {
-                        console.log("Calling extend");
                         params.status = 6;
                         $scope.sendRequest(response.data.success.id, params);
                     }
                     if (status === 3) {
-                        console.log("calling cancle");
                         params.status = 4;
                         $scope.sendRequest(response.data.success.id, params);
                     }
                 }
             },
             sendRequest(booking_id,params){
-                console.log("calling this request");
                 axios.patch('/api/booking/'+booking_id+'/status',params)
                     .then(function (response) {
-                        new Noty({type: 'error',text: response.error}).show();
                         if(response.error)
                         new Noty({type: 'error',text: response.error}).show();
                         if(response.success)
                             new Noty({type: 'success',text: response.success}).show();
 
                     });
+            },
+            markRead(notification){
+
+                let params = {notify_id: notification.id}
+                axios.post('/api/notifications',params)
+                    .then(function (response) {
+                        let index = $scope.notifications.indexOf(notification);
+                        $scope.notifications.splice(index,1);
+
+                    });
             }
-        }
+        },
     }
 </script>
