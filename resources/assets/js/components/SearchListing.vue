@@ -1,98 +1,54 @@
 <template>
-    <div>
-        <transition name="slide-fade">
-            <div class="filter_hied_btn" v-if="user.state.showAdvance">
-                <form>
-                    <ul>
-                        <li>
-                            <div class="form-group">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
-                                </svg>
-                                <input type="text" class="form-control" placeholder="vehicle" v-model.trim="vehicle">
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-                                </svg>
-                                <input type="text" class="form-control" placeholder="location" v-model.trim="location">
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
-                                </svg>
-                                <input type="text" class="form-control" placeholder="price range" v-model.trim="price">
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group">
+
+    <div class="search_map">
+        <div id="search_map" style="width: 100%; height: 100%;"></div>
+
+        <div class="search_container">
+            <transition-group name="list" tag="div">
+                <div class="search_car" v-for="i in user.state.searchResults" :key="i">
+                    <div class="search_car_content" :style="{width: user.state.detailsDisplay ? '0px' : '', height: user.state.detailsDisplay ? '0px' : ''}">
+                        <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a></h3>
+                        <ul>
+                            <li>
+                                <p>Year: {{i.year}} </p>
+                                <p>Mileage: {{i.mileage}}</p>
+                            </li>
+                            <li>
+                                <p>Seats: {{i.seats}}</p>
+                                <p>Transmission: {{i.transmission}}</p>
+                            </li>
+                            <li>
+                                <p>Fuel type: {{i.fuel}} </p>
+                                <p>Consumption: {{i.mpg_eco}} mpg (ec.)</p>
+                            </li>
+                        </ul>
+                        <div class="availablity_box">
+                            <div class="availabe">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
-                                <input type="text" class="form-control available-from" placeholder="available from" v-model.trim="available">
+                                <p>available from: <span>{{i.available_from | date('fromNow')}}</span></p>
                             </div>
-                        </li>
-                        <li>
-                            <button type="button" class="submit" @click="searchVehicles">Apply filters</button>
-                        </li>
-                    </ul>
-                </form>
-            </div>
-        </transition>
-
-        <div class="search_map">
-            <div id="search_map" style="width: 100%; height: 100%;"></div>
-
-            <div class="search_container">
-                <transition-group name="list" tag="div">
-                    <div class="search_car" v-for="i in user.state.searchResults" :key="i">
-                        <div class="search_car_content" :style="{width: user.state.detailsDisplay ? '0px' : '', height: user.state.detailsDisplay ? '0px' : ''}">
-                            <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a></h3>
-                            <ul>
-                                <li>
-                                    <p>Year: {{i.year}} </p>
-                                    <p>Mileage: {{i.mileage}}</p>
-                                </li>
-                                <li>
-                                    <p>Seats: {{i.seats}}</p>
-                                    <p>Transmission: {{i.transmission}}</p>
-                                </li>
-                                <li>
-                                    <p>Fuel type: {{i.fuel}} </p>
-                                    <p>Consumption: {{i.mpg_eco}} mpg (ec.)</p>
-                                </li>
-                            </ul>
-                            <div class="availablity_box">
-                                <div class="availabe">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                                    </svg>
-                                    <p>available from: <span>{{i.available_from | date('fromNow')}}</span></p>
-                                </div>
-                                <div class="availabe_item_price">
-                                    <h3>{{i.rent | currency}}</h3>
-                                    <span>/week</span>
-                                </div>
+                            <div class="availabe_item_price">
+                                <h3>{{i.rent | currency}}</h3>
+                                <span>/week</span>
                             </div>
                         </div>
-
-                        <a href="javascript:void(0)" @click="itemDetails(i)">
-                            <div class="search_car_img" :style="{'background-image': 'url(' + i.images[0] + ')', width: user.state.detailsDisplay ? '20%' : '', 'min-height':  user.state.detailsDisplay ? '100px' : ''}">
-                                <img class="img-responsive" :src="i.images[0]" alt="">
-                                <div class="highlight-vehicle" v-if="user.state.detailsDisplay && i.id == user.state.vehicleData.id"></div>
-                            </div>
-                        </a>
                     </div>
-                </transition-group>
 
-                <search-listing-details :user="user" v-if="user.state.detailsDisplay"></search-listing-details>
-            </div>
+                    <a href="javascript:void(0)" @click="itemDetails(i)">
+                        <div class="search_car_img" :style="{'background-image': 'url(' + i.images[0] + ')', width: user.state.detailsDisplay ? '20%' : '', 'min-height':  user.state.detailsDisplay ? '100px' : ''}">
+                            <img class="img-responsive" :src="i.images[0]" alt="">
+                            <div class="highlight-vehicle" v-if="user.state.detailsDisplay && i.id == user.state.vehicleData.id"></div>
+                        </div>
+                    </a>
+                </div>
+            </transition-group>
+
+            <search-listing-details :user="user" v-if="user.state.detailsDisplay"></search-listing-details>
         </div>
     </div>
+
 </template>
 
 <script>
@@ -103,10 +59,6 @@
         data() {
             return {
                 user: User,
-                vehicle: "",
-                location: "",
-                available: "",
-                price: "",
                 item: {},
                 filterDisplay: 'none',
                 detailsDisplay: false,

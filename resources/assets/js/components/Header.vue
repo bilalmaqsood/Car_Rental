@@ -2,8 +2,12 @@
     <div>
         <div class="nav_wrapper">
             <nav class="navbar navbar-default navbar-fixed-top">
+                <transition name="slide-fade" mode="out-in">
+                    <advance-form v-if="storage.state.showAdvance"></advance-form>
+                </transition>
+
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="/">
+                    <a class="navbar-brand" href="javascript:" @click="goHome">
                         <img :src="baseURL + '/images/white_logo.png'" alt="" class="default_logo">
                         <img :src="baseURL + '/images/logo.png'" alt="" class="hover_logo">
                     </a>
@@ -17,7 +21,7 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="search_filter" v-if="storage.state.detailsDisplay" @click="closeDetailForm" key="close">
+                    <div class="search_filter" v-if="storage.state.detailsDisplay || storage.state.showAdvance" @click="closeDetailForm" key="close">
                         <button class="search_filter_btn primary_btn">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use>
@@ -185,7 +189,7 @@
                             </li>
 
                             <li :class="{active: menuView == 'search'}" v-if="isClient()">
-                                <a href="javascript:" @click="changeMenuView('search')">
+                                <a href="javascript:" @click="showAdvanceForm">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
                                     </svg>
@@ -410,6 +414,7 @@
             },
 
             closeDetailForm() {
+                User.commit('advance');
                 User.commit('details', false);
             },
 
@@ -421,6 +426,11 @@
             isClient() {
                 if (this.storage && this.storage.state.auth.type === 'client')
                     return true;
+            },
+
+            goHome() {
+                User.commit('home');
+                User.commit('view');
             }
         }
     }

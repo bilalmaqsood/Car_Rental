@@ -4,6 +4,7 @@ import mutations from './mutations';
 
 const state = {
     auth: null,
+    home: true,
     bookNow: false,
     searchView: false,
     authSection: false,

@@ -9,6 +9,10 @@ export default {
         state.auth = user;
     },
 
+    home (state) {
+        state.home = !state.home;
+    },
+
     view (state) {
         state.searchView = !state.searchView;
     },

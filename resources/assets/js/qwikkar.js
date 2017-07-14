@@ -20,6 +20,7 @@ Vue.component('home-page', require('./components/HomePage.vue'));
 Vue.component('user-register', require('./components/Register.vue'));
 Vue.component('user-profile', require('./components/Profile.vue'));
 Vue.component('vehicles-search-form', require('./components/SearchForm.vue'));
+Vue.component('advance-form', require('./components/AdvanceForm.vue'));
 Vue.component('search-listing', require('./components/SearchListing.vue'));
 Vue.component('search-listing-details', require('./components/SearchListingDetails.vue'));
 Vue.component('contact-us-form', require('./components/ContactForm.vue'));

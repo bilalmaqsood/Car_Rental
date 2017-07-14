@@ -1,6 +1,6 @@
 <template>
     <transition name="slide-fade" mode="out-in">
-        <div v-if="home" key="home-page">
+        <div v-if="storage.state.home" key="home-page">
             <div class="slide_wrapper">
                 <div class="top_location">
                     <vehicles-search-form @showListing="switchToListing"></vehicles-search-form>
@@ -40,7 +40,7 @@
     export default {
         data() {
             return {
-                home: true
+                storage: User
             };
         },
 
@@ -54,12 +54,12 @@
                 if (searchResults && searchResults.length) {
                     User.commit('listing', searchResults);
                     this.switchToListing();
-                }
+                } else
+                    localStorage.removeItem('reloadData');
             },
 
             switchToListing() {
-                console.log('switched');
-                this.home = false;
+                User.commit('home');
             }
         }
     }
