@@ -3944,10 +3944,13 @@ h3 {
 }
 .help-block{
     color: #ff0404 !important;
+
 }
 .text-sm{
     margin: 10px auto !important;
     font-size: 12px !important;
+    font-weight: bold;
+
 }
 button:disabled{
     cursor:not-allowed;
