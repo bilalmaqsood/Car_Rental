@@ -113,12 +113,14 @@
                                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                                                 </svg>
                                                                 <input class="form-control" placeholder="email" type="email" @blur="$v.login.email.$touch()" v-model.trim="login.email">
+                                                                <span class="help-block text-sm" v-if="$v.login.email.$error">Enter valid email</span>
                                                             </div>
                                                             <div class="form-group" :class="{ 'has-error': $v.login.password.$error }">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon cursor-pointer" @click="authSectionView='reset'">
                                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                                                                 </svg>
                                                                 <input class="form-control" placeholder="password" type="password" @blur="$v.login.password.$touch()" v-model.trim="login.password">
+                                                                <span class="help-block text-sm" v-if="$v.login.password.$error">Enter valid password of 6 digits long</span>
                                                             </div>
                                                             <p><span class="forgot-message">forgot your password? click the <span>padlock</span> icon to recover</span></p>
                                                         </form>

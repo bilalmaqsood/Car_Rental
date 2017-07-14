@@ -33,30 +33,37 @@
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                         </svg>
                         <input v-model="basic_info.name" @blur="$v.basic_info.name.$touch()" type="text" class="form-control" placeholder="full name">
+                        <span class="help-block text-sm" v-if="$v.basic_info.name.$error">Enter valid name</span>
+
                     </div>
                     <div class="form-group" :class="{ 'has-error': $v.basic_info.email.$error }">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 25" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#form_envelope"></use>
                         </svg>
                         <input v-model="basic_info.email" @blur="$v.basic_info.email.$touch()" type="email" class="form-control" placeholder="e-mail">
+                        <span class="help-block text-sm" v-if="$v.basic_info.email.$error">Enter valid email</span>
                     </div>
                     <div class="form-group" :class="{ 'has-error': $v.basic_info.phone.$error }">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 25" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
                         </svg>
                         <input v-model="basic_info.phone" @blur="$v.basic_info.phone.$touch()" type="text" class="form-control phone-number" placeholder="phone number">
+                        <span class="help-block text-sm" v-if="$v.basic_info.phone.$error">Enter valid phone</span>
                     </div>
                     <div class="form-group" :class="{ 'has-error': $v.basic_info.dob.$error }" v-if="user_type=='client'">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                         </svg>
                         <input type="text" @blur="updateDOB" class="form-control date-of-birth" placeholder="date of birth">
+                        <span class="help-block text-sm" v-if="$v.basic_info.dob.$error">Enter valid date of birth</span>
+
                     </div>
                     <div class="form-group" :class="{ 'has-error': $v.basic_info.password.$error }">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                         </svg>
                         <input v-model="basic_info.password" @blur="$v.basic_info.password.$touch()" type="password" class="form-control" placeholder="password">
+                        <span class="help-block text-sm" v-if="$v.basic_info.password.$error">Enter valid password of 6 digits long</span>
                     </div>
                     <button type="button" class="secodery_btn" @click="changeStep" :disabled="$v.basic_info.$invalid" data-loading-text="owner signing up ...">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
