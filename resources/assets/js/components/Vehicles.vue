@@ -34,6 +34,7 @@
 
                 <vehicle-input-form></vehicle-input-form>
             </div>
+
             <div class="car_detail">
                 <div class="availablity_detail">
                     <h3>Toyota Prius 1.8 Hybrid</h3>
@@ -91,40 +92,8 @@
                 </div>
                 <div class="ratting" data-score="1"></div>
             </div>
-            <div class="pofile_content_wrapper">
-                <div class="img_box" style="background: url(images/car_img_1.png)">
-                    <img src="/images/car_img_1.png" alt=""/>
-                </div>
-                <div class="profile_content">
-                    <h3>Booking approved</h3>
-                    <p><span>Mike Myers</span> approved your request to book</p>
-                    <p>Toyota Prius 1.8 Hybrid</p>
-                    <p>Contract start: 06.05.2017 </p>
-                    <p>Contract end: 20.05.2017</p>
-                    <p>
-                        You can now check and sign the contract and set your
-                        <span>Direct Debit.</span> A deposit of <span>£250.00</span> have been taken
-                        from your card ending in <span>1234</span>
-                    </p>
-                </div>
-            </div>
-            <div class="pofile_content_wrapper">
-                <div class="img_box" style="background: url(images/car_img_1.png)">
-                    <img src="/images/car_img_1.png" alt=""/>
-                </div>
-                <div class="profile_content">
-                    <h3>Booking approved</h3>
-                    <p><span>Mike Myers</span> approved your request to book</p>
-                    <p>Toyota Prius 1.8 Hybrid</p>
-                    <p>Contract start: 06.05.2017 </p>
-                    <p>Contract end: 20.05.2017</p>
-                    <p>
-                        You can now check and sign the contract and set your
-                        <span>Direct Debit.</span> A deposit of <span>£250.00</span> have been taken
-                        from your card ending in <span>1234</span>
-                    </p>
-                </div>
-            </div>
+
+
         </div>
     </div>
 </template>
@@ -133,29 +102,24 @@
     export default {
         data() {
             return {
-                notifications: ''
+                vehicles: '',
             };
         },
 
         mounted() {
             let $scope = this;
-
             this.prepareComponent();
-            axios.get('/api/notifications')
-                .then(function (response) {
-                    $scope.notifications = response.data.success;
-                });
         },
 
         methods: {
             prepareComponent() {
-                console.log('profile componenet mounted');
+                axios.get('/api/vehicle')
+                    .then(this.vehiclesCallback);
             },
+            vehiclesCallback(r) {
+                    this.vehicles = r.data.success;
 
-            propExist(obj, prop){
-                return obj.hasOwnProperty(prop);
             },
-
             date_format(date){
                 return moment.utc(date.date).format("D.M.Y");
             }
