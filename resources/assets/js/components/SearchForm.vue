@@ -65,12 +65,13 @@
                 advanceSearch: false,
             };
         },
+
         mounted() {
             $('.available').datetimepicker({
-                inline: true,
-                sideBySide: false
+                useCurrent: false
             });
         },
+
         methods: {
             searchVehicles(e) {
                 this.fetchVehicles(e);
