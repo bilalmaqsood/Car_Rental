@@ -39,7 +39,13 @@ Route::post('/promo-code/verify', 'PromoCodeController');
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/notifications', function (Request $request) {
-        return api_response($request->user()->notifications);
+        return api_response($request->user()->unreadNotifications);
+    });
+    Route::post('/notifications', function (Request $request) {
+        $notification = $request->user()->notifications()->where('id', $request->notify_id)->first();
+        if ($notification)
+            $notification->update(['read_at' => Carbon\Carbon::now()]);
+
     });
 
     Route::patch('faq/{id}', 'FaqController@update');
