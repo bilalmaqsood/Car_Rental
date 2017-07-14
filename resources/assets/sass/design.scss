@@ -3936,10 +3936,13 @@ h3 {
 }
 .help-block{
     color: #ff0404 !important;
+
 }
 .text-sm{
     margin: 10px auto !important;
     font-size: 12px !important;
+    font-weight: bold;
+
 }
 button:disabled{
     cursor:not-allowed;
@@ -3947,4 +3950,7 @@ button:disabled{
 }
 .basic_info .text-sm{
     margin: -15px auto !important;
+}
+.card_recured .text-sm{
+    margin: -5px auto !important;
 }
