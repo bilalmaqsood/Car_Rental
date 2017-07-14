@@ -429,8 +429,12 @@
             },
 
             goHome() {
-                User.commit('home');
-                User.commit('view');
+                if (User.state.home)
+                    $("html, body").animate({scrollTop: 0}, 1000);
+                else {
+                    User.commit('home');
+                    User.commit('view');
+                }
             }
         }
     }
