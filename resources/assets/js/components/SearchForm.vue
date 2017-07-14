@@ -31,23 +31,27 @@
                     </svg>
                 </button>
             </li>
-            <li v-show="advanceSearch">
-                <div class="form-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
-                    </svg>
-                    <input type="text" class="form-control" placeholder="price" v-model="price">
-                </div>
-            </li>
+            <transition name="slide-fade">
+                <li v-if="advanceSearch">
+                    <div class="form-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                        </svg>
+                        <input type="text" class="form-control" placeholder="price" v-model="price">
+                    </div>
+                </li>
+            </transition>
 
-            <li v-show="advanceSearch">
-                <div class="form-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                    </svg>
-                    <input type="text" class="form-control available" placeholder="Available" v-model="available">
-                </div>
-            </li>
+            <transition name="slide-fade">
+                <li v-if="advanceSearch">
+                    <div class="form-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                        </svg>
+                        <input type="text" class="form-control available" placeholder="Available" v-model="available">
+                    </div>
+                </li>
+            </transition>
         </ul>
     </form>
 </template>
