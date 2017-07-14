@@ -113,17 +113,16 @@ class BookingController extends Controller
      */
     public function show(Request $request, $id)
     {
+        $booking = Booking::findOrFail($id);
+
+        if ($this->validateBooking($booking, $request))
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+
         $booking = Booking::whereId($id)->with(['vehicle' => function ($with) {
             $with->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'transmission', 'fuel', 'mile_cap', 'rent');
         }, 'bookingLog' => function ($with) {
             $with->with(['requested', 'fulfilled']);
         }])->first();
-
-        if (!$booking)
-            throw new ModelNotFoundException();
-
-        if ($this->validateBooking($booking, $request))
-            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         return api_response($booking);
     }
@@ -252,6 +251,7 @@ class BookingController extends Controller
             'type' => 'Booking',
             'status' => $booking->status,
             'old_status' => $booking->status,
+            'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
             'title' => 'Booking ' . strtolower($booking->statusTypes[$status]) . ' request',
             'user' => $request->user()->name,
@@ -318,6 +318,7 @@ class BookingController extends Controller
             'type' => 'Booking',
             'status' => $request->status,
             'old_status' => $booking->status,
+            'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
             'title' => 'Booking ' . strtolower($booking->statusTypes[$request->status]),
             'user' => $request->user()->name,

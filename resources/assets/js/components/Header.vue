@@ -155,79 +155,80 @@
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right" key="authenticated" v-else>
-                            <li :class="{active: settings}">
-                                <a href="javascript:" @click="settings = !settings">
+                            <li :class="{active: menuView == 'settings'}">
+                                <a href="javascript:" @click="changeMenuView('settings')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cog_setting"></use>
                                     </svg>
                                     settings
                                 </a>
-                                <transition name="slide-fade">
-                                    <user-settings v-if="settings" :profileHeight="height"></user-settings>
-                                </transition>
-
                             </li>
-                            <li @click="payment=!payment">
-                                <a href="javascript:;">
+
+                            <li :class="{active: menuView == 'payment'}">
+                                <a href="javascript:" @click="changeMenuView('payment')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                                     </svg>
                                     payment
                                 </a>
-                                <transition name="slide-fade">
-                                    <payment-card-listing v-if="payment" :profileHeight="height"></payment-card-listing>
-                                </transition>
                             </li>
-                            <li :class="{active: booking}">
-                                <a href="javascript:;" @click="booking=!booking">
+
+                            <li :class="{active: menuView == 'booking'}">
+                                <a href="javascript:" @click="changeMenuView('booking')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon svg-icon-booking">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                     </svg>
                                     bookings
                                 </a>
-                            <transition name="slide-fade">
-                                <booking-listing v-if="booking" :profileHeight="height"></booking-listing>
-                            </transition>
                             </li>
-                            <li v-if="isClient()">
-                                <a href="#">
+
+                            <li :class="{active: menuView == 'search'}" v-if="isClient()">
+                                <a href="javascript:" @click="changeMenuView('search')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
                                     </svg>
                                     search
                                 </a>
                             </li>
-                            <li :class="{active: vehicles}" v-if="isOwner()">
-                                <a href="javascript:" @click="vehicles = !vehicles">
+
+                            <li :class="{active: menuView == 'vehicles'}" v-if="isOwner()">
+                                <a href="javascript:" @click="changeMenuView('vehicles')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
                                     </svg>
-                                    vehicles</a>
-                                <transition name="slide-fade">
-                                    <vehicle-crud v-if="vehicles" :profileHeight="height"></vehicle-crud>
-                                </transition>
+                                    vehicles
+                                </a>
                             </li>
 
-                            <li :class="{active: profile}">
-                                <a href="javascript:" @click="profile = !profile">
+                            <li :class="{active: menuView == 'profile'}">
+                                <a href="javascript:" @click="changeMenuView('profile')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                     </svg>
                                     profile
                                 </a>
-                                <transition name="slide-fade">
-                                    <user-profile v-if="profile" :profileHeight="height"></user-profile>
-                                </transition>
                             </li>
                         </ul>
                     </transition>
                 </div>
+
+                <div class="clearfix"></div>
 
                 <div class="spinner-container side-loader" id="sideLoader">
                     <div class="spinner-frame">
                         <div class="spinner-cover"></div>
                         <div class="spinner-bar"></div>
                     </div>
+                </div>
+
+                <div class="menu-component-container" v-show="!!menuView" :style="{ height: height + 'px' }">
+                    <transition name="slide-fade">
+                        <!--<user-settings v-if="menuView == 'settings'" :profileHeight="height"></user-settings>-->
+                        <user-profile v-if="menuView == 'profile'" :profileHeight="height"></user-profile>
+                        <!--<vehicle-crud v-if="menuView == 'vehicles'" :profileHeight="height"></vehicle-crud>-->
+                        <!--<booking-listing v-if="menuView == 'booking'" :profileHeight="height"></booking-listing>-->
+                        <!--<payment-card-listing v-if="menuView == 'payment'" :profileHeight="height"></payment-card-listing>-->
+                    </transition>
                 </div>
             </nav>
         </div>
@@ -247,11 +248,7 @@
                 baseURL: window.Qwikkar.baseUrl,
                 message: null,
                 authSectionView: 'login',
-                profile: false,
-                booking: false,
-                settings: false,
-                vehicles: false,
-                payment: false,
+                menuView: '',
                 height: 0,
                 login: {
                     email: '',
@@ -308,6 +305,13 @@
             hideViewParentChild() {
                 User.commit('updateAuthView', false);
                 this.authSectionView = 'login';
+            },
+
+            changeMenuView(view) {
+                if (this.menuView && this.menuView === view)
+                    this.menuView = '';
+                else
+                    this.menuView = view;
             },
 
             changeView() {

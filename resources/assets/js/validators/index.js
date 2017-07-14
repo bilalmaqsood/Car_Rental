@@ -1,6 +1,6 @@
 
 export const DateValidator = (value) => {
-    return moment.utc(value, 'MM/DD/YYYY', true).isValid();
+    return !value || moment.utc(value, 'MM/DD/YYYY', true).isValid();
 };
 
 export const AlphaSpaceValidator = (value) => {

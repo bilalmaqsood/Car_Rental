@@ -67,6 +67,8 @@ class Vehicle extends Model
         'mile_cap' => 'float',
         'after_mile' => 'float',
         'deposit' => 'float',
+
+        'year' => 'integer',
         'no_fault_accident' => 'integer',
         'fault_accident' => 'integer',
 

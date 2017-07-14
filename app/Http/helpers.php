@@ -28,6 +28,13 @@ function api_response($data, $error = false)
         return response()->json(['success' => $data], 200);
 }
 
+/**
+ * Render blade string rather than blade view
+ *
+ * @param $__php
+ * @param $__data
+ * @return string
+ */
 function render($__php, $__data)
 {
     $obLevel = ob_get_level();
@@ -40,13 +47,13 @@ function render($__php, $__data)
     }
 
     catch (Exception $e) {
-        while (ob_get_level() > $obLevel) ob_end_clean();
-        throw $e;
+//        while (ob_get_level() > $obLevel) ob_end_clean();
+//        throw $e;
     }
 
     catch (Throwable $e) {
-        while (ob_get_level() > $obLevel) ob_end_clean();
-        throw new \Symfony\Component\Debug\Exception\FatalThrowableError($e);
+//        while (ob_get_level() > $obLevel) ob_end_clean();
+//        throw new \Symfony\Component\Debug\Exception\FatalThrowableError($e);
     }
 
     return ob_get_clean();

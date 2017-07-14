@@ -837,7 +837,8 @@ h3 {
     display: block;
 }
 
-.search_map {
+.search_map,
+.menu-component-container {
     position: fixed;
     right: 0;
     width: 100%;
@@ -1515,8 +1516,8 @@ h3 {
     background: rgba(255, 255, 255, 0.91);
     float: right;
     right: 0;
-    height: 100vh;
-    overflow-y: scroll;
+    height: 100%;
+    overflow: auto;
     top: 0;
 }
 
@@ -1524,6 +1525,7 @@ h3 {
     float: left;
     width: 100%;
     position: relative;
+    margin-bottom: 1em;
 }
 
 .profile_top_content img {
@@ -1531,7 +1533,7 @@ h3 {
     position: relative;
 }
 
-.update_ropfile {
+.update_profile {
     bottom: 0;
     background: rgba(141, 199, 31, 0.74);
     width: 100%;
@@ -1539,25 +1541,25 @@ h3 {
     position: absolute;
 }
 
-.update_ropfile .secodery_btn {
+.update_profile .secodery_btn {
     background: #4a4a4a;
     float: right;
     z-index: 40;
     margin-top: -68px;
 }
 
-.update_ropfile .secodery_btn .svg-icon {
+.update_profile .secodery_btn .svg-icon {
     fill: #87af1e;
 }
 
-.update_ropfile h3 {
+.update_profile h3 {
     color: #fff;
     font-size: 22px;
     margin: 20px 0 0 20px;
     width: 80%;
 }
 
-.update_ropfile p {
+.update_profile p {
     color: #fff;
     font-size: 15px;;
     margin: 0 0 0 20px;
@@ -1567,9 +1569,10 @@ h3 {
 .pofile_content_wrapper {
     float: left;
     width: 100%;
-    box-shadow: 5px 5px 3px rgb(10, 10, 10);
+    box-shadow: 0 0 5px rgb(10, 10, 10);
     border-left: 5px solid #87af1e;
     background: rgba(255, 255, 255, 0.96);
+    margin-bottom: 1em;
 }
 
 .pofile_content_wrapper h3 {
@@ -2822,13 +2825,13 @@ h3 {
     margin-top: 0;
 }
 
-.update_ropfile p span {
+.update_profile p span {
     color: #525252;
     display: inline-block;
-    margin-right: 5px;
+    //margin-right: 5px;
 }
 
-.update_ropfile p span i {
+.update_profile p span i {
     color: #fff;
     display: inline-block !important;
     font-size: 15px !important;
@@ -3680,7 +3683,7 @@ h3 {
         width: 20px;
         height: 20px;
     }
-    .update_ropfile p {
+    .update_profile p {
         font-size: 12px;
     }
     .main_booking_container {

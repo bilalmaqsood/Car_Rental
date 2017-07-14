@@ -156,6 +156,7 @@ trait BookingOperations
             'type' => 'Booking',
             'status' => $booking->status,
             'old_status' => $booking->status,
+            'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
             'title' => 'Booking requested',
             'user' => $user->name,
