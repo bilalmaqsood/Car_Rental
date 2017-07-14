@@ -98,8 +98,7 @@
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="7 seats">
-                            </div>
+                                <input type="text" class="form-control" placeholder="7 seats">                            </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.availability.$error}">
@@ -158,15 +157,19 @@
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.discounts.$error}">
-                                <input type="text" class="form-control" placeholder="discounts" v-model="form.discounts">
+                                <input type="text" class="form-control" placeholder="percent" v-model="percent">
                                 <p class=" help-block text-sm" v-if="$v.form.discounts.$error">Enter discounts</p>
 
-                                <span>
-															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" class="svg-icon">
+                                <span @click="push()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#add_icon"></use>
-															</svg>
-														</span>
+									</svg>
+								</span>
+
                             </div>
+                            <ul v-if="form.discounts.length>0">
+                                <li v-for="discount in form.discounts" style="display: inline-block"> <span>Week</span> {{discount.week}} <span> percent</span> {{discount.percent }} <i class="fa fa-trash clickable" @click="pop(discount)"></i></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
@@ -290,6 +293,8 @@
         data() {
             return {
                 User: User,
+                week: '',
+                percent: '',
                 form: {
                     make: '',
                     model: '',
@@ -307,7 +312,7 @@
                     rent: '',
                     insurance: '',
                     deposit: '',
-                    discounts:'',
+                    discounts:[],
                     registration: '',
                 },
             };
@@ -381,7 +386,7 @@
                 },
                 discounts:{
                     required,
-                    minLength: minLength(6)
+                    minLength: minLength(1)
                 },
                 registration:{
                     required,
@@ -424,6 +429,25 @@
                 });
 
                 return input;
+            },
+            push(){
+                let count=this.form.discounts.length+1;
+                this.form.discounts.push({week: count,percent: this.percent});
+                this.percent='';
+                this.week='';
+                count='';
+            },
+            pop(discount){
+                this.form.discounts.splice(this.form.discounts.indexOf(discount),1);
+                this.reCalculate();
+            },
+            reCalculate(){
+                var discounts = [];
+                this.form.discounts.map(function(value, key) {
+                    discounts.push({week: key+1 ,percent: value.percent});
+                });
+                this.form.discounts = discounts;
+                console.log(this.form.discounts);
             }
         }
     }
