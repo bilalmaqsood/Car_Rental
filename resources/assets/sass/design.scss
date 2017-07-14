@@ -844,6 +844,10 @@ h3 {
     width: 100%;
 }
 
+.menu-component-container {
+    overflow: auto;
+}
+
 .nav_wrapper .navbar-brand .default_logo {
     display: block;
 }
@@ -1895,20 +1899,13 @@ h3 {
 
 .main_booking_container {
     width: 90%;
-    position: absolute;
-    z-index: 60;
     float: right;
-    right: 0;
-    height: 100vh;
-    overflow-y: scroll;
-    top: 0;
 }
 
 .main_booking_container .booking_container {
     width: 55%;
     float: right;
     background: rgba(255, 255, 255, 0.91);
-    padding-top: 71px;
 }
 
 #documents .panel-group .panel {
@@ -2171,20 +2168,15 @@ h3 {
 
 .vehicles_container {
     width: 90%;
-    position: absolute;
-    z-index: 60;
     float: right;
-    right: 0;
-    height: 100vh;
-    overflow-y: scroll;
-    top: 0;
+    position: relative;
 }
 
 .vehicles_container .car_detail_container {
     width: 50%;
     float: right;
     background: rgba(255, 255, 255, 0.91);
-    padding-top: 71px;
+    position: static;
 }
 
 .vehicles_container .booking_tab_content {

@@ -225,11 +225,11 @@
 
                 <div class="menu-component-container" v-show="!!menuView" :style="{ height: height + 'px' }">
                     <transition name="slide-fade">
-                        <!--<user-settings v-if="menuView == 'settings'" :profileHeight="height"></user-settings>-->
-                        <user-profile v-if="menuView == 'profile'" :profileHeight="height"></user-profile>
-                        <!--<vehicle-crud v-if="menuView == 'vehicles'" :profileHeight="height"></vehicle-crud>-->
-                        <!--<booking-listing v-if="menuView == 'booking'" :profileHeight="height"></booking-listing>-->
-                        <!--<payment-card-listing v-if="menuView == 'payment'" :profileHeight="height"></payment-card-listing>-->
+                        <user-settings v-if="menuView == 'settings'"></user-settings>
+                        <user-profile v-if="menuView == 'profile'"></user-profile>
+                        <vehicle-crud v-if="menuView == 'vehicles'"></vehicle-crud>
+                        <booking-listing v-if="menuView == 'booking'"></booking-listing>
+                        <payment-card-listing v-if="menuView == 'payment'"></payment-card-listing>
                     </transition>
                 </div>
             </nav>
