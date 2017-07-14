@@ -122,7 +122,7 @@ class BookingController extends Controller
             $with->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'transmission', 'fuel', 'mile_cap', 'rent');
         }, 'bookingLog' => function ($with) {
             $with->with(['requested', 'fulfilled']);
-        }])->first();
+        }, 'user'])->first();
 
         return api_response($booking);
     }
