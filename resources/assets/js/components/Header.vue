@@ -328,7 +328,7 @@
                 this.authSectionView = 'login';
             },
 
-            renderResetPasswordIf: function () {
+            renderResetPasswordIf() {
                 let hash = window.location.hash;
                 if (hash.indexOf('#reset-password-') !== -1) {
                     this.forgot.token = hash.replace('#reset-password-', '');
@@ -419,13 +419,11 @@
             },
 
             isOwner() {
-                if (this.storage && this.storage.state.auth.type === 'owner')
-                    return true;
+                return (User.state.auth && User.state.auth.type === 'owner');
             },
 
             isClient() {
-                if (this.storage && this.storage.state.auth.type === 'client')
-                    return true;
+                return (User.state.auth && User.state.auth.type === 'client');
             },
 
             goHome() {

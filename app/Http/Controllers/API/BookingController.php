@@ -213,6 +213,7 @@ class BookingController extends Controller
      *
      * @param Request $request
      * @param int $id
+     * @param BookingLog $log
      * @return string
      */
     public function updateStatusRequest(Request $request, $id, BookingLog $log)
@@ -246,10 +247,11 @@ class BookingController extends Controller
 
         $booking->bookingLog()->save($log);
 
-        $booking->vehicle->owner->user->notify(new BookingNotify([
+        $notiData = [
             'id' => $booking->id,
+            'log_id' => $log->id,
             'type' => 'Booking',
-            'status' => $booking->status,
+            'status' => $status,
             'old_status' => $booking->status,
             'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
@@ -259,7 +261,15 @@ class BookingController extends Controller
             'contract_start' => $booking->start_date,
             'contract_end' => $booking->end_date,
             'deposit' => $booking->deposit,
-        ]));
+        ];
+
+        if ($request->has('start_date') && $request->has('end_date'))
+            $notiData['extend'] = [
+                'contract_start' => $request->start_date,
+                'contract_end' => $request->end_date,
+            ];
+
+        $booking->vehicle->owner->user->notify(new BookingNotify($notiData));
 
         return api_response($this->getStatusNotifyString($log));
     }
