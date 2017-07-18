@@ -150,7 +150,6 @@
                     this.vehicles = r.data.success;
                     if(r.data.success[0]){
                         this.vehicle = r.data.success[0];
-                        this.addTimeSlots(r.data.success[0]);
                     }
 
             },
