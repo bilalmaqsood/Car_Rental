@@ -17,7 +17,6 @@ class ProfileController extends Controller
     {
         $this->validate($request, [
             'name' => 'alpha_spaces',
-            'email' => 'email|unique:users,email',
             'phone' => 'phone:GB',
 
             'postcode' => [
@@ -35,14 +34,17 @@ class ProfileController extends Controller
             'pco_number' => 'string',
         ]);
 
+        $data = $request->all();
+        unset($data['email']);
+
         $user = $request->user();
 
-        $user->fill($request->all());
+        $user->fill($data);
         $user->save();
 
         $client = $user->client;
 
-        $client->fill($request->all());
+        $client->fill($data);
 
         $client->save();
 
@@ -59,7 +61,6 @@ class ProfileController extends Controller
     {
         $this->validate($request, [
             'name' => 'alpha_spaces',
-            'email' => 'email|unique:users,email',
             'phone' => 'phone:GB',
 
             'postcode' => [
@@ -75,14 +76,17 @@ class ProfileController extends Controller
             'country' => 'string',
         ]);
 
+        $data = $request->all();
+        unset($data['email']);
+
         $user = $request->user();
 
-        $user->fill($request->all());
+        $user->fill($data);
         $user->save();
 
         $owner = $user->owner;
 
-        $owner->fill($request->all());
+        $owner->fill($data);
 
         $owner->save();
 

@@ -25,7 +25,7 @@
                 </button>
             </li>
             <li>
-                <button type="button" class="primary_btn" @click="searchFilters">
+                <button type="button" class="primary_btn" @click="searchFilters" :class="{active:advanceSearch}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filters_icon"></use>
                     </svg>
@@ -37,7 +37,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                         </svg>
-                        <input type="text" class="form-control" placeholder="price" v-model="price">
+                        <input type="text" class="form-control" placeholder="price range" v-model="price">
                     </div>
                 </li>
             </transition>
@@ -48,7 +48,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                         </svg>
-                        <input type="text" class="form-control available" placeholder="Available" v-model="available">
+                        <input type="text" class="form-control available" placeholder="available from" v-model="available">
                     </div>
                 </li>
             </transition>
@@ -70,12 +70,6 @@
             };
         },
 
-        mounted() {
-            $('.available').datetimepicker({
-                useCurrent: false
-            });
-        },
-
         methods: {
             searchVehicles(e) {
                 this.fetchVehicles(e);
@@ -83,6 +77,13 @@
 
             searchFilters() {
                 this.advanceSearch = !this.advanceSearch;
+
+                if (this.advanceSearch)
+                    setTimeout(function () {
+                        $('.available').datetimepicker({
+                            useCurrent: false
+                        });
+                    }, 450);
             },
 
             fetchVehicles(e) {

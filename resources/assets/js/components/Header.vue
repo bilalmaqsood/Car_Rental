@@ -175,7 +175,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                                     </svg>
-                                    payment
+                                    {{storage.state.auth.type == 'owner' ? 'financial' : 'payment'}}
                                 </a>
                             </li>
 
@@ -233,7 +233,8 @@
                         <user-profile v-if="menuView == 'profile'"></user-profile>
                         <vehicle-crud v-if="menuView == 'vehicles'"></vehicle-crud>
                         <booking-listing v-if="menuView == 'booking'"></booking-listing>
-                        <payment-card-listing v-if="menuView == 'payment'"></payment-card-listing>
+                        <payment-card-listing v-if="menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>
+                        <financial v-if="menuView == 'payment' && storage.state.auth.type == 'owner'"></financial>
                     </transition>
                 </div>
             </nav>

@@ -29,7 +29,7 @@ class FinancialController extends Controller
      */
     public function incomeDetail(Request $request)
     {
-        $total = ['earnings' => 0, 'deposit' => 0, 'available' => 0];
+        $total = ['earnings' => 0, 'deposit' => 0, 'available' => 0, 'withdraw' => $request->user()->withdraw()->sum('amount')];
         $vehicles = $request->user()->owner->vehicles;
 
         $vehicles->each(function ($v) use (&$total) {
@@ -42,7 +42,7 @@ class FinancialController extends Controller
             });
         });
 
-        $total['available'] = $total['earnings'] - $total['deposit'];
+        $total['available'] = $total['earnings'] - $total['deposit'] - $total['withdraw'];
 
         return api_response($total);
     }

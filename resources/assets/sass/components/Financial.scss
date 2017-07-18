@@ -1,0 +1,107 @@
+.my_earnings ul li button {
+    position: relative;
+    top: 0;
+    text-align: right;
+    float: right;
+    background: #525252;
+    padding: 10px;
+    width: 50px;
+    height: 50px;
+    border: none;
+}
+
+.my_earnings ul li:last-child .form-group {
+    margin: 7px 0;
+    width: 80%;
+    display: block;
+    float: left;
+}
+
+.my_earnings ul li:last-child .form-control {
+    padding: 6px 0;
+    border: none;
+    box-shadow: none;
+}
+
+.card_recured_text {
+    float: left;
+    width: 100%;
+}
+
+.card_recured_text ul {
+    padding: 0;
+    margin: 0;
+}
+
+.card_recured_text ul li {
+    list-style: none;
+    padding: 14px 20px 10px;
+    box-shadow: 1px 1px 3px #000;
+    background: rgb(255, 255, 255);
+}
+
+.card_recured_text ul li .svg-icon {
+    width: 24px;
+    height: 24px;
+    fill: #333;
+}
+
+.card_recured_text ul li p {
+    display: inline-block;
+    width: 94%;
+    box-shadow: none;
+    background-color: inherit;
+    border: none;
+    position: relative;
+    top: -6px;
+    margin-bottom: 0;
+    left: 12px;
+    font-size: 16px;
+}
+
+.card_recured_text ul li p span {
+    float: right;
+}
+
+.card_recured_text ul li:last-child {
+    padding: 14px 20px 10px;
+    box-shadow: 0 0 3px #aaa;
+    background: rgb(255, 255, 255);
+}
+
+.my_earnings ul li button:hover,
+.my_earnings ul li button:active {
+    background: #000000;
+}
+
+.payment_wrapper label button {
+    background: inherit;
+    border: none;
+}
+
+.payment_wrapper label .primary:hover,
+.payment_wrapper label .primary:active {
+    color: #2863af;
+}
+
+.payment_wrapper label .primary:hover .svg-icon,
+.payment_wrapper label .primary:active .svg-icon {
+    fill: #2863af !important;
+}
+
+.payment_wrapper label .danger:hover,
+.payment_wrapper label .danger:active {
+    color: #f53e3e;
+}
+
+.payment_wrapper label .danger:hover .svg-icon,
+.payment_wrapper label .danger:active .svg-icon {
+    fill: #f53e3e !important;
+}
+
+.settings-form .form-control {
+    line-height: 1rem;
+    height: auto;
+    padding: 0;
+    border: none;
+}

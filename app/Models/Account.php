@@ -16,6 +16,7 @@ class Account extends Model
         'number',
         'default',
         'sortcode',
+        'address',
     ];
 
     /**

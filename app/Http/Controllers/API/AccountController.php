@@ -40,15 +40,24 @@ class AccountController extends Controller
             'title' => 'required|string',
             'number' => 'required|string',
             'sortcode' => 'required|string',
+            'address' => 'string',
             'default' => 'numeric',
         ]);
 
+        if ($request->has('default') && $request->default == 1)
+            $request->user()->account->each(function ($account) {
+                $account->default = 0;
+                $account->save();
+            });
+
         $account = Account::firstOrNew(['title' => $request->title, 'number' => $request->number, 'sortcode' => $request->sortcode]);
 
-        if (!$account->exists)
+        if (!$account->exists) {
+            $account->fill($request->all());
             $request->user()->account()->save($account);
+        }
 
-        return api_response(trans('account.created', ['name' => $request->user()->name]));
+        return api_response($account);
     }
 
     /**
@@ -80,10 +89,17 @@ class AccountController extends Controller
             'title' => 'string',
             'number' => 'string',
             'sortcode' => 'string',
+            'address' => 'string',
             'default' => 'numeric',
         ]);
 
-        $account = $request->user()->account->where('id', $id)->first();
+        if ($request->has('default') && $request->default == 1)
+            $request->user()->account->each(function ($account) {
+                $account->default = 0;
+                $account->save();
+            });
+
+        $account = $request->user()->account()->where('id', $id)->first();
 
         if (!$account) throw new ModelNotFoundException();
 

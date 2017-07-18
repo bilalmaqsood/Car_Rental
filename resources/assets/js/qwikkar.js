@@ -36,6 +36,7 @@ Vue.component('booking-chat', require('./components/Chat.vue'));
 Vue.component('extend-cancel-booking', require('./components/ExtendCancel.vue'));
 Vue.component('payment-card-listing', require('./components/PaymentCards.vue'));
 Vue.component('payment-card-form', require('./components/CardForm.vue'));
+Vue.component('financial', require('./components/Financial.vue'));
 
 Vue.filter('date', require('./filters/date'));
 Vue.filter('currency', require('./filters/currency'));
