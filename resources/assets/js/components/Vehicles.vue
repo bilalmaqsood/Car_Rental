@@ -32,7 +32,7 @@
                     </li>
                 </ul>
 
-                <vehicle-input-form></vehicle-input-form>
+                <vehicle-input-form ></vehicle-input-form>
             </div>
 
             <div class="car_detail" v-if="vehicle">
@@ -82,9 +82,7 @@
             </div>
             <div class="pickup_loction_map" v-if="vehicle">
                 <iframe width="100%" height="450" frameborder="0" style="border:0" :src="'https://www.google.com/maps/embed/v1/place?q='+vehicle.location.split(',')[0]+','+vehicle.location.split(',')[1]+'&amp;key=AIzaSyDFkedYDgj286xDo9Sp9XRWsOiPfu9T3Ak'"></iframe>
-                <p>Phasellus nisi leo, aliquet ac erat ut, moles2e ma3s enim. Proin sit amet tempor mi, a egestas tortor. Ves2bulum et congue urna. Nunc elementum por3tor
-                    urna sed euismod. Curabitur bibendum leo iaculis pulvinar fringilla. Nullam eu interdum lectus. Duis posuere, enim at fermentum efficitur, magna nisl lobor2s
-                    metus, in hendrerit est ante et magna. Ut ma3s, justo non por3tor suscipit, augue ipsum sodales justo, a rutrum.</p>
+                <p>{{ vehicle.notes }}</p>
             </div>
 
             <div class="pickup_loction_datebox">
@@ -123,6 +121,7 @@
 </template>
 
 <script>
+    var $scope;
     export default {
         data() {
             return {
@@ -130,8 +129,15 @@
                 vehicle: false,
             };
         },
+        created: function() {
+            this.$on('vehicleAdded', function(value){
+                console.log(value);
+                this.vehicle=value;
+                this.addTimeSlots(this.vehicle);
+            });
+        },
         mounted() {
-            let $scope = this;
+            $scope = this;
             this.prepareComponent();
         },
 
@@ -144,6 +150,7 @@
                     this.vehicles = r.data.success;
                     if(r.data.success[0]){
                         this.vehicle = r.data.success[0];
+                        this.addTimeSlots(r.data.success[0]);
                     }
 
             },
@@ -167,6 +174,18 @@
             },
             vechicleDetails(arg){
                 this.vehicle = arg;
+            },
+            addTimeSlots(vehicle){
+                var dateArr=[];
+                var fromDate = moment(vehicle.available_from).format('YYYY-MM-DD');
+                var toDate = moment(fromDate).add(90, 'days').format('YYYY-MM-DD');
+                while(fromDate < toDate) {
+                    dateArr.push(moment(fromDate).format('YYYY-MM-DD'));
+                    fromDate = moment(fromDate).add(1, 'days').format('YYYY-MM-DD');
+                }
+                axios.post('/api/time-slot',{vehicle_id: vehicle.id,days: dateArr}).then(function () {
+                    
+                });
             }
         }
     }
