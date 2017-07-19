@@ -22,8 +22,8 @@
                             edit vehicle
                         </a>
                     </li>
-                    <li>
-                        <a data-toggle="tab" href="#chat_tab">
+                    <li @click="deleteVehicle">
+                        <a data-toggle="tab" href="javascript:void()">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete_icon"></use>
                             </svg>
@@ -193,6 +193,17 @@
             editVehicle(){
                 this.isEdit=! this.isEdit;
 
+            },
+            deleteVehicle(){
+                let value = confirm('Are you sure you want to delte '+ this.vehicle.make+" "+this.vehicle.model+" "+this.vehicle.make);
+                if(value){
+                        axios.delete('/api/vehicle/'+this.vehicle.id).then(function () {
+                           let index = $scope.vehicles.indexOf($scope.vehicle);
+                            $scope.vehicles.splice(index, 1);
+                            if($scope.vehicles.length>0)
+                                $scope.vehicle = $scope.vehicles[0];
+                        });
+                }
             }
         }
     }
