@@ -1,6 +1,6 @@
 <template>
     <div class="tab-content booking_tab_content">
-        <div id="car_inspection" class="tab-pane fade">
+        <div id="car_inspection" class="tab-pane fade active in">
             <div class="spinner-container center-loader" id="centerLoader">
                 <div class="spinner-frame">
                     <div class="spinner-cover"></div>
@@ -403,7 +403,7 @@
 
     var $scope;
     export default {
-        props: ['profileHeight'],
+        props: ['profileHeight','vehicle','isEdit'],
 
         data() {
             return {
@@ -550,9 +550,20 @@
                 },
             }
         },
-
+        watch: {
+            'vehicle': function (val, oldVal) {
+                if(this.isEdit){
+                    this.form=JSON.parse(JSON.stringify(Form));
+                    this.form = val;
+                }
+            }
+        },
         mounted() {
             $scope=this;
+            if(this.isEdit){
+                this.form=JSON.parse(JSON.stringify(Form));
+                this.form = this.vehicle;
+            }
             this.prepareComponent();
         },
 
@@ -561,12 +572,17 @@
                 $scope.postForm();
             },
             postForm() {
+                if(this.isEdit){
+                    axios.patch('/api/vehicle/'+this.form.id, this.prepareForm())
+                        .then(this.responseHandler);
+                } else {
                 axios.post('/api/vehicle', this.prepareForm())
                     .then(this.responseHandler);
+                }
             },
             responseHandler(response){
                 this.response = response.data.success;
-                this.form=JSON.parse(JSON.stringify(Form));
+                this.form = JSON.parse(JSON.stringify(Form));
                 this.$parent.$emit('vehicleAdded', response.data.success);
                 this.postSuccess = true;
             },
@@ -574,11 +590,11 @@
                 let input = this.form;
 
                 Object.keys(input).forEach(function (key) {
-                    if (input[key].length <= 0) {
+                    if (input[key]==null || input[key].length <= 0) {
                         delete input[key];
                     }
                 });
-
+                delete input.id;
                 return input;
             },
             push(){
@@ -626,7 +642,6 @@
                 });
 
                 $("#documents").click(function () {
-                    console.log("calling me");
                     $('#centerLoader').show();
                     $(".documentsUpload").click();
                     $(".documentsUpload").change(function () {
