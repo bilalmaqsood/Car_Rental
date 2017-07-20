@@ -163,7 +163,7 @@
                     var dateArr=[];
                     var fromDate = this.start_date.format('YYYY-MM-DD');
                     var toDate = this.end_date.format('YYYY-MM-DD');
-                    while(fromDate < toDate) {
+                    while(fromDate <= toDate) {
                         dateArr.push(moment(fromDate).format('YYYY-MM-DD'));
                         fromDate = moment(fromDate).add(1, 'days').format('YYYY-MM-DD');
                     }
