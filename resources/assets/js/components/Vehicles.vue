@@ -6,16 +6,16 @@
             </div>
             <div class="booking_tab">
                 <ul class="nav nav-tabs">
-                    <li>
-                        <a data-toggle="tab" href="#car_inspection">
+                    <li @click="isCreate=!isCreate">
+                        <a data-toggle="tab" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                             </svg>
                             add new
                         </a>
                     </li>
-                    <li>
-                        <a data-toggle="tab" href="#extend_cancel">
+                    <li @click="editVehicle">
+                        <a data-toggle="tab" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
                             </svg>
@@ -32,7 +32,7 @@
                     </li>
                 </ul>
 
-                <vehicle-input-form ></vehicle-input-form>
+                <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="isEdit || isCreate"></vehicle-input-form>
             </div>
 
             <div class="car_detail" v-if="vehicle">
@@ -121,10 +121,14 @@
 </template>
 
 <script>
+    import Form from '../vehicle-fields';
+
     var $scope;
     export default {
         data() {
             return {
+                isEdit: false,
+                isCreate: false,
                 vehicles: '',
                 vehicle: false,
             };
@@ -185,6 +189,10 @@
                 axios.post('/api/time-slot',{vehicle_id: vehicle.id,days: dateArr}).then(function () {
                     
                 });
+            },
+            editVehicle(){
+                this.isEdit=! this.isEdit;
+
             }
         }
     }
