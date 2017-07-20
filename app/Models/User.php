@@ -209,4 +209,14 @@ class User extends Authenticatable
     {
         return in_array('admin', array_column($this->types->toArray(), 'name'));
     }
+
+    /**
+     * Route notifications for the mail channel.
+     *
+     * @return string
+     */
+    public function routeNotificationForMail()
+    {
+        return $this->email;
+    }
 }

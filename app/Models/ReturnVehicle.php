@@ -42,4 +42,12 @@ class ReturnVehicle extends Model
     {
         return $this->belongsTo('Qwikkar\Models\Booking');
     }
+
+    /**
+     * Relation to ticket table
+     */
+    public function ticket()
+    {
+        return $this->hasOne('Qwikkar\Models\Ticket');
+    }
 }

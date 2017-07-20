@@ -4,11 +4,15 @@ namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Qwikkar\Concerns\Disputable;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
+use Qwikkar\Models\ReturnVehicle;
 
 class ReturnVehicleController extends Controller
 {
+    use Disputable;
+
     /**
      * InspectionController constructor.
      */
@@ -47,15 +51,20 @@ class ReturnVehicleController extends Controller
 
         $booking = Booking::findOrFail($booking_id);
 
+        $returnVehicle = new ReturnVehicle($request->all());
         if ($booking->returnVehicle->where('type', $request->type)->count()) {
             $returnVehicle = $booking->returnVehicle->where('type', $request->type)->first();
             $returnVehicle->fill($request->all());
             $returnVehicle->save();
         } else {
-            $booking->returnVehicle()->create($request->all());
+            $booking->returnVehicle()->save($returnVehicle);
         }
 
         if ($request->has('status') && $request->status == 1) {
+
+            if ($booking->status != 10)
+                $this->openDispute($request, $booking, $returnVehicle);
+
             $booking->status = 10;
             $booking->save();
         }
@@ -109,15 +118,19 @@ class ReturnVehicleController extends Controller
 
         $returnVehicle->data = $request->data;
 
+        if ($request->has('status') && $request->status == 1 && $returnVehicle->status != 1) {
+
+            if ($booking->status != 10)
+                $this->openDispute($request, $booking, $returnVehicle);
+
+            $booking->status = 10;
+            $booking->save();
+        }
+
         if ($request->has('status'))
             $returnVehicle->status = $request->status;
 
         $returnVehicle->save();
-
-        if ($request->has('status') && $request->status == 1) {
-            $booking->status = 10;
-            $booking->save();
-        }
 
         return api_response($returnVehicle);
     }
