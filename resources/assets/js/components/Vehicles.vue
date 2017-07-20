@@ -30,6 +30,14 @@
                             edit contract
                         </a>
                     </li>
+                    <li @click="vehicleTimeslots=!vehicleTimeslots">
+                        <a data-toggle="tab" href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
+                            </svg>
+                            Add Timeslots
+                        </a>
+                    </li>
                     <li @click="deleteVehicle">
                         <a data-toggle="tab" href="javascript:void()">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" class="svg-icon">
@@ -40,6 +48,7 @@
                     </li>
                 </ul>
                 <vehicle-contract v-if="editContract" :vehicle="vehicle"></vehicle-contract>
+                <vehicle-timeslots v-if="vehicleTimeslots" :vehicle="vehicle"></vehicle-timeslots>
                 <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="isEdit || isCreate"></vehicle-input-form>
             </div>
 
@@ -140,13 +149,13 @@
                 editContract: false,
                 vehicles: '',
                 vehicle: false,
+                vehicleTimeslots: false,
             };
         },
         created: function() {
             this.$on('vehicleAdded', function(value){
                 console.log(value);
                 this.vehicle=value;
-                this.addTimeSlots(this.vehicle);
             });
         },
         mounted() {
@@ -187,18 +196,7 @@
             vechicleDetails(arg){
                 this.vehicle = arg;
             },
-            addTimeSlots(vehicle){
-                var dateArr=[];
-                var fromDate = moment(vehicle.available_from).format('YYYY-MM-DD');
-                var toDate = moment(fromDate).add(90, 'days').format('YYYY-MM-DD');
-                while(fromDate < toDate) {
-                    dateArr.push(moment(fromDate).format('YYYY-MM-DD'));
-                    fromDate = moment(fromDate).add(1, 'days').format('YYYY-MM-DD');
-                }
-                axios.post('/api/time-slot',{vehicle_id: vehicle.id,days: dateArr}).then(function () {
-                    
-                });
-            },
+            
             editVehicle(){
                 this.isEdit=! this.isEdit;
 
