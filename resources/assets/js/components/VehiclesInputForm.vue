@@ -289,107 +289,6 @@
                 </div>
             </div>
         </div>
-
-        <div id="extend_cancel" class="tab-pane fade">
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-        </div>
-
-        <div id="chat_tab" class="tab-pane fade">
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>@blur="$v.card.number.$touch()"
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-            <p>
-                Integer et odio viverra, feugiat ex sed, lobor4s sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis
-                suscipit. Sed sit amet tris4que leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero
-                eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.
-            </p>
-        </div>
     </div>
 </template>
 
@@ -594,7 +493,8 @@
                         delete input[key];
                     }
                 });
-                delete input.id;
+                if(input.id)
+                   delete input.id;
                 return input;
             },
             push(){

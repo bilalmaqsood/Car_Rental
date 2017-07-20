@@ -22,6 +22,14 @@
                             edit vehicle
                         </a>
                     </li>
+                    <li @click="editContract=!editContract">
+                        <a data-toggle="tab" href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
+                            </svg>
+                            edit contract
+                        </a>
+                    </li>
                     <li @click="deleteVehicle">
                         <a data-toggle="tab" href="javascript:void()">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" class="svg-icon">
@@ -31,7 +39,7 @@
                         </a>
                     </li>
                 </ul>
-
+                <vehicle-contract v-if="editContract" :vehicle="vehicle"></vehicle-contract>
                 <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="isEdit || isCreate"></vehicle-input-form>
             </div>
 
@@ -129,6 +137,7 @@
             return {
                 isEdit: false,
                 isCreate: false,
+                editContract: false,
                 vehicles: '',
                 vehicle: false,
             };
