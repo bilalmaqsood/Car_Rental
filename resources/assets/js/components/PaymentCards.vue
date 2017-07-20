@@ -10,10 +10,10 @@
                     </a>
                 </div>
 
-                <payment-card-form key="add-cards" v-else></payment-card-form>
+                <payment-card-form :editCard="editCard" :selectedcard="card" key="add-cards" v-else></payment-card-form>
             </transition>
 
-            <button type="button" @click="addCard=!addCard">Add More</button>
+            <button type="button" @click="cardAdd">{{ addCard?'Cancle':'Add more' }}</button>
         </div>
 
     </div>
@@ -23,6 +23,7 @@
     export default {
         data() {
             return {
+                card: '',
                 cards: '',
                 editCard: false,
                 addCard: false,
@@ -38,6 +39,14 @@
 
         methods: {
             cardEdit(c) {
+                this.card=c;
+                this.editCard=! this.editCard;
+                this.addCard = !this.addCard;
+            },
+            cardAdd(){
+                this.addCard = !this.addCard;
+                this.editCard = false;
+                this.card = {};
             }
         }
     }

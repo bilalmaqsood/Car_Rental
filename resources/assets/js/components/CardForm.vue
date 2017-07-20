@@ -1,15 +1,5 @@
 <template>
     <div key="card_detail">
-        <div class="fill_card">
-            <div class="list-group">
-                <transition-group name="list" tag="div">
-                    <a href="javascript:" @click="fillCard(c, $event)" class="list-group-item" v-for="c in credit_cards" :key="c" :class="{active: c.id == card.id}">
-                        <h4 class="list-group-item-heading">{{ c.expiry }}</h4>
-                        <p class="list-group-item-text">{{ c.number }}</p>
-                    </a>
-                </transition-group>
-            </div>
-        </div>
         <div class="card_recured">
             <ul>
                 <li>
@@ -53,6 +43,7 @@
                     <a href="/terms-and-conditions" target="_blank">Terms & Conditions</a>
                 </li>
             </ul>
+            <button @click="processCard"> {{ editCard ? 'Update card' : 'Save card' }}</button>
         </div>
     </div>
 </template>
@@ -63,7 +54,7 @@
     import {Boolean} from '../validators';
     import {required, minLength} from 'vuelidate/lib/validators';
     export default {
-        props: ['profileHeight'],
+        props: ['profileHeight','editCard','selectedcard'],
 
         data() {
             return {
@@ -107,13 +98,33 @@
 
         mounted() {
             let $scope = this;
-            axios.get('/api/credit-card').then(function (r) {
-                $scope.cards=r.data.success;
-            });
+            if(this.editCard)
+                this.card =  this.selectedcard;
+            else
+                this.card =  {};
+
         },
 
         methods: {
-            cardEdit(c){
+            processCard(){
+
+                if(!this.editCard){
+                    axios.post('/api/credit-card', this.card)
+                        .then(function (r) {
+                            new Noty({
+                                type: 'information',
+                                text: 'Card added successfuly!',
+                            }).show();
+                        });
+                } else {
+                    axios.patch('/api/credit-card/'+this.selectedcard.id, this.card)
+                        .then(function (r) {
+                            new Noty({
+                                type: 'information',
+                                text: 'Card update successfuly!',
+                            }).show();
+                        });
+                }
 
             }
         }
