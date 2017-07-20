@@ -6,32 +6,32 @@
             </div>
             <div class="booking_tab">
                 <ul class="nav nav-tabs">
-                    <li @click="isCreate=!isCreate">
-                        <a data-toggle="tab" href="javascript:void(0)">
+                    <li :class="{active: menuView == 'add'}">
+                        <a data-toggle="tab" href="javascript:void(0)" @click="changeMenuView('add')">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                             </svg>
                             add new
                         </a>
                     </li>
-                    <li @click="editVehicle">
-                        <a data-toggle="tab" href="javascript:void(0)">
+                    <li  :class="{active: menuView == 'edit'}">
+                        <a @click="editVehicle" data-toggle="tab" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
                             </svg>
                             edit vehicle
                         </a>
                     </li>
-                    <li @click="editContract=!editContract">
-                        <a data-toggle="tab" href="javascript:void(0)">
+                    <li :class="{active: menuView == 'editcontract'}" >
+                        <a @click="changeMenuView('editcontract')"  data-toggle="tab" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
                             </svg>
                             edit contract
                         </a>
                     </li>
-                    <li @click="vehicleTimeslots=!vehicleTimeslots">
-                        <a data-toggle="tab" href="javascript:void(0)">
+                    <li :class="{active: menuView == 'timeslots'}" >
+                        <a @click="changeMenuView('timeslots')" data-toggle="tab" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
                             </svg>
@@ -47,9 +47,9 @@
                         </a>
                     </li>
                 </ul>
-                <vehicle-contract v-if="editContract" :vehicle="vehicle"></vehicle-contract>
-                <vehicle-timeslots v-if="vehicleTimeslots" :vehicle="vehicle"></vehicle-timeslots>
-                <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="isEdit || isCreate"></vehicle-input-form>
+                <vehicle-contract v-if="menuView=='editcontract'" :vehicle="vehicle"></vehicle-contract>
+                <vehicle-timeslots v-if="menuView=='timeslots'" :vehicle="vehicle"></vehicle-timeslots>
+                <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="menuView=='edit' || menuView=='add'"></vehicle-input-form>
             </div>
 
             <div class="car_detail" v-if="vehicle">
@@ -144,12 +144,10 @@
     export default {
         data() {
             return {
+                menuView: '',
                 isEdit: false,
-                isCreate: false,
-                editContract: false,
                 vehicles: '',
                 vehicle: false,
-                vehicleTimeslots: false,
             };
         },
         created: function() {
@@ -196,9 +194,10 @@
             vechicleDetails(arg){
                 this.vehicle = arg;
             },
-            
+
             editVehicle(){
                 this.isEdit=! this.isEdit;
+                this.changeMenuView('edit');
 
             },
             deleteVehicle(){
@@ -211,7 +210,13 @@
                                 $scope.vehicle = $scope.vehicles[0];
                         });
                 }
-            }
+            },
+            changeMenuView(view) {
+                if (this.menuView && this.menuView === view)
+                    this.menuView = '';
+                else
+                    this.menuView = view;
+            },
         }
     }
 </script>
