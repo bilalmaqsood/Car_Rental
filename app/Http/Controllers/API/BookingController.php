@@ -417,4 +417,28 @@ class BookingController extends Controller
 
         return api_response(trans('booking.signature', ['name' => $request->user()->name]));
     }
+
+    /**
+     * Add weekly mileage of booked vehicle
+     *
+     * @param Request $request
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function weeklyMileageService(Request $request, $id)
+    {
+        $this->validate($request, [
+            'miles' => 'required|numeric'
+        ]);
+
+        $booking = Booking::findOrFail($id);
+
+        if ($this->validateBooking($booking, $request))
+            return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $booking->vehicle->mileage += $request->miles;
+        $booking->vehicle->save();
+
+        return api_response(trans('booking.mileage', ['name' => $booking->vehicle->vehicle_name, 'miles' => $request->miles]));
+    }
 }

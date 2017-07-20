@@ -24,6 +24,7 @@ class CreateClientsTable extends Migration
             $table->string('pco_number')->nullable();
             $table->date('pco_release_date')->nullable();
             $table->date('pco_expiry_date')->nullable();
+            $table->json('documents')->nullable()->comment('documents of driver');
             $table->timestamps();
         });
     }

@@ -96,6 +96,14 @@ class Booking extends Model
     }
 
     /**
+     * Get all return vehicle inspections of the booking vehicle
+     */
+    public function returnVehicle()
+    {
+        return $this->hasMany('Qwikkar\Models\ReturnVehicle');
+    }
+
+    /**
      * Get the vehicle of booking
      */
     public function vehicle()

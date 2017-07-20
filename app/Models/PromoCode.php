@@ -43,6 +43,16 @@ class PromoCode extends Model
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'id',
+        'updated_at',
+    ];
+
+    /**
      * Get all of the users that are assigned to this promo code
      */
     public function users()

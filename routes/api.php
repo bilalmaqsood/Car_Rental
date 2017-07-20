@@ -34,25 +34,20 @@ Route::post('faq', 'FaqController@store');
 
 Route::post('/time-slot/verify', 'TimeSlotController@verifySlots');
 
-Route::post('/promo-code/verify', 'PromoCodeController');
+Route::get('/promo-code/{code}', 'PromoCodeController@info');
+Route::post('/promo-code/verify', 'PromoCodeController@verify');
 
 Route::group(['middleware' => 'auth:api'], function () {
-
-    Route::get('/notifications', function (Request $request) {
-        return api_response($request->user()->unreadNotifications);
-    });
-    Route::post('/notifications', function (Request $request) {
-        $notification = $request->user()->notifications()->where('id', $request->notify_id)->first();
-        if ($notification)
-            $notification->update(['read_at' => Carbon\Carbon::now()]);
-
-    });
 
     Route::patch('faq/{id}', 'FaqController@update');
 
     Route::delete('faq/{id}', 'FaqController@destroy');
 
     Route::get('/user', 'AuthController@info');
+    Route::post('/change-password', 'AuthController@changePassword');
+
+    Route::get('/notifications', 'AuthController@notifications');
+    Route::post('/notifications', 'AuthController@notificationsRead');
 
     Route::patch('/profile/client', 'ProfileController@updateClient')->middleware('client');
     Route::patch('/profile/owner', 'ProfileController@updateOwner')->middleware('owner');
@@ -73,6 +68,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('booking/{id}/feedback', 'BookingController@giveFeedback');
     Route::get('booking/{id}/logs', 'BookingController@lastBookingLog')->middleware('owner');
     Route::post('booking/{id}/signature', 'BookingController@signatureBooking')->middleware('not-admin');
+    Route::post('booking/{id}/weekly-mileage', 'BookingController@weeklyMileageService')->middleware('client');
 
 
     Route::post('credit-card/{id}/default', 'CreditCardController@defaultCard');
@@ -84,6 +80,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/booking/{id}/payment-weekly', 'FinancialController@paymentDetailWeekly')->middleware('not-admin');
 
     Route::resource('/booking/{booking_id}/inspection', 'InspectionController');
+    Route::resource('/booking/{booking_id}/return', 'ReturnVehicleController');
 
     Route::post('withdraw', 'WithdrawController');
 

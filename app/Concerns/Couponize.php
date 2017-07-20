@@ -40,7 +40,7 @@ trait Couponize
      */
     public static function verify($code)
     {
-        $promoCode = PromoCode::firstOrNew(['code' => $code, 'is_active' => 1]);
+        $promoCode = PromoCode::firstOrNew(['code' => $code]);
 
         return $promoCode->exists ? $promoCode : false;
     }

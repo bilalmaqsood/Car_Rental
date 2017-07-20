@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
 
-class InspectionController extends Controller
+class ReturnVehicleController extends Controller
 {
     /**
      * InspectionController constructor.
@@ -27,11 +27,11 @@ class InspectionController extends Controller
     {
         $booking = Booking::findOrFail($booking_id);
 
-        return api_response($booking->inspection);
+        return api_response($booking->returnVehicle);
     }
 
     /**
-     * add an inspection of a booking
+     * add an inspections of a booking
      *
      * @param Request $request
      * @param $booking_id
@@ -41,22 +41,28 @@ class InspectionController extends Controller
     {
         $this->validate($request, [
             'type' => 'required|in:front,rear,driver_side,off_side,notes',
-            'data' => 'required|array'
+            'data' => 'required|array',
+            'status' => 'in:0,1'
         ]);
 
         $booking = Booking::findOrFail($booking_id);
 
-        if ($booking->inspection->where('type', $request->type)->count()) {
-            $inspection = $booking->inspection->where('type', $request->type)->first();
-            $inspection->fill($request->all());
-            $inspection->save();
+        if ($booking->returnVehicle->where('type', $request->type)->count()) {
+            $returnVehicle = $booking->returnVehicle->where('type', $request->type)->first();
+            $returnVehicle->fill($request->all());
+            $returnVehicle->save();
         } else {
-            $booking->inspection()->create($request->all());
+            $booking->returnVehicle()->create($request->all());
         }
 
-        $booking->load('inspection');
+        if ($request->has('status') && $request->status == 1) {
+            $booking->status = 10;
+            $booking->save();
+        }
 
-        return api_response($booking->inspection->where('type', $request->type)->first());
+        $booking->load('returnVehicle');
+
+        return api_response($booking->returnVehicle->where('type', $request->type)->first());
     }
 
     /**
@@ -70,12 +76,12 @@ class InspectionController extends Controller
     {
         $booking = Booking::findOrFail($booking_id);
 
-        $inspection = $booking->inspection()->where('id', $id)->first();
+        $returnVehicle = $booking->returnVehicle()->where('id', $id)->first();
 
-        if (!$inspection)
+        if (!$returnVehicle)
             throw new ModelNotFoundException();
 
-        return api_response($inspection);
+        return api_response($returnVehicle);
     }
 
     /**
@@ -89,21 +95,31 @@ class InspectionController extends Controller
     public function update(Request $request, $booking_id, $id)
     {
         $this->validate($request, [
-            'type' => 'required|in:front,rear,driver_side,off_side,notes',
-            'data' => 'required|array'
+            'type' => 'in:front,rear,driver_side,off_side,notes',
+            'data' => 'required|array',
+            'status' => 'in:0,1'
         ]);
 
         $booking = Booking::findOrFail($booking_id);
 
-        $inspection = $booking->inspection()->where('id', $id)->first();
+        $returnVehicle = $booking->returnVehicle()->where('id', $id)->first();
 
-        if (!$inspection)
+        if (!$returnVehicle)
             throw new ModelNotFoundException();
 
-        $inspection->data = $request->data;
-        $inspection->save();
+        $returnVehicle->data = $request->data;
 
-        return api_response($inspection);
+        if ($request->has('status'))
+            $returnVehicle->status = $request->status;
+
+        $returnVehicle->save();
+
+        if ($request->has('status') && $request->status == 1) {
+            $booking->status = 10;
+            $booking->save();
+        }
+
+        return api_response($returnVehicle);
     }
 
     /**
@@ -117,11 +133,11 @@ class InspectionController extends Controller
     {
         $booking = Booking::findOrFail($booking_id);
 
-        $inspection = $booking->inspection()->where('id', $id)->first();
+        $returnVehicle = $booking->returnVehicle()->where('id', $id)->first();
 
-        if (!$inspection)
+        if (!$returnVehicle)
             throw new ModelNotFoundException();
 
-        return api_response($inspection->delete());
+        return api_response($returnVehicle->delete());
     }
 }

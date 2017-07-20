@@ -4,7 +4,7 @@ namespace Qwikkar\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Inspection extends Model
+class ReturnVehicle extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -14,6 +14,7 @@ class Inspection extends Model
     protected $fillable = [
         'type',
         'data',
+        'status'
     ];
 
     /**

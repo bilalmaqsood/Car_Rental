@@ -23,4 +23,6 @@ return [
 
     'admin_fail' => 'Admin user cannot login to website.',
 
+    'readed' => 'Notifications read at date is updated.',
+
 ];

@@ -20,6 +20,7 @@ class Client extends Model
         'pco_number',
         'pco_release_date',
         'pco_expiry_date',
+        'documents',
     ];
 
     /**
@@ -31,6 +32,15 @@ class Client extends Model
         'id',
         'user_id',
         'updated_at',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'documents' => 'collection',
     ];
 
     /**

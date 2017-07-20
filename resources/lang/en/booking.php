@@ -32,4 +32,6 @@ return [
         'exist' => 'Feedback is already exist for current booking.',
     ],
 
+    'mileage' => ':miles have been added for :name.',
+
 ];
