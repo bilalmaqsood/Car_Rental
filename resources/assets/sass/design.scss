@@ -3986,3 +3986,30 @@ button:disabled{
     min-height: 500px;
    white-space: pre;
 }
+.draggable, .mydraggable {
+    width: 60px;
+    height: 25px;
+    background: rgba(145, 4, 28, 0.6);
+    z-index: 1;
+    cursor: move;
+    overflow: hidden;
+    position: absolute;
+    padding: 0px 5px;
+    text-align: center;
+    opacity: .9;
+    border: 2px dotted #8c001a;
+}
+.carcondition-img{
+    position: relative;
+}
+#mydragcontrols {
+        float: right;
+}
+#mydragcontrols #myfix {
+        cursor: pointer;
+    margin: 2px;
+}
+#mydragcontrols #mydeldrag {
+        cursor: pointer;
+    margin: 2px;
+}

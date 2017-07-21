@@ -1,34 +1,39 @@
 <template>
     <div id="car_inspection" class="tab-pane fade active in">
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#car_front">Front</a></li>
-            <li><a data-toggle="tab" href="#car_rear">Rear</a></li>
-            <li><a data-toggle="tab" href="#car_driver_side">Driver side</a></li>
-            <li><a data-toggle="tab" href="#car_off_side">Off side</a></li>
-            <li><a data-toggle="tab" href="#car_notes">Notes</a></li>
+            <li :class="{'active': menuView=='front'}">
+            <a @click="changeMenu('front')" href="javascript:void(0)">Front</a></li>
+            <li :class="{'active': menuView=='rear'}">
+            <a @click="changeMenu('rear')" href="javascript:void(0)">Rear</a></li>
+            <li :class="{'active': menuView=='driver_side'}">
+            <a @click="changeMenu('driver_side')" href="javascript:void(0)">Driver side</a></li>
+            <li :class="{'active': menuView=='off_side'}">
+            <a @click="changeMenu('off_side')" href="javascript:void(0)">Off side</a></li>
+            <li :class="{'active': menuView=='notes'}">
+            <a @click="changeMenu('notes')" href="javascript:void(0)">Notes</a></li>
         </ul>
 
         <div class="tab-content">
-
-            <div id="car_front" class="tab-pane fade in active">
-                <div class="dummy_car carcondition-img" id="pageSidefront">
+            <div id="car_front" class="tab-pane fade in active" v-if="menuView=='front'">
+                <div class="dummy_car carcondition-img" id="front">
                     <img src="images/front.png" alt="">
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
                         <input type="text" palceholder="add description" v-model="description">
                         <span>
-									<svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
+									<svg  @click="saveSpots('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
                         </span>
                         <span>
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
+									<svg @click="uploadImage('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
+                                    <input type="file" class="hidden" id="frontUploader" name="">
                         </span>
                         <span>
-									<svg @click="drawSpots('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" clickable svg-icon">
+									<svg :class="{'clickable': !sportPending}" @click="drawSpots('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
 									</svg>
                         </span>
@@ -37,8 +42,8 @@
                 </div>
             </div>
 
-            <div id="car_rear" class="tab-pane fade">
-                <div class="dummy_car">
+            <div id="car_rear" class="tab-pane fade in active" v-if="menuView=='rear'">
+                <div class="dummy_car carcondition-img" id="rear">
                     <img src="images/rear.png" alt="">
                 </div>
                 <div class="front_back_size">
@@ -55,7 +60,7 @@
 									</svg>
 								</span>
                         <span>
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+									<svg @click="drawSpots('rear')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
 									</svg>
 								</span>
@@ -63,8 +68,9 @@
 
                 </div>
             </div>
-            <div id="car_driver_side" class="tab-pane fade">
-                <div class="dummy_car">
+
+            <div id="car_driver_side" class="tab-pane fade in active" v-if="menuView=='driver_side'">
+                <div class="dummy_car carcondition-img" id="driver_side">
                     <img src="images/driver_side.png" alt="">
                 </div>
                 <div class="front_back_size">
@@ -81,16 +87,17 @@
 									</svg>
 								</span>
                         <span>
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
-									</svg>
+									<svg @click="drawSpots('driver_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" clickable svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
+                                    </svg>
 								</span>
                     </div>
 
                 </div>
             </div>
-            <div id="car_off_side" class="tab-pane fade">
-                <div class="dummy_car">
+
+            <div id="car_off_side" class="tab-pane fade in active" v-if="menuView=='off_side'">
+                <div class="dummy_car carcondition-img" id="off_side">
                     <img src="images/off_side.png" alt="">
                 </div>
                 <div class="front_back_size">
@@ -107,15 +114,16 @@
 									</svg>
 								</span>
                         <span>
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
-									</svg>
+									<svg @click="drawSpots('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" clickable svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
+                                    </svg>
 								</span>
                     </div>
 
                 </div>
             </div>
-            <div id="car_notes" class="tab-pane fade">
+
+            <div id="car_notes" class="tab-pane fade in active" v-if="menuView=='notes'">
                 <div class="dummy_car">
                     <img src="images/dummy_car.png" alt="">
                 </div>
@@ -141,6 +149,7 @@
 
                 </div>
             </div>
+
             <div class="hidden spots_area">
                 <p>Scratch 1.2 inches - front door</p>
                 <p>Bump 0.2 inches rear bumper</p>
@@ -153,15 +162,20 @@
 
 <script>
 
-    var $scope;
-    var GtotalWidth, GtotalHeight;
-    var sportNum = 1;
+
 
     export default {
+        props: ['profileHeight','booking'],
 
         data() {
             return {
+                menuView: 'front',
+                sportPending: false,
                 description: '',
+                X_Axis: '',
+                Y_Axis: '',
+                spot_image: '',
+                inspections: [],
                 inspection: {
                 type: '',
                 data: [],
@@ -170,85 +184,111 @@
         },
 
         mounted() {
-            $scope=this;
-
-
 
         },
 
         methods: {
-            drawSpots(currentPage){
+             changeMenu(view) {
+                if (this.menuView && this.menuView === view)
+                    this.menuView = '';
+                else
+                    this.menuView = view;
+            },
+            drawSpots(spotSide){
+
+                if (this.sportPending) 
+                {
+
+                    new Noty({
+                            type: 'warning',
+                            text: 'Save old spot before creating new one!',
+                        }).show();
+
+                    return false;
+                 }
+
+
+                let GtotalWidth, GtotalHeight;
+                let sportNum = 1;
+                let $scope = this;
 
                 GtotalWidth = parseInt($('.carcondition-img').width());
                 GtotalHeight = parseInt($('.carcondition-img').height());
 
 
-                $('#pageSide' + currentPage).prepend('<div id="mydraggable" data-drag-id="' + sportNum +'" style="top:50%; left:50%; z-index: 99;" class="mydraggable draggable' + sportNum + '"><div id="mydragcontrols"><span id="myfix" data-drag-id="' + sportNum + '" style="color: green"><i class="fa fa-check" aria-hidden="true"></i></span><span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span></div></div>');
+                $('#' + spotSide).prepend('<div id="mydraggable" data-drag-id="' + sportNum +'" style="top:50%; left:50%; z-index: 99;" class="mydraggable draggable' + sportNum + '"><div id="mydragcontrols"><span id="myfix" data-drag-id="' + sportNum + '" style="color: green"><i class="fa fa-check" aria-hidden="true"></i></span><span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span></div></div>');
                 $('.mydraggable').show();
                 sportNum++;
-                $('.mydraggable').draggable({
+                    $('.mydraggable').draggable({
                     containment: 'parent',
                     stop: function () {
-                        var l = ( 100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())) ) + "%" ;
-                        var t = ( 100 * parseFloat($(this).position().top / parseFloat($(this).parent().height())) ) + "%" ;
+                        let l = ( 100 * parseFloat($(this).position().left / parseFloat($(this).parent().width())) ) + "%" ;
+                        let t = ( 100 * parseFloat($(this).position().top / parseFloat($(this).parent().height())) ) + "%" ;
+                       $scope.X_Axis = l;
+                       $scope.Y_Axis = t;
                         $(this).css("left", l);
                         $(this).css("top", t);
                     }
                 });
+                    $scope.inspection.type = spotSide;
+                    $scope.sportPending = true;
             },
-            prepareComponent(){
-                $.fn.visibleHeight = function() {
-                    var elBottom, elTop, scrollBot, scrollTop, visibleBottom, visibleTop;
-                    scrollTop = $(window).scrollTop();
-                    scrollBot = scrollTop + $(window).height();
-                    elTop = this.offset().top;
-                    elBottom = elTop + this.outerHeight();
-                    visibleTop = elTop < scrollTop ? scrollTop : elTop;
-                    visibleBottom = elBottom > scrollBot ? scrollBot : elBottom;
-                    return visibleBottom - visibleTop;
-                };
+            
+            uploadImage(side){
+                let $scope = this;
+                $('#'+side+'Uploader').click();
+                $('#'+side+'Uploader').change(function () {
+                        $.map(this.files, function (val) {
+                            var reader = new FileReader();
+                            reader.readAsDataURL(val);
+                            var fd = new window.FormData();
+                            fd.append('upload', val);
+                            reader.onload = function (e) {
+                                axios.post('/api/upload/image',fd).then(function(r){
+                                    $scope.spot_image = r.data.success;
+                                });
 
-                $(document).on('click', '#myfix', function() {
-                    //var currentPage = jQuery('#pageNumber').val();
-                    var currentPage = $(this).parents('.carcondition-img').data('page-number');
-                    console.log(currentPage);
-
-                    var spotNum = $(this).data('drag-id');
-                    alert(spotNum);
-
-
-                    var topCoord = $('.draggable'+spotNum)[0].style.top;
-                    var leftCoord = $('.draggable'+spotNum)[0].style.left;
-                    var ZIndexCoord = $(this).parents('.mydraggable').css("z-index");
-
-                    window.parent.takemysign(topCoord, leftCoord, currentPage, spotNum, ZIndexCoord);
-
-                });
-
-                $(document).on('click', '#mydeldrag', function() {
-
-                    var carID = $('meta[name="carID"]').attr('content');
-                    var spot_id = $(this).parents('.mydraggable').data('spot-id');
-                    var spot_page_id = $(this).parents('.mydraggable').data('spot-page-id');
-
-                    if (spot_id === undefined){
-                        $(this).parents('.mydraggable').remove();
-                    }else {
-                        $.ajax({
-                            url: "{{ url('/admin/ajax/cars/del-vehicle-spot') }}",
-                            type: 'post',
-                            data: $.param({'_token' : '{{ csrf_token() }}','spot_id': spot_id, 'spot_page_id': spot_page_id, 'car_id' : carID}),
-                            success: function(response) {
-                                if (response.success === true){
-                                    $(this).parents('.mydraggable').remove();
-                                    $('.spot_'+response.data.id+'_'+response.data.side_num).remove();
-                                    $('.des_'+response.data.id+'_'+response.data.side_num).remove();
-                                }
-                            }
+                            };
                         });
-                    }
+                        $('#centerLoader').hide();
+                    });
+            },
+            saveSpots(side){
+                if(this.X_Axis=='' || this.Y_Axis==''){
+                    new Noty({
+                            type: 'warning',
+                            text: 'Draw spot first',
+                        }).show();
+                }
+
+                if(this.description==''){
+                    new Noty({
+                            type: 'warning',
+                            text: 'Enter description',
+                        }).show();
+                }
+
+                var data = [this.spot_image,this.description,this.X_Axis,this.Y_Axis];
+                this.inspection.data[this.inspection.data.length] = data;
+
+                this.processSpot();
+            },
+            processSpot(){
+                let $scope = this;
+                axios.post('/api/booking/'+this.booking.id+'/inspection',this.inspection).then(function(r){
+                       
+                      $scope.inspections.push(r);
+                      $scope.sportPending = false;
 
                 });
+            },
+            clearSpot(){
+                    this.inspection.type = '';
+                    this.inspection.data = [];
+                    this.description = '';
+                    this.X_Axis = '';
+                    this.Y_Axis = '';
+                    this.spot_image = '';
             }
         }
     }

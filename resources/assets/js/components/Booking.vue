@@ -96,7 +96,7 @@
 
                         <div class="tab-content booking_tab_content">
                             <transition name="slide-fade" mode="out-in">
-                                <car-inspection key="car-inspection" v-if="car_inpec"></car-inspection>
+                                <car-inspection :booking='CURRENT_BOOKING' key="car-inspection" v-if="car_inpec"></car-inspection>
                                 <booking-documents key="booking-documents" v-if="booking_docs"></booking-documents>
                                 <booking-chat key="booking-chat" v-if="booking_chat"></booking-chat>
                                 <extend-cancel-booking key="extend-cancel-booking" v-if="extend_cancel" :CURRENT_BOOKING="CURRENT_BOOKING"></extend-cancel-booking>
