@@ -12,7 +12,8 @@ const state = {
     detailsDisplay: false,
     searchResults: [],
     vehicleData: {},
-    bookingData: {}
+    bookingData: {},
+    currentBook: null
 };
 
 export default new Vuex.Store({

@@ -24,11 +24,3 @@ Route::get('/vehicles', 'HomeController@topVehicles');
 Route::get('/vehicle/image/hash', function () {
     return response(File::get(resource_path('assets/images/car_img.png')), 200, array('content-type' => 'image/png'));
 });
-
-Route::get('/test', function () {
-    $booking = \Qwikkar\Models\Booking::find(1);
-
-    $users = collect([])->push($booking->user)->push($booking->vehicle->owner->user)->push(\Qwikkar\Models\User::find(1));
-
-    dd($users);
-});

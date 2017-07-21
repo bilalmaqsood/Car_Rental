@@ -162,6 +162,7 @@
                 isCard: false,
                 location: null,
                 promo_code: null,
+                promo_code_reward: 0,
                 start_date: null,
                 end_date: null,
                 credit_cards: null,
@@ -209,7 +210,7 @@
             },
 
             totalRent() {
-                return this.vehicle.rent * this.days;
+                return this.vehicle.rent * this.days - this.promo_code_reward;
             },
 
             totalInsurance() {
@@ -218,8 +219,8 @@
 
             totalBooking() {
                 return (
-                    (this.vehicle.rent * this.days) +
-                    (this.vehicle.insurance * this.days) +
+                    this.totalRent +
+                    this.totalInsurance +
                     this.vehicle.deposit
                 );
             },
@@ -236,16 +237,16 @@
         methods: {
             prepareComponent() {
                 this.initializeJquery();
-                let $t = this;
                 let bookingData = Local.get('bookingData');
                 if (bookingData) {
-                    setTimeout(function () {
-                        $t.calenderChange({date: moment(bookingData.start_date + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true)});
-                        $t.calenderChange({date: moment(bookingData.end_date + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true)});
-                        $t.location = bookingData.location;
-                        $t.promo_code = bookingData.promo_code;
-                        setTimeout(function () {
-                            $t.processBooking();
+                    setTimeout(() => {
+                        this.calenderChange({date: moment(bookingData.start_date + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true)});
+                        this.calenderChange({date: moment(bookingData.end_date + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true)});
+                        this.location = bookingData.location;
+                        this.promo_code = bookingData.promo_code;
+                        this.promo_code_reward = bookingData.promo_code_reward;
+                        setTimeout(() => {
+                            this.processBooking();
                             localStorage.removeItem('reloadData');
                         }, 500);
                     }, 500);
@@ -303,7 +304,6 @@
             },
 
             highlightDays(bool) {
-                let $t = this;
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
 
                 if (bool) {
@@ -332,14 +332,14 @@
                                 if (r.data.success)
                                     new Noty({
                                         type: 'information',
-                                        text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
+                                        text: '<div><p><b>Selected Start Date:</b> ' + this.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + this.end_date.format('M/D/Y') + '</p></div>',
                                     }).show();
                                 else {
                                     new Noty({
                                         type: 'warning',
                                         text: 'Requested time slots are not available for booking.'
                                     }).show();
-                                    $t.resetDatesLessSeven();
+                                    this.resetDatesLessSeven();
                                 }
                             });
                     } else {
@@ -405,22 +405,29 @@
             },
 
             checkPromoCode() {
-                let $t = this;
-
                 if (this.promo_code)
-                    axios.post('/api/promo-code/verify', {
-                        promo_code: this.promo_code
-                    }).then(r => {
-                        if (r.data.success)
-                            new Noty({
-                                type: 'information',
-                                text: 'Promo code available.'
-                            }).show();
-                    }).catch(r => {
-                        if (r.response.status === 422) {
-                            $t.promo_code = null;
-                        }
-                    });
+                    axios.get('/api/promo-code/' + this.promo_code)
+                        .then(r => {
+                            if (r.data.success && r.data.success.is_active) {
+                                new Noty({
+                                    type: 'information',
+                                    text: 'Promo code available.'
+                                }).show();
+                                this.promo_code_reward = r.data.success.reward;
+                            } else
+                                this.resetPromoCodeFields();
+                        })
+                        .catch(r => {
+                            if (r.response.status === 422)
+                                this.resetPromoCodeFields();
+                        });
+                else
+                    this.resetPromoCodeFields();
+            },
+
+            resetPromoCodeFields() {
+                this.promo_code = null;
+                this.promo_code_reward = 0;
             },
 
             processPayment(e) {
@@ -476,6 +483,7 @@
                     start_date: this.start_date.format('MM/DD/YYYY'),
                     end_date: this.end_date.format('MM/DD/YYYY'),
                     promo_code: this.promo_code,
+                    promo_code_reward: this.promo_code_reward,
                     location: this.location
                 });
             }

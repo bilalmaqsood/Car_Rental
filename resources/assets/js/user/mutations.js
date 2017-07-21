@@ -1,6 +1,10 @@
 
 export default {
 
+    updateCurrentBook (state, id) {
+        state.currentBook = id;
+    },
+
     updateAuthView (state) {
         state.authSection = !state.authSection;
     },

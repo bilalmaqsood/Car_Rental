@@ -232,7 +232,7 @@
                         <user-settings v-if="menuView == 'settings'"></user-settings>
                         <user-profile v-if="menuView == 'profile'"></user-profile>
                         <vehicle-crud v-if="menuView == 'vehicles'"></vehicle-crud>
-                        <booking-listing v-if="menuView == 'booking'"></booking-listing>
+                        <booking-listing v-if="menuView == 'booking'" :viewHeight="height"></booking-listing>
                         <payment-card-listing v-if="menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>
                         <financial v-if="menuView == 'payment' && storage.state.auth.type == 'owner'"></financial>
                     </transition>

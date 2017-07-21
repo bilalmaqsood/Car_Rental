@@ -29,10 +29,12 @@ Vue.component('top-vehicles-listing', require('./components/TopVehicleListing.vu
 Vue.component('user-settings', require('./components/Settings.vue'));
 Vue.component('vehicle-crud', require('./components/Vehicles.vue'));
 Vue.component('vehicle-input-form', require('./components/VehiclesInputForm.vue'));
-Vue.component('booking-listing', require('./components/Booking.vue'));
+Vue.component('booking-listing', require('./components/BookingListing.vue'));
+Vue.component('booking', require('./components/BookingDetail.vue'));
+Vue.component('past-booking', require('./components/PastBookingDetail.vue'));
 Vue.component('car-inspection', require('./components/CarInspection.vue'));
 Vue.component('booking-documents', require('./components/Documents.vue'));
-Vue.component('booking-chat', require('./components/Chat.vue'));
+Vue.component('chat', require('./components/Chat.vue'));
 Vue.component('extend-cancel-booking', require('./components/ExtendCancel.vue'));
 Vue.component('payment-card-listing', require('./components/PaymentCards.vue'));
 Vue.component('payment-card-form', require('./components/CardForm.vue'));
