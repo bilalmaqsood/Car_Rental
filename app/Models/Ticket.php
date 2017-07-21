@@ -23,7 +23,7 @@ class Ticket extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Qwikkar\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -31,6 +31,6 @@ class Ticket extends Model
      */
     public function returnVehicle()
     {
-        return $this->belongsTo('Qwikkar\Models\ReturnVehicle');
+        return $this->belongsTo(ReturnVehicle::class);
     }
 }

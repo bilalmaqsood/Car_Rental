@@ -21,7 +21,7 @@ class Feedback extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Qwikkar\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -29,6 +29,6 @@ class Feedback extends Model
      */
     public function booking()
     {
-        return $this->belongsTo('Qwikkar\Models\Booking');
+        return $this->belongsTo(Booking::class);
     }
 }

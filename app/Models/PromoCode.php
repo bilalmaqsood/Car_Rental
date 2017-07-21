@@ -57,7 +57,7 @@ class PromoCode extends Model
      */
     public function users()
     {
-        return $this->morphedByMany('Qwikkar\Models\User', 'promo_code_able');
+        return $this->morphedByMany(User::class, 'promo_code_able');
     }
 
     /**
@@ -65,6 +65,6 @@ class PromoCode extends Model
      */
     public function booking()
     {
-        return $this->morphedByMany('Qwikkar\Models\Booking', 'promo_code_able');
+        return $this->morphedByMany(Booking::class, 'promo_code_able');
     }
 }

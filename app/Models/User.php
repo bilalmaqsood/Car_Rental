@@ -65,7 +65,7 @@ class User extends Authenticatable
      */
     public function faq()
     {
-        return $this->hasMany('Qwikkar\Models\Faq', 'answered_by');
+        return $this->hasMany(Faq::class, 'answered_by');
     }
 
     /**
@@ -73,7 +73,7 @@ class User extends Authenticatable
      */
     public function balance()
     {
-        return $this->hasOne('Qwikkar\Models\Balance');
+        return $this->hasOne(Balance::class);
     }
 
     /**
@@ -81,7 +81,7 @@ class User extends Authenticatable
      */
     public function balanceLogs()
     {
-        return $this->morphMany('Qwikkar\Models\BalanceLog', 'loggable');
+        return $this->morphMany(BalanceLog::class, 'loggable');
     }
 
     /**
@@ -89,7 +89,7 @@ class User extends Authenticatable
      */
     public function creditCard()
     {
-        return $this->hasMany('Qwikkar\Models\CreditCard');
+        return $this->hasMany(CreditCard::class);
     }
 
     /**
@@ -97,7 +97,7 @@ class User extends Authenticatable
      */
     public function withdraw()
     {
-        return $this->hasMany('Qwikkar\Models\Withdraw');
+        return $this->hasMany(Withdraw::class);
     }
 
     /**
@@ -105,7 +105,7 @@ class User extends Authenticatable
      */
     public function account()
     {
-        return $this->hasMany('Qwikkar\Models\Account');
+        return $this->hasMany(Account::class);
     }
 
     /**
@@ -113,7 +113,7 @@ class User extends Authenticatable
      */
     public function oauthTokens()
     {
-        return $this->hasMany('Qwikkar\Models\OauthAccessToken');
+        return $this->hasMany(OauthAccessToken::class);
     }
 
     /**
@@ -121,7 +121,7 @@ class User extends Authenticatable
      */
     public function client()
     {
-        return $this->hasOne('Qwikkar\Models\Client');
+        return $this->hasOne(Client::class);
     }
 
     /**
@@ -129,7 +129,7 @@ class User extends Authenticatable
      */
     public function owner()
     {
-        return $this->hasOne('Qwikkar\Models\Owner');
+        return $this->hasOne(Owner::class);
     }
 
     /**
@@ -137,7 +137,7 @@ class User extends Authenticatable
      */
     public function booking()
     {
-        return $this->hasMany('Qwikkar\Models\Booking');
+        return $this->hasMany(Booking::class);
     }
 
     /**
@@ -145,7 +145,7 @@ class User extends Authenticatable
      */
     public function promoCodes()
     {
-        return $this->morphToMany('Qwikkar\Models\PromoCode', 'promo_code_able');
+        return $this->morphToMany(PromoCode::class, 'promo_code_able');
     }
 
     /**
@@ -153,7 +153,7 @@ class User extends Authenticatable
      */
     public function types()
     {
-        return $this->belongsToMany('Qwikkar\Models\UserType', 'user_mappings');
+        return $this->belongsToMany(UserType::class, 'user_mappings');
     }
 
     /**

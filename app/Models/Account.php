@@ -86,6 +86,6 @@ class Account extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Qwikkar\Models\User');
+        return $this->belongsTo(User::class);
     }
 }

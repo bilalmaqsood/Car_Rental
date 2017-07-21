@@ -40,7 +40,7 @@ class ReturnVehicle extends Model
      */
     public function booking()
     {
-        return $this->belongsTo('Qwikkar\Models\Booking');
+        return $this->belongsTo(Booking::class);
     }
 
     /**
@@ -48,6 +48,6 @@ class ReturnVehicle extends Model
      */
     public function ticket()
     {
-        return $this->hasOne('Qwikkar\Models\Ticket');
+        return $this->hasOne(Ticket::class);
     }
 }

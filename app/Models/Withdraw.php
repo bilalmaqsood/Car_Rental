@@ -21,7 +21,7 @@ class Withdraw extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Qwikkar\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -29,6 +29,6 @@ class Withdraw extends Model
      */
     public function balanceLogs()
     {
-        return $this->morphMany('Qwikkar\Models\BalanceLog', 'loggable');
+        return $this->morphMany(BalanceLog::class, 'loggable');
     }
 }

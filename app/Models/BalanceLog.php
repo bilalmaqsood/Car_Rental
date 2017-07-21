@@ -39,6 +39,6 @@ class BalanceLog extends Model
      */
     public function balance()
     {
-        return $this->belongsTo('Qwikkar\Models\Balance');
+        return $this->belongsTo(Balance::class);
     }
 }

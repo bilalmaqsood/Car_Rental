@@ -22,6 +22,6 @@ class Faq extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Qwikkar\Models\User', 'answered_by');
+        return $this->belongsTo(User::class, 'answered_by');
     }
 }

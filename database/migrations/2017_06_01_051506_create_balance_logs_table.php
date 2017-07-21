@@ -17,8 +17,8 @@ class CreateBalanceLogsTable extends Migration
             $table->increments('id');
 
             $table->integer('balance_id')->index();
-            $table->integer('loggable_id')->index();
-            $table->string('loggable_type')->index();
+
+            $table->morphs('loggable');
 
             $table->decimal('amount');
             $table->text('comment');

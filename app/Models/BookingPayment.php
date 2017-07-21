@@ -36,7 +36,7 @@ class BookingPayment extends Model
      */
     public function booking()
     {
-        return $this->belongsTo('Qwikkar\Models\Booking');
+        return $this->belongsTo(Booking::class);
     }
 
     /**
@@ -44,6 +44,6 @@ class BookingPayment extends Model
      */
     public function balanceLogs()
     {
-        return $this->morphMany('Qwikkar\Models\BalanceLog', 'loggable');
+        return $this->morphMany(BalanceLog::class, 'loggable');
     }
 }

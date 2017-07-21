@@ -21,6 +21,6 @@ class ContractTemplate extends Model
      */
     public function vehicle()
     {
-        return $this->belongsTo('Qwikkar\Models\Vehicle');
+        return $this->belongsTo(Vehicle::class);
     }
 }

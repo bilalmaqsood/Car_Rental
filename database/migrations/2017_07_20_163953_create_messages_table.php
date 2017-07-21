@@ -22,6 +22,8 @@ class CreateMessagesTable extends Migration
             $table->text('message');
             $table->boolean('read');
 
+            $table->morphs('able');
+
             $table->timestamps();
         });
     }

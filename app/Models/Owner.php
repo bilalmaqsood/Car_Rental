@@ -36,7 +36,7 @@ class Owner extends Model
      */
     public function vehicles()
     {
-        return $this->hasMany('Qwikkar\Models\Vehicle');
+        return $this->hasMany(Vehicle::class);
     }
 
     /**
@@ -44,6 +44,6 @@ class Owner extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Qwikkar\Models\User');
+        return $this->belongsTo(User::class);
     }
 }

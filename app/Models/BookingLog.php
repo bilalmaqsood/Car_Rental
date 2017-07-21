@@ -53,7 +53,7 @@ class BookingLog extends Model
      */
     public function booking()
     {
-        return $this->belongsTo('Qwikkar\Models\Booking');
+        return $this->belongsTo(Booking::class);
     }
 
     /**
@@ -61,7 +61,7 @@ class BookingLog extends Model
      */
     public function requested()
     {
-        return $this->belongsTo('Qwikkar\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -69,6 +69,6 @@ class BookingLog extends Model
      */
     public function fulfilled()
     {
-        return $this->belongsTo('Qwikkar\Models\User');
+        return $this->belongsTo(User::class);
     }
 }

@@ -29,7 +29,7 @@ class Balance extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Qwikkar\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -37,6 +37,6 @@ class Balance extends Model
      */
     public function logs()
     {
-        return $this->hasMany('Qwikkar\Models\BalanceLog');
+        return $this->hasMany(BalanceLog::class);
     }
 }

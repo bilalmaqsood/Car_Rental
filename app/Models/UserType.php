@@ -25,6 +25,6 @@ class UserType extends Model
      */
     public function users()
     {
-        return $this->belongsToMany('Qwikkar\Models\User', 'user_mappings');
+        return $this->belongsToMany(User::class, 'user_mappings');
     }
 }

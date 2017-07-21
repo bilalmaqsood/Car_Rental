@@ -76,7 +76,7 @@ class Booking extends Model
      */
     public function bookingLog()
     {
-        return $this->hasMany('Qwikkar\Models\BookingLog');
+        return $this->hasMany(BookingLog::class);
     }
 
     /**
@@ -84,7 +84,7 @@ class Booking extends Model
      */
     public function payments()
     {
-        return $this->hasMany('Qwikkar\Models\BookingPayment');
+        return $this->hasMany(BookingPayment::class);
     }
 
     /**
@@ -92,7 +92,7 @@ class Booking extends Model
      */
     public function inspection()
     {
-        return $this->hasMany('Qwikkar\Models\Inspection');
+        return $this->hasMany(Inspection::class);
     }
 
     /**
@@ -100,7 +100,7 @@ class Booking extends Model
      */
     public function returnVehicle()
     {
-        return $this->hasMany('Qwikkar\Models\ReturnVehicle');
+        return $this->hasMany(ReturnVehicle::class);
     }
 
     /**
@@ -108,7 +108,7 @@ class Booking extends Model
      */
     public function vehicle()
     {
-        return $this->belongsTo('Qwikkar\Models\Vehicle');
+        return $this->belongsTo(Vehicle::class);
     }
 
     /**
@@ -116,7 +116,7 @@ class Booking extends Model
      */
     public function user()
     {
-        return $this->belongsTo('Qwikkar\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -124,6 +124,6 @@ class Booking extends Model
      */
     public function promoCodes()
     {
-        return $this->morphToMany('Qwikkar\Models\PromoCode', 'promo_code_able');
+        return $this->morphToMany(PromoCode::class, 'promo_code_able');
     }
 }

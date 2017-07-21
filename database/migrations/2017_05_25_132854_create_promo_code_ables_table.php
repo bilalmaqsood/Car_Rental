@@ -15,8 +15,8 @@ class CreatePromoCodeAblesTable extends Migration
     {
         Schema::create('promo_code_ables', function (Blueprint $table) {
             $table->integer('promo_code_id')->index();
-            $table->integer('promo_code_able_id')->index();
-            $table->string('promo_code_able_type')->index();
+
+            $table->morphs('promo_code_able');
 
             $table->unique(['promo_code_id', 'promo_code_able_id', 'promo_code_able_type'], 'promo_code_id_able_id_able_type_unique');
         });

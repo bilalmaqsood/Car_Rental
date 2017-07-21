@@ -115,7 +115,7 @@ class Vehicle extends Model
      */
     public function owner()
     {
-        return $this->belongsTo('Qwikkar\Models\Owner');
+        return $this->belongsTo(Owner::class);
     }
 
     /**
@@ -123,7 +123,7 @@ class Vehicle extends Model
      */
     public function booking()
     {
-        return $this->hasMany('Qwikkar\Models\Booking');
+        return $this->hasMany(Booking::class);
     }
 
     /**
@@ -131,7 +131,7 @@ class Vehicle extends Model
      */
     public function timeSlots()
     {
-        return $this->hasMany('Qwikkar\Models\TimeSlot');
+        return $this->hasMany(TimeSlot::class);
     }
 
     /**
@@ -139,6 +139,6 @@ class Vehicle extends Model
      */
     public function contractTemplate()
     {
-        return $this->hasOne('Qwikkar\Models\ContractTemplate');
+        return $this->hasOne(ContractTemplate::class);
     }
 }
