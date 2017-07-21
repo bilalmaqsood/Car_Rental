@@ -61,7 +61,15 @@ class User extends Authenticatable
     }
 
     /**
-     * Get user's balance
+     * Get user's messages
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
+    /**
+     * Get user's frequently asked questions
      */
     public function faq()
     {

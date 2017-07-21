@@ -20,7 +20,7 @@ class CreateMessagesTable extends Migration
             $table->integer('receiver_id');
 
             $table->text('message');
-            $table->boolean('read');
+            $table->boolean('read')->default(0);
 
             $table->morphs('able');
 

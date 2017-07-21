@@ -39,6 +39,10 @@ Route::post('/promo-code/verify', 'PromoCodeController@verify');
 
 Route::group(['middleware' => 'auth:api'], function () {
 
+    Route::get('message', 'MessageController@allMessages');
+    Route::post('message/read', 'MessageController@markRead');
+    Route::post('message/send', 'MessageController@sendMessage');
+
     Route::patch('faq/{id}', 'FaqController@update');
 
     Route::delete('faq/{id}', 'FaqController@destroy');

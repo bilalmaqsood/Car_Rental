@@ -141,4 +141,12 @@ class Vehicle extends Model
     {
         return $this->hasOne(ContractTemplate::class);
     }
+
+    /**
+     * Get all of the messages against an vehicle
+     */
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'able');
+    }
 }
