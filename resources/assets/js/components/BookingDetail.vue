@@ -145,6 +145,7 @@
                 this.$emit('sideView', {
                     id: this.booking.id,
                     index: this.index,
+                    past: false,
                     view: view
                 });
             }

@@ -14,8 +14,6 @@ require('eonasdan-bootstrap-datetimepicker');
 
 require('jquery.easing');
 
-window.$ = $.extend(require('jquery-ui-dist/jquery-ui.js'));
-
 require('owl.carousel');
 
 require('jquery.payment');

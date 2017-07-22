@@ -15,6 +15,8 @@ require('./design');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.component('pdf', require('vue-pdf'));
+Vue.component('pdf-document', require('./components/PDFDocument.vue'));
 Vue.component('app-header', require('./components/Header.vue'));
 Vue.component('home-page', require('./components/HomePage.vue'));
 Vue.component('user-register', require('./components/Register.vue'));
@@ -34,7 +36,7 @@ Vue.component('booking', require('./components/BookingDetail.vue'));
 Vue.component('past-booking', require('./components/PastBookingDetail.vue'));
 Vue.component('car-inspection', require('./components/CarInspection.vue'));
 Vue.component('booking-documents', require('./components/Documents.vue'));
-Vue.component('chat', require('./components/Chat.vue'));
+Vue.component('chat-booking', require('./components/Chat.vue'));
 Vue.component('extend-cancel-booking', require('./components/ExtendCancel.vue'));
 Vue.component('payment-card-listing', require('./components/PaymentCards.vue'));
 Vue.component('payment-card-form', require('./components/CardForm.vue'));

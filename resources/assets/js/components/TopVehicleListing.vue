@@ -31,7 +31,7 @@
             <div role="tabpanel" class="tab-pane active" id="by_location">
                 <div class="main_vehicles_container">
                     <transition-group name="list" tag="div">
-                        <div v-for="vehicle in vehicles" :key="vehicle" class="main_vehicles list-item">
+                        <div v-for="vehicle in vehicles" :key="vehicle.id" class="main_vehicles list-item">
                             <div class="owl-carousel owl-slider">
                                 <div v-for="img in vehicle.images " class="item"><img :src="img" alt=""></div>
                             </div>

@@ -119,7 +119,7 @@ class BookingController extends Controller
             return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $booking = Booking::whereId($id)->with(['vehicle' => function ($with) {
-            $with->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'transmission', 'fuel', 'mile_cap', 'rent');
+            $with->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'transmission', 'fuel', 'mile_cap', 'rent', 'documents');
         }, 'bookingLog' => function ($with) {
             $with->with(['requested', 'fulfilled']);
         }, 'user'])->first();

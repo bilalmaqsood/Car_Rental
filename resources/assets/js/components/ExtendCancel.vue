@@ -1,99 +1,96 @@
 <template>
-    <div id="extend_cancel" class="tab-pane fade active in">
+    <div id="extend_cancel">
         <div class="extend_booking">
             <div class="extend_booking_content">Extend booking</div>
-            <div class="extend_booking_content">
+
+            <div class="extend_booking_content no-padding">
                 <div class="book_now_calender">
-                    <p>Select first and last day of booking</p>
+                    <p>Select the day to extend to</p>
                     <div style="overflow:hidden;">
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div id="extendcancledate"></div>
+                                    <div id="extendCancelDate"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="extend_booking_content clickable" @click="extendBooking">Send request</div>
-            <div class="extend_booking_content ">Cancel booking</div>
-            <div class="extend_booking_content clickable">
-               
-            </div>
-            <div class="extend_booking_content ">Reason for early cancelation <input type="text" v-model="cancle_note"></div>
-            <div class="extend_booking_content clickable" @click="cancleBooking">Send request</div>
+
+            <div class="extend_booking_content cursor-pointer btn-send" @click="extendBooking">Send request</div>
+
+            <div class="extend_booking_content">Cancel booking</div>
+
+            <div class="extend_booking_content no-padding"><textarea class="form-control" placeholder="Reason for early cancellation" v-model="cancel_note"></textarea></div>
+
+            <div class="extend_booking_content cursor-pointer btn-send" @click="cancelBooking">Send request</div>
         </div>
     </div>
 </template>
 
 <script>
-
-    var $scope;
-
     export default {
-        props:['CURRENT_BOOKING'],
+        props:['user'],
+
         data() {
             return {
-                start_date: "",
-                end_date: "",
-                cancle_note: ""
+                end_date: '',
+                start_date: '',
+                cancel_note: ''
             };
         },
 
         mounted() {
-            $scope=this;
-            var start_date="";
-            var end_date="";
-            window.ExtendCanclepicker =  $('#extendcancledate').datetimepicker({
+
+            $('#extendCancelDate').datetimepicker({
                 inline: true,
                 sideBySide: false
-            });
-
-            ExtendCanclepicker.on("dp.change",function (event) {
-                if(start_date.length<=0)
-                    start_date = event.date.format("Y-M-D");
-                else if(end_date.length<=0)
-                    end_date = event.date.format("Y-M-D");
-
-                $scope.start_date=start_date;
-                $scope.end_date=end_date;
-
-            });
+            })
+//                .on("dp.change",function (event) {
+//                if(start_date.length<=0)
+//                    start_date = event.date.format("Y-M-D");
+//                else if(end_date.length<=0)
+//                    end_date = event.date.format("Y-M-D");
+//
+//                $scope.start_date=start_date;
+//                $scope.end_date=end_date;
+//            });
         },
 
         methods: {
-            extendBooking(){
+            extendBooking() {
+                if (this.user.state.currentBook !== null) {
+                    axios.post('/api/booking/' + this.user.state.currentBook + '/status', this.extendParams())
+                        .then(response => {
+                            console.log(response);
+                        });
+                }
+            },
 
-                if(this.CURRENT_BOOKING !== undefined ) {
-                    axios.post('/api/booking/' + this.CURRENT_BOOKING.id + '/status', this.extendParams())
+            cancelBooking() {
+                if (this.user.state.currentBook !== null) {
+                    axios.post('/api/booking/' + this.user.state.currentBook + '/status', this.cancelParams())
                         .then(response => {
                             console.log(response);
                         });
                 }
             },
-            cancleBooking(){
-                if(this.CURRENT_BOOKING !== undefined ) {
-                    axios.post('/api/booking/' + this.CURRENT_BOOKING.id + '/status', this.cancleParams())
-                        .then(response => {
-                            console.log(response);
-                        });
-                }
-            },
-            extendParams(){
+
+            extendParams() {
                 return {
-                    start_date: $scope.start_date,
-                    end_date: $scope.end_date,
+                    start_date: this.start_date,
+                    end_date: this.end_date,
                     status: 5
                 }
             },
-            cancleParams(){
+
+            cancelParams() {
                 return {
-                    note: $scope.cancle_note,
+                    note: this.cancle_note,
                     status: 3
                 }
             }
-
         }
     }
 </script>

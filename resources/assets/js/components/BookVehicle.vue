@@ -49,7 +49,7 @@
                 <div class="fill_card">
                     <div class="list-group">
                         <transition-group name="list" tag="div">
-                            <a href="javascript:" @click="fillCard(c, $event)" class="list-group-item" v-for="c in credit_cards" :key="c" :class="{active: c.id == card.id}">
+                            <a href="javascript:" @click="fillCard(c, $event)" class="list-group-item" v-for="c in credit_cards" :key="c.id" :class="{active: c.id == card.id}">
                                 <h4 class="list-group-item-heading">{{ c.expiry }}</h4>
                                 <p class="list-group-item-text">{{ c.number }}</p>
                             </a>

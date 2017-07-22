@@ -184,7 +184,7 @@ trait BookingOperations
 
         $fileName = '/storage' . $fileName;
 
-        $booking->documents = collect([$fileName]);
+        $booking->documents = collect([['name' => 'Booking Contract', 'type' => 'pdf', 'path' => $fileName]]);
         $booking->save();
     }
 

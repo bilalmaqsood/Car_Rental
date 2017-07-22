@@ -25,6 +25,6 @@ mix
     .copy('resources/assets/images', 'public/images')
 ;
 
-if (mix.Mix.inProduction) {
+if (mix.inProduction()) {
     mix.version();
 }

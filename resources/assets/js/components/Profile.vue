@@ -17,7 +17,7 @@
         </div>
 
         <transition-group name="slide-fade" tag="div">
-            <div v-for="notif in notifications" :class="notif.data.noti_type" v-bind:key="notif" class="cursor-pointer pofile_content_wrapper">
+            <div v-for="notif in notifications" :class="notif.data.noti_type" v-bind:key="notif.id" class="cursor-pointer pofile_content_wrapper">
                 <div v-if="propExist(notif.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notif.data.image + ')' }">
                     <img :src="notif.data.image" alt="">
                 </div>

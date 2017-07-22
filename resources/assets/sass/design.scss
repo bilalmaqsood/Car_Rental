@@ -166,12 +166,15 @@ h3 {
     border: none;
     text-align: center;
 }
-.login-section .primary_btn{
+
+.login-section .primary_btn {
     width: 85px;
 }
-.login-section .secodery_btn{
+
+.login-section .secodery_btn {
     width: 85px;
 }
+
 .primary_btn i {
     display: block;
 }
@@ -312,16 +315,15 @@ h3 {
     height: 90px;
     margin-right: 2px;
 }
-.top_location .list-unstyled li:first-child{
+
+.top_location .list-unstyled li:first-child {
     background: inherit !important;
     height: initial !important;
     padding: 0 !important;
 }
+
 .top_location li.picker-switch.accordion-toggle {
     display: none;
-}
-.clickable {
-    cursor: pointer;
 }
 
 .top_location ul li:nth-child(2n) {
@@ -1800,6 +1802,12 @@ h3 {
     width: 50%;
     background: rgba(255, 255, 255, 0.91);
     position: relative;
+
+    .btn-close {
+        position: absolute;
+        left: -3rem;
+        top: 1rem;
+    }
 }
 
 .timepicker {
@@ -1965,7 +1973,7 @@ h3 {
 }
 
 .chat_contrnt .send_box {
-    width: 90%;
+    width: 95%;
     background: #98b927;
     margin: 10px auto 0;
     color: #fff;
@@ -1999,8 +2007,8 @@ h3 {
 
 .chat_date_time {
     display: inline-block;
-    width: 80%;
-    margin-left: 10%;
+    width: 84%;
+    margin-left: 8%;
     font-size: 10px;
     line-height: 19px;
     font-weight: normal;
@@ -2011,7 +2019,7 @@ h3 {
 }
 
 .chat_contrnt .receve_box {
-    width: 90%;
+    width: 95%;
     background: #efeff4;
     margin: 10px auto 0;
     color: #525252;
@@ -2137,7 +2145,7 @@ h3 {
     box-shadow: 1px 1px 3px #000;
     background: #fff;
     border-bottom: 1px solid rgba(230, 230, 230, 0.32);
-    text-align:left;
+    text-align: left;
 }
 
 .setting_wrapper ul li span {
@@ -2149,7 +2157,7 @@ h3 {
 .setting_wrapper ul li .svg-icon {
     width: 26px;
     height: 26px;
-    display:inline;
+    display: inline;
 }
 
 .setting_wrapper ul li:first-child p {
@@ -2396,7 +2404,6 @@ h3 {
 }
 
 .book_now_calender {
-    float: left;
     width: 100%;
     background: #525252;
 }
@@ -2436,7 +2443,7 @@ h3 {
     line-height: 19px;
     font-weight: normal;
     color: #fff;
-    margin: 10px 0 0 25px;
+    padding: 10px 0 0 25px;
 }
 
 .bootstrap-datetimepicker-widget table thead tr:first-child th:hover {
@@ -2456,43 +2463,30 @@ h3 {
     line-height: 19px;
     font-weight: normal;
     padding: 10px 25px;
-    float: left;
     width: 100%;
-}
 
-.extend_booking .extend_booking_content:nth-child(1) {
-    background: #fff;
-    box-shadow: 1px 1px 3px #000;
-}
+    &.btn-send {
+        background: #525252;
+        box-shadow: 1px 1px 3px #000;
+        color: #87af1e;
 
-.extend_booking .extend_booking_content:nth-child(2) {
-    padding: 0;
-}
+        &:hover {
+            background: #3e3e3e;
+            color: #b2e125;
+        }
+    }
 
-.extend_booking .extend_booking_content:nth-child(3) {
-    background: #525252;
-    box-shadow: 1px 1px 3px #000;
-    color: #87af1e;
-}
+    &:nth-child(1),
+    &:nth-child(4) {
+        box-shadow: 1px 1px 3px #000;
+        font-size: 12px;
+        line-height: 3rem;
+    }
 
-.extend_booking .extend_booking_content:nth-child(4) {
-    background: #fff;
-    box-shadow: 1px 1px 3px #000;
-}
-
-.extend_booking .extend_booking_content:nth-child(5) {
-    padding: 0;
-}
-
-.extend_booking .extend_booking_content:nth-child(6) {
-    background: #fff;
-    box-shadow: 1px 1px 3px #000;
-}
-
-.extend_booking .extend_booking_content:nth-child(7) {
-    background: #525252;
-    box-shadow: 1px 1px 3px #000;
-    color: #87af1e;
+    .form-control {
+        border: none;
+        border-radius: 0;
+    }
 }
 
 .book_now_calender ul li {
@@ -3907,84 +3901,96 @@ h3 {
     }
 }
 
-
 .has-error {
     border-left: 5px solid #ff0404 !important;
 }
 
-.has-error .form-control{
+.has-error .form-control {
     color: #ff0404 !important;
 }
 
 .has-error .form-control::-webkit-input-placeholder {
-  color: #ff0404 !important;
+    color: #ff0404 !important;
 }
 
 .has-error .form-control::-moz-placeholder {
-  color: #ff0404 !important;
+    color: #ff0404 !important;
 }
 
 .has-error .form-control:-ms-input-placeholder {
-  color: #ff0404 !important;
+    color: #ff0404 !important;
 }
 
 .has-error .form-control:-moz-placeholder {
-  color: #ff0404 !important;
+    color: #ff0404 !important;
 }
-.help-block{
+
+.help-block {
     color: #ff0404 !important;
 
 }
-.text-sm{
+
+.text-sm {
     margin: 10px auto !important;
     font-size: 12px !important;
     font-weight: bold;
 
 }
-button:disabled{
-    cursor:not-allowed;
+
+button:disabled {
+    cursor: not-allowed;
     opacity: 0.5;
 }
-.basic_info .text-sm{
+
+.basic_info .text-sm {
     margin: -15px auto !important;
 }
-.card_recured .text-sm{
+
+.card_recured .text-sm {
     margin: -5px auto !important;
 }
-.vehicle_registration .text-sm{
+
+.vehicle_registration .text-sm {
     text-align: left;
     margin-left: 5% !important;
     font-weight: bold;
 }
-.discount-group{
+
+.discount-group {
     position: relative;
 }
-.discount-group .discount{
+
+.discount-group .discount {
     position: relative;
     text-align: left;
     margin-left: 5px;
     margin-top: 10px;
     float: left;
 }
+
 .label.label-info.discount:first-of-type {
     margin-left: 30px;
 }
-.discount-group .discount i{
+
+.discount-group .discount i {
     position: absolute;
     top: 2px;
     right: 2px;
 }
+
 .discount-group .discount p {
     font-size: 11px;
     line-height: 8px;
     font-weight: bold;
     padding: 5px;
 }
-.contract-area{
+
+.contract-area {
     min-width: 660px;
     min-height: 500px;
-   white-space: pre;
+    white-space: pre;
 }
+
 .draggable, .mydraggable {
     width: 60px;
     height: 25px;
@@ -3998,17 +4004,21 @@ button:disabled{
     opacity: .9;
     border: 2px dotted #8c001a;
 }
-.carcondition-img{
+
+.carcondition-img {
     position: relative;
 }
+
 #mydragcontrols {
-        float: right;
+    float: right;
 }
+
 #mydragcontrols #myfix {
-        cursor: pointer;
+    cursor: pointer;
     margin: 2px;
 }
+
 #mydragcontrols #mydeldrag {
-        cursor: pointer;
+    cursor: pointer;
     margin: 2px;
 }

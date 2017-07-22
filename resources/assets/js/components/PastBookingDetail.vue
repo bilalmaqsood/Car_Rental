@@ -36,7 +36,7 @@
                 <div class="pickup_loction_btn">
                     <ul>
                         <li>
-                            <button>
+                            <button @click="loadSideView('bookNow')">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 20" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#issue"></use>
                                 </svg>
@@ -44,7 +44,7 @@
                             </button>
                         </li>
                         <li>
-                            <button>
+                            <button @click="loadSideView('chat')">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
                                 </svg>
@@ -64,7 +64,7 @@
 
 <script>
     export default {
-        props: ['booking'],
+        props: ['booking', 'index'],
 
         data() {
             return {};
@@ -80,9 +80,17 @@
             }
         },
 
-        mounted() {
-        },
+        mounted() {},
 
-        methods: {}
+        methods: {
+            loadSideView(view) {
+                this.$emit('sideView', {
+                    id: this.booking.id,
+                    index: this.index,
+                    past: true,
+                    view: view
+                });
+            }
+        }
     }
 </script>

@@ -24,3 +24,7 @@ Route::get('/vehicles', 'HomeController@topVehicles');
 Route::get('/vehicle/image/hash', function () {
     return response(File::get(resource_path('assets/images/car_img.png')), 200, array('content-type' => 'image/png'));
 });
+
+Route::get('/vehicle/document/path', function () {
+    return response(File::get(resource_path('assets/images/car_img.png')), 200, array('content-type' => 'image/png'));
+});

@@ -5,8 +5,8 @@
 
         <div class="search_container">
             <transition-group name="list" tag="div">
-                <div class="search_car" v-for="i in user.state.searchResults" :key="i">
-                    <div class="search_car_content" :style="{width: user.state.detailsDisplay ? '0px' : '', height: user.state.detailsDisplay ? '0px' : ''}">
+                <div class="search_car" v-for="i in user.state.searchResults" :key="i.id">
+                    <div class="search_car_content" :style="{width: user.state.detailsDisplay ? '0' : '', height: user.state.detailsDisplay ? '0px' : ''}">
                         <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a></h3>
                         <ul>
                             <li>
