@@ -1,30 +1,44 @@
 <template>
-    <form class="form-inline">
+    <form>
         <ul>
             <li>
                 <div class="form-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+
+
+<div class="input-group login-input">
+                            <span class="input-group-addon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                     </svg>
+</span>
                     <input type="text" class="form-control" placeholder="vehicle" v-model="vehicle">
+
+</div>
+
+                    
                 </div>
             </li>
             <li>
                 <div class="form-group">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+<div class="input-group login-input">
+                            <span class="input-group-addon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-                    </svg>
+                    </svg></span>
                     <input type="text" class="form-control" placeholder="location" v-model="location">
+
+</div>
+                    
                 </div>
             </li>
-            <li>
+            <li class="button-search">
                 <button type="button" class="secodery_btn" @click="searchVehicles" data-loading-text="searching ...">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
                     </svg>
                 </button>
             </li>
-            <li>
+            <li class="button-search">
                 <button type="button" class="primary_btn" @click="searchFilters" :class="{active:advanceSearch}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filters_icon"></use>
@@ -34,10 +48,15 @@
             <transition name="slide-fade">
                 <li v-if="advanceSearch">
                     <div class="form-group">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+<div class="input-group login-input">
+                            <span class="input-group-addon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
-                        </svg>
+                        </svg></span>
                         <input type="text" class="form-control" placeholder="price range" v-model="price">
+
+</div>
+                        
                     </div>
                 </li>
             </transition>
@@ -45,14 +64,20 @@
             <transition name="slide-fade">
                 <li v-if="advanceSearch">
                     <div class="form-group">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+<div class="input-group login-input">
+                            <span class="input-group-addon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                         </svg>
+</span>
                         <input type="text" class="form-control available" placeholder="available from" v-model="available">
+</div>
+                        
                     </div>
                 </li>
             </transition>
         </ul>
+<div class="clearfix"></div>
     </form>
 </template>
 
