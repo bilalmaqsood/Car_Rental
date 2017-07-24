@@ -29,40 +29,48 @@
             <div class="basic_info" key="step-2" v-if="step=='basic_info'">
                 <form>
                     <div class="form-group" :class="{ 'has-error': $v.basic_info.name.$error }">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
-                        </svg>
+                        <div class="input-group login-input">
+                            <span class="input-group-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use> </svg>
+                            </span>
                         <input v-model="basic_info.name" @blur="$v.basic_info.name.$touch()" type="text" class="form-control" placeholder="full name">
+                        </div>
                         <span class="help-block text-sm" v-if="$v.basic_info.name.$error">Enter valid name</span>
-
                     </div>
                     <div class="form-group" :class="{ 'has-error': $v.basic_info.email.$error }">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 25" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#form_envelope"></use>
-                        </svg>
-                        <input v-model="basic_info.email" @blur="$v.basic_info.email.$touch()" type="email" class="form-control" placeholder="e-mail">
+                        <div class="input-group login-input">
+                            <span class="input-group-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 25" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#form_envelope"></use> </svg>
+                            </span>
+                            <input v-model="basic_info.email" @blur="$v.basic_info.email.$touch()" type="email" class="form-control" placeholder="e-mail">
+                        </div>
                         <span class="help-block text-sm" v-if="$v.basic_info.email.$error">Enter valid email</span>
                     </div>
                     <div class="form-group" :class="{ 'has-error': $v.basic_info.phone.$error }">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 25" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
-                        </svg>
+                        <div class="input-group login-input">
+                            <span class="input-group-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 25" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use> </svg>
+                            </span>
                         <input v-model="basic_info.phone" @blur="$v.basic_info.phone.$touch()" type="text" class="form-control phone-number" placeholder="phone number">
+                        </div>
                         <span class="help-block text-sm" v-if="$v.basic_info.phone.$error">Enter valid phone</span>
                     </div>
                     <div class="form-group" :class="{ 'has-error': $v.basic_info.dob.$error }" v-if="user_type=='client'">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                        </svg>
-                        <input type="text" @blur="updateDOB" class="form-control date-of-birth" placeholder="date of birth">
+                        <div class="input-group login-input">
+                            <span class="input-group-addon">
+                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use> </svg>
+                            </span>
+                            <input type="text" @blur="updateDOB" class="form-control date-of-birth" placeholder="date of birth">
+                        </div>
                         <span class="help-block text-sm" v-if="$v.basic_info.dob.$error">Enter valid date of birth</span>
-
                     </div>
                     <div class="form-group" :class="{ 'has-error': $v.basic_info.password.$error }">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
-                        </svg>
-                        <input v-model="basic_info.password" @blur="$v.basic_info.password.$touch()" type="password" class="form-control" placeholder="password">
+                        <div class="input-group login-input">
+                            <span class="input-group-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use> </svg>
+                            </span>
+                            <input v-model="basic_info.password" @blur="$v.basic_info.password.$touch()" type="password" class="form-control" placeholder="password">
+                        </div>
                         <span class="help-block text-sm" v-if="$v.basic_info.password.$error">Enter valid password of 6 digits long</span>
                     </div>
                     <button type="button" class="secodery_btn" @click="changeStep" :disabled="$v.basic_info.$invalid" data-loading-text="owner signing up ...">
@@ -83,34 +91,45 @@
             <div class="basic_info" key="step-3" v-if="step=='driver_info'">
                 <form>
                     <div class="form-group">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon svg-icon-booking">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
-                        </svg>
-                        <input type="text" class="form-control" placeholder="national insurance number" v-model="driver_info.insurance">
+                        <div class="input-group login-input">
+                            <span class="input-group-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon svg-icon-booking"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use> </svg>
+                            </span>
+                            <input type="text" class="form-control" placeholder="national insurance number" v-model="driver_info.insurance">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon svg-icon-booking">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
-                        </svg>
-                        <input type="text" class="form-control" placeholder="PCO certificate number" v-model="driver_info.pco_number">
+                        <div class="input-group login-input">
+                            <span class="input-group-addon">
+                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon svg-icon-booking"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use> </svg>
+                            </span>
+                            <input type="text" class="form-control" placeholder="PCO certificate number" v-model="driver_info.pco_number">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                        </svg>
-                        <input type="text" class="form-control certificate-expiration" placeholder="PCO certificate expiration date" @blur="updateCertificateExpiration">
+                        <div class="input-group login-input">
+                            <span class="input-group-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use> </svg>
+                            </span>
+                            <input type="text" class="form-control certificate-expiration" placeholder="PCO certificate expiration date" @blur="updateCertificateExpiration">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
-                        </svg>
-                        <input type="text" class="form-control" placeholder="driver’s license number" v-model="driver_info.driving">
+
+                        <div class="input-group login-input">
+                            <span class="input-group-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use> </svg>
+                            </span>
+                            <input type="text" class="form-control" placeholder="driver’s license number" v-model="driver_info.driving">
+                        </div>
                     </div>
                     <div class="form-group">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-                        </svg>
-                        <input type="text" class="form-control" placeholder="postcode on driver’s license" v-model="driver_info.postcode">
+                        <div class="input-group login-input">
+                            <span class="input-group-addon">
+                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use> </svg>
+                            </span>
+                            <input type="text" class="form-control" placeholder="postcode on driver’s license" v-model="driver_info.postcode">
+                        </div>
                     </div>
                     <button type="button" class="secodery_btn" @click="changeStep" data-loading-text="driver signing up ...">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
