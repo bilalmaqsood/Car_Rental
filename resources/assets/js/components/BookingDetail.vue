@@ -65,12 +65,20 @@
                                 car inspection
                             </a>
                         </li>
-                        <li>
+                        <li v-if="User.state.auth.type=='client'">
                             <a @click="loadSideView('extend')" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
                                 extend/cancel
+                            </a>
+                        </li>
+                         <li v-else>
+                            <a @click="cancelBooking" href="javascript:">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                </svg>
+                                cancel
                             </a>
                         </li>
                         <li>
@@ -98,11 +106,15 @@
 </template>
 
 <script>
+
+    import User from '../user';
+
     export default {
         props: ['booking', 'user', 'index'],
 
         data() {
             return {
+                User: User,
                 payments: []
             };
         },
@@ -148,6 +160,16 @@
                     past: false,
                     view: view
                 });
+            },
+            cancelBooking(){
+                let result = confirm("You are about to cancel booking");
+                if (this.booking.id && result) {
+                    let params = {status: 6};
+                    axios.patch('/api/booking/' + this.booking.id + '/status', params)
+                        .then(response => {
+                            console.log(response);
+                        });
+                }
             }
         }
     }
