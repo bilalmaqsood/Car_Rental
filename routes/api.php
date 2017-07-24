@@ -40,6 +40,7 @@ Route::post('/promo-code/verify', 'PromoCodeController@verify');
 Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('message', 'MessageController@allMessages');
+    Route::get('message/{id}', 'MessageController@getMessages');
     Route::post('message/read', 'MessageController@markRead');
     Route::post('message/send', 'MessageController@sendMessage');
 

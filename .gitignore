@@ -20,3 +20,4 @@ Homestead.yaml
 /.phpstorm.meta.php
 public/0.js
 public/*.worker.js
+/nbproject

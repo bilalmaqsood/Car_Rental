@@ -31,7 +31,7 @@ class Message extends Model
      * @var array
      */
     protected $hidden = [
-//        'sender_id',
+        'sender_id',
         'receiver_id',
     ];
 

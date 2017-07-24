@@ -81,14 +81,15 @@ axios.interceptors.response.use(function (response) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+import Echo from 'laravel-echo'
 
-// window.Pusher = require('pusher-js');
+window.Pusher = require('pusher-js');
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: 'bf2d324184dd601f0dac',
+    cluster: 'ap2'
+});
 
 /**
  * Define prototypes for Class objects

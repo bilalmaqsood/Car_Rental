@@ -1,20 +1,19 @@
 <template>
     <div class="chat_contrnt" :style="{ height: viewHeight + 'px' }">
         <div class="all-chat-messages">
-            <div class="send_box">
-                <p>Integer et odio viverra, feugiat ex sed, loborHs sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis suscipit. Sed sit amet trisHque leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.</p>
-            </div>
-            <span class="chat_date_time">John Doe | 05.06.2017 | 12:30</span>
-
-            <div class="receve_box">
-                <p>Integer et odio viverra, feugiat ex sed, loborHs sapien. Cras vitae varius urna. Ut nec libero sed orci iaculis suscipit. Sed sit amet trisHque leo, id mollis ante. Duis ac porta nunc, non pulvinar leo. Duis ac ex id libero eleifend egestas efficitur a diam. Aenean eleifend lorem eu ultrices.</p>
-            </div>
-            <span class="chat_date_time chat_date_time_recive">John Doe | 05.06.2017 | 12:30</span>
+            <transition-group name="list" tag="div">
+                <div v-for="m in messages.data" :key="m.id">
+                    <div :class="{send_box: !isReceiver(m), receve_box: isReceiver(m)}">
+                        <p>{{m.message}}</p>
+                    </div>
+                    <span class="chat_date_time" :class="{chat_date_time_recive: isReceiver(m)}">{{isReceiver(m) ? m.receiver.name : m.sender.name}} | {{m.updated_at | date('format', 'DD.MM.YYYY')}} | {{m.updated_at | date('format', 'HH:mm a')}}</span>
+                </div>
+            </transition-group>
         </div>
 
         <div class="chat_btn_wrapper">
-            <input class="form-control" placeholder="Your message">
-            <button>
+            <input class="form-control" placeholder="Your message" v-model="message">
+            <button @click="sendMessage">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#send"></use>
                 </svg>
@@ -25,14 +24,57 @@
 
 <script>
     export default {
-        props: ['viewHeight'],
+        props: ['viewHeight', 'user', 'bookingId'],
 
         data() {
-            return {};
+            return {
+                message: '',
+                messages: {}
+            };
         },
 
-        mounted() {},
+        mounted() {
+            $('#sideLoader').show();
+            axios.get('/api/message/' + this.bookingId).then(r => {
+                this.messages = r.data.success;
+                $('#sideLoader').hide();
+            });
 
-        methods: {}
+            Echo.join('chatroom')
+                .here((users) => {
+                    console.log(users);
+                })
+                .joining((user) => {
+                    console.log(user);
+                })
+                .leaving((user) => {
+                    console.log(user);
+                })
+                .listen('MessagePosted', (e) => {
+                    console.log(e);
+                });
+        },
+
+        methods: {
+            isReceiver(m) {
+                return this.user.state.auth.email === m.receiver.email;
+            },
+
+            sendMessage() {
+                if (this.message) {
+                    $('#sideLoader').show();
+                    axios.post('/api/message/send', {
+                        booking_id: this.bookingId,
+                        message: this.message
+                    }).then(r => {
+                        this.message = '';
+                        delete r.data.success.able;
+                        delete r.data.success.sender.types;
+                        this.messages.data.push(r.data.success);
+                        $('#sideLoader').hide();
+                    });
+                }
+            }
+        }
     }
 </script>

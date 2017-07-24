@@ -3,6 +3,7 @@
 namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Qwikkar\Events\MessagePosted;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
 use Qwikkar\Models\Message;
@@ -20,6 +21,17 @@ class MessageController extends Controller
     public function allMessages(Request $request)
     {
         return api_response($request->user()->messages()->where('read', 0)->with('sender')->get());
+    }
+
+    /**
+     * Get all messages of a booking
+     *
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function getMessages($id)
+    {
+        return api_response(Booking::findOrFail($id)->messages()->orderBy('updated_at')->with('receiver', 'sender')->paginate(10));
     }
 
     /**
@@ -73,7 +85,9 @@ class MessageController extends Controller
 
         $message->save();
 
-        return api_response(trans('messages.created', ['name' => $message->receiver->name]));
+//        broadcast(new MessagePosted($message));
+
+        return api_response($message);
     }
 
     /**

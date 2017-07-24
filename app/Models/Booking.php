@@ -72,6 +72,14 @@ class Booking extends Model
     ];
 
     /**
+     * Get all of the balance logs for the withdraws.
+     */
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'able');
+    }
+
+    /**
      * Get user of the booking
      */
     public function bookingLog()

@@ -178,7 +178,7 @@ return [
          */
         Qwikkar\Providers\AppServiceProvider::class,
         Qwikkar\Providers\AuthServiceProvider::class,
-        // Qwikkar\Providers\BroadcastServiceProvider::class,
+        Qwikkar\Providers\BroadcastServiceProvider::class,
         Qwikkar\Providers\EventServiceProvider::class,
         Qwikkar\Providers\RouteServiceProvider::class,
 
