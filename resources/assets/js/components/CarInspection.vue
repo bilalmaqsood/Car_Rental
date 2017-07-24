@@ -19,7 +19,9 @@
 
                      <div v-if="front.data.length > 0 " v-for="inspection in front.data"   :style="{'top': inspection[2], 'left': inspection[3], 'z-index': 99}" class="mydraggable  ">
                         <div id="mydragcontrols">
-                            <span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span>
+                            <span id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                            </span>
                         </div>
                     </div>
 
@@ -227,7 +229,7 @@
 
         methods: {
             logit(obj){ console.log(obj) },
-             changeMenu(view) {
+            changeMenu(view) {
                 if(this.sportPending){
                     var result = confirm("Inspection is pending, do you want to contnue");
                     if(result){
@@ -300,6 +302,14 @@
                         });
                         $('#centerLoader').hide();
                     });
+            },
+            deleteSpot(spot){
+                var result = confirm("Are you sure to delete this spot");
+                    if(result){
+                     let index = this[this.menuView].data.indexOf(spot);
+                        this[this.menuView].data.splice(index,1);
+                        this.processSpot();
+                    } else { return false; }
             },
             saveSpots(side){
 
