@@ -9,7 +9,7 @@
             </div>
             <div class="vehicle_registration">
                 <div class="registration_number">
-                    Vehicle registration number
+                    <b>Vehicle registration number</b>
                     <a href="javascript:void(0);" @click="processForm">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
@@ -22,39 +22,36 @@
                             <div class="form-group" :class="{'has-error': $v.form.registration.$error}">
                                 <input type="text" class="form-control" placeholder="registration number" v-model="form.registration" @blur="$v.form.registration.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.registration.$error">Enter valid registration number</p>
-
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.make.$error}">
                                 <input type="text" class="form-control" placeholder="vehicle make" v-model="form.make" @blur="$v.form.make.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.make.$error">Enter valid make of vehicle</p>
-
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.model.$error}">
                                 <input type="text" class="form-control" placeholder="vehicle model" v-model="form.model"  @blur="$v.form.model.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.model.$error">Enter valid model of vehicle</p>
-
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.variant.$error}">
                                 <input type="text" class="form-control" placeholder="vehicle variant" v-model="form.variant" @blur="$v.form.variant.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.variant.$error">Enter vehicle variant</p>
-
+                                <span>
+															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+															</svg>
+														</span>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.year.$error}">
                                 <input type="text" class="form-control registration_year" placeholder="registration year" v-model="form.year" @blur="$v.form.year.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.year.$error">Enter vehicle year</p>
-                                <span>
-															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-															</svg>
-														</span>
+
                             </div>
                         </li>
                         <li>
@@ -68,12 +65,6 @@
                             <div class="form-group" :class="{'has-error': $v.form.fuel.$error}">
                                 <input type="text" class="form-control" placeholder="fuel type" v-model="form.fuel"  @blur="$v.form.fuel.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.fuel.$error">Enter fuel type</p>
-
-                                <span>
-															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" class="svg-icon">
-																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#add_icon"></use>
-															</svg>
-														</span>
                             </div>
                         </li>
                         <li>
@@ -89,14 +80,14 @@
 
                             </div>
                         </li>
-                        <li>
+                        <li class="half-group">
                             <div class="form-group" :class="{'has-error': $v.form.transmission.$error}">
                                 <input type="text" class="form-control" placeholder="transmission" v-model="form.transmission" @blur="$v.form.transmission.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.transmission.$error">Enter transmission </p>
 
                             </div>
                         </li>
-                        <li>
+                        <li class="half-group">
                             <div class="form-group" :class="{'has-error': $v.form.seats.$error}">
                                 <input type="text" class="form-control" placeholder="5 seats" v-model="form.seats" @blur="$v.form.seats.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.seats.$error">Enter vehicle seats </p>
@@ -117,18 +108,20 @@
 
                             </div>
                         </li>
-                        <li>
-                            <div class="form-group" >
+                        <li class="checkbox-form">
+                            <div class="form-group">
+<label>
                                 <input type="checkbox" class="form-control" id="pickup" placeholder="yes / no if pick by owner" v-model="form.pickup" >
                                 Pickup by owner
-
-
+</label>
+<label>
+                                <input type="checkbox" class="form-control" id="delivery" placeholder="yes / no if delivery by owner" v-model="form.delivery" >
+                                 Delivery by owner
+</label>
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
-                                <input type="checkbox" class="form-control" id="delivery" placeholder="yes / no if delivery by owner" v-model="form.delivery" >
-                                 Delivery by owner
 
                             </div>
                         </li>
@@ -209,17 +202,16 @@
                             <div class="form-group discount-group" >
 
                                 <input type="text" class="form-control" placeholder="percent" v-model="percent" >
-                                <div v-if="form.discounts.length>0" v-for="discount in form.discounts"  class="label label-success discount" >
+<span @click="push()" class="add-icon-plus">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+								</span>                                
+<div v-if="form.discounts.length>0" v-for="discount in form.discounts"  class="label label-success discount" >
                                     <p>Week {{discount.week}} {{discount.percent}}</p>
                                     <i class="fa fa-remove clickable" @click="pop(discount)"></i>
                                 </div>
 
 
-                                <span @click="push()">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" class="svg-icon">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#add_icon"></use>
-									</svg>
-								</span>
+                                
                                 <div class="clearfix"></div>
                             </div>
 
@@ -281,9 +273,9 @@
                             </div>
                         </li>
                         <li>
-                            <button id="uploadImages">Upload Images</button>
+                            <button id="uploadImages" class="primary-button">Upload Images</button>
                             <input type="file"  class="hidden hiddenUpload" name="files[]" multiple="multiple" value="upload">
-                             <button id="documents">Upload documents</button>
+                             <button id="documents" class="primary-button">Upload documents</button>
                             <input type="file"  class="hidden documentsUpload" name="documents[]" multiple="multiple"></li>
                     </ul>
                 </div>

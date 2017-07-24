@@ -20,23 +20,34 @@
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
-                        <input type="text" palceholder="add description" v-model="description">
-                        <span>
+
+<div class="input-group login-input">
+                        <input type="text" palceholder="add description" v-model="description" class="form-control">
+<div class="input-group-addon">
+<span>
 									<svg  @click="saveSpots('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
                         </span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg @click="uploadImage('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
                                     <input type="file" class="hidden" id="frontUploader" name="">
                         </span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg :class="{'clickable': !sportPending}" @click="drawSpots('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
 									</svg>
                         </span>
+</div>
+</div>
+
+                        
                     </div>
 
                 </div>
@@ -48,23 +59,31 @@
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
-                        <input type="text" palceholder="add description" v-model="description">
-                        <span>
+<div class="input-group login-input">
+                        <input type="text" class="form-control" palceholder="add description" v-model="description">
+<div class="input-group-addon">                        
+<span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
 								</span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
 								</span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg @click="drawSpots('rear')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
 									</svg>
 								</span>
+</div>
                     </div>
+</div>
 
                 </div>
             </div>
@@ -75,22 +94,30 @@
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
-                        <input type="text" palceholder="add description" v-model="description">
+<div class="input-group login-input">
+                        <input type="text" palceholder="add description" v-model="description" class="form-control">
+<div class="input-group-addon"> 
                         <span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
 								</span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
 								</span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg @click="drawSpots('driver_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" clickable svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
                                     </svg>
 								</span>
+</div>
+                    </div>
                     </div>
 
                 </div>
@@ -102,24 +129,31 @@
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
-                        <input type="text" palceholder="add description" v-model="description">
+<div class="input-group login-input">
+                        <input type="text" class="form-control" palceholder="add description" v-model="description">
+<div class="input-group-addon">
                         <span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
 								</span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
 								</span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg @click="drawSpots('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" clickable svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
                                     </svg>
 								</span>
-                    </div>
-
+</div>
+                    </div> </div>
+</div>
                 </div>
             </div>
 
@@ -129,22 +163,33 @@
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
-                        <input type="text" palceholder="add description" v-model="description">
-                        <span>
+<div class="input-group login-input">
+                        <input type="text" palceholder="add description" v-model="description" class="form-control">
+<div class="input-group-addon">
+    <span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
 								</span>
-                        <span>
+</div>
+<div class="input-group-addon">
+  <span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
 								</span>
+</div>
+
+<div class="input-group-addon">
+
+                    
+                      
                         <span>
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
 									</svg>
 								</span>
+</div></div>
                     </div>
 
                 </div>

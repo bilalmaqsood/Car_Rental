@@ -76,33 +76,51 @@
             <div :class="{card_recured_text:viewAccount, card_recured:!viewAccount}">
                 <ul>
                     <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
+<div class="input-group login-input">
+<div class="input-group-addon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                         </svg>
-                        <p v-if="viewAccount">Account holder name<span v-html="account.title"></span></p>
+</div>
+ <p v-if="viewAccount">Account holder name<span v-html="account.title"></span></p>
                         <input v-else type="text" class="form-control" placeholder="Account holder name" v-model="account.title" @keyup="account.title = $event.target.value.toUpperCase()">
+</div>
                     </li>
                     <li>
+
+<div class="input-group login-input">
+<div class="input-group-addon">
+
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                         </svg>
+</div>
                         <p v-if="viewAccount">Account number<span v-html="account.number"></span></p>
                         <input v-else type="text" class="form-control" placeholder="Account number" v-model="account.number">
+</div>
                     </li>
                     <li>
+<div class="input-group login-input">
+<div class="input-group-addon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                         </svg>
+</div>
                         <p v-if="viewAccount">Sort code<span v-html="account.sortcode"></span></p>
                         <input v-else type="text" class="form-control" placeholder="Sort code" v-model="account.sortcode">
-                    </li>
+</div>      
+              </li>
                     <li>
+<div class="input-group login-input">
+<div class="input-group-addon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon" style="height:30px">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                         </svg>
+</div>
                         <p v-if="viewAccount">Billing address<span v-html="account.address"></span></p>
                         <input v-else type="text" class="form-control" placeholder="Billing address" v-model="account.address">
-                    </li>
+</div>
+  </li>
                 </ul>
             </div>
         </div>

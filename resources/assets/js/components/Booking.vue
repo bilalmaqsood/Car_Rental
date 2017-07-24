@@ -14,16 +14,16 @@
                                 <h3> {{booking.vehicle.make}} {{booking.vehicle.model}} {{booking.vehicle.variant}}</h3>
                                 <ul>
                                     <li>
-                                        <p>Year:  {{booking.vehicle.year}}</p>
-                                        <p>Mileage: {{booking.vehicle.mileage}}</p>
+                                        <p><strong>Year:</strong>  {{booking.vehicle.year}}</p>
+                                        <p><strong>Mileage:</strong> {{booking.vehicle.mileage}}</p>
                                     </li>
                                     <li>
-                                        <p>Seats: {{booking.vehicle.seats}} </p>
-                                        <p>Transmission: {{booking.vehicle.transmission}}</p>
+                                        <p><strong>Seats:</strong> {{booking.vehicle.seats}} </p>
+                                        <p><strong>Transmission:</strong> {{booking.vehicle.transmission}}</p>
                                     </li>
                                     <li>
-                                        <p>Fuel type: {{booking.vehicle.fuel}} </p>
-                                        <p>Consumption:  {{booking.vehicle.mpg}} mpg (ec.)</p>
+                                        <p><strong>Fuel type:</strong> {{booking.vehicle.fuel}} </p>
+                                        <p><strong>Consumption:</strong>  {{booking.vehicle.mpg}} mpg (ec.)</p>
                                     </li>
                                 </ul>
                                 <div class="availablity_box">
@@ -113,12 +113,12 @@
                         <div class="search_car_content">
                             <h3> {{booking.vehicle.make}} {{booking.vehicle.model}} {{booking.vehicle.variant}}</h3>
                             <ul>
-                                <li><p>Year:  {{booking.vehicle.year}}</p>
-                                    <p>Mileage: {{booking.vehicle.mileage}}</p></li>
-                                <li><p>Seats: {{booking.vehicle.seats}} </p>
-                                    <p>Transmission: {{booking.vehicle.transmission}}</p></li>
-                                <li><p>Fuel type: {{booking.vehicle.fuel}} </p>
-                                    <p>Consumption:  {{booking.vehicle.mpg}} mpg (ec.)</p></li>
+                                <li><p><strong>Year:</strong>  {{booking.vehicle.year}}</p>
+                                    <p><strong>Mileage:</strong> {{booking.vehicle.mileage}}</p></li>
+                                <li><p><strong>Seats:</strong> {{booking.vehicle.seats}} </p>
+                                    <p><strong>Transmission:</strong> {{booking.vehicle.transmission}}</p></li>
+                                <li><p><strong>Fuel type:</strong> {{booking.vehicle.fuel}} </p>
+                                    <p><strong>Consumption:</strong>  {{booking.vehicle.mpg}} mpg (ec.)</p></li>
                             </ul>
                             <div class="availablity_box">
                                 <div class="availabe">

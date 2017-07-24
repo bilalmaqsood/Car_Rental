@@ -10,16 +10,16 @@
                         <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a></h3>
                         <ul>
                             <li>
-                                <p>Year: {{i.year}} </p>
-                                <p>Mileage: {{i.mileage}}</p>
+                                <p><strong>Year:</strong> {{i.year}} </p>
+                                <p><strong>Mileage:</strong> {{i.mileage}}</p>
                             </li>
                             <li>
-                                <p>Seats: {{i.seats}}</p>
-                                <p>Transmission: {{i.transmission}}</p>
+                                <p><strong>Seats:</strong> {{i.seats}}</p>
+                                <p><strong>Transmission:</strong> {{i.transmission}}</p>
                             </li>
                             <li>
-                                <p>Fuel type: {{i.fuel}} </p>
-                                <p>Consumption: {{i.mpg_eco}} mpg (ec.)</p>
+                                <p><strong>Fuel type:</strong> {{i.fuel}} </p>
+                                <p><strong>Consumption:</strong> {{i.mpg_eco}} mpg (ec.)</p>
                             </li>
                         </ul>
                         <div class="availablity_box">
