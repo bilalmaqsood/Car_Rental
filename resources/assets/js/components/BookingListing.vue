@@ -34,6 +34,7 @@
             </transition>
 
             <transition name="flip" mode="out-in">
+                <car-inspection v-if="sideView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
                 <extend-cancel-booking v-if="sideView=='extend'" key="booking-extend" :user="storage"></extend-cancel-booking>
                 <booking-documents v-if="sideView=='documents'" key="booking-documents" :documents="documents"></booking-documents>
                 <chat-booking v-if="sideView=='chat'" key="booking-chat" :viewHeight="viewHeight"></chat-booking>
