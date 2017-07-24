@@ -327,8 +327,7 @@ h3 {
 
 .top_location ul li:nth-child(2n) {
     background: rgba(255, 255, 255, 0.78);
-    height: 90px;
-}
+ }
 
 .top_location ul li:nth-child(3n).secodery_btn {
     background: #4a4a4a;
@@ -3973,14 +3972,14 @@ button:disabled {
     }
 }
 
-.login-input input .form-control {
+.login-input input.form-control {
     background: none;
     border-radius: 0;
     border: none;
     box-shadow: none;
 }
 
-.login-input span.input-group-addon {
+.login-input .input-group-addon {
     background: none;
     border-radius: 0;
     border: none;
