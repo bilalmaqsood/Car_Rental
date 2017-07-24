@@ -31,7 +31,7 @@ class MessageController extends Controller
      */
     public function getMessages($id)
     {
-        return api_response(Booking::findOrFail($id)->messages()->orderBy('updated_at')->with('receiver', 'sender')->paginate(10));
+        return api_response(Booking::findOrFail($id)->messages()->orderBy('updated_at', 'desc')->with('receiver', 'sender')->paginate(10));
     }
 
     /**
@@ -85,7 +85,7 @@ class MessageController extends Controller
 
         $message->save();
 
-//        broadcast(new MessagePosted($message));
+        broadcast(new MessagePosted($message, $message->receiver, $message->sender))->toOthers();
 
         return api_response($message);
     }

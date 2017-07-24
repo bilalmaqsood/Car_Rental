@@ -34,28 +34,26 @@
         },
 
         mounted() {
-            $('#sideLoader').show();
-            axios.get('/api/message/' + this.bookingId).then(r => {
-                this.messages = r.data.success;
-                $('#sideLoader').hide();
-            });
-
-            Echo.join('chatroom')
-                .here((users) => {
-                    console.log(users);
-                })
-                .joining((user) => {
-                    console.log(user);
-                })
-                .leaving((user) => {
-                    console.log(user);
-                })
-                .listen('MessagePosted', (e) => {
-                    console.log(e);
-                });
+            this.prepareComponent();
         },
 
         methods: {
+            prepareComponent() {
+                $('#sideLoader').show();
+                axios.get('/api/message/' + this.bookingId).then(r => {
+                    this.messages = r.data.success;
+                    $('#sideLoader').hide();
+                });
+
+                window.Echo
+                    .join('chatroom')
+                    .listen('MessagePosted', (e) => {
+                        e.message.sender = e.sender;
+                        e.message.receiver = e.receiver;
+                        this.messages.data.push(e.message);
+                    });
+            },
+
             isReceiver(m) {
                 return this.user.state.auth.email === m.receiver.email;
             },

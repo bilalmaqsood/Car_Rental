@@ -87,8 +87,9 @@ window.Pusher = require('pusher-js');
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: 'bf2d324184dd601f0dac',
-    cluster: 'ap2'
+    key: '446c210a7bb677d95919',
+    cluster: 'eu',
+    namespace: 'Qwikkar.Events'
 });
 
 /**

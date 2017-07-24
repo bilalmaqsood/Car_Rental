@@ -20,5 +20,5 @@ Broadcast::channel('chatroom', function ($user) {
 });
 
 Broadcast::channel('booking.{id}', function ($user, $id) {
-    return true;
+    return $user;
 });
