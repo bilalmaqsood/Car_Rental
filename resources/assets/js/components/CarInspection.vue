@@ -25,27 +25,38 @@
                         </div>
                     </div>
 
-                    <img src="images/front.png" alt="" style="margin: 0px;">
+                    <img src="/images/front.png" alt="" style="margin: 0px;">
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
-                        <input type="text" palceholder="add description" v-model="description">
-                        <span>
+
+<div class="input-group login-input">
+                        <input type="text" palceholder="add description" v-model="description" class="form-control">
+<div class="input-group-addon">
+<span>
 									<svg  @click="saveSpots('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
                         </span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg @click="uploadImage('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
                                     <input type="file" class="hidden" id="frontUploader" name="">
                         </span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg :class="{'clickable': !sportPending}" @click="drawSpots('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
 									</svg>
                         </span>
+</div>
+</div>
+
+
                     </div>
 
                 </div>
@@ -58,28 +69,36 @@
                             <span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span>
                         </div>
                     </div>
-                    <img src="images/rear.png" alt="">
+                    <img src="/images/rear.png" alt="">
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
-                        <input type="text" palceholder="add description" v-model="description">
-                        <span>
+<div class="input-group login-input">
+                        <input type="text" class="form-control" palceholder="add description" v-model="description">
+<div class="input-group-addon">
+<span>
 									<svg  @click="saveSpots('rear')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
                         </span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg @click="uploadImage('rear')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
                                     <input type="file" class="hidden" id="frontUploader" name="">
                         </span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg :class="{'clickable': !sportPending}" @click="drawSpots('rear')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
 									</svg>
                         </span>
+</div>
                     </div>
+</div>
 
                 </div>
             </div>
@@ -91,27 +110,35 @@
                             <span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span>
                         </div>
                     </div>
-                    <img src="images/driver_side.png" alt="">
+                    <img src="/images/driver_side.png" alt="">
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
-                        <input type="text" palceholder="add description" v-model="description">
+<div class="input-group login-input">
+                        <input type="text" palceholder="add description" v-model="description" class="form-control">
+<div class="input-group-addon">
                         <span>
 									<svg  @click="saveSpots('driver_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
                         </span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg @click="uploadImage('driver_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
                                     <input type="file" class="hidden" id="frontUploader" name="">
                         </span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg :class="{'clickable': !sportPending}" @click="drawSpots('driver_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
 									</svg>
                         </span>
+</div>
+                    </div>
                     </div>
 
                 </div>
@@ -124,29 +151,36 @@
                             <span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span>
                         </div>
                     </div>
-                    <img src="images/off_side.png" alt="">
+                    <img src="/images/off_side.png" alt="">
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
-                        <input type="text" palceholder="add description" v-model="description">
+<div class="input-group login-input">
+                        <input type="text" class="form-control" palceholder="add description" v-model="description">
+<div class="input-group-addon">
                         <span>
 									<svg  @click="saveSpots('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
                         </span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg @click="uploadImage('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
                                     <input type="file" class="hidden" id="frontUploader" name="">
                         </span>
+</div>
+<div class="input-group-addon">
                         <span>
 									<svg :class="{'clickable': !sportPending}" @click="drawSpots('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
 									</svg>
                         </span>
-                    </div>
-
+</div>
+                    </div> </div>
+</div>
                 </div>
             </div>
 
@@ -157,27 +191,38 @@
                             <span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span>
                         </div>
                     </div>
-                    <img src="images/front.png" alt="">
+                    <img src="/images/front.png" alt="">
                 </div>
                 <div class="front_back_size">
                     <div class="add_description_icon">
-                        <input type="text" palceholder="add description" v-model="description">
-                        <span>
+<div class="input-group login-input">
+                        <input type="text" palceholder="add description" v-model="description" class="form-control">
+<div class="input-group-addon">
+    <span>
 									<svg  @click="saveSpots('notes')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
 									</svg>
                         </span>
-                        <span>
+</div>
+<div class="input-group-addon">
+  <span>
 									<svg @click="uploadImage('notes')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
                                     <input type="file" class="hidden" id="frontUploader" name="">
                         </span>
+</div>
+
+<div class="input-group-addon">
+
+
+
                         <span>
 									<svg :class="{'clickable': !sportPending}" @click="drawSpots('notes')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
 									</svg>
                         </span>
+</div></div>
                     </div>
 
                 </div>
@@ -186,7 +231,7 @@
             <div class="hidden spots_area">
                 <p>Scratch 1.2 inches - front door</p>
                 <p>Bump 0.2 inches rear bumper</p>
-                <img src="images/front.png" alt="" />
+                <img src="/images/front.png" alt="" />
             </div>
         </div>
 

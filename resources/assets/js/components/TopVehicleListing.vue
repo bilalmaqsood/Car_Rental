@@ -38,16 +38,16 @@
                             <h3>{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
                             <ul>
                                 <li>
-                                    <p>Year: {{vehicle.year}} </p>
-                                    <p>Mileage: {{vehicle.mileage}}</p>
+                                    <p><strong>Year:</strong> {{vehicle.year}} </p>
+                                    <p><strong>Mileage:</strong> {{vehicle.mileage}}</p>
                                 </li>
                                 <li>
-                                    <p>Seats: {{vehicle.seats}}</p>
-                                    <p>Transmission: {{vehicle.transmission}}</p>
+                                    <p><strong>Seats:</strong> {{vehicle.seats}}</p>
+                                    <p><strong>Transmission:</strong> {{vehicle.transmission}}</p>
                                 </li>
                                 <li>
-                                    <p>Fuel type: {{vehicle.fuel}} </p>
-                                    <p>Consumption: {{vehicle.mpg_eco}} mpg (ec.)</p>
+                                    <p><strong>Fuel type:</strong> {{vehicle.fuel}} </p>
+                                    <p><strong>Consumption:</strong> {{vehicle.mpg_eco}} mpg (ec.)</p>
                                 </li>
                             </ul>
                             <div class="availablity_box">

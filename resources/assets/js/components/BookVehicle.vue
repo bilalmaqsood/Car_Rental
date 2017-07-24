@@ -60,39 +60,55 @@
                     <ul>
                         <li>
                             <div class="form-group">
+<div class="input-group login-input">
+<div class="input-group-addon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                 </svg>
+</div>
                                 <input @keyup="card.name = $event.target.value.toUpperCase()" @blur="$v.card.name.$touch()" v-model.trim="card.name" type="text" class="form-control" placeholder="name on card" name="name">
+</div>
                                 <span class="help-block text-sm" v-if="$v.card.name.$error">Enter valid name</span>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
+<div class="input-group login-input">
+<div class="input-group-addon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                                 </svg>
+</div>
                                 <input @blur="$v.card.number.$touch()" v-model.trim="card.number" type="text" class="form-control cc-num" placeholder="card number" name="number">
+</div>
                                 <span class="help-block text-sm" v-if="$v.card.number.$error">Enter valid card number</span>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
+<div class="input-group login-input">
+<div class="input-group-addon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
+</div>
                                 <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="card expira/on date" name="expiry">
+</div>
                                 <span class="help-block text-sm" v-if="$v.card.expiry.$error">Enter valid expiry date</span>
                             </div>
                         </li>
                         <li>
                             <div class="form-group">
+<div class="input-group login-input">
+<div class="input-group-addon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                                 </svg>
+</div>
                                 <input @blur="$v.card.cvc.$touch()" v-model.trim="card.cvc" type="password" class="form-control cc-cvc" placeholder="cvc" name="cvc">
+</div>
                                 <span class="help-block text-sm" v-if="$v.card.cvc.$error">Enter valid cvc </span>
                             </div>
                         </li>

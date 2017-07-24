@@ -327,7 +327,6 @@ h3 {
 
 .top_location ul li:nth-child(2n) {
     background: rgba(255, 255, 255, 0.78);
-    height: 90px;
 }
 
 .top_location ul li:nth-child(3n).secodery_btn {
@@ -402,7 +401,6 @@ h3 {
     display: inline-block;
     margin: .5%;
     text-align: left;
-    float: left;
     padding: 3px 20px;
 }
 
@@ -631,8 +629,8 @@ h3 {
     background: #525252;
     color: #87af1e;
     width: 100%;
-    padding: 22px;
-    font-size: 22px;
+    padding: 15px;
+    font-size: 18px;
     border: 1px solid #525252;
     margin-top: 15px;
 }
@@ -906,7 +904,7 @@ h3 {
     display: inline-block;
     width: 50%;
     float: left;
-    padding: 20px 45px 15px;
+    padding: 15px;
     box-shadow: 1px 1px 2px rgb(10, 10, 10);
 }
 
@@ -918,18 +916,6 @@ h3 {
 .filter_hied_btn ul li .form-group {
     margin-bottom: 0;
 }
-
-.filter_hied_btn ul li .form-control {
-    border: none;
-    width: 70%;
-    display: inline-block;
-    background: inherit;
-    box-shadow: none;
-    font-size: 20px;
-    position: relative;
-    top: -5px;
-}
-
 .search_map #search_map {
     width: 50% !important;
     height: 100vh !important;
@@ -1012,6 +998,7 @@ h3 {
 .search_car_content ul {
     padding: 0 0 0 5px;
     margin: 0;
+    min-height: 103px;
     display: block;
     width: 100%;
 }
@@ -1294,10 +1281,11 @@ h3 {
     background: #525252;
     color: #87af1e;
     width: 100%;
-    font-size: 22px;
+    font-weight: 700;
+    font-size: 17px;
     border: 1px solid #525252;
+    padding: 19px 5px;
     text-align: center;
-    height: 60px;
     line-height: 1rem;
 }
 
@@ -1313,11 +1301,17 @@ h3 {
 
 .pickup_loction_btn ul li button .svg-icon {
     fill: #87af1e;
+    width: 22px;
+    height: 22px;
 }
-
+.has-error .form-control:focus {
+    box-shadow: none;
+}
+.pickup_loction_btn ul li button .svg-icon, .pickup_loction_btn ul li button span {
+    display: inline-block;
+    vertical-align: middle;
+}
 .pickup_loction_btn ul li button span {
-    position: relative;
-    top: -14px;
     margin-left: 10px;
 }
 
@@ -1416,18 +1410,22 @@ h3 {
     width: 100%;
     background: #4a4a4a;
     color: #87af1e;
-    height: 80px;
+    padding: 15px;
+    padding: 17px;
 }
 
 .car_cost_tabel .secodery_btn .svg-icon {
     fill: #87af1e;
-    width: 40px;
+    width: 22px;
+    height: 22px;
 }
 
 .car_cost_tabel .secodery_btn span {
-    position: relative;
-    top: -7px;
     margin-left: 10px;
+}
+.car_cost_tabel .secodery_btn span, .car_cost_tabel .secodery_btn .svg-icon {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .fill_card {
@@ -1453,17 +1451,6 @@ h3 {
     box-shadow: 1px 1px 3px #000;
     background: rgb(255, 255, 255);
 }
-
-.card_recured ul li .form-control {
-    display: inline-block;
-    width: 94%;
-    box-shadow: none;
-    background-color: inherit;
-    border: none;
-    position: relative;
-    top: -6px;
-}
-
 .card_recured ul li .form-group {
     margin-bottom: 0;
 }
@@ -1486,7 +1473,11 @@ h3 {
 
 .payment_wrapper .card_recured ul li:last-child .svg-icon {
     fill: #333;
-    float: none;
+    float: left;
+    margin-right: 15px;
+}
+.card_recured .primary-button {
+    margin-bottom: 10px;
 }
 
 .card_recured ul li:last-child p {
@@ -1502,13 +1493,6 @@ h3 {
     font-weight: bold;
     color: #87af1e;
 }
-
-.card_recured .form-group .svg-icon {
-    width: 24px;
-    fill: #333;
-    height: 24px;
-}
-
 .main_profile_container {
     width: 50%;
     position: absolute;
@@ -1593,7 +1577,7 @@ h3 {
 }
 
 .profile_content {
-    width: 50%;
+    width: 100%;
     float: left;
     padding-left: 15px;
 }
@@ -2054,35 +2038,21 @@ h3 {
 .all-chat-messages:after {
     clear: both;
 }
-
 .chat_btn_wrapper {
     width: 100%;
     position: absolute;
     bottom: 0;
 }
-
 .chat_btn_wrapper .form-control {
-    width: 98%;
     position: relative;
-    height: 100px;
     border: none;
-    padding: 3rem 6rem 3rem 2rem;
+    color: #333;
     font-size: 15px;
-    margin: 0 auto 0.6rem;
 }
-
 .chat_btn_wrapper button {
-    position: absolute;
-    right: 15px;
-    top: 32px;
     background: #fff;
     border: none;
-
-    svg:hover {
-        fill: #000;
-    }
 }
-
 .payment_wrapper {
     float: left;
     width: 100%;
@@ -2113,7 +2083,7 @@ h3 {
 }
 
 .payment_wrapper .card_recured {;
-    margin-bottom: 0;
+                                margin-bottom: 0;
 }
 
 .setting_wrapper {
@@ -2181,6 +2151,9 @@ h3 {
 
 .vehicles_container .booking_tab_content {
     width: 50%;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 .vehicles_container .booking_tab ul li {
@@ -2211,14 +2184,6 @@ h3 {
     right: 0;
 }
 
-.vehicle_registration .card_recured ul li .form-group {
-    position: relative;
-}
-
-.vehicle_registration .card_recured ul li .form-control {
-    top: 5px;
-}
-
 .vehicle_registration .form-group .svg-icon {
     width: 26px;
     fill: #98b927;
@@ -2228,7 +2193,6 @@ h3 {
 
 .vehicle_registration .card_recured ul li {
     padding: 0;
-    min-height: 50px;
     border-bottom: 1px solid #f1f1f1;
     float: left;
     width: 100%;
@@ -2266,21 +2230,11 @@ h3 {
     text-align: center;
 }
 
-.vehicle_registration .card_recured ul li:nth-child(11) {
+.vehicle_registration .card_recured ul li.half-group {
     width: 50%;
-    float: left;
     border-left: 1px solid #f1f1f1;
     text-align: center;
 }
-
-.vehicle_registration .card_recured ul li:nth-child(10) .form-control {
-    text-align: center;
-}
-
-.vehicle_registration .card_recured ul li:nth-child(11) .form-control {
-    text-align: center;
-}
-
 .vehicle_registration .card_recured ul li:last-child {
     background: #fff;
 }
@@ -2452,11 +2406,14 @@ h3 {
 
 .extend_booking .extend_booking_content {
     list-style-type: none;
-    font-size: 16px;
-    line-height: 19px;
+    font-size: 15px;
+    font-weight: 700; 
     font-weight: normal;
-    padding: 10px 25px;
     width: 100%;
+    padding: 10px;
+    background: #98b927;
+    text-align: center;
+    color: #fff;
 
     &.btn-send {
         background: #525252;
@@ -2469,19 +2426,22 @@ h3 {
         }
     }
 
-    &:nth-child(1),
-    &:nth-child(4) {
-        box-shadow: 1px 1px 3px #000;
-        font-size: 12px;
-        line-height: 3rem;
-    }
 
     .form-control {
         border: none;
         border-radius: 0;
     }
 }
-
+.book_now_calender p{
+    margin: 0 auto;
+}
+.extend_booking .extend_booking_content:nth-child(3n), #extend_cancel .extend_booking .extend_booking_content:nth-child(2n), .extend_booking_content.cursor-pointer.btn-send {
+    cursor: pointer;
+    padding: 10px;
+}
+.extend_booking .extend_booking_content:nth-child(2n) {
+    padding: 0;
+}
 .book_now_calender ul li {
     padding: 10px 0;
 }
@@ -2923,26 +2883,23 @@ button:disabled {
     position: relative;
     top: -13px;
 }
-
 .card_recured .text-sm {
-    margin: -5px auto !important;
+    margin: 0 auto;
 }
-
 .vehicle_registration .text-sm {
     text-align: left;
-    margin-left: 5% !important;
+    padding-left: 12px;
     font-weight: bold;
 }
-
 .discount-group {
     position: relative;
 }
-
 .discount-group .discount {
     position: relative;
     text-align: left;
     margin-left: 5px;
     margin-top: 10px;
+    margin-bottom: 10px;
     float: left;
 }
 
@@ -2961,1031 +2918,40 @@ button:disabled {
     line-height: 8px;
     font-weight: bold;
     padding: 5px;
+    margin: 0 auto;
 }
-
 .contract-area {
-    min-width: 660px;
-    min-height: 500px;
-    white-space: pre;
-}
-
-/*@media all and (max-width: 1920px) and (min-width: 1600px) {
-    .slide_wrapper {
-        min-height: 850px;
-    }
-    .top_location {
-        padding: 0 3%;
-    }
-    .top_location ul li {
-        width: 42.6%;
-    }
-    .availabe_item_price span {
-        font-size: 15px;
-    }
-    .availabe p {
-        font-size: 20px;
-    }
-    .availabe_item_price h3 {
-        font-size: 40px;
-    }
-    .main_vehicles ul li p {
-        font-size: 20px;
-    }
-    .main_vehicles ul li {
-        margin-top: 15px;
-    }
-    .navbar-default .navbar-nav > li > a {
-        width: 130px;
-        height: 130px;
-        padding: 30px 5px;
-        font-size: 20px;
-    }
-    .nav_wrapper .navbar-default .navbar-nav > li:nth-child(2) a {
-        padding: 36px 5px !important;
-    }
-    .form-group .svg-icon {
-        width: 30px;
-        fill: #333;
-    }
-    .top_location ul li:first-child {
-        height: 130px;
-    }
-    .top_location ul li:nth-child(2n) {
-        height: 130px;
-    }
-    .top_location ul li {
-        padding: 41px;
-        box-shadow: 1px 1px 3px #000;
-    }
-    .top_location ul li:first-child .form-control {
-        margin-top: -24px;
-    }
-    .top_location ul li:nth-child(3n) {
-        width: 130px;
-    }
-    .secodery_btn {
-        width: 130px;
-        height: 130px;
-    }
-    .top_location ul li:nth-child(4n) {
-        width: 130px;
-    }
-    .primary_btn {
-        width: 130px;
-        height: 130px;
-    }
-    .vehicles_tabs .nav-tabs {
-        width: 396px;
-    }
-    .vehicles_tabs .nav > li > a {
-        width: 130px;
-        height: 130px;
-        padding: 30px 5px;
-    }
-    .vehicles_tabs .nav > li:nth-child(2) a {
-        padding: 42px 5px !important;
-    }
-    .vehicles_tabs h2 {
-        line-height: 120px;
-    }
-    .about_content_section {
-        padding: 70px 40px 170px;
-        font-size: 22px;
-        line-height: 30px;
-    }
-    .about_section_wrapper h2 {
-        line-height: 120px;
-    }
-    .get_intuch_wrapper .nav-tabs {
-        width: 396px;
-    }
-    .get_intuch_wrapper .nav > li > a {
-        width: 130px;
-        height: 130px;
-        padding: 37px 5px;
-        font-size: 17px;
-    }
-    .getin_touch_section .nav > li:nth-child(2) a {
-        padding: 33px 5px;
-    }
-    .getin_touch_section .contact_form .form-group .svg-icon {
-        width: 38px;
-        top: 13px;
-    }
-    .svg-icon {
-        width: 36px;
-    }
-    .getin_touch_section {
-        margin: -130px 10%;
-    }
-    .footer_wrapper {
-        padding: 135px 10% 30px;
-    }
-    .submit {
-        padding: 30px;
-        font-size: 26px;
-    }
-    .contact_form textarea {
-        height: 250px;
-        padding-top: 10px;
-    }
-    .top_location .form-control {
-        margin-top: -22px;
-    }
-    .button_box {
-        width: 260px;
-    }
-    .login-section {
-        height: 130px;
-        width: 49%;
-    }
-    .recover_password {
-        height: 130px;
-        width: 49%;
-    }
-    .forget_password {
-        height: 130px;
-        width: 49%;
-    }
-    .login_form {
-        margin-top: 46px;
-    }
-    .login_form p {
-        padding-right: 117px;
-    }
-    .uber_account {
-        height: 130px;
-        width: 35%;
-    }
-    .uber_account .form-group {
-        top: 5px;
-    }
-    .search_container {
-        padding-top: 130px;
-        width: 50%;
-    }
-    .search_car_content .availablity_box {
-        margin-top: 21px;
-    }
-    .search_car_content .availabe_item_price h3 {
-        font-size: 30px;
-    }
-    .search_car_content .availabe {
-        margin-top: 7px;
-    }
-    .search_car_content h3 {
-        font-size: 25px;
-    }
-    .past-bookings .search_car_img,
-    .booking_container .search_car.past-bookings {
-        min-height: 25vh;
-    }
-    .past-bookings .search_car_img {
-        min-height: 24.8vh;
-    }
-    .search_car_content {
-        width: 56%;
-    }
-    .search_car_img {
-        width: 44%;
-        min-height: 189px;
-    }
-    .search_car_content .search-btn-container {
-        width: 56%;
-    }
-    .search_car_content ul li {
-        margin-top: 5px;
-    }
-    .search_car_content .pickup_loction_btn ul li {
-        margin-top: 0;
-    }
-    .search_car_content .availabe p {
-        font-size: 16px;
-    }
-    .search_filter {
-        left: 54%;
-    }
-    .filter_hied_btn {
-        width: 46%;
-        top: 130px;
-    }
-    .contact_form .form-group {
-        padding: 12px 30px;
-    }
-    .getin_touch_section .contact_form .form-group:nth-child(3) {
-        padding-left: 40px;
-    }
-    .contact_form .form-control {
-        height: 65px;
-    }
-    .search_filter .primary_btn {
-        margin-top: 30px;
-    }
-    .navbar-brand {
-        margin-top: 30px;
-    }
-    .pickup_loction ul li {
-        padding: 25px 18px;
-    }
-    .availablity_detail h3 {
-        font-size: 28px;
-    }
-    .car_detail_thumb {
-        width: 16.5%;
-    }
-    .car_detail_thumb img {
-        min-height: 77px;
-    }
-    .car_detail_container {
-        width: 83.5%;
-    }
-    .search_car .past_booking_car {
-        min-height: 270px;
-    }
-    .vehicles_container .car_detail_container {
-        padding-top: 130px;
-    }
-    .booking_tab_content .active {
-        padding-top: 130px;
-    }
-    .booking_tab_content .table-condensed .active {
-        padding: 5px;
-    }
-    .booking_tab_content .active .nav-tabs .active {
-        padding-top: 0;
-    }
-    .card_recured ul li {
-        padding: 20px 20px 7px;
-    }
-}
-
-@media screen and (max-width: 1880px) {
-    .top_location ul li {
-        width: 42%;
-    }
-    .login-section {
-        width: 52%;
-    }
-    .recover_password {
-        width: 52%;
-    }
-    .uber_account {
-        width: 36%;
-    }
-}
-
-@media screen and (max-width: 1760px) {
-    .top_location ul li {
-        width: 41%;
-    }
-    .login-section {
-        width: 54%;
-    }
-    .recover_password {
-        width: 54%;
-    }
-    .uber_account {
-        width: 40%;
-        clear: both;
-    }
-}
-
-@media screen and (max-width: 1700px) {
-    .login-section {
-        width: 58%;
-    }
-    .recover_password {
-        width: 58%;
-    }
-}
-
-@media screen and (max-width: 1600px) {
-    .top_location ul li {
-        width: 39%;
-    }
-    .login-section {
-        width: 60%;
-    }
-    .recover_password {
-        width: 60%;
-    }
-}
-
-@media screen and (max-width: 1370px) {
-    .login-section {
-        width: 62%;
-    }
-    .recover_password {
-        width: 62%;
-    }
-}
-*/
-
-@media screen and (max-width: 1260px) {
-    .top_location ul li {
-        width: 38%;
-    }
-    .login-section {
-        width: 71%;
-    }
-    .recover_password {
-        width: 71%;
-    }
-    .login_form p {
-        padding-right: 10px;
-    }
-}
-
-@media screen and (max-width: 1199px) {
-    .top_location {
-        padding: 0 5%;
-    }
-    .main_vehicles h3 {
-        font-size: 30px;
-    }
-    .login-section {
-        width: 75%;
-    }
-    .recover_password {
-        width: 75%;
-    }
-    .login_form {
-        width: 67%;
-    }
-    .uber_account {
-        width: 451px;
-    }
-    .uber_account .form-group {
-        width: 322px;
-    }
-    .profile_content p {
-        font-size: 11px;
-    }
-    .pickup_loction_btn ul li button {
-        font-size: 17px;
-        height: 70px;
-    }
-    #car_inspection .nav > li > a {
-        font-size: 13px;
-    }
-    .card_recured ul li .form-control {
-        width: 92%;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .top_location ul li {
-        width: 37%;
-    }
-}
-
-@media screen and (max-width: 992px) {
-    .top_location {
-        padding: 10px;
-    }
-    .top_location ul li {
-        width: 38.3%;
-    }
-    .main_vehicles {
-        width: 48%;
-    }
-    .nav_wrapper .navbar-nav > li i {
-        font-size: 32px;
-    }
-    .vehicles_tabs .nav > li > a {
-        width: 96px;
-        height: 96px;
-    }
-    .vehicles_tabs .nav-tabs {
-        width: 295px;
-        bottom: -4px;
-    }
-    .vehicles_tabs .nav > li > a {
-        width: 96px;
-        height: 96px;
-        padding: 14px 2px;
-    }
-    .vehicles_tabs .nav > li:nth-child(2) a {
-        padding: 26px 5px !important;
-    }
-    .vehicles_tabs h2 {
-        border-left: 80px solid #525252;
-        line-height: 80px;
-    }
-    .about_section_wrapper h2 {
-        border-left: 80px solid #525252;
-        line-height: 80px;
-    }
-    .get_intuch_wrapper .nav > li > a {
-        width: 96px;
-        height: 96px;
-        padding: 14px 2px;
-    }
-    .slide_wrapper {
-        min-height: 400px;
-    }
-    .get_intuch_wrapper .nav > li > a {
-        padding: 22px 2px;
-    }
-    .getin_touch_section .nav > li:nth-child(2) a {
-        padding: 19px 5px;
-    }
-    .contact_form textarea {
-        height: 120px;
-        width: 94%;
-    }
-    .getin_touch_section .contact_form .form-group:nth-child(4) {
-        margin-bottom: 4px;
-    }
-    .getin_touch_section {
-        width: 94%;
-        margin: -100px 3%;
-    }
-    .login-section {
-        width: 94%;
-        height: 96px;
-    }
-    .recover_password {
-        width: 94%;
-        height: 96px;
-    }
-    .button_box {
-        display: inline-block;
-        width: 192px;
-    }
-    .button_box .primary_btn {
-        width: 96px;
-        height: 96px;
-    }
-    .button_box .secodery_btn {
-        width: 96px;
-        height: 96px;
-    }
-    .login_form {
-        margin-top: 28px;
-    }
-    .filter_hied_btn {
-        width: 80%;
-    }
-    .search_container {
-        width: 50%;
-    }
-    .search_filter {
-        left: 20%;
-    }
-    .main_profile_container {
-        width: 80%;
-    }
-    .main_booking_container {
-        width: 80%;
-    }
-    .main_booking_container .booking_container {
-        width: 100%;
-    }
-    .booking_tab_content {
-        width: 100%;
-        position: static;
-    }
-    .booking_tab_content .active {
-        padding-top: 5px;
-    }
-    .vehicles_container {
-        width: 80%;
-    }
-    .vehicles_container .car_detail_container {
-        width: 100%;
-    }
-    .vehicles_container .booking_tab_content {
-        width: 100%;
-    }
-}
-
-@media screen and (max-width: 970px) {
-    .top_location ul li {
-        width: 38%;
-    }
-    .search_filter {
-        left: 20%;
-    }
-    .search_container {
-        width: 50%;
-    }
-}
-
-@media screen and (max-width: 948px) {
-    .top_location ul li {
-        width: 37%;
-    }
-}
-
-@media screen and (max-width: 870px) {
-    .top_location ul li {
-        width: 36%;
-    }
-}
-
-@media screen and (max-width: 815px) {
-    .top_location ul li {
-        width: 35%;
-    }
-    .card_recured ul li .form-control {
-        width: 93%;
-    }
-}
-
-@media screen and (max-width: 767px) {
-    .contact_form .form-control {
-        display: inline-block;
-    }
-    .contact_form .form-group {
-        float: left;
-    }
-    .getin_touch_section .contact_form .form-group:nth-child(3) {
-        padding-top: 5px;
-    }
-    .main_vehicles {
-        width: 340px;
-        display: block;
-        float: none;
-        margin: 15px auto 0;
-    }
-    .availablity_box {
-        margin-top: 15px;
-        margin-bottom: 30px;
-    }
-    .customize_nav {
-        float: right;
-    }
-    .customize_nav .navbar-nav {
-        margin: 0;
-    }
-    .customize_nav .nav > li {
-        position: relative;
-        display: inline-block;
-    }
-    .vehicles_tabs h2 {
-        border: none;
-    }
-    .about_section_wrapper h2 {
-        border: none;
-        font-size: 30px;
-        line-height: 45px;
-    }
-    .top_location ul li {
-        width: 100%;
-        position: relative;
-        margin-top: 1px;
-    }
-    .top_location {
-        padding: 0;
-    }
-    .top_location ul li {
-        padding: 17px 30px;
-    }
-    .top_location ul li:first-child {
-        height: 80px;
-    }
-    .top_location ul li:nth-child(2n) {
-        height: 80px;
-    }
-    .secodery_btn {
-        width: 80px;
-        height: 80px;
-    }
-    .top_location ul li:nth-child(3n) {
-        width: 80px;
-        padding: 0;
-        float: right;
-        position: relative;
-        top: -81px;
-        right: 1px;
-    }
-    .primary_btn {
-        width: 81px;
-        height: 80px;
-    }
-    .top_location ul li:nth-child(4n) {
-        width: 80px;
-        padding: 0;
-        float: right;
-        position: relative;
-        top: -162px;
-        right: -78px;
-    }
-    .top_location .form-control {
-        width: 80%;
-        display: inline-block;
-    }
-    .form-group {
-        margin-bottom: 0;
-        margin-top: 10px;
-    }
-    .top_location .form-control {
-        top: -5px;
-        position: relative;
-    }
-    .top_location ul li:first-child .form-control {
-    }
-    .top_location {
-        bottom: -160px;
-    }
-    .vehicles_tabs {
-        margin-top: 92px;
-    }
-    .footer_wrapper {
-        text-align: center;
-    }
-    .login-section {
-        width: 94%;
-        height: auto;
-    }
-    .recover_password {
-        width: 94%;
-        height: auto;
-    }
-    .button_box {
-        display: inline-block;
-        width: 64px;
-        right: 0;
-        position: absolute;
-    }
-    .button_box .secodery_btn {
-        width: 64px;
-        height: 64px;
-    }
-    .button_box .primary_btn {
-        width: 64px;
-        height: 64px;
-    }
-    .login_form {
-        margin-top: 0;
-        width: 96%;
-    }
-    .form-group {
-        margin-top: 20px;
-    }
-    .login_form .form-group .form-control {
-        display: inline-block;
-        width: 80%;
-    }
-    .login_form p {
-        text-align: left;
-        margin-left: 27px;
-    }
-    .uber_account {
-        width: 417px;
-        height: 80px;
-    }
-    .uber_account .form-group {
-        width: 322px;
-        float: left;
-        top: 7px;
-        margin-top: 0;
-    }
-    .search_car_content .availablity_box {
-        margin-bottom: 0;
-    }
-    .search_car_img img {
-        display: block;
-        width: 100%;
-    }
-    .search_car_img {
-        width: 100%;
-        background: none !important;
-    }
-    .search_car_content {
-        width: 100%;
-    }
-    .search_car_content ul li p {
-        font-size: 13px;
-    }
-    .contact_form textarea {
-        width: 90%;
-    }
-    .nav_wrapper_inner_pages .navbar-default {
-        padding-right: 6px;
-    }
-    .search_container {
-        padding-top: 50px;
-    }
-    .filter_hied_btn ul li .form-group {
-        margin-top: 0;
-    }
-    .availablity_detail ul li:first-child p:nth-child(3) {
-        clear: both;
-    }
-    .availablity_detail {
-        width: 100%;
-    }
-    .car_detail {
-        position: relative;
-    }
-    .availablity_price {
-        width: 30%;
-        margin-top: 0;
-        position: absolute;
-        right: 15px;
-        bottom: 12px;
-    }
-    .search_map #search_map {
-        displaY: none;
-    }
-    .search_container {
-        width: 100%;
-    }
-    .filter_hied_btn {
-        width: 100%;
-    }
-    .pickup_loction .secodery_btn {
-        height: 90px;
-    }
-    .pickup_loction ul {
-        padding-right: 80px;
-    }
-    .pickup_loction_btn ul li button {
-        height: 80px;
-    }
-    .card_recured ul li .form-group {
-        margin-top: 0;
-    }
-    .navbar-brand {
-        height: 38px;
-        width: 36px;
-        margin-top: 8px;
-    }
-    .navbar-header {
-        padding-left: 0;
-    }
-    .main_profile_container {
-        width: 100%;
-    }
-    .img_box {
-        background: none;
-        width: 100%;
-    }
-    .img_box img {
-        display: block;
-    }
-    .profile_content {
-        width: 100%;
-    }
-    .navbar-default .navbar-nav > li > a {
-        width: 60px;
-        height: 50px;
-        padding: 4px 0;
-        font-size: 10px;
-    }
-    .nav > li .svg-icon {
-        width: 20px;
-        height: 20px;
-    }
-    .update_profile p {
-        font-size: 12px;
-    }
-    .main_booking_container {
-        width: 100%;
-    }
-    .past_booking_car {
-        min-height: auto;
-    }
-    #car_inspection .nav > li > a {
-        font-size: 12px;
-    }
-    .vehicles_container {
-        width: 100%;
-    }
-    .vehicles_container .car_detail_container {
-        padding-top: 60px;
-    }
-    .card_recured ul li .form-control {
-        width: 88%;
-    }
-    .search_filter .primary_btn {
-        height: 50px;
-    }
-    .filter_hied_btn {
-        top: 50px;
-    }
-    .user-rent-btn .primary_btn {
-        width: 80px;
-    }
-    .user-rent-btn {
-        width: 80px;
-    }
-    .user-want-rent {
-        width: 260px;
-        height: 160px;
-    }
-    .user-want-rent .btn {
-        padding: 25px 18px;
-        height: 80px;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .vehicles_tabs .nav > li > a {
-        width: 76px;
-        height: 76px;
-        padding: 11px 4px;
-        font-size: 13px;
-    }
-    .vehicles_tabs .nav-tabs {
-        width: 246px;
-    }
-    .vehicles_tabs h2 {
-        font-size: 24px;
-    }
-    .vehicles_tabs h2 {
-        line-height: 58px;
-    }
-    .get_intuch_wrapper h2 {
-        font-size: 24px;
-        margin-top: 26px;
-        margin-right: 7px;
-    }
-    .vehicles_tabs .nav > li:nth-child(2) a {
-        padding: 20px 5px !important;
-    }
-    .svg-icon {
-        width: 22px;
-    }
-    .nav_wrapper .navbar-default .navbar-nav > li:nth-child(2) a {
-        padding: 4px 5px !important;
-    }
-    .vehicles_tabs .nav > li i {
-        font-size: 30px;
-    }
-    .get_intuch_wrapper .nav > li > a {
-        width: 76px;
-        height: 76px;
-        padding: 17px 2px;
-    }
-    .getin_touch_section .nav > li:nth-child(2) a {
-        padding: 4px 1px;
-    }
-    .get_intuch_wrapper .nav-tabs {
-        width: 235px;
-    }
-    .get_intuch_wrapper .tab-content {
-        padding: 20px 10px;
-    }
-    .contact_form .form-control {
-        display: inline-block;
-    }
-    .uber_account .form-group {
-        width: 205px;
-        float: left;
-        top: 7px;
-        margin-top: 0;
-    }
-    .uber_account {
-        width: 300px;
-        height: 100px;
-    }
-    .filter_hied_btn ul li {
-        width: 100%;
-        padding: 15px 20px 10px;
-        box-shadow: 1px 1px 1px rgb(159, 159, 159);
-    }
-    .availablity_detail ul li:last-child p {
-        width: 100%;
-        border: none;
-    }
-    .availablity_detail .availabe p {
-        font-size: 11px;
-        left: 0;
-    }
-    .availablity_detail ul li p {
-        font-size: 11px;
-    }
-    .car_detail_container .availabe_item_price span {
-        font-size: 10px;
-    }
-    .pickup_loction_btn ul li {
-        width: 100%;
-    }
-    .pickup_loction_btn ul li button {
-        margin-top: 1px;
-    }
-    .ratting .fa-fw {
-        width: 18px;
-    }
-    .ratting {
-        margin-right: 5px;
-    }
-    .car_cost_tabel ul li span {
-        width: 50%;
-        display: block;
-    }
-    .car_detail_clander ul li:nth-child(3n) span {
-        width: 86%;
-        float: right;
-        top: 0;
-    }
-    .car_detail_clander ul li:nth-child(2n) span {
-        top: -7px;
-    }
-    .car_cost_tabel {
-        margin-top: 15px;
-    }
-    .booking_tab ul li a {
-        font-size: 12px;
-    }
-    .rent_tabel ul li {
-        font-size: 11px;
-    }
-    .setting_wrapper ul li {
-        font-size: 13px;
-    }
-    .setting_wrapper ul li p span {
-        position: relative;
-        top: 0;
-        text-align: left;
-        float: none;
-        display: block;
-        margin-left: 0;
-    }
-}
-
-@media screen and (max-width: 550px) {
-    .pickup_loction .secodery_btn {
-        height: 120px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .contact_form textarea {
-        width: 87%;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .get_intuch_wrapper h2 {
-        font-size: 24px;
-        width: 100%;
-        margin: 0;
-        padding: 10px;
-    }
-    .login_form {
-        margin-top: 0;
-        width: 74%;
-    }
-    .login_form .form-group {
-        margin-top: 10px;
-    }
-    .search_car_content .availabe p {
-        font-size: 13px;
-    }
-    .search_car_content .availabe_item_price {
-        width: 110px;
-    }
-    .pickup_loction ul li {
-        font-size: 11px;
-    }
-}
-
-@media screen and (max-width: 360px) {
-    .main_vehicles {
-        width: 300px;
-    }
-    .main_vehicles ul li p {
-        font-size: 13px;
-    }
-    .main_vehicles h3 {
-        font-size: 24px;
-    }
-    .availabe p {
-        font-size: 14px;
-    }
-    .card_recured ul li .form-control {
-        width: 87%;
-    }
-}
-
-@media screen and (max-width: 320px) {
-    .pickup_loction ul li {
-        font-size: 10px;
-    }
-    .nav_wrapper .navbar-default .navbar-nav > li:nth-child(2) a {
-        padding: 4px 3px !important;
-    }
-    .navbar-default .navbar-nav > li > a {
-        width: 52px;
-    }
-}
-
-.login-input input .form-control {
+    width: 100%;
     background: none;
-    border-radius: 0;
+    min-height: 500px;
     border: none;
-    box-shadow: none;
+    box-shadow: 0 0 4px rgba(91, 91, 91, 0.5);
+    white-space: pre;
+    word-wrap: break-word;
+    background: #fff;
 }
-
-.login-input span.input-group-addon {
+.primary-button {
+    background: #87af1e none repeat scroll 0 0;
+    border: medium none;
+    color: #ffffff;
+    display: inline-block;
+    font-weight: 700;
+    margin: 20px auto 0;
+    padding: 10px 15px;
+    text-align: center;
+    width: 150px;
+}
+.login-input .input-group-addon {
     background: none;
     border-radius: 0;
     border: none;
     padding: 0;
+}
+.login-input .form-control {
+    background: none;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
 }
 
 .vehicles_tabs .nav.nav-tabs .svg-icon {
@@ -4023,4 +2989,47 @@ button:disabled {
 #mydragcontrols #mydeldrag {
     cursor: pointer;
     margin: 2px;
+}
+.card_recured .form-control {
+    background: none;
+    border: none;
+    box-shadow: none;
+    height: 50px;
+}
+.checkbox-form label {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    margin: 13px 10px;
+}
+.card_recured .checkbox-form .form-control {
+    display: inline-block;
+}
+.card_recured .checkbox-form .form-control {
+    width: auto;
+    padding: 0;
+    height: auto;
+    display: inline-block;
+}
+.add-icon-plus i {
+    font-size: 29px;
+    color: #fff;
+    cursor: pointer;
+}
+.card_recured .primary-button{
+    font-size: 13px;
+}
+.vehicle_registration .card_recured ul li .form-group .bootstrap-datetimepicker-widget span {
+    float: none !important;
+    background: inherit !important; 
+    width: auto !important;
+    min-height: inherit !important;
+    padding: 5 !important;
+    position: static !important;
+    border-radius: 0 !important;
+}
+.bootstrap-datetimepicker-widget table td span{
+  line-height: 22px !important;
+  width: auto !important;
+  height:  auto !important; 
 }

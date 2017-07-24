@@ -13,7 +13,7 @@
                 <payment-card-form :editCard="editCard" :selectedcard="card" key="add-cards" v-else></payment-card-form>
             </transition>
 
-            <button type="button" @click="cardAdd">{{ addCard?'Cancle':'Add more' }}</button>
+            <button class="primary-button" type="button" @click="cardAdd">{{ addCard?'Cancle':'Add more' }}</button>
         </div>
 
     </div>
