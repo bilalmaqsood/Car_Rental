@@ -31,13 +31,15 @@
     </div>
 
     @include('layouts.svgs')
+<script   type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0&sensor=false&libraries=places'></script>
 
     <!-- Scripts -->
     <script src="{{ mix('js/jst.js') }}"></script>
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/qwikkar.js') }}"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0"></script>
+        <!-- <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0&sensor=false&libraries=places'></script> -->
+
 
 </body>
 </html>

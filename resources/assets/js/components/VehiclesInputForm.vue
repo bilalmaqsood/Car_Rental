@@ -142,7 +142,7 @@
                                 <input type="text" class="form-control" placeholder="return location" v-model="form.return_location" @blur="$v.form.return_location.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.return_location.$error">Enter return location </p>
                                 <span>
-															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+															<svg @click="showLocationPicker('return_location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
 															</svg>
 								</span>
@@ -153,7 +153,7 @@
                                 <input type="text" class="form-control" placeholder="vehicle location in latitude and longitude" v-model="form.location" @blur="$v.form.location.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.location.$error">Enter vehicle location in latitude and longitude </p>
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                                    <svg @click="showLocationPicker('location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                                     </svg>
 								</span>
@@ -281,10 +281,9 @@
                 </div>
             </div>
         </div>
-        <location-picker :pickupLocation="pickupLocation"></location-picker>
+        <location-coordinates-picker :location="location" @locationEvent="saveLocationCoordinates"></location-coordinates-picker>
     </div>
 </template>
-
 <script>
 
     import Local from '../local';
@@ -300,7 +299,8 @@
         data() {
             return {
                 User: User,
-                pickupLocation: '',
+                location: '',
+                selectedLocation: '',
                 week: '',
                 percent: '',
                 form: JSON.parse(JSON.stringify(Form)),
@@ -573,8 +573,12 @@
 
             },
             showLocationPicker(obj){
-                    this.pickupLocation = obj;
+                    this.selectedLocation = obj;
+                    this.location = this.form[obj];
                 $('#myModal').appendTo("body").modal('show');
+            },
+            saveLocationCoordinates(response){
+                this.form[this.selectedLocation] = response;
             }
 
             }
