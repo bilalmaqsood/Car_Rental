@@ -211,6 +211,11 @@ trait BookingOperations
             'contract_end_date' => $booking->end_date->format('l jS \\of F Y'),
         ]);
 
+        $dataPlaced = trim($dataPlaced, "\"");
+        $dataPlaced = trim($dataPlaced);
+
+        $dataPlaced = str_replace('\n', '<br>', $dataPlaced);
+
         return str_replace("\n", '<br>', $dataPlaced);
     }
 
