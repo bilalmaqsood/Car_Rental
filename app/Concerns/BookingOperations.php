@@ -237,6 +237,8 @@ trait BookingOperations
                 $request->user()->types->first()->name => $request->signature->store('images', 'public')
             ]);
 
+        $oldStatus = $booking->status;
+
         if ($signatures->has('client')) {
             $booking->status = 3;
             $pdfData['driver_signature'] = $signatures->get('client');
@@ -251,6 +253,37 @@ trait BookingOperations
 
         $booking->signatures = $signatures;
         $booking->save();
+
+        if ($signatures->has('owner'))
+            $booking->vehicle->owner->user->notify(new BookingNotify([
+                'id' => $booking->id,
+                'type' => 'Booking',
+                'status' => $booking->status,
+                'old_status' => $oldStatus,
+                'vehicle_id' => $booking->vehicle->id,
+                'image' => $booking->vehicle->images->first(),
+                'title' => 'Booking signature\'s by owner',
+                'user' => $request->user(),
+                'vehicle' => $booking->vehicle->vehicle_name,
+                'contract_start' => $booking->start_date,
+                'contract_end' => $booking->end_date,
+                'deposit' => $booking->deposit,
+            ]));
+        else if ($signatures->has('client'))
+            $booking->user->notify(new BookingNotify([
+                'id' => $booking->id,
+                'type' => 'Booking',
+                'status' => $booking->status,
+                'old_status' => $oldStatus,
+                'vehicle_id' => $booking->vehicle->id,
+                'image' => $booking->vehicle->images->first(),
+                'title' => 'Booking signature\'s by owner',
+                'user' => $request->user(),
+                'vehicle' => $booking->vehicle->vehicle_name,
+                'contract_start' => $booking->start_date,
+                'contract_end' => $booking->end_date,
+                'deposit' => $booking->deposit,
+            ]));
 
         \PDF::loadView('pdf.contract', $pdfData)->save(storage_path('app/public' . $fileName));
     }
