@@ -1,5 +1,4 @@
 const {mix} = require('laravel-mix');
-const Mixer = require('./mix.extend.js');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,15 +12,10 @@ const Mixer = require('./mix.extend.js');
  |
  */
 
-Mixer.run();
-
 mix
     .js('resources/assets/js/qwikkar.js', 'public/js')
     .extract(['lodash', 'jquery', 'vue', 'vuelidate', 'axios', 'noty'])
     .sass('resources/assets/sass/qwikkar.scss', 'public/css')
-    .scripts([
-        'public/js/jst.js'
-    ], 'public/js/jst.js')
     .copy('resources/assets/images', 'public/images')
 ;
 

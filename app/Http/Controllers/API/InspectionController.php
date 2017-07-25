@@ -14,7 +14,9 @@ class InspectionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('owner');
+        $this->middleware('owner')->except('index');
+
+        $this->middleware('not-admin')->only('index');
     }
 
     /**

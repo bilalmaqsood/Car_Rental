@@ -50,13 +50,3 @@ Vue.filter('currency', require('./filters/currency'));
 const app = new Vue({
     el: '#app'
 });
-
-// setTimeout(function () {
-//     console.log('timeout triggered');
-//     $('#app-navbar-collapse').html(_.template(Qwikkar['panel.html']({
-//         data: {
-//             name: 'oknasir',
-//             description: 'panel description for oknasir'
-//         }
-//     })));
-// }, 3000);
