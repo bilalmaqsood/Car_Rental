@@ -269,7 +269,7 @@ trait BookingOperations
                 'contract_end' => $booking->end_date,
                 'deposit' => $booking->deposit,
             ]));
-        else if ($request->user()->isOwner())
+        else if ($request->user()->isClient())
             $booking->vehicle->owner->user->notify(new BookingNotify([
                 'id' => $booking->id,
                 'type' => 'Booking',
