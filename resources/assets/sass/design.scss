@@ -916,6 +916,7 @@ h3 {
 .filter_hied_btn ul li .form-group {
     margin-bottom: 0;
 }
+
 .search_map #search_map {
     width: 50% !important;
     height: 100vh !important;
@@ -1304,13 +1305,16 @@ h3 {
     width: 22px;
     height: 22px;
 }
+
 .has-error .form-control:focus {
     box-shadow: none;
 }
+
 .pickup_loction_btn ul li button .svg-icon, .pickup_loction_btn ul li button span {
     display: inline-block;
     vertical-align: middle;
 }
+
 .pickup_loction_btn ul li button span {
     margin-left: 10px;
 }
@@ -1423,6 +1427,7 @@ h3 {
 .car_cost_tabel .secodery_btn span {
     margin-left: 10px;
 }
+
 .car_cost_tabel .secodery_btn span, .car_cost_tabel .secodery_btn .svg-icon {
     display: inline-block;
     vertical-align: middle;
@@ -1451,6 +1456,7 @@ h3 {
     box-shadow: 1px 1px 3px #000;
     background: rgb(255, 255, 255);
 }
+
 .card_recured ul li .form-group {
     margin-bottom: 0;
 }
@@ -1476,6 +1482,7 @@ h3 {
     float: left;
     margin-right: 15px;
 }
+
 .card_recured .primary-button {
     margin-bottom: 10px;
 }
@@ -1493,6 +1500,7 @@ h3 {
     font-weight: bold;
     color: #87af1e;
 }
+
 .main_profile_container {
     width: 50%;
     position: absolute;
@@ -2038,21 +2046,25 @@ h3 {
 .all-chat-messages:after {
     clear: both;
 }
+
 .chat_btn_wrapper {
     width: 100%;
     position: absolute;
     bottom: 0;
 }
+
 .chat_btn_wrapper .form-control {
     position: relative;
     border: none;
     color: #333;
     font-size: 15px;
 }
+
 .chat_btn_wrapper button {
     background: #fff;
     border: none;
 }
+
 .payment_wrapper {
     float: left;
     width: 100%;
@@ -2083,7 +2095,7 @@ h3 {
 }
 
 .payment_wrapper .card_recured {;
-                                margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .setting_wrapper {
@@ -2235,6 +2247,7 @@ h3 {
     border-left: 1px solid #f1f1f1;
     text-align: center;
 }
+
 .vehicle_registration .card_recured ul li:last-child {
     background: #fff;
 }
@@ -2407,7 +2420,7 @@ h3 {
 .extend_booking .extend_booking_content {
     list-style-type: none;
     font-size: 15px;
-    font-weight: 700; 
+    font-weight: 700;
     font-weight: normal;
     width: 100%;
     padding: 10px;
@@ -2426,22 +2439,25 @@ h3 {
         }
     }
 
-
     .form-control {
         border: none;
         border-radius: 0;
     }
 }
-.book_now_calender p{
+
+.book_now_calender p {
     margin: 0 auto;
 }
+
 .extend_booking .extend_booking_content:nth-child(3n), #extend_cancel .extend_booking .extend_booking_content:nth-child(2n), .extend_booking_content.cursor-pointer.btn-send {
     cursor: pointer;
     padding: 10px;
 }
+
 .extend_booking .extend_booking_content:nth-child(2n) {
     padding: 0;
 }
+
 .book_now_calender ul li {
     padding: 10px 0;
 }
@@ -2883,17 +2899,21 @@ button:disabled {
     position: relative;
     top: -13px;
 }
+
 .card_recured .text-sm {
     margin: 0 auto;
 }
+
 .vehicle_registration .text-sm {
     text-align: left;
     padding-left: 12px;
     font-weight: bold;
 }
+
 .discount-group {
     position: relative;
 }
+
 .discount-group .discount {
     position: relative;
     text-align: left;
@@ -2920,6 +2940,7 @@ button:disabled {
     padding: 5px;
     margin: 0 auto;
 }
+
 .contract-area {
     width: 100%;
     background: none;
@@ -2930,6 +2951,7 @@ button:disabled {
     word-wrap: break-word;
     background: #fff;
 }
+
 .primary-button {
     background: #87af1e none repeat scroll 0 0;
     border: medium none;
@@ -2941,12 +2963,14 @@ button:disabled {
     text-align: center;
     width: 150px;
 }
+
 .login-input .input-group-addon {
     background: none;
     border-radius: 0;
     border: none;
     padding: 0;
 }
+
 .login-input .form-control {
     background: none;
     border-radius: 0;
@@ -2959,7 +2983,8 @@ button:disabled {
     width: 25px;
 }
 
-.draggable, .mydraggable {
+.draggable,
+.mydraggable {
     width: 60px;
     height: 25px;
     background: rgba(145, 4, 28, 0.6);
@@ -2990,46 +3015,54 @@ button:disabled {
     cursor: pointer;
     margin: 2px;
 }
+
 .card_recured .form-control {
     background: none;
     border: none;
     box-shadow: none;
     height: 50px;
 }
+
 .checkbox-form label {
     display: inline-block;
     font-size: 14px;
     font-weight: normal;
     margin: 13px 10px;
 }
+
 .card_recured .checkbox-form .form-control {
     display: inline-block;
 }
+
 .card_recured .checkbox-form .form-control {
     width: auto;
     padding: 0;
     height: auto;
     display: inline-block;
 }
+
 .add-icon-plus i {
     font-size: 29px;
     color: #fff;
     cursor: pointer;
 }
-.card_recured .primary-button{
+
+.card_recured .primary-button {
     font-size: 13px;
 }
+
 .vehicle_registration .card_recured ul li .form-group .bootstrap-datetimepicker-widget span {
     float: none !important;
-    background: inherit !important; 
+    background: inherit !important;
     width: auto !important;
     min-height: inherit !important;
-    padding: 5 !important;
+    padding: 5px !important;
     position: static !important;
     border-radius: 0 !important;
 }
-.bootstrap-datetimepicker-widget table td span{
-  line-height: 22px !important;
-  width: auto !important;
-  height:  auto !important; 
+
+.bootstrap-datetimepicker-widget table td span {
+    line-height: 22px !important;
+    width: auto !important;
+    height: auto !important;
 }

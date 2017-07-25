@@ -8,10 +8,6 @@ window._ = require('lodash');
 
 window.$ = window.jQuery = require('jquery');
 
-require('bootstrap-sass');
-
-require('eonasdan-bootstrap-datetimepicker');
-
 require('jquery.easing');
 
 window.$ = $.extend(require('jquery-ui-dist/jquery-ui.js'));
@@ -19,6 +15,10 @@ window.$ = $.extend(require('jquery-ui-dist/jquery-ui.js'));
 require('owl.carousel');
 
 require('jquery.payment');
+
+require('bootstrap-sass');
+
+require('eonasdan-bootstrap-datetimepicker');
 
 window.Inputmask = require('inputmask');
 window.numeral = require('numeral');
