@@ -19,9 +19,8 @@ mix
     .extract(['lodash', 'jquery', 'vue', 'vuelidate', 'axios', 'noty'])
 
     .sass('resources/assets/sass/qwikkar.scss', 'public/css')
-    .sass('resources/assets/sass/admin.scss', 'public/css')
 
-    .less('resources/assets/less/style.scss', 'public/css')
+    .less('resources/assets/less/admin.less', 'public/css')
 
     .copy('resources/assets/images', 'public/images')
 ;
