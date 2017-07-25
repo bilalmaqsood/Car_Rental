@@ -254,7 +254,7 @@ trait BookingOperations
         $booking->signatures = $signatures;
         $booking->save();
 
-        if ($signatures->has('owner'))
+        if ($request->user()->isOwner())
             $booking->user->notify(new BookingNotify([
                 'id' => $booking->id,
                 'type' => 'Booking',
@@ -269,7 +269,7 @@ trait BookingOperations
                 'contract_end' => $booking->end_date,
                 'deposit' => $booking->deposit,
             ]));
-        else if ($signatures->has('client'))
+        else if ($request->user()->isOwner())
             $booking->vehicle->owner->user->notify(new BookingNotify([
                 'id' => $booking->id,
                 'type' => 'Booking',
