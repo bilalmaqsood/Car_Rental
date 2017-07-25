@@ -131,7 +131,7 @@
                                 <p class=" help-block text-sm" v-if="$v.form.pickup_location.$error">Enter pickup location </p>
 
                                 <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                                    <svg @click="showLocationPicker('pickup_location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                                     </svg>
 								</span>
@@ -281,6 +281,7 @@
                 </div>
             </div>
         </div>
+        <location-picker :pickupLocation="pickupLocation"></location-picker>
     </div>
 </template>
 
@@ -299,6 +300,7 @@
         data() {
             return {
                 User: User,
+                pickupLocation: '',
                 week: '',
                 percent: '',
                 form: JSON.parse(JSON.stringify(Form)),
@@ -569,6 +571,10 @@
                     });
                 });
 
+            },
+            showLocationPicker(obj){
+                    this.pickupLocation = obj;
+                $('#myModal').appendTo("body").modal('show');
             }
 
             }
