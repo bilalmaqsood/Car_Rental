@@ -32,7 +32,7 @@
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.model.$error}">
-                                <input type="text" class="form-control" placeholder="vehicle model" v-model="form.model"  @blur="$v.form.model.$touch()">
+                                <input type="text" class="form-control" placeholder="vehicle model" v-model="form.model" @blur="$v.form.model.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.model.$error">Enter valid model of vehicle</p>
                             </div>
                         </li>
@@ -40,21 +40,21 @@
                             <div class="form-group" :class="{'has-error': $v.form.variant.$error}">
                                 <input type="text" class="form-control" placeholder="vehicle variant" v-model="form.variant" @blur="$v.form.variant.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.variant.$error">Enter vehicle variant</p>
-                                               </div>
+                            </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.year.$error}">
 
-<div class="input-group login-input">
-<input type="text" class="form-control registration_year" placeholder="registration year" v-model="form.year" @blur="$v.form.year.$touch()">
-<div class="input-group-addon">
-<span>
-															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-															</svg>
-														</span>
-</div>
-</div>
+                                <div class="input-group login-input">
+                                    <input type="text" class="form-control registration_year" placeholder="registration year" v-model="form.year" @blur="$v.form.year.$touch()">
+                                    <div class="input-group-addon">
+                                        <span>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
 
                                 <p class=" help-block text-sm" v-if="$v.form.year.$error">Enter vehicle year</p>
 
@@ -69,7 +69,7 @@
 
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.fuel.$error}">
-                                <input type="text" class="form-control" placeholder="fuel type" v-model="form.fuel"  @blur="$v.form.fuel.$touch()">
+                                <input type="text" class="form-control" placeholder="fuel type" v-model="form.fuel" @blur="$v.form.fuel.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.fuel.$error">Enter fuel type</p>
                             </div>
                         </li>
@@ -116,14 +116,14 @@
                         </li>
                         <li class="checkbox-form">
                             <div class="form-group">
-<label>
-                                <input type="checkbox" class="form-control" id="pickup" placeholder="yes / no if pick by owner" v-model="form.pickup" >
-                                Pickup by owner
-</label>
-<label>
-                                <input type="checkbox" class="form-control" id="delivery" placeholder="yes / no if delivery by owner" v-model="form.delivery" >
-                                 Delivery by owner
-</label>
+                                <label>
+                                    <input type="checkbox" class="form-control" id="pickup" placeholder="yes / no if pick by owner" v-model="form.pickup">
+                                    Pickup by owner
+                                </label>
+                                <label>
+                                    <input type="checkbox" class="form-control" id="delivery" placeholder="yes / no if delivery by owner" v-model="form.delivery">
+                                    Delivery by owner
+                                </label>
                             </div>
                         </li>
                         <li>
@@ -134,16 +134,16 @@
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.pickup_location.$error}">
 
-<div class="input-group login-input">
-  <input type="text" class="form-control" placeholder="pickup location" v-model="form.pickup_location" @blur="$v.form.pickup_location.$touch()">
-<div class="input-group-addon">
-<span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-                                    </svg>
-								</span>
-</div>
-</div>                              
+                                <div class="input-group login-input">
+                                    <input type="text" class="form-control" placeholder="pickup location" v-model="form.pickup_location" @blur="$v.form.pickup_location.$touch()">
+                                    <div class="input-group-addon">
+                                        <span>
+                                            <svg @click="showLocationPicker('pickup_location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
                                 <p class=" help-block text-sm" v-if="$v.form.pickup_location.$error">Enter pickup location </p>
                             </div>
                         </li>
@@ -151,38 +151,38 @@
                             <div class="form-group" :class="{'has-error': $v.form.return_location.$error}">
 
 
-<div class="input-group login-input">
-                                <input type="text" class="form-control" placeholder="return location" v-model="form.return_location" @blur="$v.form.return_location.$touch()">
-<div class="input-group-addon">
-<span>
-															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-															</svg>
-								</span>
-</div>
-</div>
+                                <div class="input-group login-input">
+                                    <input type="text" class="form-control" placeholder="return location" v-model="form.return_location" @blur="$v.form.return_location.$touch()">
+                                    <div class="input-group-addon">
+                                        <span>
+                                            <svg @click="showLocationPicker('return_location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
                                 <p class=" help-block text-sm" v-if="$v.form.return_location.$error">Enter return location</p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.location.$error}">
 
-<div class="input-group login-input">
-  <input type="text" class="form-control" placeholder="vehicle location in latitude and longitude" v-model="form.location" @blur="$v.form.location.$touch()">
-<div class="input-group-addon">
- <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-                                    </svg>
-								</span>
-</div>
-</div>                              
+                                <div class="input-group login-input">
+                                    <input type="text" class="form-control" placeholder="vehicle location in latitude and longitude" v-model="form.location" @blur="$v.form.location.$touch()">
+                                    <div class="input-group-addon">
+                                        <span>
+                                            <svg @click="showLocationPicker('location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
                                 <p class=" help-block text-sm" v-if="$v.form.location.$error">Enter vehicle location in latitude and longitude </p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.delivery_charges.$error}">
-                                <input type="text" class="form-control" placeholder="delivery charges per week" v-model="form.delivery_charges"  @blur="$v.form.delivery_charges.$touch()">
+                                <input type="text" class="form-control" placeholder="delivery charges per week" v-model="form.delivery_charges" @blur="$v.form.delivery_charges.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.delivery_charges.$error">Delivery charges per week</p>
                             </div>
                         </li>
@@ -220,27 +220,26 @@
                             </div>
                         </li>
                         <li>
-                            <div class="form-group discount-group" >
+                            <div class="form-group discount-group">
 
 
-<div class="input-group login-input">
-                                <input type="text" class="form-control" placeholder="percent" v-model="percent" >
+                                <div class="input-group login-input">
+                                    <input type="text" class="form-control" placeholder="percent" v-model="percent">
 
-<div class="input-group-addon">
-<span @click="push()" class="add-icon-plus">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-								</span>  
-</div>
-</div>
+                                    <div class="input-group-addon">
+                                        <span @click="push()" class="add-icon-plus">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+								        </span>
+                                    </div>
+                                </div>
 
-                              
-<div v-if="form.discounts.length>0" v-for="discount in form.discounts"  class="label label-success discount" >
+
+                                <div v-if="form.discounts.length>0" v-for="discount in form.discounts" class="label label-success discount">
                                     <p>Week {{discount.week}} {{discount.percent}}</p>
                                     <i class="fa fa-remove clickable" @click="pop(discount)"></i>
                                 </div>
 
 
-                                
                                 <div class="clearfix"></div>
                             </div>
 
@@ -303,16 +302,16 @@
                         </li>
                         <li>
                             <button id="uploadImages" class="primary-button">Upload Images</button>
-                            <input type="file"  class="hidden hiddenUpload" name="files[]" multiple="multiple" value="upload">
-                             <button id="documents" class="primary-button">Upload documents</button>
-                            <input type="file"  class="hidden documentsUpload" name="documents[]" multiple="multiple"></li>
+                            <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple" value="upload">
+                            <button id="documents" class="primary-button">Upload documents</button>
+                            <input type="file" class="hidden documentsUpload" name="documents[]" multiple="multiple"></li>
                     </ul>
                 </div>
             </div>
         </div>
+        <location-coordinates-picker :location="location" @locationEvent="saveLocationCoordinates"></location-coordinates-picker>
     </div>
 </template>
-
 <script>
 
     import Local from '../local';
@@ -323,11 +322,13 @@
 
     var $scope;
     export default {
-        props: ['profileHeight','vehicle','isEdit'],
+        props: ['profileHeight', 'vehicle', 'isEdit'],
 
         data() {
             return {
                 User: User,
+                location: '',
+                selectedLocation: '',
                 week: '',
                 percent: '',
                 form: JSON.parse(JSON.stringify(Form)),
@@ -428,43 +429,43 @@
                     minLength: minLength(1)
                 },
 
-                extension:{
+                extension: {
                     required,
                     minLength: minLength(1)
                 },
-                license_years:{
+                license_years: {
                     required,
                     minLength: minLength(1)
                 },
-                pco_years:{
+                pco_years: {
                     required,
                     minLength: minLength(1)
                 },
-                driver_year:{
+                driver_year: {
                     required,
                     minLength: minLength(1)
                 },
-                license_points:{
+                license_points: {
                     required,
                     minLength: minLength(1)
                 },
-                no_fault_accident:{
+                no_fault_accident: {
                     required,
                     minLength: minLength(1)
                 },
-                fault_accident:{
+                fault_accident: {
                     required,
                     minLength: minLength(1)
                 },
-                notes:{
+                notes: {
                     required,
                     minLength: minLength(1)
                 },
-                registration:{
+                registration: {
                     required,
                     minLength: minLength(1)
                 },
-                images:{
+                images: {
                     required,
                     minLength: minLength(1)
                 },
@@ -472,35 +473,35 @@
         },
         watch: {
             'vehicle': function (val, oldVal) {
-                if(this.isEdit){
-                    this.form=JSON.parse(JSON.stringify(Form));
+                if (this.isEdit) {
+                    this.form = JSON.parse(JSON.stringify(Form));
                     this.form = val;
                 }
             }
         },
         mounted() {
-            $scope=this;
-            if(this.isEdit){
-                this.form=JSON.parse(JSON.stringify(Form));
+            $scope = this;
+            if (this.isEdit) {
+                this.form = JSON.parse(JSON.stringify(Form));
                 this.form = this.vehicle;
             }
             this.prepareComponent();
         },
 
         methods: {
-            processForm(){
+            processForm() {
                 $scope.postForm();
             },
             postForm() {
-                if(this.isEdit){
-                    axios.patch('/api/vehicle/'+this.form.id, this.prepareForm())
+                if (this.isEdit) {
+                    axios.patch('/api/vehicle/' + this.form.id, this.prepareForm())
                         .then(this.responseHandler);
                 } else {
-                axios.post('/api/vehicle', this.prepareForm())
-                    .then(this.responseHandler);
+                    axios.post('/api/vehicle', this.prepareForm())
+                        .then(this.responseHandler);
                 }
             },
-            responseHandler(response){
+            responseHandler(response) {
                 this.response = response.data.success;
                 this.form = JSON.parse(JSON.stringify(Form));
                 this.$parent.$emit('vehicleAdded', response.data.success);
@@ -510,40 +511,40 @@
                 let input = this.form;
 
                 Object.keys(input).forEach(function (key) {
-                    if (input[key]==null || input[key].length <= 0) {
+                    if (input[key] == null || input[key].length <= 0) {
                         delete input[key];
                     }
                 });
-                if(input.id)
-                   delete input.id;
+                if (input.id)
+                    delete input.id;
                 return input;
             },
-            push(){
-                let count=$scope.form.discounts.length+1;
-                $scope.form.discounts.push({week: count,percent: $scope.percent});
-                $scope.percent='';
-                $scope.week='';
-                count='';
+            push() {
+                let count = $scope.form.discounts.length + 1;
+                $scope.form.discounts.push({week: count, percent: $scope.percent});
+                $scope.percent = '';
+                $scope.week = '';
+                count = '';
             },
-            pop(discount){
-                $scope.form.discounts.splice($scope.form.discounts.indexOf(discount),1);
+            pop(discount) {
+                $scope.form.discounts.splice($scope.form.discounts.indexOf(discount), 1);
                 $scope.reCalculate();
             },
-            reCalculate(){
+            reCalculate() {
                 var discounts = [];
-                $scope.form.discounts.map(function(value, key) {
-                    discounts.push({week: key+1 ,percent: value.percent});
+                $scope.form.discounts.map(function (value, key) {
+                    discounts.push({week: key + 1, percent: value.percent});
                 });
                 $scope.form.discounts = discounts;
             },
-            imagesResponse(r){
+            imagesResponse(r) {
                 this.form.images.push(r.data.success);
-                },
-            documentsResponse(r){
+            },
+            documentsResponse(r) {
                 this.form.documents.push(r.data.success);
 
             },
-            prepareComponent(){
+            prepareComponent() {
 
 
                 $('.registration_year').datetimepicker({
@@ -553,13 +554,13 @@
 
                 $('.available_to').datetimepicker({
                     format: 'YYYY-MM-DD',
-                }).on('dp.change',function (e) {
-                    $scope.form.available_to=$(".available_to").val();
+                }).on('dp.change', function (e) {
+                    $scope.form.available_to = $(".available_to").val();
                 });
                 $('.available_from').datetimepicker({
                     format: 'YYYY-MM-DD',
-                }).on('dp.change',function (e) {
-                    $scope.form.available_from=$(".available_from").val();
+                }).on('dp.change', function (e) {
+                    $scope.form.available_from = $(".available_from").val();
                 });
 
                 $("#documents").click(function () {
@@ -572,7 +573,7 @@
                             var fd = new window.FormData();
                             fd.append('upload', val);
                             reader.onload = function (e) {
-                                axios.post('/api/upload/document',fd).then($scope.documentsResponse);
+                                axios.post('/api/upload/document', fd).then($scope.documentsResponse);
 
                             };
                         });
@@ -590,7 +591,7 @@
                             var fd = new window.FormData();
                             fd.append('upload', val);
                             reader.onload = function (e) {
-                                axios.post('/api/upload/image',fd).then($scope.imagesResponse);
+                                axios.post('/api/upload/image', fd).then($scope.imagesResponse);
 
                             };
                         });
@@ -598,9 +599,17 @@
                     });
                 });
 
+            },
+            showLocationPicker(obj) {
+                this.selectedLocation = obj;
+                this.location = this.form[obj];
+                $('#myModal').appendTo("body").modal('show');
+            },
+            saveLocationCoordinates(response) {
+                this.form[this.selectedLocation] = response;
             }
 
-            }
+        }
 
     }
 </script>
