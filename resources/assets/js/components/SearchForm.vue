@@ -31,20 +31,7 @@
                     
                 </div>
             </li>
-            <li class="button-search">
-                <button type="button" class="secodery_btn" @click="searchVehicles" data-loading-text="searching ...">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
-                    </svg>
-                </button>
-            </li>
-            <li class="button-search">
-                <button type="button" class="primary_btn" @click="searchFilters" :class="{active:advanceSearch}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filters_icon"></use>
-                    </svg>
-                </button>
-            </li>
+            
             <transition name="slide-fade">
                 <li v-if="advanceSearch">
                     <div class="form-group">
@@ -76,6 +63,20 @@
                     </div>
                 </li>
             </transition>
+<li class="button-search">
+                <button type="button" class="secodery_btn" @click="searchVehicles" data-loading-text="searching ...">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
+                    </svg>
+                </button>
+            </li>
+            <li class="button-search">
+                <button type="button" class="primary_btn" @click="searchFilters" :class="{active:advanceSearch}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filters_icon"></use>
+                    </svg>
+                </button>
+            </li>
         </ul>
 <div class="clearfix"></div>
     </form>
