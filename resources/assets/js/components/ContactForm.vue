@@ -38,39 +38,59 @@
 
                 <div role="tabpanel" class="tab-pane active" id="contact_us">
                     <div class="contact_form">
-                        <form class="form-inline">
+                        <form>
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group" :class="{ 'has-error': $v.form.name.$error }">
+<div class="input-group login-input">
+<div class="input-group-addon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                     </svg>
+</div>
                                     <input type="text" class="form-control" placeholder="full name" v-model="form.name">
-                                </div>
+</div>                                
+</div>
                                 <div class="form-group" :class="{ 'has-error': $v.form.email.$error }">
+<div class="input-group login-input">
+<div class="input-group-addon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#form_envelope"></use>
                                     </svg>
+</div>
                                     <input type="email" class="form-control" placeholder="e-mail" v-model.trim="form.email">
+</div>
                                 </div>
                                 <div class="form-group" :class="{ 'has-error': $v.form.phone.$error }">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 25" class="svg-icon">
+<div class="input-group login-input">
+<div class="input-group-addon">                                   
+ <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
                                     </svg>
+</div>
                                     <input type="text" class="form-control" placeholder="phone number" v-model.trim="form.phone">
+</div>
                                 </div>
                                 <div class="form-group" :class="{ 'has-error': $v.form.subject.$error }">
+<div class="input-group login-input">
+<div class="input-group-addon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sign_contract_icon"></use>
                                     </svg>
+</div>
                                     <input type="text" class="form-control" placeholder="subject" v-model="form.subject">
+</div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 form-textarea">
                                 <div class="form-group" :class="{ 'has-error': $v.form.message.$error }">
+<div class="input-group login-input">
+<div class="input-group-addon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
                                     </svg>
-                                    <textarea placeholder="your message" v-model="form.message"></textarea>
+</div>
+                                    <textarea class="form-control" placeholder="your message" v-model="form.message"></textarea>
+</div>
                                 </div>
                                 <button type="button" class="submit" @click="postForm">Submit</button>
                             </div>

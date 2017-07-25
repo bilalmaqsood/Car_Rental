@@ -597,16 +597,6 @@ h3 {
     width: 40px;
     text-align: center;
 }
-
-.contact_form .form-control {
-    background-color: inherit;
-    border: none;
-    box-shadow: none;
-    font-size: 16px;
-    width: 80%;
-    height: 40px;
-}
-
 .contact_form .form-group {
     width: 100%;
     box-shadow: 0.5px 0.5px 2px #9e9e9e;
@@ -619,7 +609,7 @@ h3 {
     border: none;
     box-shadow: none;
     font-size: 16px;
-    width: 88%;
+    width: 100%;
     float: right;
     height: 178px;
     resize: none;
@@ -632,7 +622,7 @@ h3 {
     padding: 15px;
     font-size: 18px;
     border: 1px solid #525252;
-    margin-top: 15px;
+    margin-top: 8px;
 }
 
 .submit:hover {
@@ -685,6 +675,11 @@ h3 {
 .form-group .svg-icon {
     width: 20px;
     fill: #333;
+    height: 20px;
+}
+.form-textarea .login-input .input-group-addon {
+    vertical-align: top;
+padding-top: 10px;
 }
 
 .login-section button svg {
@@ -730,29 +725,6 @@ h3 {
 .navbar {
     background: rgba(255, 255, 255, 0.65);
 }
-
-.getin_touch_section .contact_form .form-group .svg-icon {
-    width: 28px;
-    fill: #333;
-    top: 6px;
-    position: relative;
-}
-
-.getin_touch_section .contact_form .form-group:nth-child(3) {
-    padding-left: 21px;
-}
-
-.getin_touch_section .contact_form .form-group:nth-child(3) .svg-icon {
-    width: 17px;
-    fill: #333;
-    right: 5px;
-    top: 9px;
-}
-
-.getin_touch_section .contact_form .form-group:nth-child(4) {
-    margin-bottom: 20px;
-}
-
 .uber_account {
     float: right;
     background: #525252;
@@ -2095,7 +2067,7 @@ h3 {
 }
 
 .payment_wrapper .card_recured {;
-    margin-bottom: 0;
+                                margin-bottom: 0;
 }
 
 .setting_wrapper {
@@ -2153,38 +2125,31 @@ h3 {
     float: right;
     position: relative;
 }
-
 .vehicles_container .car_detail_container {
     width: 50%;
     float: right;
     background: rgba(255, 255, 255, 0.91);
     position: static;
 }
-
 .vehicles_container .booking_tab_content {
     width: 50%;
     position: absolute;
     left: 0;
     top: 0;
 }
-
 .vehicles_container .booking_tab ul li {
     width: 33.3%;
 }
-
 .vehicles_container .booking_tab ul li:last-child {
     /*width: 33.34%;*/
 }
-
 .vehicles_container .booking_tab {
     margin-top: 0;
 }
-
 .vehicle_registration {
     float: left;
     width: 100%;
 }
-
 .vehicle_registration .card_recured ul li .form-group span {
     float: right;
     background: #525252;
@@ -2192,17 +2157,15 @@ h3 {
     min-height: 50px;
     text-align: center;
     padding: 10px;
-    position: absolute;
+    position: static;
     right: 0;
 }
-
 .vehicle_registration .form-group .svg-icon {
     width: 26px;
     fill: #98b927;
     height: 26px;
     margin: 0 auto;
 }
-
 .vehicle_registration .card_recured ul li {
     padding: 0;
     border-bottom: 1px solid #f1f1f1;
@@ -2956,14 +2919,18 @@ button:disabled {
     background: #87af1e none repeat scroll 0 0;
     border: medium none;
     color: #ffffff;
-    display: inline-block;
+    display: block;
     font-weight: 700;
     margin: 20px auto 0;
+    text-decoration: none;
     padding: 10px 15px;
     text-align: center;
     width: 150px;
 }
-
+.primary-button:hover {
+    text-decoration: none;
+    color: #fff;
+}
 .login-input .input-group-addon {
     background: none;
     border-radius: 0;
@@ -3065,4 +3032,245 @@ button:disabled {
     line-height: 22px !important;
     width: auto !important;
     height: auto !important;
+}
+.vehicle_registration .card_recured ul li .form-group .bootstrap-datetimepicker-widget li{
+    background-color: #fff;
+    color: #87af1e;
+}
+
+.vehicle_registration .bootstrap-datetimepicker-widget table td span.active {
+    background: #87af1e !important;
+    color: #000;
+}
+.vehicle_registration .bootstrap-datetimepicker-widget table td {
+    height: auto !important;
+    line-height: 35px;
+    width: auto !important;
+}
+
+
+
+@media screen and (max-width: 1023px) {
+
+    .main_profile_container, .main_booking_container {
+        width: 80%;
+    }
+    .main_booking_container .booking_container, .booking_tab_content{
+        width: 100%;
+    }
+    .booking_tab_content .btn-close {
+        left: 0;
+        margin-left: 24px;
+        position: absolute;
+        top: 60px;
+    }
+    .top_location form, .getin_touch_section {
+        width: 98%;
+    }
+    .main_vehicles {
+        width: 48%;
+        padding: 10px;
+    }
+    .main_vehicles h3{
+        margin: 0 auto;
+    }
+    .main_vehicles ul{
+        font-size: 13px;
+        letter-spacing: 0.5px;
+    }
+    .get_intuch_wrapper .tab-content {
+        padding: 20px 0;
+        width: 100%;
+    }
+    .footer_wrapper{
+        padding: 90px 15px 20px;
+    }
+    .about_section_wrapper h2, .vehicles_tabs h2{
+        border-width: 30px;
+    }
+    .filter_hied_btn{
+        width: 80%;
+    }
+    .pofile_content_wrapper{
+        margin-bottom: 1em;
+    }
+    .profile_content ul {
+        padding: 0;
+    }
+    .img_box{
+        width: 100%;
+        background-position: center;
+    }
+    .vehicles_container .car_detail_container {
+        width: 100%;
+    }
+    .vehicles_container .booking_tab_content {
+        left: 0;
+        position: static;
+        top: 0;
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 767px) {
+
+    .vehicles_container{
+        width: 100%;
+    }
+    .navbar-right {
+        float: right;
+        margin: 0 auto;
+    }
+    .nav li {
+        float: left;
+    }
+    .main_vehicles.list-item {
+        width: 98%;
+        margin: 0 auto;
+    }
+    .vehicles_tabs .nav-tabs {
+        margin: 0 auto;
+        width: 100%;
+        display: block;
+        position: static;
+    }
+    .vehicles_tabs h2{
+        width: 100%;
+    }
+    .vehicles_tabs .nav > li, .getin_touch_section .nav > li {
+        width: 33.33%;
+    }
+    .top_location ul li.button-search{
+        width: 49.8%;
+        margin-bottom: 0.2%;
+        margin-right: 0.2%;
+    }
+    .top_location ul li{
+        width: 49.8%;
+    }
+    .about_content_section {
+        padding: 15px 15px 100px;
+    }
+    .vehicles_tabs .nav > li i{
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .vehicles_tabs .nav.nav-tabs .svg-icon, .get_intuch_wrapper .nav.nav-tabs > li .svg-icon {
+        height: 15px;
+        width: 20px;
+        margin-bottom: 10px;
+    }
+    .vehicles_tabs .nav > li > a, .get_intuch_wrapper .nav > li > a {
+        font-size: 12px;
+    }
+    .get_intuch_wrapper .nav > li > a{
+        padding: 10px;
+        font-size: 13px;
+    }
+    .get_intuch_wrapper h2{
+        float: none;
+        display: block;
+        padding: 20px;
+        margin: 0 auto;
+    }
+    .get_intuch_wrapper .nav-tabs {
+        width: 100%;
+    }
+    .search_car_content .search-btn-container{
+        width: 100%;
+        position: static;
+    }
+    .search_car_content .availabe_item_price h3{
+        margin: 13px 0;
+        float: right;
+        display: block;
+    }
+    .booking_tab ul li a {
+        font-size: 12px;
+    }
+    .main_profile_container, .main_booking_container {
+        width: 100%;
+    }
+    .booking_container h2, .payment_wrapper h2{
+        border-width: 10px;
+    }
+    .rent_tabel ul {
+        padding: 0 25px 0 15px;
+    }
+    .rent_tabel ul li{
+        font-size: 13px;
+    }
+    .filter_hied_btn{
+        width: 100%;
+    }
+    .booking_tab_content .btn-close {
+        margin: 20px auto 0 20px;
+        position: static;
+    }
+}
+
+
+@media screen and (max-width: 470px) {
+
+    .navbar-brand {
+        height: auto;
+        width: 45px;
+    }   
+    .navbar-default .navbar-nav > li > a {
+        padding: 6px;
+        font-size: 12px;
+    }
+    .nav.navbar-nav > li .svg-icon {
+        width: 17px;
+        height: 17px;
+    } 
+    #car_inspection .nav-tabs > li{
+        width: 50%;
+    }
+    #car_inspection .nav-tabs > li:nth-child(5n){
+        width: 100%;
+    }
+    .availablity_detail, .availablity_price, .availabe_item_price {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 360px) {
+
+    .navbar-default .navbar-nav > li > a {
+        font-size: 11px;
+        padding: 3px 5px;
+    }
+    .search_filter {
+        float: right;
+        left: inherit;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+    }
+    .search_filter .primary_btn {
+        background: #ffffff none repeat scroll 0 0;
+        float: right;
+        height: 50px;
+        line-height: 73px;
+        margin: 0 auto;
+        width: 50px;
+    }
+    .filter_hied_btn{
+        top: 50px;
+    }
+    .booking_tab ul li{
+        width: 50%;
+        margin-bottom: 2px;
+    }
+    .booking_tab_content .btn-close {
+        margin: 20px auto 0 20px;
+    }
+    .booking_tab_content .active {
+        padding-top: 5px;
+    }
+
+
 }

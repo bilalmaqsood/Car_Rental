@@ -40,16 +40,22 @@
                             <div class="form-group" :class="{'has-error': $v.form.variant.$error}">
                                 <input type="text" class="form-control" placeholder="vehicle variant" v-model="form.variant" @blur="$v.form.variant.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.variant.$error">Enter vehicle variant</p>
-                                <span>
+                                               </div>
+                        </li>
+                        <li>
+                            <div class="form-group" :class="{'has-error': $v.form.year.$error}">
+
+<div class="input-group login-input">
+<input type="text" class="form-control registration_year" placeholder="registration year" v-model="form.year" @blur="$v.form.year.$touch()">
+<div class="input-group-addon">
+<span>
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
 															</svg>
 														</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group" :class="{'has-error': $v.form.year.$error}">
-                                <input type="text" class="form-control registration_year" placeholder="registration year" v-model="form.year" @blur="$v.form.year.$touch()">
+</div>
+</div>
+
                                 <p class=" help-block text-sm" v-if="$v.form.year.$error">Enter vehicle year</p>
 
                             </div>
@@ -127,36 +133,51 @@
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.pickup_location.$error}">
-                                <input type="text" class="form-control" placeholder="pickup location" v-model="form.pickup_location" @blur="$v.form.pickup_location.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.pickup_location.$error">Enter pickup location </p>
 
-                                <span>
+<div class="input-group login-input">
+  <input type="text" class="form-control" placeholder="pickup location" v-model="form.pickup_location" @blur="$v.form.pickup_location.$touch()">
+<div class="input-group-addon">
+<span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                                     </svg>
 								</span>
+</div>
+</div>                              
+                                <p class=" help-block text-sm" v-if="$v.form.pickup_location.$error">Enter pickup location </p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.return_location.$error}">
+
+
+<div class="input-group login-input">
                                 <input type="text" class="form-control" placeholder="return location" v-model="form.return_location" @blur="$v.form.return_location.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.return_location.$error">Enter return location </p>
-                                <span>
+<div class="input-group-addon">
+<span>
 															<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
 																<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
 															</svg>
 								</span>
+</div>
+</div>
+                                <p class=" help-block text-sm" v-if="$v.form.return_location.$error">Enter return location</p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.location.$error}">
-                                <input type="text" class="form-control" placeholder="vehicle location in latitude and longitude" v-model="form.location" @blur="$v.form.location.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.location.$error">Enter vehicle location in latitude and longitude </p>
-                                <span>
+
+<div class="input-group login-input">
+  <input type="text" class="form-control" placeholder="vehicle location in latitude and longitude" v-model="form.location" @blur="$v.form.location.$touch()">
+<div class="input-group-addon">
+ <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                                     </svg>
 								</span>
+</div>
+</div>                              
+                                <p class=" help-block text-sm" v-if="$v.form.location.$error">Enter vehicle location in latitude and longitude </p>
                             </div>
                         </li>
                         <li>
@@ -201,10 +222,18 @@
                         <li>
                             <div class="form-group discount-group" >
 
+
+<div class="input-group login-input">
                                 <input type="text" class="form-control" placeholder="percent" v-model="percent" >
+
+<div class="input-group-addon">
 <span @click="push()" class="add-icon-plus">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
-								</span>                                
+								</span>  
+</div>
+</div>
+
+                              
 <div v-if="form.discounts.length>0" v-for="discount in form.discounts"  class="label label-success discount" >
                                     <p>Week {{discount.week}} {{discount.percent}}</p>
                                     <i class="fa fa-remove clickable" @click="pop(discount)"></i>
