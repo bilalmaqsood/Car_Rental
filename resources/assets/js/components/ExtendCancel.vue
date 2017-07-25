@@ -1,6 +1,7 @@
 <template>
     <div id="extend_cancel">
-        <div class="extend_booking">
+
+        <div v-if="user.state.auth.type=='client'" class="extend_booking">
             <div class="extend_booking_content">Extend booking</div>
 
             <div class="extend_booking_content no-padding">
@@ -26,15 +27,23 @@
 
             <div class="extend_booking_content cursor-pointer btn-send" @click="cancelBooking">Send request</div>
         </div>
+
+        <div v-else>
+            Cancle booking request
+        </div>
+
     </div>
 </template>
 
 <script>
+
+import User from '../user';
+
     export default {
-        props:['user'],
 
         data() {
             return {
+                user: User,
                 end_date: '',
                 start_date: '',
                 cancel_note: ''
@@ -44,26 +53,21 @@
         mounted() {
 
             $('#extendCancelDate').datetimepicker({
-                inline: true,
-                sideBySide: false
-            })
-//                .on("dp.change",function (event) {
-//                if(start_date.length<=0)
-//                    start_date = event.date.format("Y-M-D");
-//                else if(end_date.length<=0)
-//                    end_date = event.date.format("Y-M-D");
-//
-//                $scope.start_date=start_date;
-//                $scope.end_date=end_date;
-//            });
+                    inline: true,
+                    sideBySide: false
+                }).on('dp.change', this.calenderChange);
+                $('[data-toggle="tooltip"]').tooltip();
         },
 
         methods: {
+            
             extendBooking() {
+                let $scope = this;
                 if (this.user.state.currentBook !== null) {
                     axios.post('/api/booking/' + this.user.state.currentBook + '/status', this.extendParams())
                         .then(response => {
                             console.log(response);
+                            $scope.$emit("clearSideView");
                         });
                 }
             },
@@ -81,16 +85,100 @@
                 return {
                     start_date: this.start_date,
                     end_date: this.end_date,
-                    status: 5
+                    status: 7
                 }
             },
 
             cancelParams() {
                 return {
                     note: this.cancle_note,
-                    status: 3
+                    status: 5
                 }
-            }
+            },
+            calenderChange(e) {
+                if (!this.start_date)
+                    this.start_date = e.date.utc().startOf('day');
+                else if (!this.end_date) {
+                    this.end_date = e.date.utc().endOf('day');
+                    this.highlightDays(true);
+                } else {
+                    this.highlightDays(false);
+                    this.start_date = null;
+                    this.end_date = null;
+                }
+            },
+            highlightDays(bool) {
+                let $t = this;
+                let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
+
+                if (bool) {
+                    if (this.start_date.format('X') < this.end_date.format('X')) {
+                        let StartDate = this.start_date;
+                        let EndDate = this.end_date;
+                        $e.find('td').each(function (i, e) {
+                            let $elem = $(e);
+                            let eDate = moment.utc($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
+                            if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
+                        });
+
+                        if (this.end_date.diff(this.start_date, 'days') < 6) {
+                            new Noty({
+                                type: 'warning',
+                                text: 'Booking should be at least one week.'
+                            }).show();
+
+                            this.resetDatesLessSeven();
+                        } else{
+                            new Noty({
+                                type: 'information',
+                                text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
+                            }).show();
+                            }
+                    } else {
+                        new Noty({
+                            type: 'warning',
+                            text: '<div><p>Start date should greater than end date.</p><p>Please select dates again.</p></div>',
+                        }).show();
+                        this.start_date = null;
+                        this.end_date = null;
+                        $e.find('td').removeClass('highlight-day');
+                    }
+                } else {
+                    $e.find('td').removeClass('highlight-day');
+                    new Noty({
+                        type: 'information',
+                        text: 'Dates are reset.',
+                        timeout: 600
+                    }).show();
+                }
+            },
+            resetDatesLessSeven() {
+                let $t = this;
+                this.start_date = null;
+                this.end_date = null;
+
+                setTimeout(function () {
+                    $t.highlightDays(false);
+                }, 1000);
+            },
+            resetDates(e) {
+                let $btn = $(e.target);
+
+                $btn.removeClass('fa-undo').addClass('fa-refresh fa-spin');
+
+                this.start_date = null;
+                this.end_date = null;
+                this.highlightDays(false);
+
+                setTimeout(function () {
+                    $btn.removeClass('fa-refresh fa-spin').addClass('fa-undo');
+                    new Noty({
+                        type: 'information',
+                        text: 'Dates are reset.',
+                        timeout: 600
+                    }).show();
+                }, 600);
+            },
         }
     }
 </script>
