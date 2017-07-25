@@ -17,6 +17,24 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespace = 'Qwikkar\Http\Controllers';
 
     /**
+     * This namespace is applied to your api controller routes.
+     *
+     * In addition, it is set as the URL generator's root namespace.
+     *
+     * @var string
+     */
+    protected $apiNamespace = 'Qwikkar\Http\Controllers\API';
+
+    /**
+     * This namespace is applied to your admin controller routes.
+     *
+     * In addition, it is set as the URL generator's root namespace.
+     *
+     * @var string
+     */
+    protected $adminNamespace = 'Qwikkar\Http\Controllers\Admin';
+
+    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
@@ -39,7 +57,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapAdminRoutes();
     }
 
     /**
@@ -67,7 +85,22 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('api')
             ->middleware('api')
-            ->namespace($this->namespace . '\API')
+            ->namespace($this->apiNamespace)
             ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * Define the "admin" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAdminRoutes()
+    {
+        Route::prefix('admin')
+            ->middleware(['web', 'admin'])
+            ->namespace($this->adminNamespace)
+            ->group(base_path('routes/admin.php'));
     }
 }

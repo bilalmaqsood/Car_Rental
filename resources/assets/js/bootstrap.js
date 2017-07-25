@@ -85,11 +85,15 @@ axios.interceptors.response.use(function (response) {
 
 import Echo from 'laravel-echo'
 
-window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001',
-    namespace: 'Qwikkar.Events'
-});
+try {
+    window.Echo = new Echo({
+        broadcaster: 'socket.io',
+        host: window.location.hostname + ':6001',
+        namespace: 'Qwikkar.Events'
+    });
+} catch (e) {
+    console.error('Socket.io not found: https://laravel.com/docs/5.4/broadcasting#driver-prerequisites', e);
+}
 
 /**
  * Define prototypes for Class objects

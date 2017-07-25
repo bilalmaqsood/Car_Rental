@@ -88,7 +88,6 @@
                 axios.get('/api/booking').then(r => {
                     if (r.data.success.length) {
                         this.showView = true;
-                        $('#sideLoader').hide();
                         setTimeout(() => {
                             _.each(r.data.success, (b) => {
                                 if (b.status === 9)
@@ -104,6 +103,7 @@
                             }, 500);
                         }, 450);
                     }
+                    $('#sideLoader').hide();
                 });
             },
 

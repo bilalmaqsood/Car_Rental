@@ -81,13 +81,6 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        if ($user->isAdmin()) {
-            \Auth::logout();
-            return $request->expectsJson() ?
-                api_response(trans('auth.admin_fail'), Response::HTTP_UNPROCESSABLE_ENTITY) :
-                redirect()->intended($this->redirectPath());
-        }
-
         return $request->expectsJson() ?
             $this->setAPIResponse($request, $user) :
             redirect()->intended($this->redirectPath());

@@ -37,8 +37,8 @@
                     </div>
 
                     <a href="javascript:void(0)" @click="itemDetails(i)">
-                        <div class="search_car_img" :style="{'background-image': 'url(' + i.images[0] + ')', width: user.state.detailsDisplay ? '20%' : '', 'min-height':  user.state.detailsDisplay ? '100px' : ''}">
-                            <img class="img-responsive" :src="i.images[0]" alt="">
+                        <div class="search_car_img" :style="{'background-image': 'url(' + getImage(i.images) + ')', width: user.state.detailsDisplay ? '20%' : '', 'min-height':  user.state.detailsDisplay ? '100px' : ''}">
+                            <img class="img-responsive" :src="getImage(i.images)" alt="">
                             <div class="highlight-vehicle" v-if="user.state.detailsDisplay && i.id == user.state.vehicleData.id"></div>
                         </div>
                     </a>
@@ -95,6 +95,10 @@
                         User.commit('vehicle', vehicleData);
                     }
                 }, 500);
+            },
+
+            getImage(images) {
+                return images && images.length ? images[0] : '/vehicle/image/hash';
             },
 
             searchVehicles() {

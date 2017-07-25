@@ -1,24 +1,6 @@
 
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900);
-
-// Variables
-@import "variables";
-
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
-// Owl Carousel
-@import "node_modules/owl.carousel/src/scss/owl.carousel";
-
-// Font Awesome
-@import "node_modules/font-awesome/scss/font-awesome";
-
-// Eonasdan Bootstrap 3 Date/Time Picker
-@import "node_modules/eonasdan-bootstrap-datetimepicker/src/sass/bootstrap-datetimepicker";
-
-// NOTY v3
-@import "node_modules/noty/src/noty";
+// Booting the styles
+@import "bootstrap";
 
 // Designer styles
 @import "design";

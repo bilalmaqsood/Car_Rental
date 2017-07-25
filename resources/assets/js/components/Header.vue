@@ -114,39 +114,39 @@
                                                         <form class="form-inline">
                                                             <div class="form-group" :class="{ 'has-error': $v.login.email.$error }">
 
-<div class="input-group login-input">
+                                                                <div class="input-group login-input">
 
 <span class="input-group-addon">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                                                 </svg>
 </span>
-                                                                <input class="form-control" placeholder="email" type="email" @blur="$v.login.email.$touch()" v-model.trim="login.email">
+                                                                    <input class="form-control" placeholder="email" type="email" @blur="$v.login.email.$touch()" v-model.trim="login.email">
 
-</div>
+                                                                </div>
 
-                                                                
+
                                                                 <span class="help-block text-sm" v-if="$v.login.email.$error">Enter valid email</span>
                                                             </div>
                                                             <div class="form-group" :class="{ 'has-error': $v.login.password.$error }">
 
 
-<div class="input-group login-input">
+                                                                <div class="input-group login-input">
 
 <span class="input-group-addon">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon cursor-pointer" @click="authSectionView='reset'">
                                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                                                                 </svg>
 </span>
-                                                                <input class="form-control" placeholder="password" type="password" @blur="$v.login.password.$touch()" v-model.trim="login.password">
+                                                                    <input class="form-control" placeholder="password" type="password" @blur="$v.login.password.$touch()" v-model.trim="login.password">
 
-</div>
+                                                                </div>
 
-                                                                
+
                                                                 <span class="help-block text-sm" v-if="$v.login.password.$error">Enter valid password of 6 digits long</span>
-                                                            <p><span class="forgot-message">forgot your password? click the <span>padlock</span> icon to recover</span></p>
-                                                            
-</div>
+                                                                <p><span class="forgot-message">forgot your password? click the <span>padlock</span> icon to recover</span></p>
+
+                                                            </div>
                                                         </form>
                                                     </div>
 
@@ -154,43 +154,40 @@
                                                         <form class="form-inline">
                                                             <div class="form-group" :class="{ 'has-error': $v.forgot.email.$error }">
 
-<div class="input-group login-input">
+                                                                <div class="input-group login-input">
 <span class="input-group-addon">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                                                 </svg>
 </span>
-                                                                <input class="form-control" placeholder="email" type="email" @blur="$v.forgot.email.$touch()" v-model.trim="forgot.email">
-</div>
+                                                                    <input class="form-control" placeholder="email" type="email" @blur="$v.forgot.email.$touch()" v-model.trim="forgot.email">
+                                                                </div>
 
-                                                                
+
                                                             </div>
                                                             <div class="form-group" :class="{ 'has-error': $v.forgot.password.$error }">
-<div class="input-group login-input">
+                                                                <div class="input-group login-input">
 <span class="input-group-addon">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
                                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                                                                 </svg>
 </span>
-                                                                <input type="password" class="form-control" placeholder="new password" @blur="$v.forgot.password.$touch()" v-model.trim="forgot.password">
-</div>
+                                                                    <input type="password" class="form-control" placeholder="new password" @blur="$v.forgot.password.$touch()" v-model.trim="forgot.password">
+                                                                </div>
                                                             </div>
                                                             <div class="form-group" :class="{ 'has-error': $v.forgot.password_confirmation.$error }">
 
 
-
-<div class="input-group login-input">
+                                                                <div class="input-group login-input">
 <span class="input-group-addon">
                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
                                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                                                                 </svg>
 </span>
-                                                                <input type="password" class="form-control" placeholder="re-type password" @blur="$v.forgot.password_confirmation.$touch()" v-model.trim="forgot.password_confirmation">
-</div>
+                                                                    <input type="password" class="form-control" placeholder="re-type password" @blur="$v.forgot.password_confirmation.$touch()" v-model.trim="forgot.password_confirmation">
+                                                                </div>
 
 
-
-                                                                
                                                             </div>
                                                         </form>
                                                     </div>
@@ -394,8 +391,13 @@
                         text: '<b>' + r.data.success.name + '</b> has been logged in.',
                     }).show();
                     $this.resetAuthView();
-                    localStorage.reloadData = JSON.stringify(User.state);
-                    window.location.href = '/';
+
+                    if (r.data.success.type === 'admin')
+                        window.location.href = '/admin';
+                    else {
+                        localStorage.reloadData = JSON.stringify(User.state);
+                        window.location.href = '/';
+                    }
                 }).catch(function () {
                     $btn.button('reset');
                 });
@@ -448,8 +450,12 @@
                 if (r.data.success.type === 'owner' || r.data.success.type === 'client') {
                     User.commit('update', r.data.success);
                     this.$refs.home.prepareComponent();
-                } else
-                    window.location.href = '/logout';
+                } else {
+                    if (r.data.success.type === 'admin')
+                        window.location.href = '/admin';
+                    else
+                        window.location.href = '/logout';
+                }
             },
 
             showAdvanceForm() {

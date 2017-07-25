@@ -255,7 +255,7 @@ trait BookingOperations
         $booking->save();
 
         if ($signatures->has('owner'))
-            $booking->vehicle->owner->user->notify(new BookingNotify([
+            $booking->user->notify(new BookingNotify([
                 'id' => $booking->id,
                 'type' => 'Booking',
                 'status' => $booking->status,
@@ -270,14 +270,14 @@ trait BookingOperations
                 'deposit' => $booking->deposit,
             ]));
         else if ($signatures->has('client'))
-            $booking->user->notify(new BookingNotify([
+            $booking->vehicle->owner->user->notify(new BookingNotify([
                 'id' => $booking->id,
                 'type' => 'Booking',
                 'status' => $booking->status,
                 'old_status' => $oldStatus,
                 'vehicle_id' => $booking->vehicle->id,
                 'image' => $booking->vehicle->images->first(),
-                'title' => 'Booking signature\'s by owner',
+                'title' => 'Booking signature\'s by client',
                 'user' => $request->user(),
                 'vehicle' => $booking->vehicle->vehicle_name,
                 'contract_start' => $booking->start_date,
