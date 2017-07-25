@@ -85,12 +85,9 @@ axios.interceptors.response.use(function (response) {
 
 import Echo from 'laravel-echo'
 
-window.Pusher = require('pusher-js');
-
 window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: '446c210a7bb677d95919',
-    cluster: 'eu',
+    broadcaster: 'socket.io',
+    host: window.location.hostname + ':6001',
     namespace: 'Qwikkar.Events'
 });
 

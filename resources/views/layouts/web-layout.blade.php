@@ -33,6 +33,7 @@
     @include('layouts.svgs')
 
     <!-- Scripts -->
+    <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
     <script src="{{ mix('js/jst.js') }}"></script>
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>

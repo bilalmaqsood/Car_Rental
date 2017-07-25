@@ -19,7 +19,7 @@ class CreateAccountsTable extends Migration
             $table->string('title');
             $table->text('number');
             $table->text('sortcode');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->boolean('default')->default(0);
             $table->timestamps();
         });
