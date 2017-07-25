@@ -10,7 +10,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Modal title</h4>
+                    <h4 class="modal-title">Select vehicle location</h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-horizontal" style="width: 550px">
@@ -95,6 +95,7 @@
             emitCoordinates(){
              let latitude = $("#us3-lat").val();
              let longitude = $("#us3-lon").val();
+             $('#myModal').modal('hide');
              this.$emit("locationEvent",latitude+","+longitude);
 
             }
