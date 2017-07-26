@@ -568,6 +568,7 @@
                 if (this.isEdit) {
                     this.form = JSON.parse(JSON.stringify(Form));
                     this.form = val;
+                    this.updateLocationNames();
                 }
             }
         },
@@ -576,6 +577,7 @@
             if (this.isEdit) {
                 this.form = JSON.parse(JSON.stringify(Form));
                 this.form = this.vehicle;
+                this.updateLocationNames();
             }
             this.prepareComponent();
         },
@@ -596,7 +598,11 @@
             responseHandler(response) {
                 this.response = response.data.success;
                 this.form = JSON.parse(JSON.stringify(Form));
-                this.$parent.$emit('vehicleAdded', response.data.success);
+                if (this.isEdit)
+                    this.$parent.$emit('vehicleUpdate', response.data.success);
+                else
+                    this.$parent.$emit('vehicleAdded', response.data.success);
+
                 this.postSuccess = true;
             },
             prepareForm() {
@@ -723,7 +729,19 @@
             selectSeats(value) {
                 this.form.seats = value;
             },
+            updateLocationNames(){
+                    FetchLocationName(this.form.pickup_location, null, function (result) {
+                        $("#pickup_location").val(result);
+                    });
 
+                     FetchLocationName(this.form.return_location, null, function (result) {
+                        $("#return_location").val(result);
+                    });
+
+                     FetchLocationName(this.form.location, null, function (result) {
+                        $("#location").val(result);
+                    });
+            }
         }
 
     }

@@ -151,8 +151,22 @@
             };
         },
         created: function() {
+            let $this = this;
             this.$on('vehicleAdded', function(value){
-                console.log(value);
+               this.menuView='';
+                new Noty({
+                    type: 'information',
+                    text: value.make+" "+value.model+" "+value.make + " Added!",
+                }).show();
+                this.vehicle=value;
+            });
+
+            this.$on('vehicleUpdate', function(value){
+               this.menuView='';
+                new Noty({
+                    type: 'information',
+                    text: value.make+" "+value.model+" "+value.make + " Updated!",
+                }).show();
                 this.vehicle=value;
             });
         },
