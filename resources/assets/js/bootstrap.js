@@ -12,8 +12,6 @@ require('jquery.easing');
 
 window.$ = $.extend(require('jquery-ui-dist/jquery-ui.js'));
 
-require('./locationpicker.jquery');
-
 require('owl.carousel');
 
 require('jquery.payment');

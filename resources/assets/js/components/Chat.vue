@@ -12,17 +12,16 @@
         </div>
 
         <div class="chat_btn_wrapper">
-<div class="input-group login-input">
-            <input class="form-control" placeholder="Your message" v-model="message">
-<div class="input-group-addon">
-<button @click="sendMessage">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#send"></use>
-                </svg>
-            </button>
-</div>
-</div>
-            
+            <div class="input-group login-input">
+                <input class="form-control" placeholder="Your message" v-model="message">
+                <div class="input-group-addon">
+                    <button @click="sendMessage">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#send"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
