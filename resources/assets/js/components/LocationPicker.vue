@@ -53,6 +53,7 @@
         },
 
         mounted() {
+            require('../locationpicker.jquery');
             var $this = this;
             $('#myModal').on('hidden.bs.modal', function () {
 

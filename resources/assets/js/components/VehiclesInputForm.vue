@@ -9,8 +9,11 @@
             </div>
             <div class="vehicle_registration">
                 <div class="registration_number">
-                    <b>Vehicle registration number</b>
-                    <a href="javascript:void(0);" @click="processForm">
+                    <div class="form-group" :class="{'has-error': $v.form.registration.$error}">
+                                <input type="text" class="form-control" placeholder="registration number" v-model="form.registration" @blur="$v.form.registration.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.registration.$error">Enter valid registration number</p>
+                            </div>
+                    <a href="javascript:void(0);" @click="verifyByAVLA">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
                         </svg>
@@ -18,12 +21,6 @@
                 </div>
                 <div class="card_recured">
                     <ul>
-                        <li>
-                            <div class="form-group" :class="{'has-error': $v.form.registration.$error}">
-                                <input type="text" class="form-control" placeholder="registration number" v-model="form.registration" @blur="$v.form.registration.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.registration.$error">Enter valid registration number</p>
-                            </div>
-                        </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.make.$error}">
                                 <input type="text" class="form-control" placeholder="vehicle make" v-model="form.make" @blur="$v.form.make.$touch()">
@@ -69,7 +66,12 @@
 
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.fuel.$error}">
-                                <input type="text" class="form-control" placeholder="fuel type" v-model="form.fuel" @blur="$v.form.fuel.$touch()">
+                                <select v-model="form.fuel" class="form-control">
+                                  <option disabled value="">Please select one</option>
+                                  <option>Diesel</option>
+                                  <option>Petrol</option>
+                                  <option>octane</option>
+                                </select>
                                 <p class=" help-block text-sm" v-if="$v.form.fuel.$error">Enter fuel type</p>
                             </div>
                         </li>
@@ -87,19 +89,35 @@
                             </div>
                         </li>
                         <li class="half-group">
-                            <div class="form-group" :class="{'has-error': $v.form.transmission.$error}">
-                                <input type="text" class="form-control" placeholder="transmission" v-model="form.transmission" @blur="$v.form.transmission.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.transmission.$error">Enter transmission </p>
+                            <div class="form-group" :class="{'has-error': $v.form.seats.$error}">
+                                <!-- <input type="text" class="form-control" placeholder="5 seats" v-model="form.seats" @blur="$v.form.seats.$touch()"> -->
+                                <button @click="selectSeats(5)" class="btn btn-block seats-button" :class="{'btn-selected': form.seats==5 }">5 seats</button>
+                                <p class=" help-block text-sm" v-if="$v.form.seats.$error">Enter vehicle seats </p>
 
                             </div>
                         </li>
                         <li class="half-group">
                             <div class="form-group" :class="{'has-error': $v.form.seats.$error}">
-                                <input type="text" class="form-control" placeholder="5 seats" v-model="form.seats" @blur="$v.form.seats.$touch()">
+                                <!-- <input type="text" class="form-control" placeholder="5 seats" v-model="form.seats" @blur="$v.form.seats.$touch()"> -->
+                                 <button @click="selectSeats(7)" class="btn btn-block seats-button" :class="{'btn-selected': form.seats==7 }">7 seats</button>
                                 <p class=" help-block text-sm" v-if="$v.form.seats.$error">Enter vehicle seats </p>
 
                             </div>
                         </li>
+                        <li class="half-group">
+                            <div class="form-group" :class="{'has-error': $v.form.transmission.$error}">
+                                <div class="form-group" :class="{'has-error': $v.form.transmission.$error}">
+                                <select v-model="form.transmission" class="form-control">
+                                  <option disabled value="">transmission</option>
+                                  <option>Manual</option>
+                                  <option>Automatic</option>
+                                </select>
+                              </div>
+                                <p class=" help-block text-sm" v-if="$v.form.transmission.$error">Enter transmission </p>
+
+                            </div>
+                        </li>
+                        
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.available_from.$error}">
                                 <input type="text" class="form-control available_from" placeholder="Available from" v-model="form.available_from" @blur="$v.form.available_from.$touch()">
@@ -135,7 +153,7 @@
                             <div class="form-group" :class="{'has-error': $v.form.pickup_location.$error}">
 
                                 <div class="input-group login-input">
-                                    <input type="text" class="form-control" placeholder="pickup location" v-model="form.pickup_location" @blur="$v.form.pickup_location.$touch()">
+                                    <input type="text" class="form-control" placeholder="pickup location"id="pickup_location" @blur="$v.form.pickup_location.$touch()">
                                     <div class="input-group-addon">
                                         <span>
                                             <svg @click="showLocationPicker('pickup_location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
@@ -152,7 +170,7 @@
 
 
                                 <div class="input-group login-input">
-                                    <input type="text" class="form-control" placeholder="return location" v-model="form.return_location" @blur="$v.form.return_location.$touch()">
+                                    <input type="text" class="form-control" placeholder="return location" id="return_location" @blur="$v.form.return_location.$touch()">
                                     <div class="input-group-addon">
                                         <span>
                                             <svg @click="showLocationPicker('return_location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
@@ -168,7 +186,7 @@
                             <div class="form-group" :class="{'has-error': $v.form.location.$error}">
 
                                 <div class="input-group login-input">
-                                    <input type="text" class="form-control" placeholder="vehicle location in latitude and longitude" v-model="form.location" @blur="$v.form.location.$touch()">
+                                    <input type="text" class="form-control" placeholder="vehicle location in latitude and longitude" id="location" @blur="$v.form.location.$touch()">
                                     <div class="input-group-addon">
                                         <span>
                                             <svg @click="showLocationPicker('location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
@@ -304,7 +322,8 @@
                             <button id="uploadImages" class="primary-button">Upload Images</button>
                             <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple" value="upload">
                             <button id="documents" class="primary-button">Upload documents</button>
-                            <input type="file" class="hidden documentsUpload" name="documents[]" multiple="multiple"></li>
+                            <input type="file" class="hidden documentsUpload" name="documents[]" multiple="multiple">
+                            <button  @click="processForm" class="primary-button">Save Vehicle</button></li>
                     </ul>
                 </div>
             </div>
@@ -540,28 +559,29 @@
             imagesResponse(r) {
                 this.form.images.push(r.data.success);
             },
-            documentsResponse(r) {
-                this.form.documents.push(r.data.success);
 
-            },
             prepareComponent() {
-
-
-                $('.registration_year').datetimepicker({
-                    format: 'YYYY',
-                    viewMode: 'years'
-                });
-
+                let $this = this;
                 $('.available_to').datetimepicker({
                     format: 'YYYY-MM-DD',
                 }).on('dp.change', function (e) {
                     $scope.form.available_to = $(".available_to").val();
                 });
+
                 $('.available_from').datetimepicker({
                     format: 'YYYY-MM-DD',
                 }).on('dp.change', function (e) {
                     $scope.form.available_from = $(".available_from").val();
                 });
+
+
+                $('.registration_year').datetimepicker({
+                   format: 'YYYY',
+                    viewMode: 'years'
+                }).on('dp.change', function (e) {
+                    $scope.form.year = $(".registration_year").val();
+                });
+
 
                 $("#documents").click(function () {
                     $('#centerLoader').show();
@@ -569,11 +589,15 @@
                     $(".documentsUpload").change(function () {
                         $.map(this.files, function (val) {
                             var reader = new FileReader();
+                            let name = val.name.substring(0, val.name.lastIndexOf('.'));
                             reader.readAsDataURL(val);
                             var fd = new window.FormData();
                             fd.append('upload', val);
                             reader.onload = function (e) {
-                                axios.post('/api/upload/document', fd).then($scope.documentsResponse);
+                                axios.post('/api/upload/document', fd).then( (r)=> {
+                                    $this.form.documents.push({name: name,path: r.data.success });
+
+                                });
 
                             };
                         });
@@ -606,7 +630,50 @@
                 $('#myModal').appendTo("body").modal('show');
             },
             saveLocationCoordinates(response) {
+                this.getLocationName(response);
                 this.form[this.selectedLocation] = response;
+            },
+            verifyByAVLA(){
+                let param = {registration_number: this.form.registration}
+                axios.post('/api/driver-and-vehicle-licensing-agency', param)
+                     .then((r)=>{
+                        if(r.data.success){
+                        this.form.year = r.data.success.Response.DataItems.VehicleRegistration.YearOfManufacture;
+                        this.form.make = r.data.success.Response.DataItems.VehicleRegistration.Make;
+                        this.form.model  = r.data.success.Response.DataItems.VehicleRegistration.Model;
+                        }
+                     });
+            },
+            selectSeats(value){
+                this.form.seats = value;
+            },
+            getLocationName(location){
+                let object = $("#"+this.selectedLocation);
+                if (location.length > 0) {
+                  
+                  var geocoder;
+                    geocoder = new google.maps.Geocoder();
+                    var latlng = new google.maps.LatLng(location.split(",")[0], location.split(",")[1]);
+
+                        geocoder.geocode(
+                            {'latLng': latlng}, 
+                            function(results, status) {
+                                if (status == google.maps.GeocoderStatus.OK) {
+                                        if (results[0]) {
+                                            $(object).val(results[0].formatted_address);
+                                        }
+                                        else  {
+                                            alert("address not found");
+                                        }
+                                }
+                                 else {
+                                    alert("Geocoder failed due to: " + status);
+                                }
+                            }
+                        );
+
+                }
+
             }
 
         }
