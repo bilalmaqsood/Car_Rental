@@ -10,9 +10,11 @@
             <div class="vehicle_registration">
                 <div class="registration_number">
                     <div class="form-group" :class="{'has-error': $v.form.registration.$error}">
-                                <input type="text" class="form-control" placeholder="registration number" v-model="form.registration" @blur="$v.form.registration.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.registration.$error">Enter valid registration number</p>
-                            </div>
+                        <input type="text" class="form-control" placeholder="registration number"
+                               v-model="form.registration" @blur="$v.form.registration.$touch()">
+                        <p class=" help-block text-sm" v-if="$v.form.registration.$error">
+                            Enter valid registration number</p>
+                    </div>
                     <a href="javascript:void(0);" @click="verifyByAVLA">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
@@ -23,19 +25,24 @@
                     <ul>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.make.$error}">
-                                <input type="text" class="form-control" placeholder="vehicle make" v-model="form.make" @blur="$v.form.make.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.make.$error">Enter valid make of vehicle</p>
+                                <input type="text" class="form-control" placeholder="vehicle make" v-model="form.make"
+                                       @blur="$v.form.make.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.make.$error">
+                                    Enter valid make of vehicle</p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.model.$error}">
-                                <input type="text" class="form-control" placeholder="vehicle model" v-model="form.model" @blur="$v.form.model.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.model.$error">Enter valid model of vehicle</p>
+                                <input type="text" class="form-control" placeholder="vehicle model" v-model="form.model"
+                                       @blur="$v.form.model.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.model.$error">
+                                    Enter valid model of vehicle</p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.variant.$error}">
-                                <input type="text" class="form-control" placeholder="vehicle variant" v-model="form.variant" @blur="$v.form.variant.$touch()">
+                                <input type="text" class="form-control" placeholder="vehicle variant"
+                                       v-model="form.variant" @blur="$v.form.variant.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.variant.$error">Enter vehicle variant</p>
                             </div>
                         </li>
@@ -43,11 +50,15 @@
                             <div class="form-group" :class="{'has-error': $v.form.year.$error}">
 
                                 <div class="input-group login-input">
-                                    <input type="text" class="form-control registration_year" placeholder="registration year" v-model="form.year" @blur="$v.form.year.$touch()">
+                                    <input type="text" class="form-control registration_year"
+                                           placeholder="registration year" v-model="form.year"
+                                           @blur="$v.form.year.$touch()">
                                     <div class="input-group-addon">
                                         <span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15"
+                                                 class="svg-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                     xlink:href="#availability_results"></use>
                                             </svg>
                                         </span>
                                     </div>
@@ -59,7 +70,8 @@
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.mileage.$error}">
-                                <input type="text" class="form-control" placeholder="starting mileage" v-model="form.mileage" @blur="$v.form.mileage.$touch()">
+                                <input type="text" class="form-control" placeholder="starting mileage"
+                                       v-model="form.mileage" @blur="$v.form.mileage.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.mileage.$error">Enter vehicle mileage</p>
                             </div>
                         </li>
@@ -67,23 +79,25 @@
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.fuel.$error}">
                                 <select v-model="form.fuel" class="form-control">
-                                  <option disabled value="">Please select one</option>
-                                  <option>Diesel</option>
-                                  <option>Petrol</option>
-                                  <option>octane</option>
+                                    <option disabled value="">Please select one</option>
+                                    <option>Diesel</option>
+                                    <option>Petrol</option>
+                                    <option>octane</option>
                                 </select>
                                 <p class=" help-block text-sm" v-if="$v.form.fuel.$error">Enter fuel type</p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.mpg.$error}">
-                                <input type="text" class="form-control" placeholder="mpg" v-model="form.mpg" @blur="$v.form.mpg.$touch()">
+                                <input type="text" class="form-control" placeholder="mpg" v-model="form.mpg"
+                                       @blur="$v.form.mpg.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.mpg.$error">Enter mpg </p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.mpg_eco.$error}">
-                                <input type="text" class="form-control" placeholder="mpg (economy)" v-model="form.mpg_eco" @blur="$v.form.mpg_eco.$touch()">
+                                <input type="text" class="form-control" placeholder="mpg (economy)"
+                                       v-model="form.mpg_eco" @blur="$v.form.mpg_eco.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.mpg_eco.$error">Enter mpg(economy) </p>
 
                             </div>
@@ -91,7 +105,9 @@
                         <li class="half-group">
                             <div class="form-group" :class="{'has-error': $v.form.seats.$error}">
                                 <!-- <input type="text" class="form-control" placeholder="5 seats" v-model="form.seats" @blur="$v.form.seats.$touch()"> -->
-                                <button @click="selectSeats(5)" class="btn btn-block seats-button" :class="{'btn-selected': form.seats==5 }">5 seats</button>
+                                <button @click="selectSeats(5)" class="btn btn-block seats-button"
+                                        :class="{'btn-selected': form.seats==5 }">5 seats
+                                </button>
                                 <p class=" help-block text-sm" v-if="$v.form.seats.$error">Enter vehicle seats </p>
 
                             </div>
@@ -99,7 +115,9 @@
                         <li class="half-group">
                             <div class="form-group" :class="{'has-error': $v.form.seats.$error}">
                                 <!-- <input type="text" class="form-control" placeholder="5 seats" v-model="form.seats" @blur="$v.form.seats.$touch()"> -->
-                                 <button @click="selectSeats(7)" class="btn btn-block seats-button" :class="{'btn-selected': form.seats==7 }">7 seats</button>
+                                <button @click="selectSeats(7)" class="btn btn-block seats-button"
+                                        :class="{'btn-selected': form.seats==7 }">7 seats
+                                </button>
                                 <p class=" help-block text-sm" v-if="$v.form.seats.$error">Enter vehicle seats </p>
 
                             </div>
@@ -107,27 +125,31 @@
                         <li class="half-group">
                             <div class="form-group" :class="{'has-error': $v.form.transmission.$error}">
                                 <div class="form-group" :class="{'has-error': $v.form.transmission.$error}">
-                                <select v-model="form.transmission" class="form-control">
-                                  <option disabled value="">transmission</option>
-                                  <option>Manual</option>
-                                  <option>Automatic</option>
-                                </select>
-                              </div>
-                                <p class=" help-block text-sm" v-if="$v.form.transmission.$error">Enter transmission </p>
+                                    <select v-model="form.transmission" class="form-control">
+                                        <option disabled value="">transmission</option>
+                                        <option>Manual</option>
+                                        <option>Automatic</option>
+                                    </select>
+                                </div>
+                                <p class=" help-block text-sm" v-if="$v.form.transmission.$error">
+                                    Enter transmission </p>
 
                             </div>
                         </li>
-                        
+
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.available_from.$error}">
-                                <input type="text" class="form-control available_from" placeholder="Available from" v-model="form.available_from" @blur="$v.form.available_from.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.available_from.$error">Enter available from </p>
+                                <input type="text" class="form-control available_from" placeholder="Available from"
+                                       v-model="form.available_from" @blur="$v.form.available_from.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.available_from.$error">
+                                    Enter available from </p>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.available_to.$error}">
-                                <input type="text" class="form-control available_to" placeholder="available to" v-model="form.available_to" @blur="$v.form.available_to.$touch()">
+                                <input type="text" class="form-control available_to" placeholder="available to"
+                                       v-model="form.available_to" @blur="$v.form.available_to.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.available_to.$error">Enter available to</p>
 
                             </div>
@@ -135,11 +157,13 @@
                         <li class="checkbox-form">
                             <div class="form-group">
                                 <label>
-                                    <input type="checkbox" class="form-control" id="pickup" placeholder="yes / no if pick by owner" v-model="form.pickup">
+                                    <input type="checkbox" class="form-control" id="pickup"
+                                           placeholder="yes / no if pick by owner" v-model="form.pickup">
                                     Pickup by owner
                                 </label>
                                 <label>
-                                    <input type="checkbox" class="form-control" id="delivery" placeholder="yes / no if delivery by owner" v-model="form.delivery">
+                                    <input type="checkbox" class="form-control" id="delivery"
+                                           placeholder="yes / no if delivery by owner" v-model="form.delivery">
                                     Delivery by owner
                                 </label>
                             </div>
@@ -153,16 +177,21 @@
                             <div class="form-group" :class="{'has-error': $v.form.pickup_location.$error}">
 
                                 <div class="input-group login-input">
-                                    <input type="text" class="form-control" placeholder="pickup location"id="pickup_location" @blur="$v.form.pickup_location.$touch()">
+                                    <input type="text" class="form-control" placeholder="pickup location"
+                                           id="pickup_location" @blur="$v.form.pickup_location.$touch()">
                                     <div class="input-group-addon">
                                         <span>
-                                            <svg @click="showLocationPicker('pickup_location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                                            <svg @click="showLocationPicker('pickup_location')"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20"
+                                                 class="svg-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                     xlink:href="#lcotion_icon"></use>
                                             </svg>
                                         </span>
                                     </div>
                                 </div>
-                                <p class=" help-block text-sm" v-if="$v.form.pickup_location.$error">Enter pickup location </p>
+                                <p class=" help-block text-sm" v-if="$v.form.pickup_location.$error">
+                                    Enter pickup location </p>
                             </div>
                         </li>
                         <li>
@@ -170,70 +199,92 @@
 
 
                                 <div class="input-group login-input">
-                                    <input type="text" class="form-control" placeholder="return location" id="return_location" @blur="$v.form.return_location.$touch()">
+                                    <input type="text" class="form-control" placeholder="return location"
+                                           id="return_location" @blur="$v.form.return_location.$touch()">
                                     <div class="input-group-addon">
                                         <span>
-                                            <svg @click="showLocationPicker('return_location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                                            <svg @click="showLocationPicker('return_location')"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20"
+                                                 class="svg-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                     xlink:href="#lcotion_icon"></use>
                                             </svg>
                                         </span>
                                     </div>
                                 </div>
-                                <p class=" help-block text-sm" v-if="$v.form.return_location.$error">Enter return location</p>
+                                <p class=" help-block text-sm" v-if="$v.form.return_location.$error">
+                                    Enter return location</p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.location.$error}">
 
                                 <div class="input-group login-input">
-                                    <input type="text" class="form-control" placeholder="vehicle location in latitude and longitude" id="location" @blur="$v.form.location.$touch()">
+                                    <input type="text" class="form-control"
+                                           placeholder="vehicle location in latitude and longitude" id="location"
+                                           @blur="$v.form.location.$touch()">
                                     <div class="input-group-addon">
                                         <span>
-                                            <svg @click="showLocationPicker('location')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                                            <svg @click="showLocationPicker('location')"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20"
+                                                 class="svg-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                     xlink:href="#lcotion_icon"></use>
                                             </svg>
                                         </span>
                                     </div>
                                 </div>
-                                <p class=" help-block text-sm" v-if="$v.form.location.$error">Enter vehicle location in latitude and longitude </p>
+                                <p class=" help-block text-sm" v-if="$v.form.location.$error">
+                                    Enter vehicle location in latitude and longitude </p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.delivery_charges.$error}">
-                                <input type="text" class="form-control" placeholder="delivery charges per week" v-model="form.delivery_charges" @blur="$v.form.delivery_charges.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.delivery_charges.$error">Delivery charges per week</p>
+                                <input type="text" class="form-control" placeholder="delivery charges per week"
+                                       v-model="form.delivery_charges" @blur="$v.form.delivery_charges.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.delivery_charges.$error">
+                                    Delivery charges per week</p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.rent.$error}">
-                                <input type="text" class="form-control" placeholder="rental cost/week" v-model="form.rent" @blur="$v.form.rent.$touch()">
+                                <input type="text" class="form-control" placeholder="rental cost/week"
+                                       v-model="form.rent" @blur="$v.form.rent.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.rent.$error">Rent per week</p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.insurance.$error}">
-                                <input type="text" class="form-control" placeholder="insurance cost/week" v-model="form.insurance" @blur="$v.form.insurance.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.insurance.$error">Enter vehicle insurance </p>
+                                <input type="text" class="form-control" placeholder="insurance cost/week"
+                                       v-model="form.insurance" @blur="$v.form.insurance.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.insurance.$error">
+                                    Enter vehicle insurance </p>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.mile_cap.$error}">
-                                <input type="text" class="form-control" placeholder="mileage Cap/week" v-model="form.mile_cap" @blur="$v.form.mile_cap.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.mile_cap.$error">Enter mileage Cap per week </p>
+                                <input type="text" class="form-control" placeholder="mileage Cap/week"
+                                       v-model="form.mile_cap" @blur="$v.form.mile_cap.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.mile_cap.$error">
+                                    Enter mileage Cap per week </p>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.after_mile.$error}">
-                                <input type="text" class="form-control" placeholder="After mileage per mile price" v-model="form.after_mile" @blur="$v.form.after_mile.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.after_mile.$error">after mileage per mile price</p>
+                                <input type="text" class="form-control" placeholder="After mileage per mile price"
+                                       v-model="form.after_mile" @blur="$v.form.after_mile.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.after_mile.$error">
+                                    after mileage per mile price</p>
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.deposit.$error}">
-                                <input type="text" class="form-control" placeholder="deposit on vehicle booking" v-model="form.deposit" @blur="$v.form.deposit.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.deposit.$error">Enter deposit on vehicle booking </p>
+                                <input type="text" class="form-control" placeholder="deposit on vehicle booking"
+                                       v-model="form.deposit" @blur="$v.form.deposit.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.deposit.$error">
+                                    Enter deposit on vehicle booking </p>
 
                             </div>
                         </li>
@@ -252,7 +303,8 @@
                                 </div>
 
 
-                                <div v-if="form.discounts.length>0" v-for="discount in form.discounts" class="label label-success discount">
+                                <div v-if="form.discounts.length>0" v-for="discount in form.discounts"
+                                     class="label label-success discount">
                                     <p>Week {{discount.week}} {{discount.percent}}</p>
                                     <i class="fa fa-remove clickable" @click="pop(discount)"></i>
                                 </div>
@@ -264,71 +316,92 @@
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.extension.$error}">
-                                <input type="text" class="form-control" placeholder="Contract Extension Weeks" v-model="form.extension" @blur="$v.form.extension.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.extension.$error">Enter Contract Extension Weeks  </p>
+                                <input type="text" class="form-control" placeholder="Contract Extension Weeks"
+                                       v-model="form.extension" @blur="$v.form.extension.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.extension.$error">
+                                    Enter Contract Extension Weeks  </p>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.license_years.$error}">
-                                <input type="text" class="form-control" placeholder="license older than years" v-model="form.license_years" @blur="$v.form.license_years.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.license_years.$error">Enter license older than years</p>
+                                <input type="text" class="form-control" placeholder="license older than years"
+                                       v-model="form.license_years" @blur="$v.form.license_years.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.license_years.$error">
+                                    Enter license older than years</p>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.pco_years.$error}">
-                                <input type="text" class="form-control" placeholder="license older than years" v-model="form.pco_years" @blur="$v.form.pco_years.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.pco_years.$error">PCO license older than years</p>
+                                <input type="text" class="form-control" placeholder="license older than years"
+                                       v-model="form.pco_years" @blur="$v.form.pco_years.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.pco_years.$error">
+                                    PCO license older than years</p>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.driver_year.$error}">
-                                <input type="text" class="form-control" placeholder="license older than years" v-model="form.driver_year" @blur="$v.form.driver_year.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.driver_year.$error">PCO license older than years</p>
+                                <input type="text" class="form-control" placeholder="license older than years"
+                                       v-model="form.driver_year" @blur="$v.form.driver_year.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.driver_year.$error">
+                                    PCO license older than years</p>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.license_points.$error}">
-                                <input type="text" class="form-control" placeholder="maximum points on license" v-model="form.license_points" @blur="$v.form.license_points.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.license_points.$error">maximum points on license</p>
+                                <input type="text" class="form-control" placeholder="maximum points on license"
+                                       v-model="form.license_points" @blur="$v.form.license_points.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.license_points.$error">
+                                    maximum points on license</p>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.no_fault_accident.$error}">
-                                <input type="text" class="form-control" placeholder="year since last accident with no driver fault" v-model="form.no_fault_accident" @blur="$v.form.no_fault_accident.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.no_fault_accident.$error">maximum points on license</p>
+                                <input type="text" class="form-control"
+                                       placeholder="year since last accident with no driver fault"
+                                       v-model="form.no_fault_accident" @blur="$v.form.no_fault_accident.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.no_fault_accident.$error">
+                                    maximum points on license</p>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.fault_accident.$error}">
-                                <input type="text" class="form-control" placeholder="year since last accident with driver fault" v-model="form.fault_accident" @blur="$v.form.fault_accident.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.fault_accident.$error">year since last accident with driver fault</p>
+                                <input type="text" class="form-control"
+                                       placeholder="year since last accident with driver fault"
+                                       v-model="form.fault_accident" @blur="$v.form.fault_accident.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.fault_accident.$error">
+                                    year since last accident with driver fault</p>
 
                             </div>
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.notes.$error}">
-                                <input type="text" class="form-control" placeholder="important notes for vehicle" v-model="form.notes" @blur="$v.form.notes.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.notes.$error">important notes for vehicle</p>
+                                <input type="text" class="form-control" placeholder="important notes for vehicle"
+                                       v-model="form.notes" @blur="$v.form.notes.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.notes.$error">
+                                    important notes for vehicle</p>
 
                             </div>
                         </li>
                         <li>
                             <button id="uploadImages" class="primary-button">Upload Images</button>
-                            <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple" value="upload">
+                            <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple"
+                                   value="upload">
                             <button id="documents" class="primary-button">Upload documents</button>
                             <input type="file" class="hidden documentsUpload" name="documents[]" multiple="multiple">
-                            <button  @click="processForm" class="primary-button">Save Vehicle</button></li>
+                            <button @click="processForm" class="primary-button">Save Vehicle</button>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
-        <location-coordinates-picker :location="location" @locationEvent="saveLocationCoordinates"></location-coordinates-picker>
+        <location-coordinates-picker :location="location"
+                                     @locationEvent="saveLocationCoordinates"></location-coordinates-picker>
     </div>
 </template>
 <script>
@@ -576,7 +649,7 @@
 
 
                 $('.registration_year').datetimepicker({
-                   format: 'YYYY',
+                    format: 'YYYY',
                     viewMode: 'years'
                 }).on('dp.change', function (e) {
                     $scope.form.year = $(".registration_year").val();
@@ -594,8 +667,8 @@
                             var fd = new window.FormData();
                             fd.append('upload', val);
                             reader.onload = function (e) {
-                                axios.post('/api/upload/document', fd).then( (r)=> {
-                                    $this.form.documents.push({name: name,path: r.data.success });
+                                axios.post('/api/upload/document', fd).then((r) => {
+                                    $this.form.documents.push({name: name, path: r.data.success});
 
                                 });
 
@@ -630,51 +703,26 @@
                 $('#myModal').appendTo("body").modal('show');
             },
             saveLocationCoordinates(response) {
-                this.getLocationName(response);
+                var $this = this;
+                FetchLocationName(response, null, function (result) {
+                    $("#" + $this.selectedLocation).val(result);
+                });
                 this.form[this.selectedLocation] = response;
             },
-            verifyByAVLA(){
+            verifyByAVLA() {
                 let param = {registration_number: this.form.registration}
                 axios.post('/api/driver-and-vehicle-licensing-agency', param)
-                     .then((r)=>{
-                        if(r.data.success){
-                        this.form.year = r.data.success.Response.DataItems.VehicleRegistration.YearOfManufacture;
-                        this.form.make = r.data.success.Response.DataItems.VehicleRegistration.Make;
-                        this.form.model  = r.data.success.Response.DataItems.VehicleRegistration.Model;
+                    .then((r) => {
+                        if (r.data.success) {
+                            this.form.year = r.data.success.Response.DataItems.VehicleRegistration.YearOfManufacture;
+                            this.form.make = r.data.success.Response.DataItems.VehicleRegistration.Make;
+                            this.form.model = r.data.success.Response.DataItems.VehicleRegistration.Model;
                         }
-                     });
+                    });
             },
-            selectSeats(value){
+            selectSeats(value) {
                 this.form.seats = value;
             },
-            getLocationName(location){
-                let object = $("#"+this.selectedLocation);
-                if (location.length > 0) {
-                  
-                  var geocoder;
-                    geocoder = new google.maps.Geocoder();
-                    var latlng = new google.maps.LatLng(location.split(",")[0], location.split(",")[1]);
-
-                        geocoder.geocode(
-                            {'latLng': latlng}, 
-                            function(results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-                                        if (results[0]) {
-                                            $(object).val(results[0].formatted_address);
-                                        }
-                                        else  {
-                                            alert("address not found");
-                                        }
-                                }
-                                 else {
-                                    alert("Geocoder failed due to: " + status);
-                                }
-                            }
-                        );
-
-                }
-
-            }
 
         }
 

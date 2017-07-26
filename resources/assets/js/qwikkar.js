@@ -9,7 +9,9 @@ require('./bootstrap');
 
 require('./locationpicker.jquery');
 
-require('./design');
+var FetchLocationName = require('./design');
+
+require('./FetchLocationName');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

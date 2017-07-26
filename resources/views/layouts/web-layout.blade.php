@@ -29,7 +29,7 @@
 
     @include('layouts.svgs')
 <!-- <script   type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0&sensor=false&libraries=places'></script> -->
-
+    <script type="text/javascript"  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0&libraries=places"></script>
     <!-- Scripts -->
     <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
     <script src="{{ mix('js/manifest.js') }}"></script>
@@ -37,7 +37,6 @@
     <script src="{{ mix('js/qwikkar.js') }}"></script>
         <!-- <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0&sensor=false&libraries=places'></script> -->
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0"></script>
 
 </body>
 </html>

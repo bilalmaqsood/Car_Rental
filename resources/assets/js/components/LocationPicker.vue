@@ -63,7 +63,9 @@
 
                         $this.latitude = $this.location.split(",")[0]?$this.location.split(",")[0]:51.5073509;
                         $this.longitude = $this.location.split(",")[1]?$this.location.split(",")[1]:-0.12775829999998223;
-
+                        FetchLocationName($this.latitude, $this.longitude , function (result) {
+                            $("#us3-address").val(result);
+                        });
                              $('#us3').locationpicker({
                                 location: {
                                     latitude: $this.latitude,
