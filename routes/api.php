@@ -21,6 +21,8 @@ Route::post('/auth', '\Qwikkar\Http\Controllers\Auth\LoginController@login');
 
 Route::post('/register/{type}', 'RegisterController');
 
+Route::post('/validate/register/{type}', 'ValidationController@registerValidate');
+
 Route::get('/search/{type}', 'SearchController');
 
 Route::post('/forgot', '\Qwikkar\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail');

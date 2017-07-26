@@ -288,7 +288,13 @@
                     });
                 }
                 else if (this.user_type === 'client') {
-                    this.step = 'driver_info';
+                    let $this=this;
+                    let $btn = $(e.target).button('loading');
+                    axios.post('/api/validate/register/' + this.user_type, this.basic_info).then(function (r) {
+                        $this.step = 'driver_info';
+                    }).catch(function (r) {
+                        $btn.button('reset');
+                    });
                     setTimeout(function () {
                         $('.certificate-expiration').datetimepicker({
                             format: 'MM/DD/YYYY',
