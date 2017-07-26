@@ -111,3 +111,23 @@
         background: #6f931e;
     }
 }
+
+.main_profile_container .profile_content .primary-button {
+    margin: 0;
+    display: inline-block;
+}
+
+.primary-button.danger-button {
+    background-color: #bf5329;
+
+    &:hover {
+        background-color: #e65e2f;
+    }
+}
+
+.add-signature {
+    canvas {
+        width: 100%;
+        height: 50vh;
+    }
+}
