@@ -7,6 +7,12 @@
 
 require('./bootstrap');
 
+require('metismenu');
+require('./admin/jquery.slimscroll');
+require('./admin/waves');
+
+require('./admin/layout');
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -20,5 +26,5 @@ Vue.filter('date', require('./filters/date'));
 Vue.filter('currency', require('./filters/currency'));
 
 const admin = new Vue({
-    el: '#admin'
+    el: '#wrapper'
 });

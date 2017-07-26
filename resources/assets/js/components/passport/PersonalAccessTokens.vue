@@ -47,7 +47,7 @@
                                 </td>
 
                                 <!-- Delete Button -->
-                                <td style="vertical-align: middle;">
+                                <td style="vertical-align: middle; text-align: right;">
                                     <a class="action-link text-danger" @click="revoke(token)">
                                         Delete
                                     </a>
