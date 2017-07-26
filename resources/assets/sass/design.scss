@@ -1474,15 +1474,15 @@ padding-top: 10px;
 }
 
 .main_profile_container {
-    width: 50%;
-    position: absolute;
-    z-index: 60;
     background: rgba(255, 255, 255, 0.91);
     float: right;
-    right: 0;
-    height: 100%;
-    overflow: auto;
-    top: 0;
+    width: 50%;
+}
+
+.signature-container {
+    background: rgba(255, 255, 255, 0.91);
+    float: right;
+    width: 40%;
 }
 
 .profile_top_content {
@@ -1544,11 +1544,11 @@ padding-top: 10px;
 }
 
 .img_box {
-    width: 50%;
+    width: 45%;
     float: left;
     background-size: cover !important;
     background-position-x: center !important;
-    min-height: 175px;
+    min-height: 220px;
 }
 
 .img_box img {
@@ -1557,9 +1557,9 @@ padding-top: 10px;
 }
 
 .profile_content {
-    width: 100%;
+    width: 55%;
     float: left;
-    padding-left: 15px;
+    padding-left: 5px;
 }
 
 .profile_content h3 {
@@ -1628,11 +1628,6 @@ padding-top: 10px;
 
 .svg-icon-booking {
     height: 28px;
-}
-
-.pofile_content_wrapper:nth-child(2n) .profile_content p:nth-child(3n) {
-    font-weight: bold;
-    margin-bottom: 6px;
 }
 
 .main_profile_container .filter_hied_btn {
@@ -2927,10 +2922,14 @@ button:disabled {
     text-align: center;
     width: 150px;
 }
+
+.primary-button:focus,
 .primary-button:hover {
+    background: #6f931e none repeat scroll 0 0;
     text-decoration: none;
     color: #fff;
 }
+
 .seats-button.btn-selected {
     background: #87af1e none repeat scroll 0 0;
     border: medium none;
@@ -2942,6 +2941,7 @@ button:disabled {
     text-align: center;
     width: 100%;
 }
+
 .seats-button {
     background: #fff;
      border: medium none;
@@ -2953,6 +2953,7 @@ button:disabled {
     text-align: center;
     width: 100%;
 }
+
 .login-input .input-group-addon {
     background: none;
     border-radius: 0;

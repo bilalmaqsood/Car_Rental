@@ -10,7 +10,7 @@
                     <p>
                         Full name<span v-on:click="activateInEditMode('name')" v-show="isEditing!=='name'">{{User.state.auth.name}}</span>
                         <span v-show="isEditing=='name'">
-                            <input v-model="User.state.auth.name" type="text" class="form-control name" @blur="activateInEditMode(null)" @keyup="track">
+                            <input v-model="User.state.auth.name" type="text" class="form-control name" @blur="activateInEditMode(null)" @keyup="track('name')">
                         </span>
                     </p>
                     <p>E-mail<span>{{User.state.auth.email}}</span></p>
@@ -124,7 +124,6 @@
                 terms: false,
                 termsContent: '',
                 isEditing: false,
-                track: [],
                 clone: JSON.stringify(User.state.auth)
             };
         },
