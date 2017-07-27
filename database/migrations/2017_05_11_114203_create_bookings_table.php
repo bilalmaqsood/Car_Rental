@@ -22,11 +22,11 @@ class CreateBookingsTable extends Migration
             $table->string('location')->nullable();
             $table->decimal('deposit');
             $table->json('documents')->nullable()->comment('documents or contracts of booking');
-            $table->boolean('status')->default(0)->comment('0=Requested, 1=Confirmed, 2=Signed by client, 3=Signed by owner, 4=Accepted, 5=Cancel, 6=Canceled, 7=Extend, 8=Extended, 9=Close, 10=disputed, 11=resolved');
+            $table->boolean('status')->default(0)->comment('0=Requested, 1=Confirmed, 2=Signed by client, 3=Signed by owner, 4=Accepted, 5=Cancel, 6=Canceled, 7=Extend, 8=Extended, 9=Close, 10=Disputed, 11=Resolved');
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE `bookings` MODIFY `status` TINYINT(2) NOT NULL DEFAULT 0 COMMENT \'0=Requested, 1=Confirmed, 2=Signed by client, 3=Signed by owner, 4=Accepted, 5=Cancel, 6=Canceled, 7=Extend, 8=Extended, 9=Close, 10=disputed, 11=resolved\';');
+        DB::statement('ALTER TABLE `bookings` MODIFY `status` TINYINT(2) NOT NULL DEFAULT 0 COMMENT \'0=Requested, 1=Confirmed, 2=Signed by client, 3=Signed by owner, 4=Accepted, 5=Cancel, 6=Canceled, 7=Extend, 8=Extended, 9=Close, 10=Disputed, 11=Resolved\';');
     }
 
     /**

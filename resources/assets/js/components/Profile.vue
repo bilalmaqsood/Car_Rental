@@ -54,7 +54,8 @@
                 notifications: '',
                 booking_log: '',
                 vuex: User,
-                booking: null
+                booking: null,
+                notify: null
             };
         },
 
@@ -142,16 +143,24 @@
             },
 
             markRead(notification) {
+
+                $('#sideLoader').show();
+                if (typeof notification === 'undefined' && this.notify)
+                    notification = this.notify;
+
                 let params = {notify_id: notification.id};
                 axios.post('/api/notifications', params)
                     .then(() => {
+                        $('#sideLoader').hide();
                         let index = this.notifications.indexOf(notification);
                         this.notifications.splice(index, 1);
+                        notification = null;
                     });
             },
 
             viewContract(notify) {
                 $('#sideLoader').show();
+                this.notify = notify;
                 axios.get('/api/booking/' + notify.data.id)
                     .then((r) => {
                         $('#sideLoader').hide();
@@ -161,6 +170,7 @@
 
             cleanViewContract() {
                 this.booking = null;
+                this.markRead();
             }
         },
     }

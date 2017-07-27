@@ -1,27 +1,12 @@
 <template>
     <div>
-        <div class="row no-margin">
-            <h1 class="pull-left no-margin h2">{{d.name}}</h1>
-            <div class="form-group no-margin pull-right">
-                <div class="input-group">
-                    <input type="number" v-model.number="page" min="1" :max="numPages" class="form-control no-radius" placeholder="page no">
-                    <div class="input-group-addon no-radius"> / {{numPages}}</div>
-                </div>
-            </div>
-        </div>
-        <pdf :page="page" @numPages="numPages = $event" :src="d.path"></pdf>
+        <h1 class="h2 m-0">{{d.name}}</h1>
+        <object :data="d.path" type="application/pdf" style="height: 110vh;" width="100%"></object>
     </div>
 </template>
 
 <script>
     export default {
-        props: ['d'],
-
-        data() {
-            return {
-                page: 1,
-                numPages: 0
-            };
-        }
+        props: ['d']
     }
 </script>

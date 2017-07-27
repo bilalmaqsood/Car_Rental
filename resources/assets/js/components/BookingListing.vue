@@ -34,6 +34,7 @@
             </transition>
 
             <transition name="flip" mode="out-in">
+                <sign-contract v-if="sideView=='sign'" key="sign-contract" @closeContract="clearSideView" :booking="booking"></sign-contract>
                 <car-inspection v-if="sideView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
                 <extend-cancel-booking v-if="sideView=='extend'" key="booking-extend" :user="storage" @clearSideView="clearSideView"></extend-cancel-booking>
                 <booking-documents v-if="sideView=='documents'" key="booking-documents" :documents="documents"></booking-documents>
@@ -90,7 +91,7 @@
                         this.showView = true;
                         setTimeout(() => {
                             _.each(r.data.success, (b) => {
-                                if (b.status === 9)
+                                if (b.status === 9 || b.status === 10 || b.status === 11)
                                     this.pastBookings.push(b);
                                 else
                                     this.bookings.push(b);
@@ -135,7 +136,13 @@
                 }
             },
 
-            clearSideView() {
+            clearSideView(e) {
+                if (typeof e !== 'undefined' && e === 'sign') {
+                    if (User.state.auth.type === 'owner')
+                        this.bookings[this.inProcess.index].status = 3;
+                    else if (User.state.auth.type === 'client')
+                        this.bookings[this.inProcess.index].status = 2;
+                }
                 this.sideView = '';
                 this.inProcess = null;
             }

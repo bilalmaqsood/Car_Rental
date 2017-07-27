@@ -18,6 +18,9 @@
                         <p><b>Fuel type:</b> {{booking.vehicle.fuel}}</p>
                         <p><b>Consumption:</b> {{booking.vehicle.mpg}} mpg (ec.)</p>
                     </li>
+                    <li>
+                        <div class="badge badge-primary">{{booking.status | bookingStatus}}</div>
+                    </li>
                 </ul>
                 <div class="search-btn-container">
                     <div class="availablity_box">
@@ -62,25 +65,61 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                 </svg>
-                                car inspection
+                                {{User.state.auth.type == 'owner' && booking.status == 4 ? 'return inspection' : 'car inspection'}}
                             </a>
                         </li>
-                        <li v-if="User.state.auth.type=='client'">
-                            <a @click="loadSideView('extend')" href="javascript:">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                                </svg>
-                                extend/cancel
-                            </a>
-                        </li>
-                         <li v-else>
-                            <a @click="cancelBooking" href="javascript:">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                                </svg>
-                                cancel
-                            </a>
-                        </li>
+                        <transition name="flip" v-if="User.state.auth.type=='client'">
+                            <li v-if="!isSignatures">
+                                <a @click="loadSideView('sign')" href="javascript:">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                    </svg>
+                                    sign contract
+                                </a>
+                            </li>
+                            <li v-else-if="[4,5,7,8].includes(booking.status)">
+                                <a @click="loadSideView('extend')" href="javascript:">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                    </svg>
+                                    extend/cancel
+                                </a>
+                            </li>
+                        </transition>
+                        <transition name="flip" v-else-if="User.state.auth.type=='owner'">
+                            <li v-if="!isSignatures">
+                                <a @click="loadSideView('sign')" href="javascript:">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                    </svg>
+                                    sign contract
+                                </a>
+                            </li>
+                            <li v-else-if="[2,3].includes(booking.status)">
+                                <a @click="approveBooking" href="javascript:">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                    </svg>
+                                    accept booking
+                                </a>
+                            </li>
+                            <li v-else-if="[5,7].includes(booking.status)">
+                                <a @click="approveBooking" href="javascript:">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                    </svg>
+                                    Approve {{booking.status | bookingStatus}}
+                                </a>
+                            </li>
+                            <li v-else-if="[4,6,8].includes(booking.status)">
+                                <a @click="approveBooking" href="javascript:">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                    </svg>
+                                    close booking
+                                </a>
+                            </li>
+                        </transition>
                         <li>
                             <a @click="loadSideView('documents')" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" class="svg-icon">
@@ -120,6 +159,10 @@
         },
 
         computed: {
+            isSignatures() {
+                return this.booking.signatures && (typeof this.booking.signatures.owner !== 'undefined' && this.booking.signatures.owner) && (typeof this.booking.signatures.client !== 'undefined' && this.booking.signatures.client);
+            },
+
             vehicleName() {
                 return [this.booking.vehicle.make, this.booking.vehicle.model, this.booking.vehicle.variant].join(' ');
             },
@@ -161,15 +204,34 @@
                     view: view
                 });
             },
-            cancelBooking(){
-                let result = confirm("You are about to cancel booking");
-                if (this.booking.id && result) {
-                    let params = {status: 6};
-                    axios.patch('/api/booking/' + this.booking.id + '/status', params)
-                        .then(response => {
-                            console.log(response);
-                        });
+
+            approveBooking() {
+                let params = {};
+
+                if ([2,3].includes(this.booking.status)) {
+                    params.status = 4;
+                    params.note = 'booking approved after signatures.';
+                } else if (this.booking.status===5) {
+                    params.status = 6;
+                    params.note = 'booking canceled from cancel request by client.';
+                } else if (this.booking.status===7) {
+                    params.status = 8;
+                    params.note = 'booking extended from extend request by client.';
+                } else if ([4,6,8].includes(this.booking.status)) {
+                    params.status = 9;
+                    params.note = 'booking closed by owner';
                 }
+
+                $('#sideLoader').show();
+                axios.patch('/api/booking/' + this.booking.id + '/status', params)
+                    .then((r) => {
+                        $('#sideLoader').hide();
+                        this.booking.status = params.status;
+                        new Noty({
+                            type: 'information',
+                            text: r.data.success
+                        }).show();
+                    });
             }
         }
     }

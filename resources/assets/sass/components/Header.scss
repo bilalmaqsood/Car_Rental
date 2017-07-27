@@ -126,8 +126,12 @@
 }
 
 .add-signature {
-    canvas {
-        width: 100%;
-        height: 50vh;
+    .js-signature {
+        width: 540px;
+        height: 320px;
     }
+}
+
+.body-signature {
+    overflow: hidden !important;
 }

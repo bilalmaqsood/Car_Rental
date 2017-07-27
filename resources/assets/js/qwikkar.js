@@ -9,7 +9,9 @@ require('./bootstrap');
 
 require('./locationpicker.jquery');
 
-var FetchLocationName = require('./design');
+require('./design');
+
+require('jq-signature');
 
 require('./FetchLocationName');
 
@@ -19,7 +21,6 @@ require('./FetchLocationName');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('pdf', require('vue-pdf'));
 Vue.component('pdf-document', require('./components/PDFDocument.vue'));
 Vue.component('app-header', require('./components/Header.vue'));
 Vue.component('home-page', require('./components/HomePage.vue'));
@@ -52,6 +53,7 @@ Vue.component('sign-contract', require('./components/SignContract.vue'));
 
 Vue.filter('date', require('./filters/date'));
 Vue.filter('currency', require('./filters/currency'));
+Vue.filter('bookingStatus', require('./filters/booking-status'));
 
 const app = new Vue({
     el: '#app'

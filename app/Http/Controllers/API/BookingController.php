@@ -286,7 +286,7 @@ class BookingController extends Controller
     {
         $this->validate($request, [
             'log_id' => 'exists:booking_logs,id',
-            'status' => 'required|in:6,8,9',
+            'status' => 'required|in:4,6,8,9',
             'note' => 'string',
         ]);
 
