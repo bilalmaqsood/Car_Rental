@@ -46,10 +46,7 @@
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                         </svg>
                     </button>
-                    <ul>
-                        <li><span>Pickup from:</span> <span class="pickup_location">{{pickup_location}}</span></li>
-                        <li><span>Return to:</span> <span class="return_location">{{return_location}}</span></li>
-                    </ul>
+                    <vehicle-location :pickup_location="user.state.vehicleData.pickup_location" :return_location="user.state.vehicleData.return_location"></vehicle-location>
                 </div>
 
                 <div class="pickup_loction_map">
@@ -110,8 +107,6 @@
         data() {
             return {
                 isBooking: false,
-                pickup_location: '',
-                return_location: ''
             };
         },
 
@@ -131,25 +126,6 @@
                 } else {
                     localStorage.removeItem('reloadData');
 
-                    if ($t.user.state.vehicleData.pickup_location)
-                        $.ajax({
-                            url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.pickup_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
-                            type: 'GET',
-                            dataType: 'json',
-                            async: false,
-                        }).done(function (r) {
-                            $t.pickup_location = r.results[0].formatted_address;
-                        });
-
-                    if ($t.user.state.vehicleData.return_location)
-                        $.ajax({
-                            url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.user.state.vehicleData.return_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
-                            type: 'GET',
-                            dataType: 'json',
-                            async: false,
-                        }).done(function (r) {
-                            $t.return_location = r.results[0].formatted_address;
-                        });
                 }
             },
 
