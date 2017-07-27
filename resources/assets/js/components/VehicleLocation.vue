@@ -1,49 +1,55 @@
 <template>
-        <ul>
-                    <li><span>Pickup from:</span> <span class="pickup_location">{{pickupLoc}}</span></li>
-                    <li><span>Return to:</span> <span class="return_location">{{ returnLoc }}</span></li>
-                </ul>
-
+    <ul>
+        <li><span>Pickup from:</span> <span class="pickup_location">{{pickupLoc}}</span></li>
+        <li><span>Return to:</span> <span class="return_location">{{returnLoc}}</span></li>
+    </ul>
 </template>
 
 <script>
     export default {
-        props: ["return_location","pickup_location"],
+        props: ['return_location', 'pickup_location'],
+
         data() {
             return {
                 pickupLoc: '',
                 returnLoc: ''
             }
         },
-        
+
         mounted() {
             this.prepareComponent();
         },
 
-        watch: {
-            return_location: function(location) {
-                this.prepareComponent();
-            },
-            pickup_location: function(location) {
-                this.prepareComponent();
-
-            }
-        },
-
         methods: {
+            prepareComponent() {
+                let $t = this;
 
-        
-        prepareComponent(){
-            let $this = this;
-            FetchLocationName(this.pickup_location,null,function(value){
-                $this.pickupLoc = value;
-            });
+                if ($t.pickup_location)
+                    $.ajax({
+                        beforeSend: function(request) {
+                            request.setRequestHeader('Access-Control-Request-Headers', '');
+                        },
+                        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.pickup_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
+                        type: 'GET',
+                        dataType: 'json',
+                        async: false
+                    }).done(function (r) {
+                        $t.pickupLoc = r.results[0].formatted_address;
+                    });
 
-            FetchLocationName(this.return_location,null,function(value){
-                $this.returnLoc = value;
-            });
+                if ($t.return_location)
+                    $.ajax({
+                        beforeSend: function(request) {
+                            request.setRequestHeader('Access-Control-Request-Headers', '');
+                        },
+                        url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + $t.return_location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
+                        type: 'GET',
+                        dataType: 'json',
+                        async: false,
+                    }).done(function (r) {
+                        $t.returnLoc = r.results[0].formatted_address;
+                    });
+            }
         }
     }
-
-}
 </script>
