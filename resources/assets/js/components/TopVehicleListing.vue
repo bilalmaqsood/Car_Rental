@@ -33,7 +33,9 @@
                     <transition-group name="list" tag="div">
                         <div v-for="vehicle in vehicles" :key="vehicle.id" class="main_vehicles list-item">
                             <div class="owl-carousel owl-slider">
-                                <div v-for="img in vehicle.images " class="item"><img :src="img" alt=""></div>
+                                <div v-for="img in vehicle.images " class="item">
+                                <div class="liting-image" v-bind:style="{'background': 'url('+img+')'}"></div>
+                                </div>
                             </div>
                             <h3>{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
                             <ul>

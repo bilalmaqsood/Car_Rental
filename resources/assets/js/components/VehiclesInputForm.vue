@@ -8,21 +8,28 @@
                 </div>
             </div>
             <div class="vehicle_registration">
-                <div class="registration_number">
-                    <div class="form-group" :class="{'has-error': $v.form.registration.$error}">
-                        <input type="text" class="form-control" placeholder="registration number"
-                               v-model="form.registration" @blur="$v.form.registration.$touch()">
-                        <p class=" help-block text-sm" v-if="$v.form.registration.$error">
-                            Enter valid registration number</p>
-                    </div>
-                    <a href="javascript:void(0);" @click="verifyByAVLA">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
-                        </svg>
-                    </a>
-                </div>
+                
                 <div class="card_recured">
                     <ul>
+                        <li>
+
+                            <div class="form-group" :class="{'has-error': $v.form.registration.$error}">
+                                <div class="input-group login-input">
+                                <input type="text" class="form-control" placeholder="registration number"
+                                       v-model="form.registration" @blur="$v.form.registration.$touch()">
+                                       <div class="input-group-addon">
+                                        <span @click="verifyByAVLA" class="clickable">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                                <p class=" help-block text-sm" v-if="$v.form.registration.$error">
+                                    Enter valid registration number</p>
+                            </div>
+
+                        </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.make.$error}">
                                 <input type="text" class="form-control" placeholder="vehicle make" v-model="form.make"
@@ -122,15 +129,14 @@
 
                             </div>
                         </li>
-                        <li class="half-group">
+                        <li>
                             <div class="form-group" :class="{'has-error': $v.form.transmission.$error}">
-                                <div class="form-group" :class="{'has-error': $v.form.transmission.$error}">
                                     <select v-model="form.transmission" class="form-control">
                                         <option disabled value="">transmission</option>
                                         <option>Manual</option>
                                         <option>Automatic</option>
                                     </select>
-                                </div>
+                                
                                 <p class=" help-block text-sm" v-if="$v.form.transmission.$error">
                                     Enter transmission </p>
 
