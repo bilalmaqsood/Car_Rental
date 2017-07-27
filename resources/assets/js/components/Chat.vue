@@ -46,6 +46,7 @@
                 $('#sideLoader').show();
                 axios.get('/api/message/' + this.bookingId).then(r => {
                     this.messages = r.data.success;
+                    this.messages.data = this.messages.data.slice().reverse();
                     $('#sideLoader').hide();
                 });
 
