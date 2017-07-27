@@ -92,10 +92,7 @@
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                     </svg>
                 </button>
-                <ul>
-                    <li><span>Pickup from:</span> <span class="pickup_location">{{ fetchAddress(vehicle.pickup_location)}}</span></li>
-                    <li><span>Return to:</span> <span class="return_location">{{fetchAddress(vehicle.return_location)}}</span></li>
-                </ul>
+                    <vehicle-location :pickup_location="vehicle.pickup_location" :return_location="vehicle.return_location"></vehicle-location>
             </div>
             <div class="pickup_loction_map" v-if="vehicle">
                 <iframe width="100%" height="450" frameborder="0" style="border:0" :src="'https://www.google.com/maps/embed/v1/place?q='+vehicle.location.split(',')[0]+','+vehicle.location.split(',')[1]+'&amp;key=AIzaSyDFkedYDgj286xDo9Sp9XRWsOiPfu9T3Ak'"></iframe>

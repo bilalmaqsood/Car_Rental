@@ -4,11 +4,12 @@
             <div>
                 <transition name="flip" mode="out-in">
                     <div v-if="showView" key="booking-list">
-                        <h2>Current booking</h2>
-                        <transition-group name="list" tag="div">
-                            <booking v-for="(book,i) in bookings" :key="book.id" :booking="book" :user="storage" :index="i" @otherBooking="loadOtherBooking" @sideView="loadSideView" ref="booking"></booking>
-                        </transition-group>
-
+                        <div class="current_booking" v-if="bookings.length">
+                            <h2>Current booking</h2>
+                            <transition-group name="list" tag="div">
+                                <booking v-for="(book,i) in bookings" :key="book.id" :booking="book" :user="storage" :index="i" @otherBooking="loadOtherBooking" @sideView="loadSideView" ref="booking"></booking>
+                            </transition-group>
+                        </div>
                         <div v-if="pastBookings.length">
                             <h2>Past booking</h2>
                             <transition-group name="list" tag="div">
