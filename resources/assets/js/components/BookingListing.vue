@@ -4,11 +4,12 @@
             <div>
                 <transition name="flip" mode="out-in">
                     <div v-if="showView" key="booking-list">
+                    <div class="current_booking" v-if="bookings.length>0">
                         <h2>Current booking</h2>
                         <transition-group name="list" tag="div">
                             <booking v-for="(book,i) in bookings" :key="book.id" :booking="book" :user="storage" :index="i" @otherBooking="loadOtherBooking" @sideView="loadSideView" ref="booking"></booking>
                         </transition-group>
-
+                    </div>
                         <div v-if="pastBookings.length">
                             <h2>Past booking</h2>
                             <transition-group name="list" tag="div">
@@ -90,7 +91,7 @@
                         this.showView = true;
                         setTimeout(() => {
                             _.each(r.data.success, (b) => {
-                                if (b.status === 9)
+                                if (b.status === 6 || b.status === 9 || b.status === 10 || b.status === 11 )
                                     this.pastBookings.push(b);
                                 else
                                     this.bookings.push(b);
