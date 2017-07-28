@@ -9,6 +9,7 @@ use Qwikkar\Models\Booking;
 use Qwikkar\Models\Message;
 use Qwikkar\Models\User;
 use Qwikkar\Models\Vehicle;
+use Qwikkar\Notifications\MessageNotify;
 
 class MessageController extends Controller
 {
@@ -111,6 +112,14 @@ class MessageController extends Controller
             $message->able()->associate($booking);
 
             $message->receiver()->associate($booking->user);
+
+            $booking->user->notify(new MessageNotify([
+                'id' => $booking->id,
+                'type' => 'Message',
+                'sender' => $request->user(),
+                'receiver' => $booking->user,
+                'message' => $message->message
+            ]));
         }
 
         return $message;
@@ -139,6 +148,14 @@ class MessageController extends Controller
             $message->able()->associate($booking);
 
             $message->receiver()->associate($booking->vehicle->owner->user);
+
+            $booking->vehicle->owner->user->notify(new MessageNotify([
+                'id' => $booking->id,
+                'type' => 'Message',
+                'sender' => $request->user(),
+                'receiver' => $booking->vehicle->owner->user,
+                'message' => $message->message
+            ]));
         }
 
         return $message;
