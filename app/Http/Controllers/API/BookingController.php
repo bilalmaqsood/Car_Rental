@@ -261,6 +261,10 @@ class BookingController extends Controller
             'contract_start' => $booking->start_date,
             'contract_end' => $booking->end_date,
             'deposit' => $booking->deposit,
+            'signatures' => [
+                'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                'client' => $booking->signatures && $booking->signatures->has('client')
+            ]
         ];
 
         if ($request->has('start_date') && $request->has('end_date'))
@@ -336,6 +340,10 @@ class BookingController extends Controller
             'contract_start' => $booking->start_date,
             'contract_end' => $booking->end_date,
             'deposit' => $booking->deposit,
+            'signatures' => [
+                'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                'client' => $booking->signatures && $booking->signatures->has('client')
+            ]
         ]));
 
         $this->updateBookingFromLog($log, $request);
