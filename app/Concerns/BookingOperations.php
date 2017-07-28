@@ -164,6 +164,10 @@ trait BookingOperations
             'contract_start' => $booking->start_date,
             'contract_end' => $booking->end_date,
             'deposit' => $booking->deposit,
+            'signatures' => [
+                'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                'client' => $booking->signatures && $booking->signatures->has('client')
+            ]
         ]));
     }
 
@@ -273,6 +277,10 @@ trait BookingOperations
                 'contract_start' => $booking->start_date,
                 'contract_end' => $booking->end_date,
                 'deposit' => $booking->deposit,
+                'signatures' => [
+                    'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                    'client' => $booking->signatures && $booking->signatures->has('client')
+                ]
             ]));
         else if ($request->user()->isClient())
             $booking->vehicle->owner->user->notify(new BookingNotify([
@@ -288,6 +296,10 @@ trait BookingOperations
                 'contract_start' => $booking->start_date,
                 'contract_end' => $booking->end_date,
                 'deposit' => $booking->deposit,
+                'signatures' => [
+                    'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                    'client' => $booking->signatures && $booking->signatures->has('client')
+                ]
             ]));
 
         \PDF::loadView('pdf.contract', $pdfData)->save(storage_path('app/public' . $fileName));
