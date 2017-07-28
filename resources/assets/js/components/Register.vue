@@ -25,7 +25,7 @@
                     </button>
                 </div>
             </div>
-
+            <register-terms v-if="step=='terms'" @term="termsvalue"></register-terms>
             <div class="basic_info" key="step-2" v-if="step=='basic_info'">
                 <form>
                     <div class="form-group" :class="{ 'has-error': $v.basic_info.name.$error }">
@@ -160,6 +160,8 @@
         data() {
             return {
                 step: 'type',
+                oldstep: '',
+                terms: false,
                 user_type: 'client',
                 basic_info: {
                     name: null,
@@ -254,38 +256,30 @@
                     case 'basic_info':
                         this.process2ndStep(e);
                         break;
-
+                    case 'terms':
+                        this.step = 'terms';
+                    break;
                     case 'driver_info':
-                        let $t = this;
-                        let $btn = $(e.target).button('loading');
-
-                        let postData = JSON.parse(JSON.stringify(_.merge(this.basic_info, this.driver_info)));
-                        postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
-
-                        axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
-                            $t.successRegister();
-                            $btn.button('reset');
-                        }).catch(function (r) {
-                            $btn.button('reset');
-                        });
+                        this.validateClient();
                         break;
                 }
             },
 
             process2ndStep(e) {
                 if (this.user_type === 'owner') {
-                    let $t = this;
-                    let $btn = $(e.target).button('loading');
-
-                    let postData = JSON.parse(JSON.stringify(this.basic_info));
-                    postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
-
-                    axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
-                        $t.successRegister();
-                        $btn.button('reset');
-                    }).catch(function (r) {
-                        $btn.button('reset');
-                    });
+                    this.validateOwner(e);
+//                    let $t = this;
+//                    let $btn = $(e.target).button('loading');
+//
+//                    let postData = JSON.parse(JSON.stringify(this.basic_info));
+//                    postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
+//
+//                    axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
+//                        $t.successRegister();
+//                        $btn.button('reset');
+//                    }).catch(function (r) {
+//                        $btn.button('reset');
+//                    });
                 }
                 else if (this.user_type === 'client') {
                     let $this=this;
@@ -316,7 +310,49 @@
 
                 return cleaned;
             },
+            processOwner(){
+                let $t = this;
+                    let postData = JSON.parse(JSON.stringify(this.basic_info));
+                    postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
+                    axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
+                        $t.successRegister();
+                    }).catch(function (r) {
+                    });
+            },
+            processClient(){
+                        let $t = this;
+                        let postData = JSON.parse(JSON.stringify(_.merge(this.basic_info, this.driver_info)));
+                        postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
+                                axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
+                                    $t.successRegister();
+                                }).catch(function (r) {
+                                });
+            },
+            validateClient(){
+                let $t = this;
+                let postData = JSON.parse(JSON.stringify(_.merge(this.basic_info, this.driver_info)));
+                postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
+                axios.post('/api/validate/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
+                    $t.oldstep = 'owner_info';
+                    $t.step = 'terms';
+                }).catch(function (r) {
 
+                });
+            },
+            validateOwner(e){
+                let $t = this;
+                let $btn = $(e.target).button('loading');
+
+                let postData = JSON.parse(JSON.stringify(this.basic_info));
+                postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
+
+                axios.post('/api/validate/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
+                    $t.oldstep = 'owner_info';
+                    $t.step = 'terms';
+                }).catch(function (r) {
+                    $btn.button('reset');
+                });
+            },
             successRegister() {
                 let $t = this;
 
@@ -336,6 +372,14 @@
                     localStorage.reloadData = JSON.stringify(User.state);
                     window.location.href = '/';
                 });
+            },
+            termsvalue(value){
+                if(value && this.oldstep=='driver_info'){
+                    this.processClient();
+                }
+                if(value && this.oldstep=='owner_info'){
+                    this.processOwner();
+                }
             }
         }
     }

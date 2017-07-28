@@ -1490,6 +1490,14 @@ padding-top: 10px;
     width: 100%;
     position: relative;
     margin-bottom: 1em;
+    min-height: 200px;
+}
+.profile_top_content .background_img {
+  float: left;
+  width: 100%;
+  background-size: cover !important;
+  background-position-x: center !important;
+  min-height: 250px;
 }
 
 .profile_top_content img {
@@ -2683,7 +2691,7 @@ padding-top: 10px;
 }
 
 .terms_conditions {
-    float: left;
+    float: right;
     width: 40%;
     background: #525252;
     padding: 10px;
@@ -2700,6 +2708,7 @@ padding-top: 10px;
     margin-bottom: 40px;
     display: block;
     width: 100%;
+    text-align: center;
 }
 
 .terms_conditions p {
@@ -2707,6 +2716,7 @@ padding-top: 10px;
     line-height: 19px;
     font-weight: normal;
     color: #fff;
+    text-align: justify;
 }
 
 .terms_conditions .secodery_btn {
@@ -2719,6 +2729,7 @@ padding-top: 10px;
     width: 100%;
     border-top: 2px solid #ccc;
     padding: 30px 0;
+    text-align: center;
     color: #87af1e;
 }
 
@@ -2872,6 +2883,11 @@ button:disabled {
     text-align: left;
     padding-left: 12px;
     font-weight: bold;
+    position: absolute;
+    top: 46%;
+}
+.vehicle_registration .card_recured ul li .form-group{
+  position: relative;
 }
 
 .discount-group {
@@ -3309,4 +3325,26 @@ button:disabled {
    background-size: cover !important;
    background-position-x: center !important;
    height: 180px;
+}
+.priusactive{
+    padding: 0 0 0 5px;
+    margin: 0;
+    min-height: 103px;
+    display: block;
+    width: 100%;
+}
+.priusactive li {
+    display: block;
+    list-style: none;
+}
+.priusactive li p {
+    margin: 0 !important;
+    display: inline-block;
+    padding: 0 5px !important;
+    font-size: 12px;
+    line-height: 19px;
+    font-weight: normal;
+}
+.priusactive li p:first-child {
+    border-right: 1px solid #000;
 }

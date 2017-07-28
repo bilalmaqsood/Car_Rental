@@ -51,6 +51,7 @@ Vue.component('vehicle-timeslots', require('./components/VehicleTimeslots.vue'))
 Vue.component('location-coordinates-picker', require('./components/LocationPicker.vue'));
 Vue.component('sign-contract', require('./components/SignContract.vue'));
 Vue.component('vehicle-location', require('./components/VehicleLocation.vue'));
+Vue.component('register-terms', require('./components/RegisterTerms.vue'));
 
 Vue.filter('date', require('./filters/date'));
 Vue.filter('currency', require('./filters/currency'));

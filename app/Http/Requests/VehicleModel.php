@@ -62,7 +62,7 @@ class VehicleModel extends FormRequest
             'uber_discount.*.percent' => 'numeric',
             'uber_discount.*.points' => 'numeric',
 
-            'images' => 'array',
+            'images' => 'array|min:1|required',
             'images.*' => 'string',
 
             'documents' => 'array',
