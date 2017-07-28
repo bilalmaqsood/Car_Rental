@@ -54,7 +54,7 @@
 
             <div class="car_detail"  v-if="vehicle">
                 <div class="availablity_detail">
-                    <h3>{veh{icle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
+                    <h3>{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
                     <ul>
                         <li>
                             <p>Year: {{vehicle.year}} </p>

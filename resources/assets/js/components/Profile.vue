@@ -2,18 +2,20 @@
     <div>
         <div class="main_profile_container">
             <div class="profile_top_content">
-                <img v-if="!!vuex.state.auth.avatar" :src="vuex.state.auth.avatar" alt="">
+                <div class="background_img" v-if="!!vuex.state.auth.avatar" :style="{'background-image': 'url(' + vuex.state.auth.avatar + ')'}"  alt=""></div>
                 <div v-else style="width:100%;height:250px;text-align:center;">
                     <img src="/images/avatar-default.png" style="width:auto;" alt="">
                 </div>
                 <div class="update_profile">
                     <h3>{{vuex.state.auth.name}}</h3>
                     <p><span v-if="age">Age: <i>{{age}}</i>&nbsp; |</span> <span class="phone-number" v-if="vuex.state.auth.phone"><i>{{vuex.state.auth.phone}}</i></span></p>
-                    <button class="secodery_btn">
+                    <button id="uploadImages" class="secodery_btn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
                         </svg>
                     </button>
+                    <input type="file" class="hidden hiddenUpload" name="files[]"
+                           value="upload">
                 </div>
             </div>
 
@@ -80,6 +82,24 @@
             },
 
             prepareComponent() {
+            let $scope = this;
+
+            $("#uploadImages").click(function () {
+                $(".hiddenUpload").click();
+                $(".hiddenUpload").change(function () {
+                        let val = this.files[0];
+                        console.log(val);
+                        var reader = new FileReader();
+                        reader.readAsDataURL(val);
+                        var fd = new window.FormData();
+                        fd.append('upload', val);
+                        reader.onload = function (e) {
+                            axios.post('/api/upload/image', fd).then($scope.processAvatar);
+                        };
+                });
+            });
+
+
                 $('#sideLoader').show();
                 axios.get('/api/notifications')
                     .then(response => {
@@ -171,6 +191,23 @@
             cleanViewContract() {
                 this.booking = null;
                 this.markRead();
+            },
+            processAvatar(r){
+                let param = {avatar: r.data.success};
+                if(User.state.auth.type === "owner")
+                    axios.patch('/api/profile/owner', param)
+                        .then((r) => {
+                            console.log(r);
+                            User.state.auth.avatar = param.avatar;
+                            User.commit('update', User.state.auth);
+                        });
+                else if(User.state.auth.type === "client")
+                    axios.patch('/api/profile/client', param)
+                        .then((r) => {
+                            console.log(r);
+                            User.state.auth.avatar = param.avatar;
+                            User.commit('update', User.state.auth);
+                        });
             }
         },
     }

@@ -602,23 +602,14 @@
                 }
             },
             responseHandler(response) {
-                this.response = response.data.success;
                 this.form = JSON.parse(JSON.stringify(Form));
                 if (this.isEdit)
                     this.$parent.$emit('vehicleUpdate', response.data.success);
                 else
                     this.$parent.$emit('vehicleAdded', response.data.success);
-
-                this.postSuccess = true;
             },
             prepareForm() {
                 let input = this.form;
-
-                Object.keys(input).forEach(function (key) {
-                    if (input[key] == null || input[key].length <= 0) {
-                        delete input[key];
-                    }
-                });
                 if (input.id)
                     delete input.id;
                 return input;
@@ -669,7 +660,6 @@
 
 
                 $("#documents").click(function () {
-                    $('#centerLoader').show();
                     $(".documentsUpload").click();
                     $(".documentsUpload").change(function () {
                         $.map(this.files, function (val) {
@@ -681,17 +671,13 @@
                             reader.onload = function (e) {
                                 axios.post('/api/upload/document', fd).then((r) => {
                                     $this.form.documents.push({name: name, path: r.data.success});
-
                                 });
-
                             };
                         });
-                        $('#centerLoader').hide();
                     });
                 });
 
                 $("#uploadImages").click(function () {
-                    $('#centerLoader').show();
                     $(".hiddenUpload").click();
                     $(".hiddenUpload").change(function () {
                         $.map(this.files, function (val) {
@@ -701,10 +687,8 @@
                             fd.append('upload', val);
                             reader.onload = function (e) {
                                 axios.post('/api/upload/image', fd).then($scope.imagesResponse);
-
                             };
                         });
-                        $('#centerLoader').hide();
                     });
                 });
 

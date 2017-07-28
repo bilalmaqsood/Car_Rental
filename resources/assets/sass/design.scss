@@ -1490,6 +1490,14 @@ padding-top: 10px;
     width: 100%;
     position: relative;
     margin-bottom: 1em;
+    min-height: 200px;
+}
+.profile_top_content .background_img {
+  float: left;
+  width: 100%;
+  background-size: cover !important;
+  background-position-x: center !important;
+  min-height: 250px;
 }
 
 .profile_top_content img {
