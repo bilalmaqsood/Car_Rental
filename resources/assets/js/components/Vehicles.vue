@@ -52,9 +52,9 @@
                 <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="menuView=='edit' || menuView=='add'"></vehicle-input-form>
             </div>
 
-            <div class="car_detail" v-if="vehicle">
+            <div class="car_detail"  v-if="vehicle">
                 <div class="availablity_detail">
-                    <h3>{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
+                    <h3>{veh{icle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
                     <ul>
                         <li>
                             <p>Year: {{vehicle.year}} </p>
@@ -112,18 +112,18 @@
                 </div>
                 <div class="profile_content">
                     <h3 @click="vechicleDetails(vehicle)" class="clickable"> {{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
-                    <ul>
+                    <ul class="priusactive">
                         <li>
-                            <p>Year:  {{vehicle.year}}</p>
-                            <p>Mileage: {{vehicle.mileage}}</p>
+                            <p><b>Year:</b>  {{vehicle.year}}</p>
+                            <p><b>Mileage:</b> {{vehicle.mileage}}</p>
                         </li>
                         <li>
-                            <p>Seats: {{vehicle.seats}} </p>
-                            <p>Transmission: {{vehicle.transmission}}</p>
+                            <p><b>Seats:</b> {{vehicle.seats}} </p>
+                            <p><b>Transmission:</b> {{vehicle.transmission}}</p>
                         </li>
                         <li>
-                            <p>Fuel type: {{vehicle.fuel}} </p>
-                            <p>Consumption:  {{vehicle.mpg}} mpg (ec.)</p>
+                            <p><b>Fuel type:</b> {{vehicle.fuel}} </p>
+                            <p><b>Consumption:</b>  {{vehicle.mpg}} mpg (ec.)</p>
                         </li>
                     </ul>
 

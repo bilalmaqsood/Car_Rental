@@ -3310,3 +3310,25 @@ button:disabled {
    background-position-x: center !important;
    height: 180px;
 }
+.priusactive{
+    padding: 0 0 0 5px;
+    margin: 0;
+    min-height: 103px;
+    display: block;
+    width: 100%;
+}
+.priusactive li {
+    display: block;
+    list-style: none;
+}
+.priusactive li p {
+    margin: 0 !important;
+    display: inline-block;
+    padding: 0 5px !important;
+    font-size: 12px;
+    line-height: 19px;
+    font-weight: normal;
+}
+.priusactive li p:first-child {
+    border-right: 1px solid #000;
+}
