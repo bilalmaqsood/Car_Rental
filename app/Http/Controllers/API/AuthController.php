@@ -29,10 +29,7 @@ class AuthController extends Controller
      */
     public function notificationsRead(Request $request)
     {
-        $notification = $request->user()->notifications()->where('id', $request->notify_id)->first();
-
-        if ($notification)
-            $notification->update(['read_at' => \Carbon\Carbon::now()]);
+        $request->user()->notifications()->whereIn('id', $request->notify_ids)->update(['read_at' => \Carbon\Carbon::now()]);
 
         return api_response(trans('auth.readed'));
     }

@@ -33,8 +33,8 @@
                         <p v-if="propExist(notif.data,'contract_end')"><b>Contract end:</b> {{ date_format(notif.data.contract_end) }}</p>
                         <p v-if="propExist(notif.data,'deposit')" class="m-t-1">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notif.data.deposit | currency }}</span> have been taken from your default card.</p>
                         <p class="m-t-1">
-                            <a href="javascript:" class="primary-button" v-if="isActionable(notif)" @click="viewContract(notif)">View Contract</a>
-                            <a href="javascript:" class="primary-button" @click="markRead(notif)" v-else>Mark read</a>
+                            <a href="javascript:" class="primary-button" v-if="isActionable(notif)" @click="viewContract(notif)">view contract</a>
+                            <a href="javascript:" class="primary-button" @click="markRead(notif)">mark read</a>
                         </p>
                     </div>
                 </div>
