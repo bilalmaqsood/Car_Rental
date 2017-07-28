@@ -2875,6 +2875,11 @@ button:disabled {
     text-align: left;
     padding-left: 12px;
     font-weight: bold;
+    position: absolute;
+    top: 46%;
+}
+.vehicle_registration .card_recured ul li .form-group{
+  position: relative;
 }
 
 .discount-group {
