@@ -19,7 +19,15 @@
         mounted() {
             this.prepareComponent();
         },
+        watch: {
+            return_location: function(location) {
+                this.prepareComponent();
+            },
+            pickup_location: function(location) {
+                this.prepareComponent();
 
+            }
+        },
         methods: {
             prepareComponent() {
                 let $t = this;
