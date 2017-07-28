@@ -16,6 +16,16 @@ class ValidationController extends Controller
      */
     public function registerValidate(UserModel $request, $type)
     {
+        $this->validate($request, [
+            'insurance' => 'string',
+            'driving' => 'string',
+            'dvla' => 'string',
+            'dob' => 'date',
+            'pco_release_date' => 'date',
+            'pco_expiry_date' => 'date',
+            'pco_number' => 'string',
+        ]);
+
         response()->json(['success' => 'success'], 200);
     }
 
