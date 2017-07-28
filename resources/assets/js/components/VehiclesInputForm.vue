@@ -13,10 +13,10 @@
                     <ul>
                         <li>
 
-                            <div class="form-group" :class="{'has-error': $v.form.registration.$error}">
+                            <div class="form-group" :class="{'has-error': $v.form.registration_number.$error}">
                                 <div class="input-group login-input">
                                 <input type="text" class="form-control" placeholder="registration number"
-                                       v-model="form.registration" @blur="$v.form.registration.$touch()">
+                                       v-model="form.registration_number" @blur="$v.form.registration_number.$touch()">
                                        <div class="input-group-addon">
                                         <span @click="verifyByAVLA" class="clickable">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
@@ -25,7 +25,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <p class=" help-block text-sm" v-if="$v.form.registration.$error">
+                                <p class=" help-block text-sm" v-if="$v.form.registration_number.$error">
                                     Enter valid registration number</p>
                             </div>
 
@@ -559,7 +559,7 @@
                     required,
                     minLength: minLength(1)
                 },
-                registration: {
+                registration_number: {
                     required,
                     minLength: minLength(1)
                 },
@@ -610,8 +610,11 @@
             },
             prepareForm() {
                 let input = this.form;
-                if (input.id)
-                    delete input.id;
+                if (this.isEdit) {
+                        delete input.id;
+                        delete input.uber_discount;
+
+                }
                 return input;
             },
             push() {
@@ -706,7 +709,7 @@
                 this.form[this.selectedLocation] = response;
             },
             verifyByAVLA() {
-                let param = {registration_number: this.form.registration}
+                let param = {registration_number: this.form.registration_number}
                 axios.post('/api/driver-and-vehicle-licensing-agency', param)
                     .then((r) => {
                         if (r.data.success) {
