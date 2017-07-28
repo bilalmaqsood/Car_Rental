@@ -33,7 +33,7 @@ export default {
     documents: [],
     extension: '',
     notes: '',
-    registration: '',
+    registration_number: '',
     images: []
 };
 
