@@ -17,8 +17,8 @@ class Booking extends Model
         'Signed by client',
         'Signed by owner',
         'Accepted',
-        'Cancel',
-        'Canceled',
+        'Termination',
+        'Terminated',
         'Extend',
         'Extended',
         'Close',
@@ -87,6 +87,14 @@ class Booking extends Model
     public function bookingLog()
     {
         return $this->hasMany(BookingLog::class);
+    }
+
+    /**
+     * Get the account of the booking
+     */
+    public function account()
+    {
+        return $this->morphTo();
     }
 
     /**

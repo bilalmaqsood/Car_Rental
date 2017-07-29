@@ -101,7 +101,9 @@ trait BookingOperations
     protected function deductDeposit(Booking $booking, User $user)
     {
         if ($user->current_balance < $booking->deposit)
-            $this->makePaymentFromCard($user, $booking->deposit);
+            $account = $this->makePaymentFromCard($user, $booking->deposit);
+        else
+            $account = $user->creditCard()->where('default', 1)->first();
 
         // deduct deposit from balance
         $user->balance->current -= $booking->deposit;
@@ -127,6 +129,7 @@ trait BookingOperations
         ]));
 
         // update booking status for confirmed to requested
+        $booking->account()->associate($account);
         $booking->status = 1;
         $booking->save();
 
@@ -160,6 +163,7 @@ trait BookingOperations
             'image' => $booking->vehicle->images->first(),
             'title' => 'Booking requested',
             'user' => $user->name,
+            'credit_card' => $account->last_numbers,
             'vehicle' => $booking->vehicle->vehicle_name,
             'contract_start' => $booking->start_date,
             'contract_end' => $booking->end_date,
@@ -239,7 +243,7 @@ trait BookingOperations
 
         $signatures = $booking->signatures;
 
-        if($signatures)
+        if ($signatures)
             $signatures->put($request->user()->types->first()->name, $request->signature->store('images', 'public'));
         else
             $signatures = collect([
@@ -273,6 +277,7 @@ trait BookingOperations
                 'image' => $booking->vehicle->images->first(),
                 'title' => 'Booking signature\'s by owner',
                 'user' => $request->user()->name,
+                'credit_card' => $booking->account->last_numbers,
                 'vehicle' => $booking->vehicle->vehicle_name,
                 'contract_start' => $booking->start_date,
                 'contract_end' => $booking->end_date,
@@ -292,6 +297,7 @@ trait BookingOperations
                 'image' => $booking->vehicle->images->first(),
                 'title' => 'Booking signature\'s by client',
                 'user' => $request->user()->name,
+                'credit_card' => $booking->account->last_numbers,
                 'vehicle' => $booking->vehicle->vehicle_name,
                 'contract_start' => $booking->start_date,
                 'contract_end' => $booking->end_date,
@@ -318,7 +324,7 @@ trait BookingOperations
             $user->load('balance');
         }
 
-        $user->addBalance($amount);
+        return $user->addBalance($amount);
     }
 
     /**

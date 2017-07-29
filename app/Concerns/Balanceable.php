@@ -40,6 +40,8 @@ trait Balanceable
         $this->balance->current += $amount;
 
         $this->balance->save();
+
+        return $creditCard;
     }
 
     /**

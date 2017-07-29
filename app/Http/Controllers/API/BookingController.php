@@ -257,6 +257,7 @@ class BookingController extends Controller
             'image' => $booking->vehicle->images->first(),
             'title' => 'Booking ' . strtolower($booking->statusTypes[$status]) . ' request',
             'user' => $request->user()->name,
+            'credit_card' => $booking->account->last_numbers,
             'vehicle' => $booking->vehicle->vehicle_name,
             'contract_start' => $booking->start_date,
             'contract_end' => $booking->end_date,
@@ -320,6 +321,10 @@ class BookingController extends Controller
 
         $log->status = 2;
 
+        $title = 'Booking ' . strtolower($booking->statusTypes[$request->status]);
+        if ($request->status == 4 && in_array($booking->status, [5, 7]))
+            $title = 'Booking ' . strtolower($booking->statusTypes[$booking->status]) . ' request declined';
+
         $log->fulfilled()->associate($request->user());
 
         if ($request->has('log_id'))
@@ -334,8 +339,9 @@ class BookingController extends Controller
             'old_status' => $booking->status,
             'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
-            'title' => 'Booking ' . strtolower($booking->statusTypes[$request->status]),
+            'title' => $title,
             'user' => $request->user()->name,
+            'credit_card' => $booking->account->last_numbers,
             'vehicle' => $booking->vehicle->vehicle_name,
             'contract_start' => $booking->start_date,
             'contract_end' => $booking->end_date,
