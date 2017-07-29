@@ -17,6 +17,7 @@ class CreateBookingsTable extends Migration
             $table->increments('id');
             $table->integer('vehicle_id');
             $table->integer('user_id');
+            $table->nullableMorphs('account');
             $table->date('start_date');
             $table->date('end_date');
             $table->string('location')->nullable();

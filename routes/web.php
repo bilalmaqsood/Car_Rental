@@ -28,3 +28,9 @@ Route::get('/vehicle/image/hash', function () {
 Route::get('/vehicle/document/path', function () {
     return response(File::get(resource_path('assets/images/car_img.png')), 200, array('content-type' => 'image/png'));
 });
+
+Route::get('/test', function () {
+    $schema = \DB::getDoctrineSchemaManager();
+    d($schema->listTableColumns((new \Qwikkar\Models\Booking())->getTable()));
+    dd('oknasir');
+});
