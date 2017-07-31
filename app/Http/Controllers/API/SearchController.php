@@ -77,7 +77,7 @@ class SearchController extends Controller
 
         $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at');
 
-        if ($request->has('search'))
+        if ($request->has('search') && $request->search != '||_||')
             $vehicles = $vehicles->where(function (Builder $q) use ($request) {
                 $q->whereRaw('TRIM(BOTH \' \' FROM CONCAT_WS(\' \', `make`, `model`, `variant`, `year`)) like ?', ['%' . $request->search . '%']);
 //                $q->orWhere('make', 'like', '%' . $request->search . '%');
@@ -148,13 +148,14 @@ class SearchController extends Controller
             'search' => 'required|string',
         ]);
 
-        $vehicles = Vehicle::where(function (Builder $q) use ($request) {
-            $q->orWhere('make', 'like', '%' . $request->search . '%');
-            $q->orWhere('model', 'like', '%' . $request->search . '%');
-            $q->orWhere('variant', 'like', '%' . $request->search . '%');
-        });
+        $vehicles = Vehicle::select(['id', 'make', 'model', 'variant']);
 
-        $vehicles->select(['id', 'make', 'model', 'variant']);
+        if ($request->has('search') && $request->search != '||_||')
+            $vehicles->where(function (Builder $q) use ($request) {
+                $q->orWhere('make', 'like', '%' . $request->search . '%');
+                $q->orWhere('model', 'like', '%' . $request->search . '%');
+                $q->orWhere('variant', 'like', '%' . $request->search . '%');
+            });
 
         return $vehicles->get();
     }
