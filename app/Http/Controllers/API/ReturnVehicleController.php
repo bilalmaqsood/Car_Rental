@@ -46,7 +46,7 @@ class ReturnVehicleController extends Controller
         $this->validate($request, [
             'type' => 'required|in:front,rear,driver_side,off_side,notes',
             'data' => 'required|array',
-            'status' => 'in:0,1'
+            'status' => 'in:0,1,2'
         ]);
 
         $booking = Booking::findOrFail($booking_id);

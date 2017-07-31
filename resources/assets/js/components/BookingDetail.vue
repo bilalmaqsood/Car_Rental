@@ -60,12 +60,20 @@
 
                 <div class="booking_tab">
                     <ul class="nav nav-tabs">
-                        <li>
+                        <li v-if="User.state.auth.type == 'owner' && booking.status == 4 ">
+                            <a @click="loadSideView('return_inspection')" href="javascript:">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
+                                </svg>
+                                return inspection
+                            </a>
+                        </li>
+                        <li v-else>
                             <a @click="loadSideView('inspection')" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                 </svg>
-                                {{User.state.auth.type == 'owner' && booking.status == 4 ? 'return inspection' : 'car inspection'}}
+                                car inspection
                             </a>
                         </li>
                         <transition name="flip" v-if="User.state.auth.type=='client'">
