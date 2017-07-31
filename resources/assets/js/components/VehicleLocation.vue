@@ -1,7 +1,7 @@
 <template>
     <ul>
-        <li><span>Pickup from:</span> <span class="pickup_location">{{pickupLoc}}</span></li>
-        <li><span>Return to:</span> <span class="return_location">{{returnLoc}}</span></li>
+        <li><span><strong>Pickup from:</strong></span> <span class="pickup_location">{{pickupLoc}}</span></li>
+        <li><span><strong>Return to: </strong></span> <span class="return_location">{{returnLoc}}</span></li>
     </ul>
 </template>
 
