@@ -31,11 +31,12 @@
             </ul>
 
             <div class="tab-content">
-                <div v-show="postSuccess" class="alert alert-success" role="alert">
+            <transition name="flip" mode="out-in">
+                <div v-if="postSuccess" class="alert alert-success" role="alert">
                     <h4>{{response}}</h4>
                     <div class="clearfix"></div>
                 </div>
-
+            </transition>
                 <div role="tabpanel" class="tab-pane active" id="contact_us">
                     <div class="contact_form">
                         <form>
@@ -156,10 +157,14 @@
 
         methods: {
             postForm() {
+                let $this = this;
                 axios.post('/api/contact', this.prepareForm())
                     .then(response => {
                         this.response = response.data.success;
                         this.postSuccess = true;
+                        setTimeout(function(){ 
+                            $this.postSuccess = false;
+                        }, 3000);
                     });
             },
 
