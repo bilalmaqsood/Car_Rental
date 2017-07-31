@@ -87,7 +87,7 @@
 									<svg @click="uploadImage('rear')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
-                                    <input type="file" class="hidden" id="frontUploader" name="">
+                                    <input type="file" class="hidden" id="rearUploader" name="">
                         </span>
 </div>
 <div class="input-group-addon">
@@ -128,7 +128,7 @@
 									<svg @click="uploadImage('driver_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
-                                    <input type="file" class="hidden" id="frontUploader" name="">
+                                    <input type="file" class="hidden" id="driver_sideUploader" name="">
                         </span>
 </div>
 <div class="input-group-addon">
@@ -169,7 +169,7 @@
 									<svg @click="uploadImage('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
-                                    <input type="file" class="hidden" id="frontUploader" name="">
+                                    <input type="file" class="hidden" id="off_sideUploader" name="">
                         </span>
 </div>
 <div class="input-group-addon">
@@ -209,7 +209,7 @@
 									<svg @click="uploadImage('notes')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
 										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
 									</svg>
-                                    <input type="file" class="hidden" id="frontUploader" name="">
+                                    <input type="file" class="hidden" id="notesUploader" name="">
                         </span>
 </div>
 
