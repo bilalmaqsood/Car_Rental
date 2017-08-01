@@ -397,9 +397,9 @@
                         <li>
                             <button id="uploadImages" class="primary-button">Upload Images</button>
                             <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple"
-                                   value="upload">
+                                   value="upload" accept="image/*">
                             <button id="documents" class="primary-button">Upload documents</button>
-                            <input type="file" class="hidden documentsUpload" name="documents[]" multiple="multiple">
+                            <input type="file" class="hidden documentsUpload" name="documents[]" multiple="multiple" accept="image/*">
                             <button @click="processForm" class="primary-button">Save Vehicle</button>
                         </li>
                     </ul>
@@ -666,6 +666,7 @@
                     $(".documentsUpload").click();
                     $(".documentsUpload").change(function () {
                         $.map(this.files, function (val) {
+
                             var reader = new FileReader();
                             let name = val.name.substring(0, val.name.lastIndexOf('.'));
                             reader.readAsDataURL(val);
