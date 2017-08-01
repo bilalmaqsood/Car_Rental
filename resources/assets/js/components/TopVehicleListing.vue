@@ -37,7 +37,7 @@
                                 <div class="liting-image" v-bind:style="{'background': 'url('+img+')'}"></div>
                                 </div>
                             </div>
-                            <h3>{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
+                            <h3 class="clickable" @click="itemSelected(vehicle)">{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
                             <ul>
                                 <li>
                                     <p><strong>Year:</strong> {{vehicle.year}} </p>
@@ -107,7 +107,10 @@
                     });
                     $('#sideLoader').hide();
                 }, 10);
-            }
+            },
+            itemSelected(vehicle){
+                this.$emit("vehicleSelect",vehicle);
+            }   
         }
     }
 </script>

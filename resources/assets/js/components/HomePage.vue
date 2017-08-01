@@ -1,13 +1,14 @@
 <template>
     <transition name="slide-fade" mode="out-in">
-        <div v-if="storage.state.home" key="home-page">
+        <div v-if="storage.state.home && !details" key="home-page">
             <div class="slide_wrapper">
                 <div class="top_location">
                     <vehicles-search-form @showListing="switchToListing"></vehicles-search-form>
                 </div>
             </div>
 
-            <top-vehicles-listing></top-vehicles-listing>
+
+            <top-vehicles-listing @vehicleSelect="itemDetails"></top-vehicles-listing>
 
             <div class="about_section_wrapper" id="about_section_wrapper">
                 <h2>About Qwik<span>k</span>ar</h2>
@@ -40,6 +41,7 @@
     export default {
         data() {
             return {
+                details: false,
                 storage: User
             };
         },
@@ -60,6 +62,22 @@
 
             switchToListing() {
                 User.commit('home');
+            },
+        
+        itemDetails(item) {
+                User.commit('details', false);
+                let $t = this;
+                let $s = $('#sideLoader').show();
+                axios
+                    .get('/api/vehicle/' + item.id)
+                    .then(response => {
+                        setTimeout(function () {
+                            $s.hide();
+                            $t.details = true;
+                        }, 500);
+                        User.commit('view');
+                        User.commit('listing', [response.data.success]);
+                    });
             }
         }
     }
