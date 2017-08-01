@@ -34,26 +34,45 @@
             return {
                 contractTemplate: false,
                 start_date: '',
-                end_date: ''
+                end_date: '',
+                old_slots: '',
             };
         },
 
         mounted() {
             $scope = this;
-            this.prepareComponent();
+                        axios.get('/api/vehicle/'+this.vehicle.id+"/time-slot").then(r=>{
+                this.old_slots = r;
+                this.highlightOldDays(r);
+            }
+                );
+this.prepareComponent();
+
+
+            // $("th.next").on("click", function(event) {
+            //     $scope.highlightOldDays($scope.old_slots);
+            // });
+            // $("th.prev").on("click", function(event) {
+            //     $scope.highlightOldDays($scope.old_slots);
+            // });
 
         },
 
         methods: {
+
             prepareComponent() {
                 this.initializeJquery();
             },
 
             initializeJquery() {
-                $('#timeslots_picker').datetimepicker({
+           let $scope = this;
+
+                var $picker = $('#timeslots_picker').datetimepicker({
                     inline: true,
-                    sideBySide: false
-                }).on('dp.change', this.calenderChange);
+                    sideBySide: false,
+                    minDate: moment(new Date())
+                }).on('dp.change', this.calenderChange)
+                  .on('dp.update', function(){ $scope.highlightOldDays($scope.old_slots) });
                 $('[data-toggle="tooltip"]').tooltip();
             },
 
@@ -87,6 +106,7 @@
             },
 
             calenderChange(e) {
+                
                 if (!this.start_date)
                     this.start_date = e.date.utc().startOf('day');
                 else if (!this.end_date) {
@@ -97,6 +117,7 @@
                     this.start_date = null;
                     this.end_date = null;
                 }
+
             },
 
             highlightDays(bool) {
@@ -112,7 +133,7 @@
                             let eDate = moment.utc($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
                             if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
                         });
-
+                        $t.highlightOldDays($t.old_slots);
                         if (this.end_date.diff(this.start_date, 'days') < 6) {
                             new Noty({
                                 type: 'warning',
@@ -174,6 +195,20 @@
                         }).show();
                     });
                 }
+            },
+            highlightOldDays(response){
+                let $t = this;
+                let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
+                let $dates=[];
+                _.forEach(response.data.success, function(value) {
+                    $dates.push(moment(value.day, "YYYY-MM-DD").format("MM/DD/YYYY") );
+                    });
+
+                  $e.find('td').each(function (i, e) {
+                            let $elem = $(e);
+                            if (_.indexOf($dates,$elem.data('day'))>0) 
+                                $elem.addClass('highlight-day');
+                        });
             }
         }
     }

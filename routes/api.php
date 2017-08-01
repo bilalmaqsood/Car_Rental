@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('booking/{id}/contract', 'ContractController@contractBooking');
 
     Route::post('/time-slot', 'TimeSlotController@addSlots');
+    Route::get('/vehicle/{id}/time-slot', 'TimeSlotController@getSlots');
 
     Route::resource('booking', 'BookingController', ['except' => ['create', 'edit']]);
     Route::post('booking/{id}/status', 'BookingController@updateStatusRequest');

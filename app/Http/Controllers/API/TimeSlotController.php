@@ -73,4 +73,15 @@ class TimeSlotController extends Controller
 
         return api_response(!count($dates));
     }
+
+    public function getSlots($vehicle_id)
+    {
+
+        $vehicle = Vehicle::whereId($vehicle_id)->has("timeSlots")->with("timeSlots")->first();
+        if(!$vehicle)
+             return api_response("error",404);
+
+        return api_response($vehicle->timeSlots);
+
+    }
 }
