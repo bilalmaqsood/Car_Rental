@@ -31,9 +31,10 @@ class UsersController extends Controller
     public function create()
     {
         $user = new User();
+        $user_type = null;
         $user_types = UserType::all()->pluck("name","id");
 
-        return view("admin.users.create",compact("user","user_types"));
+        return view("admin.users.create",compact("user","user_types","user_type"));
     }
 
     public function store(UserModel $request)
@@ -41,6 +42,76 @@ class UsersController extends Controller
         $user = User::create($request->all());
         $user->addType($request->user_type);
         
-        return redirect()->route('admin.brand.index');
+        return redirect()->route('users.index');
+    }
+
+ 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $user = User::find($id);
+        $user_type = $user->types()->first()->name;
+
+        return view("admin.users.show",compact("user","user_type"));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        
+        $user = User::find($id); 
+        $user_types = UserType::all()->pluck("name","id");
+        $user_type = $user->types()->first()->id;
+        return view("admin.users.edit",compact("user","user_types","user_type"));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UserModel $request, $id)
+    {
+        $user = User::find($id); 
+        $user->fill($request->all());
+        if($request->new_password)
+            $user->password = $request->new_password;
+        $user->save();
+        $user->types()->sync($request->user_type);
+
+
+        return redirect()->route('users.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+         $status = User::destroy($id);
+
+        if(request()->ajax())
+        {
+
+            return response()->json([
+                'success' => $status == 1 ? 'true' : 'false'
+            ]);
+        }
+
     }
 }

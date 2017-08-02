@@ -9,18 +9,18 @@
      <div class="form-group {{ $errors->has('email') ? 'has-error' : ''}}">
         {!! Form::label('email', 'Email', ['class' => 'col-md-4 control-label']) !!}
         <div class="col-md-6">
-            {!! Form::text('email', $user->email, ['maxlength' => '255', 'class' => 'form-control required',]) !!}
+            {!! Form::text('email', $user->email, ['maxlength' => '255', 'class' => 'form-control required', 'placeholder' => 'Enter email']) !!}
             {!! $errors->first('email', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
      <div class="form-group {{ $errors->has('password') ? 'has-error' : ''}}">
         {!! Form::label('password', 'Password', ['class' => 'col-md-4 control-label']) !!}
         <div class="col-md-6">
-            {!! Form::text('password', $user->password, ['maxlength' => '255', 'class' => 'form-control required',]) !!}
+            {!! Form::text('new_password', null, ['maxlength' => '255', 'class' => 'form-control required', 'placeholder' => "Enter new password"]) !!}
             {!! $errors->first('password', '<p class="help-block">:message</p>') !!}
         </div>
     </div>
-     <div class="form-group {{ $errors->has('password') ? 'has-error' : ''}}">
+     <div class="form-group {{ $errors->has('phone') ? 'has-error' : ''}}">
         {!! Form::label('phone', 'phone', ['class' => 'col-md-4 control-label']) !!}
         <div class="col-md-6">
             {!! Form::text('phone', $user->phone, ['maxlength' => '255', 'class' => 'form-control required',]) !!}
@@ -37,7 +37,7 @@
     <div class="form-group {{ $errors->has('user_type') ? 'has-error' : ''}}">
         {!! Form::label('user_type', 'User Type', ['class' => 'col-md-4 control-label']) !!}
         <div class="col-md-6">
-         {!! Form::select('user_type', $user_types, null , ['class' => 'form-control', 'placeholder'=>'Select user type']) !!}
+         {!! Form::select('user_type', $user_types, $user_type , ['class' => 'form-control', 'placeholder'=>'Select user type']) !!}
             {!! $errors->first('user_type', '<p class="help-block">:message</p>') !!}
         </div>
     </div>

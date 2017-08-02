@@ -235,6 +235,9 @@ class User extends Authenticatable
           ->addColumn('user_type', function ($query) {
                 return $query->types->first()->name;
             })
+            ->addColumn('action', function ($user) {
+                return (string)view('admin.users.partials.actions',compact('user'));
+            })
           ->make(true);
     }
 

@@ -25,6 +25,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Type</th>
+                        <th>Action</th>
 
                     </tr>
                     </thead>
@@ -59,7 +60,8 @@
                 { data: 'email', name: 'email' },
                 { data: 'phone', name: 'phone' },
                 { data: 'user_type', name: 'user_type' },
-                
+                { data: 'action', name: 'action', searchable: "false", orderable: "false" }
+
                 
             ],
             "aoColumnDefs" : [
@@ -76,6 +78,31 @@
             // set the initial value
 
             "iDisplayLength" : 10
+        });
+
+
+                table.on('click', '.delete-item', function(e){
+                    if(confirm("Are you sure to delete this user?")){
+                tr = $(this).closest('tr');
+                var url = "{{route('users.destroy','---')}}";
+                var user_id = $(this).attr('data-id');
+                url = url.replace("---",user_id);
+
+                $.ajax({
+                    url: url,
+                    headers: { 'X-XSRF-TOKEN' : '{{\Illuminate\Support\Facades\Crypt::encrypt(csrf_token())}}' },
+                    error: function (response) {
+                        swal(response.statusText,(response.status==403 ? '{{trans('error_page.messages')}}' : response.responseText));
+                    },
+                    success: function(response) {
+                      
+                            tr.remove();
+                    },
+                    type: 'DELETE'
+                });
+           
+            }
+            e.preventDefault();
         });
 
 
