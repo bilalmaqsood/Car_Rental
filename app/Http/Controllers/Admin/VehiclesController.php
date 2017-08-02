@@ -3,26 +3,26 @@
 namespace Qwikkar\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use Qwikkar\Models\Ticket;
+use Qwikkar\Models\Vehicle;
 use Qwikkar\Http\Controllers\Controller;
 
-class TicketsController extends Controller
+class VehiclesController extends Controller
 {
-     /**
-     * Display a listing of the resource.
+    /**
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return array|\Illuminate\Http\JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
         if(request()->ajax())
         {
 
-           $ticket = new Ticket();
+           $vehicle = new Vehicle();
 
-            return $ticket->getDataTableData();
+            return $vehicle->getDataTableData();
         }
-        return view("admin.tickets.index");
+        return view("admin.vehicles.index");
     }
 
     /**
@@ -32,10 +32,7 @@ class TicketsController extends Controller
      */
     public function create()
     {
-        $ticket = new Ticket();
-
-        return view("admin.tickets.create",compact("ticket"));
-
+        //
     }
 
     /**
@@ -46,9 +43,7 @@ class TicketsController extends Controller
      */
     public function store(Request $request)
     {
-        dd(request()->all());
-       Ticket::create($request->all()); 
-       return redirect()->route("Tickets.index");  
+        //
     }
 
     /**
@@ -70,9 +65,7 @@ class TicketsController extends Controller
      */
     public function edit($id)
     {
-
-        $ticket  = Ticket::find($id); 
-        return view("admin.tickets.edit",compact("ticket"));
+        //
     }
 
     /**
@@ -84,10 +77,7 @@ class TicketsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ticket  = Ticket::find($id);
-        $ticket->fill($request->all());
-        $ticket->save();
-        return redirect()->route("Tickets.index");   
+        //
     }
 
     /**

@@ -149,4 +149,16 @@ class Vehicle extends Model
     {
         return $this->morphMany(Message::class, 'able');
     }
+
+        /**
+     * Get all of the vehicles , an API call of datatables
+     */
+    public function getDataTableData(){
+        $query = $this->select("vehicles.*");
+        return \Datatables::of($query)->get()
+          ->editColumn('action', function ($item) {
+                return (string) view("admin.vehicles.partials.actions",compact("item"));
+            })
+          ->make(true);
+    }
 }

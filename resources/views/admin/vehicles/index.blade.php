@@ -7,26 +7,25 @@
 
             <div class="col-md-12 overflow-auto">
                 <div class="col-sm-6">
-                   <h1>promocodes </h1>
-                <h4>promocodes listing</h4> 
+                   <h1>Vehicles </h1>
+                <h4>Vehicles listing</h4> 
                 </div>
                 <div class="col-sm-6">
-                  <a href="{{ route('promocodes.create') }}" class="btn btn-primary btn-md pull-right" title="Add New promocode">
+                  <a href="{{ route('vehicles.create') }}" class="btn btn-primary btn-md pull-right" title="Add New booking">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"/>
                     </a>
                 </div>
                 
             </div>
             <div class="col-md-12 overflow-auto">
-                <table class="table table-responsive table-bordered" id="promocodes-table" cellspacing="0">
+                <table class="table table-responsive table-bordered" id="vehicles-table" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>Code</th>
-                        <th>Reward</th>
-                        <th>Status</th>
-                        <th>Expiry</th>
-                        <th>Created At</th>
-                        <th>Action</th>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Varient</th>
+                      
+                        
 
                     </tr>
                     </thead>
@@ -40,14 +39,15 @@
 
 @section("page-scripts")
     <script>
-        var table_selector = '#promocodes-table';
+        var table_selector = '#vehicles-table';
         var table =  $('.table');
         var oTable = $(table_selector).dataTable({
             "dom": '<"top"f>rt<"bottom"ilp><"clear">',
             processing: true,
             serverSide: true,
+            paging: true,
             "ajax": {
-                "url": "{!! route('promocodes.index') !!}",
+                "url": "{!! route('vehicles.index') !!}",
                 "data": function ( d ) {
                     return $.extend( {}, d, {
                         "category-selectors": $('#category-selector').val(),
@@ -57,13 +57,11 @@
                 }
             },
             columns: [
-                { data: 'code', name: 'code' },
-                { data: 'reward', name: 'reward' },
-                { data: 'is_active', name: 'is_active' },
-                { data: 'expire_at', name: 'expire_at' },
-                { data: 'created_at', name: 'created_at' },
-                { data: 'action', name: 'action', searchable: "false", orderable: "false" }
-
+                { data: 'make', name: 'make' },
+                { data: 'model' , name: 'model' },
+                { data: 'variant' , name: 'variant' },
+      
+               
 
                 
             ],
@@ -85,11 +83,11 @@
 
 
                 table.on('click', '.delete-item', function(e){
-                    if(confirm("Are you sure to delete this promocode?")){
+                    if(confirm("Are you sure to delete this booking?")){
                 tr = $(this).closest('tr');
-                var url = "{{route('promocodes.destroy','---')}}";
-                var promocode_id = $(this).attr('data-id');
-                url = url.replace("---",promocode_id);
+                var url = "{{route('vehicles.destroy','---')}}";
+                var booking_id = $(this).attr('data-id');
+                url = url.replace("---",booking_id);
 
                 $.ajax({
                     url: url,

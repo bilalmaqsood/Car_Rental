@@ -3,6 +3,7 @@
 namespace Qwikkar\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Qwikkar\Models\PromoCode;
 use Qwikkar\Http\Controllers\Controller;
 
 class PromocodeController extends Controller
@@ -14,7 +15,14 @@ class PromocodeController extends Controller
      */
     public function index()
     {
-        //
+        if(request()->ajax())
+        {
+
+           $promo_code = new PromoCode();
+
+            return $promo_code->getDataTableData();
+        }
+        return view("admin.promocode.index");
     }
 
     /**
@@ -24,7 +32,10 @@ class PromocodeController extends Controller
      */
     public function create()
     {
-        //
+        $promo_code = new PromoCode();
+
+        return view("admin.promocode.create",compact("promo_code"));
+
     }
 
     /**
@@ -35,7 +46,9 @@ class PromocodeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd(request()->all());
+       PromoCode::create($request->all()); 
+       return redirect()->route("promocodes.index");  
     }
 
     /**
@@ -57,7 +70,9 @@ class PromocodeController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $promo_code  = PromoCode::find($id); 
+        return view("admin.promocode.edit",compact("promo_code"));
     }
 
     /**
@@ -69,7 +84,10 @@ class PromocodeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $promo_code  = PromoCode::find($id);
+        $promo_code->fill($request->all());
+        $promo_code->save();
+        return redirect()->route("promocodes.index");   
     }
 
     /**

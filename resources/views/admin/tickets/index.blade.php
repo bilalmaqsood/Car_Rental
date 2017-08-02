@@ -7,24 +7,23 @@
 
             <div class="col-md-12 overflow-auto">
                 <div class="col-sm-6">
-                   <h1>Users </h1>
-                <h4>users listing</h4> 
+                   <h1>tickets </h1>
+                <h4>tickets listing</h4> 
                 </div>
                 <div class="col-sm-6">
-                  <a href="{{ route('users.create') }}" class="btn btn-primary btn-md pull-right" title="Add New User">
+                  <a href="{{ route('tickets.create') }}" class="btn btn-primary btn-md pull-right" title="Add New User">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"/>
                     </a>
                 </div>
                 
             </div>
             <div class="col-md-12 overflow-auto">
-                <table class="table table-responsive table-bordered" id="users-table" cellspacing="0">
+                <table class="table table-responsive table-bordered" id="tickets-table" cellspacing="0">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Type</th>
+                        <th>Title</th>
+                        <th>Statue</th>
+                        <th>Message</th>
                         <th>Action</th>
 
                     </tr>
@@ -39,14 +38,14 @@
 
 @section("page-scripts")
     <script>
-        var table_selector = '#users-table';
+        var table_selector = '#tickets-table';
         var table =  $('.table');
         var oTable = $(table_selector).dataTable({
             "dom": '<"top"f>rt<"bottom"ilp><"clear">',
             processing: true,
             serverSide: true,
             "ajax": {
-                "url": "{!! route('users.index') !!}",
+                "url": "{!! route('tickets.index') !!}",
                 "data": function ( d ) {
                     return $.extend( {}, d, {
                         "category-selectors": $('#category-selector').val(),
@@ -56,10 +55,9 @@
                 }
             },
             columns: [
-                { data: 'name', name: 'name' },
-                { data: 'email', name: 'email' },
-                { data: 'phone', name: 'phone' },
-                { data: 'user_type', name: 'user_type' },
+                { data: 'title', name: 'title' },
+                { data: 'status', name: 'status' },
+                { data: 'message', name: 'message' },
                 { data: 'action', name: 'action', searchable: "false", orderable: "false" }
 
                 
@@ -84,7 +82,7 @@
                 table.on('click', '.delete-item', function(e){
                     if(confirm("Are you sure to delete this user?")){
                 tr = $(this).closest('tr');
-                var url = "{{route('users.destroy','---')}}";
+                var url = "{{route('tickets.destroy','---')}}";
                 var user_id = $(this).attr('data-id');
                 url = url.replace("---",user_id);
 
