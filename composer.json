@@ -9,7 +9,7 @@
         "barryvdh/laravel-dompdf": "^0.8.0",
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.4.*",
-        "laravel/passport": "^2.0",
+        "laravel/passport": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
         "predis/predis": "^1.1",

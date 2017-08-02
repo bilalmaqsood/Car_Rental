@@ -13,3 +13,4 @@
 
 Route::get('/', 'AdminController@index')->name('admin');
 Route::resource('users', 'UsersController');
+Route::resource('bookings', 'BookingController');

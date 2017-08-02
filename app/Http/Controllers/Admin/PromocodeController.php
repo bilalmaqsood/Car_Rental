@@ -4,10 +4,8 @@ namespace Qwikkar\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Qwikkar\Http\Controllers\Controller;
-use Qwikkar\Models\Booking;
 
-
-class BookingController extends Controller
+class PromocodeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,14 +14,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        if(request()->ajax())
-        {
-
-           $booking = new Booking();
-
-            return $booking->getDataTableData();
-        }
-        return view("admin.booking.index");
+        //
     }
 
     /**
@@ -33,8 +24,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        
-        return view("admin.booking.create");
+        //
     }
 
     /**
