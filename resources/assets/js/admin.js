@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+window.$ = $.extend(require('./admin/jquery.dataTables.min.js'));
 
 require('metismenu');
 require('./admin/jquery.slimscroll');

@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'AdminController@index')->name('admin');
+Route::resource('users', 'UsersController');
