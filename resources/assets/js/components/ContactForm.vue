@@ -25,14 +25,16 @@
 
             <div class="tab-content">
             <transition name="flip" mode="out-in">
-                <div v-if="postSuccess" class="alert alert-success" role="alert">
+                <div v-if="postSuccess" class="alert alert-success" style="position: absolute;
+    top: 5%;
+    left: 20%;" role="alert">
                     <h4>{{response}}</h4>
                     <div class="clearfix"></div>
                 </div>
             </transition>
                 <div role="tabpanel" class="tab-pane active" id="contact_us">
                     <div class="contact_form">
-                        <form>
+                        <form id="contact">
                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group" :class="{ 'has-error': $v.form.name.$error }">
 <div class="input-group login-input">
@@ -87,6 +89,7 @@
 </div>
                                 </div>
                                 <button type="button" class="submit" @click="postForm">Submit</button>
+                                <button type="reset" class="hidden" id="btn-reset">reset</button>
                             </div>
                         </form>
                     </div>
@@ -153,7 +156,9 @@
                     .then(response => {
                         this.response = response.data.success;
                         this.postSuccess = true;
+                         $this.clearForm();
                         setTimeout(function(){ 
+                           
                             $this.postSuccess = false;
                         }, 3000);
                     });
@@ -169,7 +174,15 @@
                 });
 
                 return input;
-            }
+            },
+            clearForm(){
+            this.form.name = '';
+            this.form.phone = '';
+            this.form.subject = '';
+            this.form.message = '';
+            this.form.email = '';
+                   
+                }
         }
     }
 </script>
