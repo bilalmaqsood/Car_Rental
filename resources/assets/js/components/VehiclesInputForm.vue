@@ -713,10 +713,15 @@
                 let param = {registration_number: this.form.registration_number}
                 axios.post('/api/driver-and-vehicle-licensing-agency', param)
                     .then((r) => {
-                        if (r.data.success) {
+                        if (r.data.success.Response.DataItems.VehicleRegistration) {
                             this.form.year = r.data.success.Response.DataItems.VehicleRegistration.YearOfManufacture;
                             this.form.make = r.data.success.Response.DataItems.VehicleRegistration.Make;
                             this.form.model = r.data.success.Response.DataItems.VehicleRegistration.Model;
+                        } else {
+                            new Noty({
+                                type: 'warning',
+                                text: 'Vehicle registration number not found.'
+                            }).show();
                         }
                     });
             },
