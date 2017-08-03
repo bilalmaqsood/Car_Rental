@@ -111,9 +111,8 @@
                         </li>
                         <li class="half-group">
                             <div class="form-group" :class="{'has-error': $v.form.seats.$error}">
-                                <!-- <input type="text" class="form-control" placeholder="5 seats" v-model="form.seats" @blur="$v.form.seats.$touch()"> -->
-                                <button @click="selectSeats('5 seats')" class="btn btn-block seats-button"
-                                        :class="{'btn-selected': form.seats=='5 seats' }">5 seats
+                                <button @click="selectSeats('5')" class="btn btn-block seats-button"
+                                        :class="{'btn-selected': form.seats=='5' }">5 seats
                                 </button>
                                 <p class=" help-block text-sm" v-if="$v.form.seats.$error">Enter vehicle seats </p>
 
@@ -121,9 +120,8 @@
                         </li>
                         <li class="half-group">
                             <div class="form-group" :class="{'has-error': $v.form.seats.$error}">
-                                <!-- <input type="text" class="form-control" placeholder="5 seats" v-model="form.seats" @blur="$v.form.seats.$touch()"> -->
-                                <button @click="selectSeats('7 seats')" class="btn btn-block seats-button"
-                                        :class="{'btn-selected': form.seats=='7 seats' }">7 seats
+                                <button @click="selectSeats('7')" class="btn btn-block seats-button"
+                                        :class="{'btn-selected': form.seats=='7' }">7 seats
                                 </button>
                                 <p class=" help-block text-sm" v-if="$v.form.seats.$error">Enter vehicle seats </p>
 
