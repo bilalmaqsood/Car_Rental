@@ -22,6 +22,9 @@
                             <span id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
                             </span>
+                            <span id="mydeldrag" style="color: green" @click="spotAction(inspection)">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            </span>
                         </div>
                     </div>
 
@@ -58,7 +61,8 @@
 
 
                     </div>
-
+                            <p>{{description}}</p>
+                            <img :src="spot_image" :alt="description" />
                 </div>
             </div>
 
@@ -66,7 +70,12 @@
                 <div class="dummy_car carcondition-img" id="rear">
                     <div v-if="rear.data.length > 0 " v-for="inspection in rear.data"   :style="{'top': inspection[2], 'left': inspection[3], 'z-index': 99}" class="mydraggable  ">
                         <div id="mydragcontrols">
-                            <span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span>
+                            <span id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                            </span>
+                            <span id="mydeldrag" style="color: green" @click="spotAction(inspection)">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            </span>
                         </div>
                     </div>
                     <img src="/images/rear.png" alt="">
@@ -99,6 +108,8 @@
 </div>
                     </div>
 </div>
+                <p>{{description}}</p>
+                            <img :src="spot_image" :alt="description" />
 
                 </div>
             </div>
@@ -107,7 +118,12 @@
                 <div class="dummy_car carcondition-img" id="driver_side">
                     <div v-if="driver_side.data.length > 0 " v-for="inspection in driver_side.data"   :style="{'top': inspection[2], 'left': inspection[3], 'z-index': 99}" class="mydraggable  ">
                         <div id="mydragcontrols">
-                            <span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span>
+                            <span id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                            </span>
+                            <span id="mydeldrag" style="color: green" @click="spotAction(inspection)">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            </span>
                         </div>
                     </div>
                     <img src="/images/driver_side.png" alt="">
@@ -140,7 +156,8 @@
 </div>
                     </div>
                     </div>
-
+                    <p>{{description}}</p>
+                            <img :src="spot_image" :alt="description" />
                 </div>
             </div>
 
@@ -148,7 +165,12 @@
                 <div class="dummy_car carcondition-img" id="off_side">
                     <div v-if="off_side.data.length > 0 " v-for="inspection in off_side.data"   :style="{'top': inspection[2], 'left': inspection[3], 'z-index': 99}" class="mydraggable  ">
                         <div id="mydragcontrols">
-                            <span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span>
+                            <span id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                            </span>
+                            <span id="mydeldrag" style="color: green" @click="spotAction(inspection)">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            </span>
                         </div>
                     </div>
                     <img src="/images/off_side.png" alt="">
@@ -180,6 +202,8 @@
                         </span>
 </div>
                     </div> </div>
+                    <p>{{description}}</p>
+                            <img :src="spot_image" :alt="description" />
 </div>
                 </div>
             </div>
@@ -188,7 +212,12 @@
                 <div class="dummy_car carcondition-img" >
                     <div v-if="notes.data.length > 0 " v-for="inspection in notes.data"   :style="{'top': inspection[2], 'left': inspection[3], 'z-index': 99}" class="mydraggable  ">
                         <div id="mydragcontrols">
-                            <span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span>
+                            <span id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                            </span>
+                            <span id="mydeldrag" style="color: green" @click="spotAction(inspection)">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                            </span>
                         </div>
                     </div>
                     <img src="/images/front.png" alt="">
@@ -224,15 +253,12 @@
                         </span>
 </div></div>
                     </div>
-
+<p>{{description}}</p>
+                            <img :src="spot_image" :alt="description" />
                 </div>
             </div>
 
-            <div class="hidden spots_area">
-                <p>Scratch 1.2 inches - front door</p>
-                <p>Bump 0.2 inches rear bumper</p>
-                <img src="/images/front.png" alt="" />
-            </div>
+            
         </div>
 
     </div>
@@ -281,7 +307,7 @@
                         this.clearSpot();
                         this.sportPending = false;
                     } else { return false; }
-                }
+                } else { this.clearSpot(); }
                 if (this.menuView && this.menuView === view)
                     this.menuView = '';
                 else
@@ -392,6 +418,10 @@
                     this.X_Axis = '';
                     this.Y_Axis = '';
                     this.spot_image = '';
+            },
+            spotAction(inspection){
+                this.spot_image = inspection[0];
+                this.description = inspection[1];
             }
         }
     }
