@@ -10,6 +10,8 @@
     <title>{{ config('app.name', 'Admin | Qwikkar') }}</title>
 
     <!-- Styles -->
+    <link href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" rel="stylesheet">
+
     <link href="{{ mix('css/admin.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
@@ -52,5 +54,8 @@
     <script src="{{ mix('js/manifest.js') }}"></script>
     <script src="{{ mix('js/vendor.js') }}"></script>
     <script src="{{ mix('js/admin.js') }}"></script>
+
+    @yield("page-scripts")
+
 </body>
 </html>

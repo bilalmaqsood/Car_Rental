@@ -133,6 +133,9 @@
 
                 if (this.location.length > 0) {
                     $.ajax({
+                        beforeSend: function(request) {
+                            request.setRequestHeader('Access-Control-Request-Headers', '');
+                        },
                         url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + this.location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
                         type: 'GET',
                         dataType: 'json',

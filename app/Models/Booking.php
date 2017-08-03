@@ -144,4 +144,31 @@ class Booking extends Model
     {
         return $this->morphToMany(PromoCode::class, 'promo_code_able');
     }
+
+    /**
+     * Get all of the booking  for the datatable listing.
+     */
+
+    public function getDataTableData(){
+        $query = $this->select("bookings.*")->with("user","vehicle");
+        return \Datatables::of($query)->get()
+        ->addColumn( 'vehicle', function ( $query ) {
+           return $query->vehicle->make ." ".$query->vehicle->model;
+       } )
+        ->addColumn( 'status', function ( $query ) {
+           return $this->statusTypes[$query->status];
+       } )
+        ->addColumn( 'promo_code', function ( $query ) {
+            $code = $query->promoCodes()->first();
+           return isset($code)?$code->code:"";
+       } )
+
+      ->editColumn( 'start_date', function ( $query ) {
+            return $query->start_date->format("d M Y");
+       } )
+             ->editColumn( 'end_date', function ( $query ) {
+            return $query->end_date->format("d M Y");
+       } )
+          ->make(true);
+    }
 }

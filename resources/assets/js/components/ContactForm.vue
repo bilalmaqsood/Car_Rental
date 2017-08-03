@@ -12,14 +12,7 @@
                         contact us
                     </a>
                 </li>
-                <li role="presentation">
-                    <a href="#report_issue" aria-controls="report_issue" role="tab" data-toggle="tab">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 20" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#issue"></use>
-                        </svg>
-                        report issue
-                    </a>
-                </li>
+            
                 <li role="presentation">
                     <a href="#faqs_tab" aria-controls="faqs_tab" role="tab" data-toggle="tab">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
@@ -31,11 +24,12 @@
             </ul>
 
             <div class="tab-content">
-                <div v-show="postSuccess" class="alert alert-success" role="alert">
+            <transition name="flip" mode="out-in">
+                <div v-if="postSuccess" class="alert alert-success" role="alert">
                     <h4>{{response}}</h4>
                     <div class="clearfix"></div>
                 </div>
-
+            </transition>
                 <div role="tabpanel" class="tab-pane active" id="contact_us">
                     <div class="contact_form">
                         <form>
@@ -98,9 +92,7 @@
                     </div>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="report_issue">
-                    <p>Nunc volutpat vehicula erat at facilisis. Quisque congue et turpis non maHs. Quisque egestas eleifend purus, eu finibus magna. In cursus fringilla leo consequat sollicitudin. Nunc in massa orci. Aenean pulvinar egestas rutrum. Aliquam elit libero, porta ac neque ut, fringilla laoreet lectus. Sed ut metus vitae risus iaculis vulputate. Curabitur preEum turpis nec velit commodo, nec egestas quam fringilla. Cras molesEe turpis eu lacus fringilla sodales. EEam a vesEbulum felis. Suspendisse laoreet dignissim nibh in posuere. Aenean a nisl dignissim, hendrerit magna vitae, interdum nisi. Suspendisse volutpat tortor vel libero dignissim, a viverra ex gravida.</p>
-                </div>
+                
 
                 <div role="tabpanel" class="tab-pane" id="faqs_tab">
                     <p>Nunc volutpat vehicula erat at facilisis. Quisque congue et turpis non maHs. Quisque egestas eleifend purus, eu finibus magna. In cursus fringilla leo consequat sollicitudin. Nunc in massa orci. Aenean pulvinar egestas rutrum.</p>
@@ -156,10 +148,14 @@
 
         methods: {
             postForm() {
+                let $this = this;
                 axios.post('/api/contact', this.prepareForm())
                     .then(response => {
                         this.response = response.data.success;
                         this.postSuccess = true;
+                        setTimeout(function(){ 
+                            $this.postSuccess = false;
+                        }, 3000);
                     });
             },
 

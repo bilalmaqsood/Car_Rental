@@ -1,0 +1,3 @@
+<a href="{{ route('vehicles.show', $item->id ) }}" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="left" title="{{ trans('tooltips.view') }}"><i class="fa fa-eye"></i></a>
+<a href="{{ route('vehicles.edit', $item->id) }}" class="btn btn-transparent btn-xs" data-toggle="tooltip" data-placement="left" title="{{ trans('tooltips.edit') }}"><i class="fa fa-pencil"></i></a>
+<a href="javascript:void(0)" class="btn btn-transparent btn-xs delete-item" data-id="{{ $item->id }}" data-toggle="tooltip" data-placement="left" title="{{ trans('tooltips.delete') }}"><i class="fa fa-trash"></i></a>

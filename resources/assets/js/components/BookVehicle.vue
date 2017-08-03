@@ -272,7 +272,8 @@
             initializeJquery() {
                 $('#booking_range_calender').datetimepicker({
                     inline: true,
-                    sideBySide: false
+                    sideBySide: false,
+                    minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange);
                 $('[data-toggle="tooltip"]').tooltip();
             },

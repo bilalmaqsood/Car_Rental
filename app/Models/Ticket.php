@@ -33,4 +33,13 @@ class Ticket extends Model
     {
         return $this->belongsTo(ReturnVehicle::class);
     }
+
+        /**
+     * Get all of the tickets , an API call of datatables
+     */
+    public function getDataTableData(){
+        $query = $this->select("tickets.*");
+        return \Datatables::of($query)->get()
+          ->make(true);
+    }
 }

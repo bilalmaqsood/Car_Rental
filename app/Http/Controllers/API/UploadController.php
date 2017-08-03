@@ -71,7 +71,7 @@ class UploadController extends Controller
     protected function uploadDocument(Request $request)
     {
         $this->validate($request, [
-            'upload' => 'required|file'
+            'upload' => 'required|image'
         ]);
 
         return $request->upload->store('document', 'public');

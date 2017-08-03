@@ -27,6 +27,30 @@
                     <i class="linea-icon linea-basic fa-fw" data-icon="v"></i> <span class="hide-menu"> Dashboard </span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('users.index') }}" class="waves-effect">
+                <i class="fa fa-user" aria-hidden="true" data-icon="v"></i>
+                <span class="hide-menu"> Users </span>
+                </a>
+            </li>
+           <li>
+                <a href="{{ route('bookings.index') }}" class="waves-effect">
+                <i class="fa fa-book" aria-hidden="true" data-icon="v"></i>
+                <span class="hide-menu"> Bookings </span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('promocodes.index') }}" class="waves-effect">
+                <i class="fa fa-book" aria-hidden="true" data-icon="v"></i>
+                <span class="hide-menu"> Promocodes </span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('tickets.index') }}" class="waves-effect">
+                <i class="fa fa-book" aria-hidden="true" data-icon="v"></i>
+                <span class="hide-menu"> Tickets </span>
+                </a>
+            </li>
             <li class="nav-small-cap">--- Support</li>
             <li><a href="{{ route('logout') }}" class="waves-effect"><i class="icon-logout fa-fw"></i> <span class="hide-menu">Log out</span></a></li>
             <li class="hide-menu">

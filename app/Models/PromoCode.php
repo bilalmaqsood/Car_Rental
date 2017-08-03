@@ -67,4 +67,18 @@ class PromoCode extends Model
     {
         return $this->morphedByMany(Booking::class, 'promo_code_able');
     }
+    /**
+     * Get all of the promocoes , an API call of datatables
+     */
+    public function getDataTableData(){
+        $query = $this->select("promo_codes.*");
+        return \Datatables::of($query)->get()
+          ->editColumn('is_active', function ($query) {
+                return $query->is_active==1?"Active":"In active";
+            })
+          ->editColumn('action', function ($item) {
+                return (string) view("admin.promocode.partials.actions",compact("item"));
+            })
+          ->make(true);
+    }
 }

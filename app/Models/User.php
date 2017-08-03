@@ -4,6 +4,7 @@ namespace Qwikkar\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Yajra\Datatables\Datatables;
 use Laravel\Passport\HasApiTokens;
 use Qwikkar\Concerns\Balanceable;
 use Laravel\Cashier\Billable;
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'password',
         'email',
         'phone',
+        'postcode',
         'device_id',
         'avatar',
     ];
@@ -227,4 +229,17 @@ class User extends Authenticatable
     {
         return $this->email;
     }
+
+    public function getDataTableData(){
+        $query = $this->select("users.*");
+        return Datatables::of($query)->get()
+          ->addColumn('user_type', function ($query) {
+                return $query->types->first()->name;
+            })
+            ->addColumn('action', function ($user) {
+                return (string)view('admin.users.partials.actions',compact('user'));
+            })
+          ->make(true);
+    }
+
 }
