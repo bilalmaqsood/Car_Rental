@@ -38,6 +38,7 @@
     $(".expire_at").datetimepicker({
                     inline: true,
                     sideBySide: false,
+                    format: "YYYY-MM-DD HH:mm:ss",
                     minDate: moment(new Date())
                 });
 </script>

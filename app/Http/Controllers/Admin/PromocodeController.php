@@ -46,7 +46,6 @@ class PromocodeController extends Controller
      */
     public function store(Request $request)
     {
-        dd(request()->all());
        PromoCode::create($request->all()); 
        return redirect()->route("promocodes.index");  
     }
@@ -59,7 +58,8 @@ class PromocodeController extends Controller
      */
     public function show($id)
     {
-        //
+         $promo_code  = PromoCode::find($id); 
+        return view("admin.promocode.show",compact("promo_code"));
     }
 
     /**
@@ -98,6 +98,15 @@ class PromocodeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $status = PromoCode::destroy($id);
+
+        if(request()->ajax())
+        {
+
+            return response()->json([
+                'success' => $status == 1 ? 'true' : 'false'
+            ]);
+        }
+        
     }
 }

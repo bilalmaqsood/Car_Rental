@@ -58,3 +58,11 @@ function render($__php, $__data)
 
     return ob_get_clean();
 }
+
+
+function format_date($date){
+    
+    if(get_class($date)==Carbon\Carbon::class){
+        return $date->format("d M Y H:m A");
+    }
+}
