@@ -219,8 +219,8 @@ class BookingController extends Controller
     public function updateStatusRequest(Request $request, $id, BookingLog $log)
     {
         $this->validate($request, [
-            'start_date' => 'date',
-            'end_date' => 'date',
+            'start_date' => 'date|after_or_equal:today',
+            'end_date' => 'date|after_or_equal:today',
             'location' => 'string',
             'note' => 'string',
             'status' => 'in:5,7',
@@ -261,6 +261,7 @@ class BookingController extends Controller
             'vehicle' => $booking->vehicle->vehicle_name,
             'contract_start' => $booking->start_date,
             'contract_end' => $booking->end_date,
+            'requested_data' => $requestData,
             'deposit' => $booking->deposit,
             'signatures' => [
                 'owner' => $booking->signatures && $booking->signatures->has('owner'),
