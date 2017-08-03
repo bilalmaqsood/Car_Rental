@@ -4,7 +4,7 @@ namespace Qwikkar\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Yajra\Datatables\Facades\Datatables;
+use Yajra\Datatables\Datatables;
 use Laravel\Passport\HasApiTokens;
 use Qwikkar\Concerns\Balanceable;
 use Laravel\Cashier\Billable;
