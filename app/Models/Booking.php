@@ -162,11 +162,14 @@ class Booking extends Model
             $code = $query->promoCodes()->first();
            return isset($code)?$code->code:"";
        } )
-
+        ->addColumn( 'action', function ( $item ) {
+            
+           return (string) view("admin.booking.partials.actions",compact("item"));
+       } )
       ->editColumn( 'start_date', function ( $query ) {
             return $query->start_date->format("d M Y");
        } )
-             ->editColumn( 'end_date', function ( $query ) {
+      ->editColumn( 'end_date', function ( $query ) {
             return $query->end_date->format("d M Y");
        } )
           ->make(true);

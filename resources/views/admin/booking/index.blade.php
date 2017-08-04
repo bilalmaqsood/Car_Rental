@@ -28,6 +28,7 @@
                         <th>Promocode</th>
                         <th>Start Date</th>
                         <th>End Date</th>
+                        <th>Action</th>
                         
 
                     </tr>
@@ -67,6 +68,8 @@
                 { data: 'promo_code' , name: 'promo_code' },
                 { data: 'start_date' , name: 'start_date' },
                 { data: 'end_date' , name: 'end_date' },
+                { data: 'action', name: 'action', searchable: "false", orderable: "false" }
+
                
 
                 
