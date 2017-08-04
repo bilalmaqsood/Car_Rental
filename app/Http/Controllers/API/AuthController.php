@@ -84,7 +84,7 @@ class AuthController extends Controller
         if (!Hash::check($request->current, $request->user()->password))
             return api_response(trans('passwords.current'), Response::HTTP_UNPROCESSABLE_ENTITY);
 
-        $request->user()->password = $request->password;
+        $request->user()->password = bcrypt($request->password);
         $request->user()->save();
 
         return api_response(trans('passwords.change'));
