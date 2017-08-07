@@ -70,6 +70,10 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+
+        if($request->user()->client->status==1)
+            return api_response("Sorry! you have an open dispute", Response::HTTP_UNPROCESSABLE_ENTITY);
+
         $this->validate($request, [
             'vehicle_id' => 'required|numeric|exists:vehicles,id',
             'start_date' => 'required|date|after_or_equal:today',
