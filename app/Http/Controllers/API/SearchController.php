@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Vehicle;
+use Carbon\Carbon;
 
 class SearchController extends Controller
 {
@@ -85,6 +86,14 @@ class SearchController extends Controller
 //                $q->orWhere('variant', 'like', '%' . $request->search . '%');
             });
 
+         if($request->has('booking_start') && $request->has('booking_end'))
+                     $vehicles = $vehicles->where(function (Builder $q) use ($request) {
+
+                        $q->where('available_from', '<=', Carbon::parse($request->booking_start))
+                                   ->where('available_to', '>=', Carbon::parse($request->booking_end));
+
+        });
+
         $vehicles->where(function (Builder $q) use ($request) {
 
             if ($request->price_min)
@@ -105,7 +114,7 @@ class SearchController extends Controller
 
         $vehicles->with(['booking' => function ($with) {
             $with->select('id', 'vehicle_id', 'start_date', 'end_date');
-//            $with->where('status', 2); // accepted booking from owner
+           // $with->where('status', 2); // accepted booking from owner
         }]);
 
         $vehicles->orderBy('created_at', 'desc');
