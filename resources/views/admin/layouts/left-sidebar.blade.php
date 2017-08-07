@@ -33,6 +33,12 @@
                 <span class="hide-menu"> Users </span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('vehicles.index') }}" class="waves-effect">
+                <i class="fa fa-car" aria-hidden="true" data-icon="v"></i>
+                <span class="hide-menu"> Vehicles </span>
+                </a>
+            </li>
            <li>
                 <a href="{{ route('bookings.index') }}" class="waves-effect">
                 <i class="fa fa-book" aria-hidden="true" data-icon="v"></i>

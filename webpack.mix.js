@@ -23,6 +23,7 @@ mix
     .less('resources/assets/less/admin.less', 'public/css')
 
     .copy('resources/assets/images', 'public/images')
+    .copy('node_modules/noty/lib/noty.css', 'public/css')
 ;
 
 if (mix.inProduction()) {

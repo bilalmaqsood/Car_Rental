@@ -35,8 +35,6 @@ class VehicleModel extends FormRequest
             'mpg_eco' => 'numeric',
             'transmission' => 'string|max:255',
             'seats' => 'string|max:50',
-            'available_from' => 'required|date',
-            'available_to' => 'required|date',
             'pickup' => 'required|boolean',
             'delivery' => 'required|boolean',
             'location' => 'required|string|max:100',
@@ -58,9 +56,9 @@ class VehicleModel extends FormRequest
             'discounts.*.percent' => 'numeric',
             'discounts.*.weeks' => 'numeric',
 
-            'uber_discount' => 'array',
-            'uber_discount.*.percent' => 'numeric',
-            'uber_discount.*.points' => 'numeric',
+            // 'uber_discount' => 'array',
+            // 'uber_discount.*.percent' => 'numeric',
+            // 'uber_discount.*.points' => 'numeric',
 
             'images' => 'array|min:1|required',
             'images.*' => 'string',
