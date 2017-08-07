@@ -101,6 +101,15 @@ class VehiclesController extends Controller
      */
     public function destroy($id)
     {
-        //
+         $status = Vehicle::destroy($id);
+
+        if(request()->ajax())
+        {
+
+            return response()->json([
+                'success' => $status == 1 ? 'true' : 'false'
+            ]);
+        }
+
     }
 }

@@ -86,7 +86,7 @@
 
 
                 table.on('click', '.delete-item', function(e){
-                    if(confirm("Are you sure to delete this booking?")){
+                    if(confirm("Are you sure to delete this vehicle?")){
                 tr = $(this).closest('tr');
                 var url = "{{route('vehicles.destroy','---')}}";
                 var booking_id = $(this).attr('data-id');
