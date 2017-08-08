@@ -22,6 +22,9 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+
+    @yield('page-styles')
+
 </head>
 <body class="fix-sidebar">
     <div id="wrapper">
