@@ -426,7 +426,7 @@
                 var data = [this.spot_image,this.description,this.X_Axis,this.Y_Axis];
 
                 if(this[this.menuView].status)
-                    this[this.menuView].status = 2;
+                    this[this.menuView].status = 1;
                     else
                     delete this[this.menuView].status;
 
