@@ -2,6 +2,12 @@
 
 @section('page-styles')
 <style>
+.dummy_car {
+    float: left;
+    width: 100%;
+    text-align: center;
+    padding: 70px 0;
+}
     .draggable,
 .mydraggable {
     width: 60px;
@@ -16,6 +22,24 @@
     opacity: .9;
     border: 2px dotted #8c001a;
 }
+.carcondition-img {
+    position: relative;
+}
+
+#mydragcontrols {
+    float: right;
+}
+
+#mydragcontrols #myfix {
+    cursor: pointer;
+    margin: 2px;
+}
+
+#mydragcontrols #mydeldrag {
+    cursor: pointer;
+    margin: 2px;
+}
+
 </style>
 @endsection
 @section('content')
@@ -122,7 +146,6 @@
                                                         <div class="panel-body">
 
                                                         <div style="position: relative;" class="dummy_car carcondition-img" id="{{$inspection['type']}}">
-                                                            <img src="/images/front.png" alt="" style="margin: 0px;">
                                                             @foreach($inspection['data'] as $image)
                                                                <div  style=" top: {{ $image[2] }}; 
                                                                            left: {{ $image[3] }}; z-index: 9999" class="mydraggable  ">
@@ -136,6 +159,8 @@
                                                                 </div>
                                                             </div>
                                                             @endforeach
+                                                             <img src="/images/front.png" alt="" style="margin: 0px;">
+
                                                         </div>
 
                                                         </div>
@@ -162,4 +187,12 @@
             </div>
 </div>
 
+@endsection
+
+
+@section('page-scripts')
+<script>
+
+
+</script>
 @endsection
