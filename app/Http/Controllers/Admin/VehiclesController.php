@@ -55,7 +55,10 @@ class VehiclesController extends Controller
      */
     public function show($id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+
+        return view("admin.vehicles.show",compact("vehicle"));
+
     }
 
     /**
