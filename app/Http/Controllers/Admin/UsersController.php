@@ -55,8 +55,12 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::find($id);
+        
         $user_type = $user->types()->first()->name;
-
+        if($user_type=='client'){
+            $user = $user->load("client");
+        }
+       
         return view("admin.users.show",compact("user","user_type"));
     }
 
