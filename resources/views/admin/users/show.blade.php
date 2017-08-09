@@ -45,6 +45,7 @@
                                             @if($user_type=='client' && $user->client->documents)
                                             <div class="row">
                                                 <h3>User documents</h3>
+
                                                 @foreach($user->client->documents as $document)
                                                 <div class="panel panel-default">
 
