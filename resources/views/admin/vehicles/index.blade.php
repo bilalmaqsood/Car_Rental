@@ -24,6 +24,7 @@
                         <th>Make</th>
                         <th>Model</th>
                         <th>Varient</th>
+                        <th>Action</th>
                       
                         
 
@@ -60,6 +61,8 @@
                 { data: 'make', name: 'make' },
                 { data: 'model' , name: 'model' },
                 { data: 'variant' , name: 'variant' },
+                { data: 'action', name: 'action', searchable: "false", orderable: "false" }
+
       
                
 
@@ -83,7 +86,7 @@
 
 
                 table.on('click', '.delete-item', function(e){
-                    if(confirm("Are you sure to delete this booking?")){
+                    if(confirm("Are you sure to delete this vehicle?")){
                 tr = $(this).closest('tr');
                 var url = "{{route('vehicles.destroy','---')}}";
                 var booking_id = $(this).attr('data-id');

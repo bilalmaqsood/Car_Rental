@@ -56,7 +56,10 @@ class BookingController extends Controller
      */
     public function show($id)
     {
-        //
+        $booking = Booking::with("vehicle","payments","user","payments","inspection","returnVehicle")->find($id);
+        // dd($booking->toArray());
+        $statusTypes = $booking->statusTypes;
+        return view("admin.booking.show",compact("booking","statusTypes"));
     }
 
     /**

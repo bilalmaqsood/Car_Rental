@@ -27,9 +27,9 @@ class TimeSlotController extends Controller
             'days' => 'required|array',
             'days.*' => 'date'
         ]);
-
+        $data = $request->days;
         $vehicle = $request->user()->owner->vehicles->where('id', $request->vehicle_id)->first();
-
+        $timeslots = $vehicle->timeSlots()->count();
         $filtered = $vehicle->timeSlots()->whereIn('day', $request->days)->get()->map(function ($ts) {
             return $ts->day->format('Y-m-d');
         });
@@ -45,6 +45,10 @@ class TimeSlotController extends Controller
         })->values();
 
         $vehicle->timeSlots()->saveMany($days);
+        if($timeslots==0)
+           $vehicle->available_from = Carbon::parse(reset($data));
+        $vehicle->available_to = Carbon::parse(end($data));
+        $vehicle->save();
 
         return api_response(trans('time_slots.created', ['no' => $days->count(), 'vehicle' => $vehicle->vehicle_name]));
     }

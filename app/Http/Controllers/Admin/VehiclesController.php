@@ -4,6 +4,7 @@ namespace Qwikkar\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Qwikkar\Models\Vehicle;
+use Qwikkar\Http\Requests\VehicleModel;
 use Qwikkar\Http\Controllers\Controller;
 
 class VehiclesController extends Controller
@@ -65,19 +66,31 @@ class VehiclesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $vehicle = Vehicle::find($id);
+
+        return view("admin.vehicles.edit",compact("vehicle"));
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param VehicleModel $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(VehicleModel $request, $id)
+    { 
+        $vehicle = Vehicle::where('id', $id)->first();
+
+        if (!$vehicle) throw new ModelNotFoundException();
+
+        $vehicle->fill($request->except(['available_from',
+        'available_to']));
+
+        $vehicle->save();
+
+        return api_response($vehicle);
     }
 
     /**
@@ -88,6 +101,15 @@ class VehiclesController extends Controller
      */
     public function destroy($id)
     {
-        //
+         $status = Vehicle::destroy($id);
+
+        if(request()->ajax())
+        {
+
+            return response()->json([
+                'success' => $status == 1 ? 'true' : 'false'
+            ]);
+        }
+
     }
 }

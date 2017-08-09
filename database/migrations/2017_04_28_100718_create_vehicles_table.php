@@ -27,8 +27,8 @@ class CreateVehiclesTable extends Migration
             $table->decimal('mpg_eco')->nullable()->comment('fuel consumption');
             $table->string('transmission')->nullable();
             $table->string('seats', 50)->nullable();
-            $table->date('available_from');
-            $table->date('available_to');
+            $table->date('available_from')->nullable();
+            $table->date('available_to')->nullable();
             $table->boolean('pickup')->comment('yes / no if pick by owner');
             $table->boolean('delivery')->comment('yes / no if delivery by owner');
             $table->string('pickup_location', 100)->nullable()->comment('vehicle pickup location in latitude and longitude');

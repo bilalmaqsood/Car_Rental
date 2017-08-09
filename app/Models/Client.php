@@ -21,6 +21,7 @@ class Client extends Model
         'pco_release_date',
         'pco_expiry_date',
         'documents',
+        'status',
     ];
 
     /**

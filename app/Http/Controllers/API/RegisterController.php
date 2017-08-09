@@ -41,7 +41,7 @@ class RegisterController extends Controller
      * @return array
      */
     public function __invoke(UserModel $request, $type, User $user)
-    {
+    {   
         switch ($type) {
             case 'client':
                 return $this->registerClient($request, $user);
@@ -74,6 +74,7 @@ class RegisterController extends Controller
         ]);
 
         $user->fill($request->all());
+        $user->password = bcrypt($request->get("password"));
         $user->save();
 
         $user->addType(3);
@@ -107,6 +108,7 @@ class RegisterController extends Controller
         ]);
 
         $user->fill($request->all());
+        $user->password = bcrypt($request->get("password"));
         $user->save();
 
         $user->addType(2);

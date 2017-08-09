@@ -11,7 +11,7 @@ window.$ = $.extend(require('./admin/jquery.dataTables.min.js'));
 require('metismenu');
 require('./admin/jquery.slimscroll');
 require('./admin/waves');
-
+require('./FetchLocationName');
 require('./admin/layout');
 
 /**
@@ -22,6 +22,9 @@ require('./admin/layout');
 Vue.component('passport-clients', require('./components/passport/Clients.vue'));
 Vue.component('passport-authorized-clients', require('./components/passport/AuthorizedClients.vue'));
 Vue.component('passport-personal-access-tokens', require('./components/passport/PersonalAccessTokens.vue'));
+Vue.component('vehicle-form', require('./components/VehiclesInputFormAdmin.vue'));
+Vue.component('location-coordinates-picker', require('./components/LocationPicker.vue'));
+
 
 Vue.filter('date', require('./filters/date'));
 Vue.filter('currency', require('./filters/currency'));

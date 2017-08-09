@@ -65,6 +65,7 @@ class ReturnVehicleController extends Controller
             if ($booking->status != 10)
                 $this->openDispute($request, $booking, $returnVehicle);
 
+            $booking->user()->first()->client()->update(["status" => "1"]);    
             $booking->status = 10;
             $booking->save();
         }
@@ -123,6 +124,7 @@ class ReturnVehicleController extends Controller
             if ($booking->status != 10)
                 $this->openDispute($request, $booking, $returnVehicle);
 
+            $booking->user()->first()->client()->update(["status" => "1"]);
             $booking->status = 10;
             $booking->save();
         }

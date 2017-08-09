@@ -1,5 +1,5 @@
 <template>
-    <div class="tab-content booking_tab_content">
+    <div>
         <div id="car_inspection" class="tab-pane fade active in">
             <div class="spinner-container center-loader" id="centerLoader">
                 <div class="spinner-frame">
@@ -405,7 +405,7 @@
             </div>
         </div>
         <location-coordinates-picker :location="location"
-                                     @locationEvent="saveLocationCoordinates"></location-coordinates-picker>
+                                      @locationEvent="saveLocationCoordinates"></location-coordinates-picker> 
     </div>
 </template>
 <script>
@@ -577,12 +577,12 @@
             }
         },
         mounted() {
+            console.log(this.vehicle);
             $scope = this;
-            if (this.isEdit) {
                 this.form = JSON.parse(JSON.stringify(Form));
                 this.form = this.vehicle;
                 this.updateLocationNames();
-            }
+            
             this.prepareComponent();
         },
 
@@ -591,20 +591,24 @@
                 $scope.postForm();
             },
             postForm() {
-                if (this.isEdit) {
-                    axios.patch('/api/vehicle/' + this.form.id, this.prepareForm())
+                
+                    axios.patch('/admin/vehicles/' + this.form.id, this.prepareForm())
                         .then(this.responseHandler);
-                } else {
-                    axios.post('/api/vehicle', this.prepareForm())
-                        .then(this.responseHandler);
-                }
+                
             },
             responseHandler(response) {
                 this.form = JSON.parse(JSON.stringify(Form));
-                if (this.isEdit)
-                    this.$parent.$emit('vehicleUpdate', response.data.success);
-                else
-                    this.$parent.$emit('vehicleAdded', response.data.success);
+                
+                 new Noty({
+                                type: 'information',
+                                text: 'Vehicle updated!'
+                            }).show();
+
+                 setTimeout(function() {
+                 window.location = '/admin/vehicles';
+                 }, 2000);
+
+
             },
             prepareForm() {
                 let input = this.form;

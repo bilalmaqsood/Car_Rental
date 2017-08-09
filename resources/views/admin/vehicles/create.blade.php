@@ -12,11 +12,11 @@
                 <div class="panel panel-default">
                     <div class="panel-heading" style="height: 50px;">
                         <div class="col-md-3">
-                            <h3>Create New User</h3>
+                            <h3>Add Vehicle</h3>
                         </div>
                         <div class="col-md-3 pull-right">
                             <div class="form-group pull-right">
-                                <button class="btn btn-primary full-width" id="brandSubmit">Save User</button>
+                                <button class="btn btn-primary full-width" id="brandSubmit">Save Vehicle</button>
                             </div>
                         </div>
                     </div>
