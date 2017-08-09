@@ -81,7 +81,58 @@
                         <span v-show="isEditing=='pco_expiry'">
                              <input v-model="User.state.auth.pco_expiry_date" type="text" class="form-control pco_expiry" @blur="activateInEditMode(null)" v-on:keyup="track('pco_expiry_date')">
                         </span>
+                    </p><p v-if="typeof User.state.auth.pco_expiry_date !== 'undefined'">PCO certificate exp. date
+                        <span v-on:click="activateInEditMode('pco_expiry')" v-show="isEditing!=='pco_expiry'">
+                                {{User.state.auth.pco_expiry_date | date}}
+                        </span>
+                        <span v-show="isEditing=='pco_expiry'">
+                             <input v-model="User.state.auth.pco_expiry_date" type="text" class="form-control pco_expiry" @blur="activateInEditMode(null)" v-on:keyup="track('pco_expiry_date')">
+                        </span>
                     </p>
+
+                    <p v-if="User.state.auth.type == 'client'" v-for="d in documents"> 
+                                {{d.title}}
+                       <span v-if="!d.path" @click="upload(d)" class="clickable">
+                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                        </span>
+
+                        <span v-else @click="upload(d)">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </span> 
+
+                    </p>
+
+                    <!-- <p >Driving Licence
+                        <span >
+                                
+                        </span>
+                        <span >
+                             <button @click="upload('driving_licence')" class="primary-button">Upload Images</button>
+                        </span>
+                    </p>
+                     <p >PCO Licence
+                        <span >
+                                
+                        </span>
+                        <span >
+                             <button @click="upload('pco_licence')" class="primary-button">Upload Images</button>
+                            
+                        </span>
+                    </p>
+                    <p>DBS certificate
+                        
+                        <span >
+                             <button @click="upload('dbs_certificate')" class="primary-button">Upload Images</button>
+                            
+                        </span>
+                    </p>
+                    <p>Proof of address
+                        
+                        <span >
+                             <button @click="upload('proof_of_address')" class="primary-button">Upload Images</button>
+                            
+                        </span>
+                    </p> -->
                 </li>
                 <li v-if="verifyAuth">
                     <button type="button" class="btn btn-success btn-block" @click="updateSettings"> Update Settings</button>
@@ -109,6 +160,8 @@
                     </svg>
                     <span>Log out</span>
                 </li>
+                <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple"
+                                   value="upload" >
             </ul>
         </div>
     </div>
@@ -124,6 +177,13 @@
                 terms: false,
                 termsContent: '',
                 isEditing: false,
+                documents: [
+                    {title: 'Driving Licence', name:'',path: '',type: '', doc: 'driving_licence', status: '' },
+                    {title: 'PCO Licence', name:'',path: '',type: '', doc: 'pco_licence', status: '' },
+                    {title: 'DBS certificate', name:'',path: '',type: '', doc: 'dbs_certificate', status: '' },
+                    {title: 'Proof of address', name:'',path: '',type: '', doc: 'proof_of_address', status: '' },
+                   
+                ],
                 clone: JSON.stringify(User.state.auth)
             };
         },
@@ -136,6 +196,11 @@
 
         mounted() {
             this.prepareComponent();
+            if(!User.state.auth.documents){
+                  User.state.auth.documents = this.documents;
+               } else {
+                 this.documents = User.state.auth.documents;
+               }
         },
 
         methods: {
@@ -171,10 +236,16 @@
 
             updateSettings() {
                 let $scope = this;
+                User.state.auth.documents = this.documents;
                 axios.patch(
                     '/api/profile/' + User.state.auth.type,
                     this.params()
                 ).then(function (r) {
+                     new Noty({
+                            type: 'information',
+                            text: "Profile updated successfully!"
+                        }).show();
+
                     $scope.isEditing = false;
                 });
             },
@@ -196,7 +267,30 @@
                 });
 
                 return params;
-            }
+            },
+            upload(obj){
+                let $this = this;
+                $(".hiddenUpload").click();
+                    $(".hiddenUpload").change(function () {
+                        $.map(this.files, function (val) {
+                           
+                            obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
+                            obj.type = val.type;
+                            
+                            var reader = new FileReader();
+                            reader.readAsDataURL(val);
+                            var fd = new window.FormData();
+                            fd.append('upload', val);
+                            reader.onload = function (e) {
+                                axios.post('/api/upload/document', fd).then(function(r){
+                                    obj.path = r.data.success;
+                                    // User.state.auth.documents.push(obj);
+                                });
+                            };
+                        });
+                    });
+            },
+            
         }
     }
 </script>
