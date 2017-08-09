@@ -353,6 +353,27 @@ class BookingController extends Controller
             ]
         ]));
 
+        if ($request->status == 9)
+            $booking->user->notify(new BookingNotify([
+                'id' => $booking->id,
+                'type' => 'Booking',
+                'status' => $request->status,
+                'old_status' => $booking->status,
+                'vehicle_id' => $booking->vehicle->id,
+                'image' => $booking->vehicle->images->first(),
+                'title' => 'Your deposit will be return after 24 hours.',
+                'user' => $request->user()->name,
+                'credit_card' => $booking->account->last_numbers,
+                'vehicle' => $booking->vehicle->vehicle_name,
+                'contract_start' => $booking->start_date,
+                'contract_end' => $booking->end_date,
+                'deposit' => $booking->deposit,
+                'signatures' => [
+                    'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                    'client' => $booking->signatures && $booking->signatures->has('client')
+                ]
+            ]));
+
         $this->updateBookingFromLog($log, $request);
 
         return api_response($this->getFulfillNotifyString($log));

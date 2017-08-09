@@ -23,7 +23,8 @@ class Booking extends Model
         'Extended',
         'Close',
         'Disputed',
-        'Resolved'
+        'Resolved',
+        'Deposit Returned'
     ];
 
     /**
