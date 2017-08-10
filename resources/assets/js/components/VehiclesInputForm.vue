@@ -392,10 +392,24 @@
 
                             </div>
                         </li>
+                          <li v-for="d in form.documents" v-if="d.title">
+                            <div class="form-group">
+                                <label class="control-label">{{d.title}}</label>
+                                
+                                 <span v-if="!d.path" @click="upload(d)" class="clickable">
+                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                        </span>
+
+                        <span v-else @click="edit(d)" class="clickable">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </span> 
+                                
+                            </div>
+                        </li>
                         <li>
                             <button id="uploadImages" class="primary-button">Upload Images</button>
                             <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple"
-                                   value="upload" accept="image/*">
+                                   value="upload" >
                             <button id="documents" class="primary-button">Upload documents</button>
                             <input type="file" class="hidden documentsUpload" name="documents[]" multiple="multiple" accept="image/*">
                             <button @click="processForm" class="primary-button">Save Vehicle</button>
@@ -404,6 +418,7 @@
                 </div>
             </div>
         </div>
+        <update-documents :doc="doc" :title="'Update vehicle documents'" @docUpdate="docUpdated"></update-documents> 
         <location-coordinates-picker :location="location"
                                      @locationEvent="saveLocationCoordinates"></location-coordinates-picker>
     </div>
@@ -427,6 +442,7 @@
                 selectedLocation: '',
                 week: '',
                 percent: '',
+                doc: false,
                 form: JSON.parse(JSON.stringify(Form)),
             };
         },
@@ -738,6 +754,36 @@
                      FetchLocationName(this.form.location, null, function (result) {
                         $("#location").val(result);
                     });
+            },
+           upload(obj){
+                let $this = this;
+                $(".hiddenUpload").click();
+                    $(".hiddenUpload").change(function () {
+                        $.map(this.files, function (val) {
+                           
+                            obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
+                            obj.type = val.type;
+                            
+                            var reader = new FileReader();
+                            reader.readAsDataURL(val);
+                            var fd = new window.FormData();
+                            fd.append('upload', val);
+                            reader.onload = function (e) {
+                                axios.post('/api/upload/document', fd).then(function(r){
+                                    obj.path = r.data.success;
+                                    // User.state.auth.documents.push(obj);
+                                });
+                            };
+                        });
+                    });
+            },
+            edit(doc){
+                this.doc = doc;
+                $('#updateModel').appendTo("body").modal('show');
+                
+            },
+            docUpdated(newDoc){
+
             }
         }
 

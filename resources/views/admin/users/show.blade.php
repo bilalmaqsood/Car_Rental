@@ -42,6 +42,33 @@
                                                     {{ $user->phone }}
                                                 </div>
                                             </div>
+                                            @if($user_type=='client' && $user->client->documents)
+                                            <div class="row">
+                                                <h3>User documents</h3>
+
+                                                @foreach($user->client->documents as $document)
+                                                <div class="panel panel-default">
+
+                                                   <div class="panel-heading" role="tab" id="headingThree">
+                                                        <h4 class="panel-title">
+                                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ $document['name'] }}" aria-expanded="false" aria-controls="collapseThree">
+                                                                {{ $document['title'] }}
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="{{ $document['name'] }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                        <div class="panel-body">
+                                                        <object data="{{$document['path']}}" type="application/pdf" style="height: 110vh;" width="100%"></object>
+                                                            
+                                                                
+                                                        </div>
+                                                    </div>
+                                               </div>
+                                                @endforeach
+                                            </div>
+                                            @endif
+
+
                                     </div>
                                 </div>
 

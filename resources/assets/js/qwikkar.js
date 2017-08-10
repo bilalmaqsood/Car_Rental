@@ -53,6 +53,7 @@ Vue.component('location-coordinates-picker', require('./components/LocationPicke
 Vue.component('sign-contract', require('./components/SignContract.vue'));
 Vue.component('vehicle-location', require('./components/VehicleLocation.vue'));
 Vue.component('register-terms', require('./components/RegisterTerms.vue'));
+Vue.component('update-documents', require('./components/UpdateDocuments.vue'));
 
 Vue.filter('date', require('./filters/date'));
 Vue.filter('currency', require('./filters/currency'));

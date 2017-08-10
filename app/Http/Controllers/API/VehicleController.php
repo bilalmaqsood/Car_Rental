@@ -88,7 +88,7 @@ class VehicleController extends Controller
         $vehicle = $request->user()->owner->vehicles->where('id', $id)->first();
 
         if (!$vehicle) throw new ModelNotFoundException();
-
+        logger($vehicle->images);
         $vehicle->fill($request->except(['available_from', 'available_to', 'vlc']));
 
         $vehicle->save();
