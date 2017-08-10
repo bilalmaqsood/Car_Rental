@@ -48,11 +48,10 @@ class InspectionController extends Controller
     public function store(Request $request, $booking_id)
     {
         $this->validate($request, [
-            'type' => 'required|in:front,rear,driver_side,off_side,notes',
-            'status' => 'in:0,1',
-            'is_return' => 'boolean',
-
             'data' => 'required|array|min:1',
+            'data.*.type' => 'required|in:front,rear,driver_side,off_side,notes',
+            'data.*.status' => 'in:0,1',
+            'data.*.is_return' => 'boolean',
             'data.*.x_axis' => 'numeric',
             'data.*.y_axis' => 'numeric',
             'data.*.path' => 'string',
@@ -70,11 +69,7 @@ class InspectionController extends Controller
         $spots = collect($request->data)
             ->map(function ($spot) use ($request, $booking) {
 
-                $spot['type'] = $request->type;
-                $spot['status'] = $request->status;
-                $spot['is_return'] = $request->is_return;
-
-                $inspection = Inspection::firstOrNew(collect($spot)->except('status')->all());
+                $inspection = Inspection::firstOrNew(collect($spot)->only('x_axis', 'y_axis', 'path')->all());
 
                 if (!$inspection->exists) {
                     $inspection->fill($spot);
