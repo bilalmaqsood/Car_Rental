@@ -51,15 +51,16 @@
 
                                                    <div class="panel-heading" role="tab" id="headingThree">
                                                         <h4 class="panel-title">
-                                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#" aria-expanded="false" aria-controls="collapseThree">
-                                                                
+                                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ $document['name'] }}" aria-expanded="false" aria-controls="collapseThree">
+                                                                {{ $document['title'] }}
                                                             </a>
                                                         </h4>
                                                     </div>
-                                                    <div id="" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                    <div id="{{ $document['name'] }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                                         <div class="panel-body">
-
-
+                                                        <object data="{{$document['path']}}" type="application/pdf" style="height: 110vh;" width="100%"></object>
+                                                            
+                                                                
                                                         </div>
                                                     </div>
                                                </div>
