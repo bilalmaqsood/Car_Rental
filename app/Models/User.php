@@ -221,6 +221,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Find out if User is an admin, based on if has any types
+     *
+     * @return boolean
+     */
+    public function rating()
+    {
+     return $this->hasMany(Feedback::class);   
+    }
+
+    /**
      * Route notifications for the mail channel.
      *
      * @return string
