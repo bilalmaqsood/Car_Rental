@@ -12,8 +12,13 @@ class Inspection extends Model
      * @var array
      */
     protected $fillable = [
+        'status',
+        'is_return',
         'type',
-        'data',
+        'x_axis',
+        'y_axis',
+        'path',
+        'note',
     ];
 
     /**
@@ -22,7 +27,10 @@ class Inspection extends Model
      * @var array
      */
     protected $casts = [
-        'data' => 'array',
+        'is_return' => 'boolean',
+
+        'x_axis' => 'integer',
+        'y_axis' => 'integer',
     ];
 
     /**
@@ -31,14 +39,22 @@ class Inspection extends Model
      * @var array
      */
     protected $hidden = [
-        'booking_id',
+        'vehicle_id',
     ];
 
     /**
-     * Get the booking of inspection
+     * Get the vehicle of inspection
      */
-    public function booking()
+    public function vehicle()
     {
-        return $this->belongsTo(Booking::class);
+        return $this->belongsTo(Vehicle::class);
+    }
+
+    /**
+     * Relation to ticket table
+     */
+    public function ticket()
+    {
+        return $this->hasOne(Ticket::class);
     }
 }

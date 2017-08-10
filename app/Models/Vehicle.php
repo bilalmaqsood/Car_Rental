@@ -12,6 +12,7 @@ class Vehicle extends Model
      * @var array
      */
     protected $fillable = [
+        'vlc',
         'make',
         'model',
         'variant',
@@ -72,6 +73,7 @@ class Vehicle extends Model
         'no_fault_accident' => 'integer',
         'fault_accident' => 'integer',
 
+        'vlc' => 'boolean',
         'pickup' => 'boolean',
         'delivery' => 'boolean',
 
@@ -150,15 +152,23 @@ class Vehicle extends Model
         return $this->morphMany(Message::class, 'able');
     }
 
-        /**
-     * Get all of the vehicles , an API call of datatables
+    /**
+     * Inspections of the vehicle
      */
-    public function getDataTableData(){
-        $query = $this->select("vehicles.*");
-        return \Datatables::of($query)->get()
-          ->addColumn('action', function ($item) {
-                return (string) view("admin.vehicles.partials.actions",compact("item"));
+    public function inspection()
+    {
+        return $this->hasMany(Inspection::class);
+    }
+
+    /**
+     * Get all of the vehicles, an API call of datatables
+     */
+    public function getDataTableData()
+    {
+        return \Datatables::of($this->select('vehicles.*'))->get()
+            ->addColumn('action', function ($item) {
+                return (string)view('admin.vehicles.partials.actions', compact('item'));
             })
-          ->make(true);
+            ->make(true);
     }
 }

@@ -34,8 +34,7 @@ class ProfileController extends Controller
             'pco_number' => 'string',
         ]);
 
-        $data = $request->all();
-        unset($data['email']);
+        $data = $request->except(['email', 'dlc']);
 
         $user = $request->user();
 
@@ -76,8 +75,7 @@ class ProfileController extends Controller
             'country' => 'string',
         ]);
 
-        $data = $request->all();
-        unset($data['email']);
+        $data = $request->except(['email']);
 
         $user = $request->user();
 

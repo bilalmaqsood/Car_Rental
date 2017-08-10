@@ -107,22 +107,6 @@ class Booking extends Model
     }
 
     /**
-     * Get all inspections of the booking vehicle
-     */
-    public function inspection()
-    {
-        return $this->hasMany(Inspection::class);
-    }
-
-    /**
-     * Get all return vehicle inspections of the booking vehicle
-     */
-    public function returnVehicle()
-    {
-        return $this->hasMany(ReturnVehicle::class);
-    }
-
-    /**
      * Get the vehicle of booking
      */
     public function vehicle()
@@ -149,30 +133,29 @@ class Booking extends Model
     /**
      * Get all of the booking  for the datatable listing.
      */
-
-    public function getDataTableData(){
-        $query = $this->select("bookings.*")->with("user","vehicle");
-        return \Datatables::of($query)->get()
-        ->addColumn( 'vehicle', function ( $query ) {
-           return $query->vehicle->make ." ".$query->vehicle->model;
-       } )
-        ->addColumn( 'status', function ( $query ) {
-           return $this->statusTypes[$query->status];
-       } )
-        ->addColumn( 'promo_code', function ( $query ) {
-            $code = $query->promoCodes()->first();
-           return isset($code)?$code->code:"";
-       } )
-        ->addColumn( 'action', function ( $item ) {
-            
-           return (string) view("admin.booking.partials.actions",compact("item"));
-       } )
-      ->editColumn( 'start_date', function ( $query ) {
-            return $query->start_date->format("d M Y");
-       } )
-      ->editColumn( 'end_date', function ( $query ) {
-            return $query->end_date->format("d M Y");
-       } )
-          ->make(true);
+    public function getDataTableData()
+    {
+        return \Datatables::of($this->select('bookings.*')
+            ->with('user', 'vehicle'))->get()
+            ->addColumn('vehicle', function ($query) {
+                return $query->vehicle->make . ' ' . $query->vehicle->model;
+            })
+            ->addColumn('status', function ($query) {
+                return $this->statusTypes[$query->status];
+            })
+            ->addColumn('promo_code', function ($query) {
+                $code = $query->promoCodes()->first();
+                return isset($code) ? $code->code : '';
+            })
+            ->addColumn('action', function ($item) {
+                return (string)view('admin.booking.partials.actions', compact('item'));
+            })
+            ->editColumn('start_date', function ($query) {
+                return $query->start_date->format('d M Y');
+            })
+            ->editColumn('end_date', function ($query) {
+                return $query->end_date->format('d M Y');
+            })
+            ->make(true);
     }
 }

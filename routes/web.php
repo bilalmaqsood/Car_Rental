@@ -31,6 +31,6 @@ Route::get('/vehicle/document/path', function () {
 
 Route::get('/test', function () {
     $schema = \DB::getDoctrineSchemaManager();
-    d($schema->listTableColumns((new \Qwikkar\Models\Booking())->getTable()));
+    d($schema->listTableColumns((new \Qwikkar\Models\User())->getTable()));
     dd('oknasir');
 });

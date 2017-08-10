@@ -34,4 +34,10 @@ return [
 
     'mileage' => ':miles have been added for :name.',
 
+    'return' => 'Return inspection cannot done because booking is not approved.',
+
+    'handover' => 'Handover inspections cannot done because booking is approved.',
+
+    'inspection_added' => ':count inspections added.',
+
 ];

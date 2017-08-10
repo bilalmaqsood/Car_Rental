@@ -14,7 +14,8 @@ class AddStatusToClientTable extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->integer('status')->default("0")->nullable()->comment('0=default 1=disputed');
+            $table->boolean('status')->after('user_id')->default(0)->comment('0=default 1=disputed');
+            $table->boolean('dlc')->after('status')->default(0)->comment('driving license check');
         });
     }
 
@@ -26,7 +27,8 @@ class AddStatusToClientTable extends Migration
     public function down()
     {
         Schema::table('clients', function (Blueprint $table) {
-            //
+            $table->dropColumn('status');
+            $table->dropColumn('dlc');
         });
     }
 }

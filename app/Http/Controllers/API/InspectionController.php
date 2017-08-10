@@ -4,11 +4,17 @@ namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Qwikkar\Concerns\Disputable;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
+use Qwikkar\Models\Inspection;
+use Qwikkar\Models\Vehicle;
 
 class InspectionController extends Controller
 {
+    use Disputable;
+
     /**
      * InspectionController constructor.
      */
@@ -29,7 +35,7 @@ class InspectionController extends Controller
     {
         $booking = Booking::findOrFail($booking_id);
 
-        return api_response($booking->inspection);
+        return api_response($booking->vehicle->inspection);
     }
 
     /**
@@ -43,22 +49,56 @@ class InspectionController extends Controller
     {
         $this->validate($request, [
             'type' => 'required|in:front,rear,driver_side,off_side,notes',
-            'data' => 'required|array'
+            'status' => 'in:0,1',
+            'is_return' => 'boolean',
+
+            'data' => 'required|array|min:1',
+            'data.*.x_axis' => 'numeric',
+            'data.*.y_axis' => 'numeric',
+            'data.*.path' => 'string',
+            'data.*.note' => 'string',
         ]);
 
         $booking = Booking::findOrFail($booking_id);
 
-        if ($booking->inspection->where('type', $request->type)->count()) {
-            $inspection = $booking->inspection->where('type', $request->type)->first();
-            $inspection->fill($request->all());
-            $inspection->save();
-        } else {
-            $booking->inspection()->create($request->all());
+        if ($booking->status < 4 && $request->is_return)
+            return api_response(trans('booking.return'), Response::HTTP_CONFLICT);
+
+        if ($booking->status >= 4 && !$request->is_return)
+            return api_response(trans('booking.handover'), Response::HTTP_CONFLICT);
+
+        $spots = collect($request->data)
+            ->map(function ($spot) use ($request, $booking) {
+
+                $spot['type'] = $request->type;
+                $spot['status'] = $request->status;
+                $spot['is_return'] = $request->is_return;
+
+                $inspection = Inspection::firstOrNew(collect($spot)->except('status')->all());
+
+                if (!$inspection->exists) {
+                    $inspection->fill($spot);
+                    $inspection->vehicle()->associate($booking->vehicle);
+                    $inspection->save();
+
+                    return $inspection;
+                }
+            })
+            ->reject(function ($spot) {
+                return $spot == null;
+            })
+            ->values();
+
+        if ($spots->count() && $request->has('status') && $request->status == 1 && $booking->status != 10) {
+
+            $this->openDispute($request, $booking, $spots->first());
+
+            $booking->user->client->update(['status' => 1]);
+
+            $booking->update(['status' => 10]);
         }
 
-        $booking->load('inspection');
-
-        return api_response($booking->inspection->where('type', $request->type)->first());
+        return api_response(trans('booking.inspection_added', ['count' => $spots->count()]));
     }
 
     /**
@@ -72,10 +112,9 @@ class InspectionController extends Controller
     {
         $booking = Booking::findOrFail($booking_id);
 
-        $inspection = $booking->inspection()->where('id', $id)->first();
+        $inspection = $booking->vehicle->inspection()->where('id', $id)->first();
 
-        if (!$inspection)
-            throw new ModelNotFoundException();
+        if (!$inspection) throw new ModelNotFoundException();
 
         return api_response($inspection);
     }
@@ -92,18 +131,37 @@ class InspectionController extends Controller
     {
         $this->validate($request, [
             'type' => 'required|in:front,rear,driver_side,off_side,notes',
-            'data' => 'required|array'
+            'status' => 'in:0,1',
+            'is_return' => 'boolean',
+            'x_axis' => 'numeric',
+            'y_axis' => 'numeric',
+            'path' => 'string',
+            'note' => 'string',
         ]);
 
         $booking = Booking::findOrFail($booking_id);
 
-        $inspection = $booking->inspection()->where('id', $id)->first();
+        $inspection = $booking->vehicle->inspection()->where('id', $id)->first();
 
-        if (!$inspection)
-            throw new ModelNotFoundException();
+        if (!$inspection) throw new ModelNotFoundException();
 
-        $inspection->data = $request->data;
+        if ($booking->status < 4 && $request->is_return)
+            return api_response(trans('booking.return'), Response::HTTP_CONFLICT);
+
+        if ($booking->status >= 4 && !$request->is_return)
+            return api_response(trans('booking.handover'), Response::HTTP_CONFLICT);
+
+        $inspection->fill($request->all());
         $inspection->save();
+
+        if ($request->has('status') && $request->status == 1 && $booking->status != 10) {
+
+            $this->openDispute($request, $booking, $inspection);
+
+            $booking->user->client->update(['status' => 1]);
+
+            $booking->update(['status' => 10]);
+        }
 
         return api_response($inspection);
     }
@@ -119,10 +177,9 @@ class InspectionController extends Controller
     {
         $booking = Booking::findOrFail($booking_id);
 
-        $inspection = $booking->inspection()->where('id', $id)->first();
+        $inspection = $booking->vehicle->inspection()->where('id', $id)->first();
 
-        if (!$inspection)
-            throw new ModelNotFoundException();
+        if (!$inspection) throw new ModelNotFoundException();
 
         return api_response($inspection->delete());
     }

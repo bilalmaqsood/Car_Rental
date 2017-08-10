@@ -22,6 +22,7 @@ class Client extends Model
         'pco_expiry_date',
         'documents',
         'status',
+        'dlc',
     ];
 
     /**
@@ -41,6 +42,8 @@ class Client extends Model
      * @var array
      */
     protected $casts = [
+        'dlc' => 'boolean',
+
         'documents' => 'collection',
     ];
 

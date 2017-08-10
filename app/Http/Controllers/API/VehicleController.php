@@ -46,8 +46,7 @@ class VehicleController extends Controller
         ]);
 
         if (!$vehicle->exists) {
-            $vehicle->fill($request->except(['available_from',
-        'available_to']));
+            $vehicle->fill($request->except(['available_from', 'available_to', 'vlc']));
 
             $request->user()->owner->vehicles()->save($vehicle);
 
@@ -90,8 +89,7 @@ class VehicleController extends Controller
 
         if (!$vehicle) throw new ModelNotFoundException();
 
-        $vehicle->fill($request->except(['available_from',
-        'available_to']));
+        $vehicle->fill($request->except(['available_from', 'available_to', 'vlc']));
 
         $vehicle->save();
 

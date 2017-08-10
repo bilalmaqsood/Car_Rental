@@ -5,10 +5,12 @@ namespace Qwikkar\Concerns;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Qwikkar\Models\Booking;
+use Qwikkar\Models\Inspection;
 use Qwikkar\Models\ReturnVehicle;
 use Qwikkar\Models\Ticket;
 use Qwikkar\Models\User;
 use Qwikkar\Notifications\DisputeOpenedNotify;
+use Ramsey\Uuid\Uuid;
 
 trait Disputable
 {
@@ -16,13 +18,14 @@ trait Disputable
      * Open dispute and send ticket and emails to both users and admin.
      *
      * @param Request $request
-     * @param ReturnVehicle $returnVehicle
+     * @param Booking $booking
+     * @param Inspection $inspection
      */
-    protected function openDispute(Request $request, Booking $booking, ReturnVehicle $returnVehicle)
+    protected function openDispute(Request $request, Booking $booking, Inspection $inspection)
     {
         $ticket = new Ticket();
 
-        $uuid = str_random();
+        $uuid = (string)Uuid::uuid4();
 
         $ticket->id = $uuid;
 
@@ -30,7 +33,7 @@ trait Disputable
 
         $ticket->user()->associate($request->user());
 
-        $returnVehicle->ticket()->save($ticket);
+        $inspection->ticket()->save($ticket);
 
         $users = collect([])
             ->push(User::find(1))

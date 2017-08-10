@@ -27,19 +27,18 @@ class Ticket extends Model
     }
 
     /**
-     * Get the return vehicle of ticket
+     * Get the inspection of ticket
      */
-    public function returnVehicle()
+    public function inspection()
     {
-        return $this->belongsTo(ReturnVehicle::class);
+        return $this->belongsTo(Inspection::class);
     }
 
-        /**
-     * Get all of the tickets , an API call of datatables
+    /**
+     * Get all of the tickets, an API call of datatables
      */
-    public function getDataTableData(){
-        $query = $this->select("tickets.*");
-        return \Datatables::of($query)->get()
-          ->make(true);
+    public function getDataTableData()
+    {
+        return \Datatables::of($this->select("tickets.*"))->get()->make(true);
     }
 }
