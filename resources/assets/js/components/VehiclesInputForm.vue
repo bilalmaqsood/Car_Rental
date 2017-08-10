@@ -400,7 +400,7 @@
                              <i class="fa fa-cloud-upload" aria-hidden="true"></i>
                         </span>
 
-                        <span v-else @click="upload(d)" class="clickable">
+                        <span v-else @click="edit(d)" class="clickable">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                         </span> 
                                 
@@ -418,6 +418,7 @@
                 </div>
             </div>
         </div>
+        <update-documents :doc="doc" :title="'Update vehicle documents'" @docUpdate="docUpdated"></update-documents> 
         <location-coordinates-picker :location="location"
                                      @locationEvent="saveLocationCoordinates"></location-coordinates-picker>
     </div>
@@ -441,6 +442,7 @@
                 selectedLocation: '',
                 week: '',
                 percent: '',
+                doc: false,
                 form: JSON.parse(JSON.stringify(Form)),
             };
         },
@@ -775,6 +777,14 @@
                         });
                     });
             },
+            edit(doc){
+                this.doc = doc;
+                $('#updateModel').appendTo("body").modal('show');
+                
+            },
+            docUpdated(newDoc){
+
+            }
         }
 
     }
