@@ -102,7 +102,29 @@ class Vehicle extends Model
         'owner_id',
     ];
 
+
     /**
+     * The attributes that should be appended to array.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'is_booked',
+    ];
+
+
+
+    /**
+     * Get the booking status on the vehicle .
+     *
+     * @return boolean if any booking exists for this vehicle 
+     */
+    public function getIsBookedAttribute()
+    {
+        return (bool) $this->booking()->count();
+    }
+
+        /**
      * Get the vehicle's name.
      *
      * @return string
