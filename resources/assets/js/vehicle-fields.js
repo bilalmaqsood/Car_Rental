@@ -30,7 +30,11 @@ export default {
     no_fault_accident: '',
     fault_accident: '',
     discounts:[],
-    documents: [],
+    documents: [
+                    {title: 'Incourence Documents', name:'',path: '',type: '', doc: 'incourence_document', status: '' },
+                    {title: 'PCO Certificate', name:'',path: '',type: '', doc: 'pco_certificate', status: '' },
+                    {title: 'Rent Document', name:'',path: '',type: '', doc: 'rent_document', status: '' },
+    ],
     extension: '',
     notes: '',
     registration_number: '',
