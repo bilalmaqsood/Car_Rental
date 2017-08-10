@@ -76,7 +76,7 @@ class SearchController extends Controller
             'longitude.regex' => 'The longitude is invalid.',
         ]);
 
-        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at');
+        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at')->where('vlc', 1);
 
         if ($request->has('search') && $request->search != '||_||')
             $vehicles = $vehicles->where(function (Builder $q) use ($request) {
@@ -86,13 +86,11 @@ class SearchController extends Controller
 //                $q->orWhere('variant', 'like', '%' . $request->search . '%');
             });
 
-         if($request->has('booking_start') && $request->has('booking_end'))
-                     $vehicles = $vehicles->where(function (Builder $q) use ($request) {
-
-                        $q->where('available_from', '<=', Carbon::parse($request->booking_start))
-                                   ->where('available_to', '>=', Carbon::parse($request->booking_end));
-
-        });
+        if ($request->has('booking_start') && $request->has('booking_end'))
+            $vehicles = $vehicles->where(function (Builder $q) use ($request) {
+                $q->where('available_from', '<=', Carbon::parse($request->booking_start));
+                $q->where('available_to', '>=', Carbon::parse($request->booking_end));
+            });
 
         $vehicles->where(function (Builder $q) use ($request) {
 
@@ -114,7 +112,7 @@ class SearchController extends Controller
 
         $vehicles->with(['booking' => function ($with) {
             $with->select('id', 'vehicle_id', 'start_date', 'end_date');
-           // $with->where('status', 2); // accepted booking from owner
+            // $with->where('status', 2); // accepted booking from owner
         }]);
 
         $vehicles->orderBy('created_at', 'desc');

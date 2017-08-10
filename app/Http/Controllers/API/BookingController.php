@@ -70,9 +70,11 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$request->user()->client->dlc)
+            return api_response('Driver\'s documents are not verified.', Response::HTTP_BAD_REQUEST);
 
-        if($request->user()->client->status==1)
-            return api_response("Sorry! you have an open dispute", Response::HTTP_UNPROCESSABLE_ENTITY);
+        if ($request->user()->client->status == 1)
+            return api_response('Sorry! you have an open dispute.', Response::HTTP_BAD_REQUEST);
 
         $this->validate($request, [
             'vehicle_id' => 'required|numeric|exists:vehicles,id',
