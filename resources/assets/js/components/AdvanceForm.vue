@@ -11,7 +11,7 @@
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                             </svg>
 </div>
-                            <input type="text" class="form-control" placeholder="vehicle" v-model.trim="vehicle">
+                            <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control" placeholder="vehicle" v-model.trim="vehicle" >
 </div>
                             
                         </div>
@@ -24,7 +24,7 @@
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                             </svg>
 </div>
-                            <input type="text" class="form-control" placeholder="location" v-model.trim="location">
+                            <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control" placeholder="location" v-model.trim="location">
                         </div>
 </div>
                     </li>
@@ -36,7 +36,7 @@
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                             </svg>
 </div>
-                            <input type="text" class="form-control" placeholder="price range" v-model.trim="price">
+                            <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control" placeholder="price range" v-model.trim="price">
 </div>
                         </div>
                     </li>
@@ -48,7 +48,7 @@
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                             </svg>
 </div>
-                            <input type="text" class="form-control available-from" placeholder="available from" v-model.trim="available">
+                            <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control available-from" placeholder="available from" v-model.trim="available">
   </div>
                       </div>
                     </li>
