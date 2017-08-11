@@ -94,7 +94,7 @@
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
 </div>
-                                <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="card expira/on date" name="expiry">
+                                <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="card expiration date" name="expiry">
 </div>
                                 <span class="help-block text-sm" v-if="$v.card.expiry.$error">Enter valid expiry date</span>
                             </div>
@@ -112,6 +112,21 @@
                                 <span class="help-block text-sm" v-if="$v.card.cvc.$error">Enter valid cvc </span>
                             </div>
                         </li>
+                         <li>
+                            <div class="form-group">
+                                <div class="input-group login-input">
+                                    <div class="input-group-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                                        </svg>
+                                    </div>
+                                     <input type="text" class="form-control" placeholder="billing address">
+
+                                </div>
+                                <span class="help-block text-sm" v-if="$v.card.cvc.$error">Enter valid cvc </span>
+                            </div>
+                        </li>
+                        
                         <li>
                             <svg @click="card.terms = !card.terms" :class="{active: card.terms}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon cursor-pointer">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
