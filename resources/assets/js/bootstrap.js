@@ -64,7 +64,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    if (error.response && error.response.status === 422) {
+    if (error.response && (error.response.status === 422 || error.response.status=== 400 )) {
         $.each(error.response.data, function (k, v) {
             new Noty({
                 type: 'error',
