@@ -3,7 +3,7 @@
         <div class="nav_wrapper">
             <nav class="navbar navbar-default navbar-fixed-top">
                 <transition name="slide-fade" mode="out-in">
-                    <advance-form v-if="storage.state.showAdvance"></advance-form>
+                    <advance-form v-if="storage.state.showAdvance && menuView=='advance'"></advance-form>
                 </transition>
 
                 <div class="navbar-header">
@@ -459,6 +459,7 @@
             },
 
             showAdvanceForm() {
+                this.menuView = 'advance';
                 User.commit('advance');
             },
 
