@@ -264,8 +264,19 @@
 
                                             @if($vehicle->documents)
                                             <div class="row">
-                                                <h3>Vehicle documents</h3>
+                                                <div class="col-sm-12">
+                                                    <h3 class="pull-left">Vehicle documents</h3>
+                                                    <span class="pull-right"> 
+                                                    @if($vehicle->vlc)
+                                                    <button class="btn btn-success" id="btn-verified">Verified</button>
+                                                    @else
+                                                    <button class="btn btn-primary" id="btn-verify">Verify</button>
+                                                    <button class="hidden btn btn-success" id="btn-verified">Verified</button>
 
+
+                                                    @endif
+                                                    </span>
+                                                </div>
                                                 @foreach($vehicle->documents as $document)
                                                 <div class="panel panel-default">
                 
@@ -286,7 +297,7 @@
                                             </div>
                                             @endif
 
-
+    
                                     </div>
                                 </div>
 
@@ -302,4 +313,27 @@
             </div>
 </div>
 
+@endsection
+
+@section("page-scripts")
+<script>
+    $(document).ready(function() {
+        $("#btn-verify").on('click', function(event) {
+            event.preventDefault();
+            var url = '{{  route("vehicles.verify",$vehicle->id) }}';
+
+            axios.post(url,{}).then(function(response){
+                new Noty({
+                                    type: 'information',
+                                    text: response.data.success,
+                                }).show();
+                $("#btn-verify").hide();
+                $("#btn-verified").removeClass("hidden");
+
+            });
+             
+
+        });  
+    });
+</script>
 @endsection
