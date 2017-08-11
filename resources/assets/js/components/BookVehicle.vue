@@ -435,8 +435,13 @@
                                 this.resetPromoCodeFields();
                         })
                         .catch(r => {
-                            if (r.response.status === 422)
+                            if (r.response.status === 404){
+                                new Noty({
+                                    type: 'error',
+                                    text: 'Invalid promo code.'
+                                }).show();
                                 this.resetPromoCodeFields();
+                            }
                         });
                 else
                     this.resetPromoCodeFields();
