@@ -115,4 +115,15 @@ class VehiclesController extends Controller
         }
 
     }
+
+        public function verifyVehicle($id)
+    {
+        $vehicle = Vehicle::where('id', $id)->first();
+        if (!$vehicle) throw new ModelNotFoundException();
+        $vehicle->vlc= true;
+        $vehicle->save();
+
+        return api_response('vehicle verified successfully');
+
+    }
 }

@@ -44,19 +44,31 @@
                                             </div>
                                             @if($user_type=='client' && $user->client->documents)
                                             <div class="row">
-                                                <h3>User documents</h3>
+                                               <div class="col-sm-12">
+                                                    <h3 class="pull-left">Driver documents</h3>
+                                                    <span class="pull-right"> 
+                                                    @if($user->client->dlc)
+                                                    <button class="btn btn-success" id="btn-verified">Verified</button>
+                                                    @else
+                                                    <button class="btn btn-primary" id="btn-verify">Verify</button>
+                                                    <button class="hidden btn btn-success" id="btn-verified">Verified</button>
+
+
+                                                    @endif
+                                                    </span>
+                                                </div>
 
                                                 @foreach($user->client->documents as $document)
                                                 <div class="panel panel-default">
 
                                                    <div class="panel-heading" role="tab" id="headingThree">
                                                         <h4 class="panel-title">
-                                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ $document['name'] }}" aria-expanded="false" aria-controls="collapseThree">
+                                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ $document['doc'] }}" aria-expanded="false" aria-controls="collapseThree">
                                                                 {{ $document['title'] }}
                                                             </a>
                                                         </h4>
                                                     </div>
-                                                    <div id="{{ $document['name'] }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                                    <div id="{{ $document['doc'] }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                                         <div class="panel-body">
                                                         <object data="{{$document['path']}}" type="application/pdf" style="height: 110vh;" width="100%"></object>
                                                             
@@ -84,4 +96,28 @@
             </div>
 </div>
 
+@endsection
+
+@section("page-scripts")
+
+<script>
+    $(document).ready(function() {
+        $("#btn-verify").on('click', function(event) {
+            event.preventDefault();
+            var url = '{{  route("users.verify",$user->id) }}';
+
+            axios.post(url,{}).then(function(response){
+                new Noty({
+                                    type: 'information',
+                                    text: response.data.success,
+                                }).show();
+                $("#btn-verify").hide();
+                $("#btn-verified").removeClass("hidden");
+
+            });
+             
+
+        });  
+    });
+</script>
 @endsection

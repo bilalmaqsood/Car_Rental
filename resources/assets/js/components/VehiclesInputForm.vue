@@ -338,7 +338,7 @@
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.pco_years.$error}">
-                                <input type="text" class="form-control" placeholder="license older than years"
+                                <input type="text" class="form-control" placeholder="PCO license older than years"
                                        v-model="form.pco_years" @blur="$v.form.pco_years.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.pco_years.$error">
                                     PCO license older than years</p>
@@ -347,10 +347,10 @@
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.driver_year.$error}">
-                                <input type="text" class="form-control" placeholder="license older than years"
+                                <input type="text" class="form-control" placeholder="Driver years"
                                        v-model="form.driver_year" @blur="$v.form.driver_year.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.driver_year.$error">
-                                    PCO license older than years</p>
+                                    Driver years</p>
 
                             </div>
                         </li>
@@ -369,7 +369,7 @@
                                        placeholder="year since last accident with no driver fault"
                                        v-model="form.no_fault_accident" @blur="$v.form.no_fault_accident.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.no_fault_accident.$error">
-                                    maximum points on license</p>
+                                    year since last accident with no driver fault</p>
 
                             </div>
                         </li>
