@@ -118,4 +118,12 @@ class UsersController extends Controller
         }
 
     }
+
+
+    public function verifyDriver($id)
+    {
+        $user = User::whereId($id)->first();
+        $user->client()->update(['dlc' => true]);
+        return api_response('Driver verified successfully');
+    }
 }

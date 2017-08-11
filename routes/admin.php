@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'AdminController@index')->name('admin');
+Route::post('users/{id}/verify', 'UsersController@verifyDriver')->middleware('admin')->name("users.verify");
 Route::resource('users', 'UsersController');
 Route::resource('bookings', 'BookingController');
 Route::resource('promocodes', 'PromocodeController');
