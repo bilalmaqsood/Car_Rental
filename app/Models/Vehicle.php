@@ -115,6 +115,7 @@ class Vehicle extends Model
 
 
     /**
+
      * Get the booking status on the vehicle .
      *
      * @return boolean if any booking exists for this vehicle 
