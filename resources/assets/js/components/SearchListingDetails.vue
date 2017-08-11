@@ -59,14 +59,9 @@
                     <div class="availabe">
                         <p>{{ user.state.vehicleData.owner.user.name }} <span> {{ date_format(user.state.vehicleData.owner.created_at) }}</span></p>
                     </div>
-                    <div class="ratting" data-score="1" style="cursor: pointer;">
-                        <i class="fa fa-fw fa-star" title="bad" data-score="1"></i>
-                        <i class="fa fa-fw fa-star-o" title="poor" data-score="2"></i>
-                        <i class="fa fa-fw fa-star-o" title="regular" data-score="3"></i>
-                        <i class="fa fa-fw fa-star-o" title="good" data-score="4"></i>
-                        <i class="fa fa-fw fa-star-o" title="gorgeous" data-score="5"></i>
-                        <input type="hidden" name="score" value="1">
+                    <div class="ratting">
                     </div>
+
                 </div>
 
                 <div class="pickup_loction_btn">
@@ -112,6 +107,7 @@
 
         mounted() {
             this.prepareComponent();
+            this.inilizeRating();
         },
 
         methods: {
@@ -135,6 +131,13 @@
             date_format(date){
                 return moment.utc(date).format("D.M.Y");
             },
+            inilizeRating(){
+
+            let rating = this.user.state.vehicleData.owner.avg_rating;
+            $('.ratting').starrr({
+                  rating: rating
+                });
+            }
         }
     }
 </script>

@@ -16,6 +16,8 @@ require('owl.carousel');
 
 require('jquery.payment');
 
+require('./starrr.js');
+
 require('bootstrap-sass');
 
 require('eonasdan-bootstrap-datetimepicker');
