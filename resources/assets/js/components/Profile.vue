@@ -27,6 +27,14 @@
 
                     <div class="profile_content">
                         <h3 :class="{clickable: notif.data.vehicle}" v-if="notif.data.title" @click="notify_action(notif)">{{notif.data.title}}</h3>
+                        <p v-if="notif.data.status===12"> 
+                            <p>You booking is successfully closed</p>
+                            <div class="ratting"></div>
+                            <input type="text" v-model="note">
+                            <button class="primary-button" @click="processRating(notif)">
+                                Rate now
+                            </button>
+                        </p>
                         <p v-if="propExist(notif.data,'user')"><span>{{notif.data.user}}</span> sent you booking request</p>
                         <p v-if="propExist(notif.data,'vehicle')">{{notif.data.vehicle}}</p>
                         <p v-if="propExist(notif.data,'contract_start')"><b>Contract start:</b> {{ date_format(notif.data.contract_start) }} </p>
@@ -57,7 +65,9 @@
                 booking_log: '',
                 vuex: User,
                 booking: null,
-                notify: null
+                notify: null,
+                rating: null,
+                note: null,
             };
         },
 
@@ -115,7 +125,19 @@
                         $('#sideLoader').hide();
                         this.notifications = response.data.success;
                     });
+
+
+            setTimeout(function() {
+                $('.ratting').starrr({
+                  change: function(e, value){
+                    $scope.rating = value;
+                        }
+                });
+                }, 1000);
+
             },
+
+
 
             propExist(obj, prop) {
                 return obj.hasOwnProperty(prop);
@@ -177,7 +199,7 @@
                 if (typeof notification === 'undefined' && this.notify)
                     notification = this.notify;
 
-                let params = {notify_id: notification.id};
+                let params = {notify_id: [notification.id]};
                 axios.post('/api/notifications', params)
                     .then(() => {
                         $('#sideLoader').hide();
@@ -216,6 +238,25 @@
                             console.log(r);
                             User.state.auth.avatar = param.avatar;
                             User.commit('update', User.state.auth);
+                        });
+            },
+            processRating(notification){
+                let $this = this;
+                let param ={rating: $this.rating, note: $this.note}; 
+                $('#sideLoader').show();
+                 axios.post('/api/booking/'+notification.data.booking_id+'/feedback', param)
+                        .then((r) => {
+                            $this.note=null;
+                            
+                            setTimeout(function() { 
+                                $('#sideLoader').hide(); 
+                                new Noty({
+                                    type: 'information',
+                                    text: 'Rating saved successfully.',
+                                    
+                                }).show();
+                                 $this.markRead(notification);
+                             }, 1000);
                         });
             }
         },
