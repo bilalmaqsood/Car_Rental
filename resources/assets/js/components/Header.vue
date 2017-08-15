@@ -138,7 +138,7 @@
                                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                                                                 </svg>
 </span>
-                                                                    <input class="form-control" placeholder="password" type="password" @blur="$v.login.password.$touch()" v-model.trim="login.password">
+                                                                    <input class="form-control" placeholder="password" type="password" @blur="$v.login.password.$touch()" v-model.trim="login.password" v-on:keyup.enter="loginUser">
 
                                                                 </div>
 
