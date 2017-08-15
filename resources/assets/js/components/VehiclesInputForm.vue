@@ -392,16 +392,17 @@
 
                             </div>
                         </li>
-                          <li v-for="d in form.documents" v-if="d.title">
+                          <li v-for="d in form.documents">
                             <div class="form-group">
                                 <label class="control-label">{{d.title}}</label>
                                 
                                  <span v-if="!d.path" @click="upload(d)" class="clickable">
-                             <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-                        </span>
+                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                                </span>
 
-                        <span v-else @click="edit(d)" class="clickable">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        <span v-else>
+                            <i @click="edit(d)" class="fa fa-eye clickable" aria-hidden="true"></i>
+                            <i @click="deleteDocument(d)"  class="fa fa-trash clickable" aria-hidden="true"></i>
                         </span> 
                                 
                             </div>
@@ -418,9 +419,9 @@
                 </div>
             </div>
         </div>
-        <update-documents :doc="doc" :title="'Update vehicle documents'" @docUpdate="docUpdated"></update-documents> 
+        <update-documents :doc="doc" :title="'Update vehicle documents'" @modelHiding="hideModal" @docUpdate="docUpdated"></update-documents> 
         <location-coordinates-picker :location="location"
-                                     @locationEvent="saveLocationCoordinates"></location-coordinates-picker>
+                                     @locationEvent="saveLocationCoordinates" ></location-coordinates-picker>
     </div>
 </template>
 <script>
@@ -683,12 +684,18 @@
 
                             var reader = new FileReader();
                             let name = val.name.substring(0, val.name.lastIndexOf('.'));
+                            let type = val.name.split('.').pop();
                             reader.readAsDataURL(val);
                             var fd = new window.FormData();
                             fd.append('upload', val);
                             reader.onload = function (e) {
                                 axios.post('/api/upload/document', fd).then((r) => {
-                                    $this.form.documents.push({name: name, path: r.data.success});
+                                    $this.form.documents.push({
+                                         name: name,
+                                         title: name,
+                                         path: r.data.success,
+                                         type: type
+                                     });
                                 });
                             };
                         });
@@ -762,8 +769,7 @@
                         $.map(this.files, function (val) {
                            
                             obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
-                            obj.type = val.type;
-                            
+                            obj.type = val.name.split('.').pop();
                             var reader = new FileReader();
                             reader.readAsDataURL(val);
                             var fd = new window.FormData();
@@ -779,11 +785,25 @@
             },
             edit(doc){
                 this.doc = doc;
-                $('#updateModel').appendTo("body").modal('show');
+                $('#updateModel').modal('show');
                 
+            },
+            deleteDocument(doc){
+            
+                if(doc.doc){
+                    doc.path = null;
+                    doc.name = null;
+                    doc.type = null;
+                } else{
+                this.form.documents.splice(this.form.documents.indexOf(doc), 1);
+                }
             },
             docUpdated(newDoc){
 
+            },
+            hideModal(){
+               this.doc = null;
+               
             }
         }
 
