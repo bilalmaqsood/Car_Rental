@@ -96,8 +96,10 @@
                              <i class="fa fa-cloud-upload" aria-hidden="true"></i>
                         </span>
 
-                        <span v-else @click="upload(d)">
-                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        <span v-else >
+                            <i @click="edit(d)" class="clickable fa fa-eye" aria-hidden="true"></i>
+                            <i @click="deleteDocument(d)"  class="fa fa-trash clickable" aria-hidden="true"></i>
+
                         </span> 
 
                     </p>
@@ -163,6 +165,7 @@
                 <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple"
                                    value="upload" >
             </ul>
+            <update-documents :doc="doc"  @modelHiding="hideModal" @docUpdate="docUpdated"></update-documents> 
         </div>
     </div>
 </template>
@@ -177,6 +180,7 @@
                 terms: false,
                 termsContent: '',
                 isEditing: false,
+                doc: false,
                 documents: [
                     {title: 'Driving Licence', name:'',path: '',type: '', doc: 'driving_licence', status: '' },
                     {title: 'PCO Licence', name:'',path: '',type: '', doc: 'pco_licence', status: '' },
@@ -275,7 +279,7 @@
                         $.map(this.files, function (val) {
                            
                             obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
-                            obj.type = val.type;
+                            obj.type = val.name.split('.').pop();
                             
                             var reader = new FileReader();
                             reader.readAsDataURL(val);
@@ -290,6 +294,26 @@
                         });
                     });
             },
+            deleteDocument(doc){
+            
+                if(doc.doc){
+                    doc.path = null;
+                    doc.name = null;
+                    doc.type = null;
+                } 
+            },
+            hideModal(){
+               this.doc = null;
+              
+             },            
+             edit(doc){
+                 this.doc = doc;
+                  $('#updateModel').modal('show');
+                 
+             },
+             docUpdated(){
+                
+             }
             
         }
     }
