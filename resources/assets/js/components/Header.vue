@@ -3,7 +3,7 @@
         <div class="nav_wrapper">
             <nav class="navbar navbar-default navbar-fixed-top">
                 <transition name="slide-fade" mode="out-in">
-                    <advance-form v-if="storage.state.showAdvance"></advance-form>
+                    <advance-form v-if="storage.state.showAdvance && menuView=='advance'"></advance-form>
                 </transition>
 
                 <div class="navbar-header">
@@ -138,7 +138,7 @@
                                                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                                                                 </svg>
 </span>
-                                                                    <input class="form-control" placeholder="password" type="password" @blur="$v.login.password.$touch()" v-model.trim="login.password">
+                                                                    <input class="form-control" placeholder="password" type="password" @blur="$v.login.password.$touch()" v-model.trim="login.password" v-on:keyup.enter="loginUser">
 
                                                                 </div>
 
@@ -459,6 +459,7 @@
             },
 
             showAdvanceForm() {
+                this.menuView = 'advance';
                 User.commit('advance');
             },
 

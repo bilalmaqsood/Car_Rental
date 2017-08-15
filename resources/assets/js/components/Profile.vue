@@ -85,8 +85,10 @@
             let $scope = this;
 
             $("#uploadImages").click(function () {
+                
                 $(".hiddenUpload").click();
                 $(".hiddenUpload").change(function () {
+                    
                         let val = this.files[0];
                         console.log(val);
                         var reader = new FileReader();
@@ -94,9 +96,16 @@
                         var fd = new window.FormData();
                         fd.append('upload', val);
                         reader.onload = function (e) {
+                            $('#sideLoader').show();
                             axios.post('/api/upload/image', fd).then($scope.processAvatar);
+                            setTimeout(function () {
+                    $('#sideLoader').hide();
+                    
+                }, 1000);
                         };
                 });
+
+                
             });
 
 

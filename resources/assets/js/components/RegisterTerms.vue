@@ -2,7 +2,7 @@
     <div>
         <transition name="flip" mode="out-in">
 
-<div style="margin-top: 30px; float: right; width: 100%;">
+<div style="float: right; width: 100%;">
     
     
     <div class="terms_conditions">
