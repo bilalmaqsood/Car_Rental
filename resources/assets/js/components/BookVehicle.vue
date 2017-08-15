@@ -35,7 +35,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                         </svg>
-                        <span>Pick up from: {{pickup_location}}</span>
+                        <span>Pick up from: {{ fetchAddress(pickup_location) }}</span>
                     </li>
                     <li>
                         <div class="pickup_loction_map">
@@ -312,14 +312,6 @@
                 this.end_date = null;
                 this.highlightDays(false);
 
-                setTimeout(function () {
-                    $btn.removeClass('fa-refresh fa-spin').addClass('fa-undo');
-                    new Noty({
-                        type: 'information',
-                        text: 'Dates are reset.',
-                        timeout: 600
-                    }).show();
-                }, 600);
             },
 
             calenderChange(e) {
@@ -523,7 +515,25 @@
                     promo_code_reward: this.promo_code_reward,
                     location: this.location
                 });
-            }
+            },
+            fetchAddress(arg){
+
+                let $t = this;
+                let location;
+                $.ajax({
+                    beforeSend: function(request) {
+                        request.setRequestHeader('Access-Control-Request-Headers', '');
+                    },
+                    url: 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + arg + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false,
+                }).done(function (r) {
+                    location = r.results[0].formatted_address;
+                });
+
+                return location;
+            },
         }
     }
 </script>

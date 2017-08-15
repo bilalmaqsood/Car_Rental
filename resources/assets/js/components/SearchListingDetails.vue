@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <search-listing-booking key="booking" v-if="user.state.bookNow" :vehicle="user.state.vehicleData" :pickup_location="pickup_location"></search-listing-booking>
+            <search-listing-booking key="booking" v-if="user.state.bookNow" :vehicle="user.state.vehicleData" :pickup_location="user.state.vehicleData.pickup_location"></search-listing-booking>
         </transition>
     </div>
 
