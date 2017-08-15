@@ -290,11 +290,12 @@
                         $btn.button('reset');
                     });
                     
+                    setTimeout(function() {
                         $('.certificate-expiration').datetimepicker({
                             format: 'MM/DD/YYYY',
                             viewMode: 'years'
                         });
-                    
+                    }, 1000);
                 }
             },
 
