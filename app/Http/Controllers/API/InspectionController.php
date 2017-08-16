@@ -84,7 +84,7 @@ class InspectionController extends Controller
             })
             ->values();
 
-        if ($spots->count() && $request->has('status') && $request->status == 1 && $booking->status != 10) {
+        if ($spots->count() && isset($data['status']) && $data['status'] == 1 && $booking->status != 10) {
 
             $this->openDispute($request, $booking, $spots->first());
 
@@ -151,7 +151,7 @@ class InspectionController extends Controller
         $inspection->fill($request->all());
         $inspection->save();
 
-        if ($request->has('status') && $request->status == 1 && $booking->status != 10) {
+        if (isset($data['status']) && $data['status'] == 1 && $booking->status != 10) {
 
             $this->openDispute($request, $booking, $inspection);
 

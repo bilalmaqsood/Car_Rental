@@ -41,6 +41,7 @@
 
 <div class="input-group login-input">
                         <input type="text" palceholder="add description" v-model="description" class="form-control">
+    <button @click="dispute_status=!dispute_status" class="primary-button"> <i v-if="dispute_status" class="fa fa-check "></i> {{ dispute_status==true?'Disputed':'Dispute'}}</button>
 <div class="input-group-addon">
 <span>
 									<svg  @click="saveSpots('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -280,6 +281,7 @@
                 User: User,
                 menuView: 'front',
                 is_return: false,
+                dispute_status: false,
                 sportPending: false,
                 inspections: {
                     data: [],
@@ -422,7 +424,7 @@
                 let $this = this;
                 let param = {
                     type: this.menuView,
-                    status: this.status,
+                    status: this.dispute_status===true?1:0,
                     is_return: this.is_return,
                     x_axis: this.X_Axis,
                     y_axis: this.Y_Axis,
@@ -453,6 +455,7 @@
             spotAction(inspection){
                 this.spot_image = inspection.path;
                 this.description = inspection.note;
+                this.dispute_status = inspection.status===1?true:false;
             },
             hideLoader(time){
                 setTimeout(function () {
