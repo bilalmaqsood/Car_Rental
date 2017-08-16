@@ -27,14 +27,14 @@
 
                     <div class="profile_content">
                         <h3 :class="{clickable: notif.data.vehicle}" v-if="notif.data.title" @click="notify_action(notif)">{{notif.data.title}}</h3>
-                        <p v-if="notif.data.status===12"> 
+                        <div v-if="notif.data.status===12">
                             <p>You booking is successfully closed</p>
                             <div class="ratting"></div>
                             <input type="text" v-model="note">
                             <button class="primary-button" @click="processRating(notif)">
                                 Rate now
                             </button>
-                        </p>
+                        </div>
                         <p v-if="propExist(notif.data,'user')"><span>{{notif.data.user}}</span> sent you booking request</p>
                         <p v-if="propExist(notif.data,'vehicle')">{{notif.data.vehicle}}</p>
                         <p v-if="propExist(notif.data,'contract_start')"><b>Contract start:</b> {{ date_format(notif.data.contract_start) }} </p>
@@ -124,16 +124,20 @@
                     .then(response => {
                         $('#sideLoader').hide();
                         this.notifications = response.data.success;
-                    });
-
-
-            setTimeout(function() {
+                        setTimeout(function() {
+                
+                
                 $('.ratting').starrr({
                   change: function(e, value){
                     $scope.rating = value;
                         }
                 });
-                }, 1000);
+                
+                }, 1500);
+                    });
+
+
+            
 
             },
 
