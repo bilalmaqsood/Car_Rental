@@ -23,7 +23,7 @@
             <div id="car_front" class="tab-pane fade in active" v-if="menuView=='front'">
                 <div class="dummy_car carcondition-img" id="front">
 
-                     <div v-if="inspection.type=='front'" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
+                     <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -74,7 +74,7 @@
 
             <div id="car_rear" class="tab-pane fade in active" v-if="menuView=='rear'">
                 <div class="dummy_car carcondition-img" id="rear">
-                    <div v-if="inspection.type=='rear'" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
+                    <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -122,7 +122,7 @@
 
             <div id="car_driver_side" class="tab-pane fade in active" v-if="menuView=='driver_side'">
                 <div class="dummy_car carcondition-img" id="driver_side">
-                    <div v-if="inspection.type=='driver_side'" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
+                    <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -169,7 +169,7 @@
 
             <div id="car_off_side" class="tab-pane fade in active" v-if="menuView=='off_side'">
                 <div class="dummy_car carcondition-img" id="off_side">
-                    <div v-if="inspection.type=='off_side'" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
+                    <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -216,7 +216,7 @@
 
             <div id="car_notes" class="tab-pane fade in active" v-if="menuView=='notes'">
                     <div class="chat_contrnt">
-                            <div v-if="inspection.type=='notes'" v-for="inspection in inspections.data">
+                            <div v-if="isShowable(inspection)" v-for="inspection in inspections.data">
                                 <div class="bs-callout bs-callout-danger" id="callout-glyphicons-dont-mix">
                                    <div @click="spotAction(inspection)" class="clickable send_box">
                                       <p>{{ inspection.note}}</p>
@@ -458,6 +458,16 @@
                 setTimeout(function () {
                     $('#centerLoader').hide();
                 }, time);
+            },
+            isShowable(inspection){
+                if(inspection.type==this.menuView) {
+                    if (inspection.is_return===true && this.is_return===true)
+                        return true;
+                    else if (this.is_return===false && inspection.is_return===false )
+                        return true;
+                }
+                else
+                return false;
             }
         }
     }
