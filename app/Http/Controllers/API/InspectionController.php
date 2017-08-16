@@ -52,18 +52,18 @@ class InspectionController extends Controller
             'data.*.type' => 'required|in:front,rear,driver_side,off_side,notes',
             'data.*.status' => 'in:0,1',
             'data.*.is_return' => 'boolean',
-            'data.*.x_axis' => 'numeric',
-            'data.*.y_axis' => 'numeric',
+            // 'data.*.x_axis' => 'numeric',
+            // 'data.*.y_axis' => 'numeric',
             'data.*.path' => 'string',
             'data.*.note' => 'string',
         ]);
-
+        $data = collect($request->data)->first();
+        
         $booking = Booking::findOrFail($booking_id);
-
-        if ($booking->status < 4 && $request->is_return)
+        if ($booking->status < 4 && $data['is_return'])
             return api_response(trans('booking.return'), Response::HTTP_CONFLICT);
-
-        if ($booking->status >= 4 && !$request->is_return)
+        
+        if ($booking->status >= 4 && !$data['is_return'])
             return api_response(trans('booking.handover'), Response::HTTP_CONFLICT);
 
         $spots = collect($request->data)
@@ -134,16 +134,18 @@ class InspectionController extends Controller
             'note' => 'string',
         ]);
 
+        $data = collect($request->data)->first();
+
         $booking = Booking::findOrFail($booking_id);
 
         $inspection = $booking->vehicle->inspection()->where('id', $id)->first();
 
         if (!$inspection) throw new ModelNotFoundException();
 
-        if ($booking->status < 4 && $request->is_return)
+        if ($booking->status < 4 && $data['is_return'])
             return api_response(trans('booking.return'), Response::HTTP_CONFLICT);
 
-        if ($booking->status >= 4 && !$request->is_return)
+        if ($booking->status >= 4 && !$data['is_return'])
             return api_response(trans('booking.handover'), Response::HTTP_CONFLICT);
 
         $inspection->fill($request->all());
