@@ -30,7 +30,21 @@ Route::get('/vehicle/document/path', function () {
 });
 
 Route::get('/test', function () {
-    $schema = \DB::getDoctrineSchemaManager();
-    d($schema->listTableColumns((new \Qwikkar\Models\User())->getTable()));
-    dd('oknasir');
+   $booking = \Qwikkar\Models\Booking::first();
+   $owner = $booking->vehicle->owner->user->name;
+   $driver = $booking->user->name;
+
+ 
+   $booking->vehicle->owner->user->notify(new \Qwikkar\Notifications\RatingNotify([
+   	"title" => "Rate to ".$driver,
+   	"booking_id" => $booking->id,
+   	"status" => $booking->status,
+   	"old_status" => $booking->status,
+   	]));
+   $booking->user->notify(new \Qwikkar\Notifications\RatingNotify([
+   	"title" => "Rate to ".$owner,
+   	"booking_id" => $booking->id,
+   	"status" => $booking->status,
+   	"old_status" => $booking->status,
+   	]));
 });

@@ -190,6 +190,7 @@
 
         data() {
             return {
+                old_slots: this.vehicle.time_slots,
                 isCard: false,
                 location: null,
                 promo_code: null,
@@ -263,6 +264,7 @@
 
         mounted() {
             this.prepareComponent();
+            this.highlightOldDays(this.old_slots);
         },
 
         methods: {
@@ -282,14 +284,18 @@
                         }, 500);
                     }, 500);
                 }
+
+
             },
 
             initializeJquery() {
-                $('#booking_range_calender').datetimepicker({
+                let $scope = this;
+                 $('#booking_range_calender').datetimepicker({
                     inline: true,
                     sideBySide: false,
                     minDate: moment(new Date())
-                }).on('dp.change', this.calenderChange);
+                }).on('dp.change', this.calenderChange)
+                  .on('dp.update', function(){ $scope.highlightOldDays($scope.old_slots) });
                 $('[data-toggle="tooltip"]').tooltip();
             },
 
@@ -329,6 +335,7 @@
 
             highlightDays(bool) {
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
+                let $t = this;
 
                 if (bool) {
                     if (this.start_date.format('X') < this.end_date.format('X')) {
@@ -339,7 +346,7 @@
                             let eDate = moment.utc($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
                             if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
                         });
-
+                        $t.highlightOldDays($t.old_slots);
                         if (this.end_date.diff(this.start_date, 'days') < 6) {
                             new Noty({
                                 type: 'warning',
@@ -534,6 +541,23 @@
 
                 return location;
             },
+             highlightOldDays(response){
+                let $t = this;
+                let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
+                let $dates=[];
+                _.forEach(response, function(value) {
+                    if(value.status==1)
+                    $dates.push(moment(value.day, "YYYY-MM-DD").format("MM/DD/YYYY") );
+                    });
+
+                  $e.find('td').each(function (i, e) {
+                            let $elem = $(e);
+                            console.log(_.indexOf($dates,$elem.data('day')));
+                            if (_.indexOf($dates,$elem.data('day'))<0) 
+                                $elem.addClass('old');
+
+                        });
+            }
         }
     }
 </script>
