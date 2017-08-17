@@ -252,7 +252,7 @@
                                                     <div id="images" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                                         <div class="panel-body">
                                                         @foreach($vehicle->images as $image)
-                                                            <img src="{{ $image }}" alt="">
+                                                            <img src="{{ $image }}" alt="" class="img-responsive">
                                                             @endforeach
                                                         </div>
                                                     </div>
@@ -277,7 +277,9 @@
                                                     @endif
                                                     </span>
                                                 </div>
+                                                
                                                 @foreach($vehicle->documents as $document)
+                                                    @if($document['path']!==null)
                                                 <div class="panel panel-default">
                 
                                                    <div class="panel-heading" role="tab" id="headingThree">
@@ -289,10 +291,11 @@
                                                     </div>
                                                     <div id="{{ preg_replace('/\s+/', '', $document['name']) }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                                         <div class="panel-body">
-                                                            <img src="{{ $document['path'] }}" alt="">
+                                                            <img src="{{ $document['path'] }}" class="img-responsive" alt="">
                                                         </div>
                                                     </div>
                                                </div>
+                                               @endif
                                                 @endforeach
                                             </div>
                                             @endif

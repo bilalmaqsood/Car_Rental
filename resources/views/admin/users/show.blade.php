@@ -70,9 +70,11 @@
                                                     </div>
                                                     <div id="{{ $document['doc'] }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                                         <div class="panel-body">
+                                                        @if($document['type']=='pdf')
                                                         <object data="{{$document['path']}}" type="application/pdf" style="height: 110vh;" width="100%"></object>
-                                                            
-                                                                
+                                                            @else
+                                                            <img src="{{$document['path']}}" alt="">
+                                                        @endif
                                                         </div>
                                                     </div>
                                                </div>

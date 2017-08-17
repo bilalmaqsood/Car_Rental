@@ -141,7 +141,7 @@
                                             <div class="row">
                                                 <div class="panel panel-default">
                                                 @foreach($booking->documents as $document)
-                                                @if($document['type']=='pdf')
+                                                @if($document['type']=='pdf' && $document['path']!==null)
                                                 <div class="panel-heading" role="tab" id="headingThree">
                                                         <h4 class="panel-title">
                                                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#{{preg_replace('/\s+/', '', $document['name'])}}" aria-expanded="false" aria-controls="collapseThree">
@@ -159,6 +159,7 @@
                                                 @endforeach
 
                                                 @foreach($booking->vehicle->documents as $document)
+                                                @if($document['name']!==null)
                                                     <div class="panel-heading" role="tab" id="headingThree">
                                                         <h4 class="panel-title">
                                                             <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#{{preg_replace('/\s+/', '', $document['name'])}}" aria-expanded="false" aria-controls="collapseThree">
@@ -171,6 +172,7 @@
                                                             <img src="{{$document['path']}}" alt="">
                                                         </div>
                                                     </div>
+                                                    @endif
                                                     @endforeach
                                                     
                                                 </div>
@@ -178,8 +180,8 @@
 
                                             <div class="row">
                                                 <h3>Vehicle Inspection</h3>
-
-                                                @foreach($booking->inspection as $inspection)
+                                                <div class="col-sm-6">  
+                                                @foreach($booking->vehicle->inspection as $inspection)
                                                          <div class="panel panel-default">
 
                                                 <div class="panel-heading" role="tab" id="headingThree">
@@ -193,9 +195,9 @@
                                                         <div class="panel-body">
 
                                                         <div style="position: relative;" class="dummy_car carcondition-img" id="{{$inspection['type']}}">
-                                                            @foreach($inspection['data'] as $image)
-                                                               <div  style=" top: {{ $image[2] }}; 
-                                                                           left: {{ $image[3] }}; z-index: 9999" class="mydraggable  ">
+                                                                
+                                                               <div  style=" top: {{ $inspection['x_axis'] }}%; 
+                                                                           left: {{ $inspection['y_axis'] }}%; z-index: 9999" class="mydraggable  ">
                                                                 <div id="mydragcontrols">
                                                                     <span id="mydeldrag" style="color: red">
                                                                     <i class="fa fa-times" aria-hidden="true"></i>
@@ -205,7 +207,7 @@
                                                                     </span>
                                                                 </div>
                                                             </div>
-                                                            @endforeach
+                                                           
                                                              <img src="/images/{{$inspection['type']}}.png" alt="" style="margin: 0px;">
 
                                                         </div>
@@ -216,46 +218,8 @@
                                                 @endforeach
                                             </div>
 
-                                            <div class="row">
-                                                <h3>Vehicle Return Inspection</h3>
-
-                                                @foreach($booking->returnVehicle as $inspection)
-                                                         <div class="panel panel-default">
-
-                                                <div class="panel-heading" role="tab" id="headingThree">
-                                                        <h4 class="panel-title">
-                                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#{{ $inspection['id'] }}{{$inspection['type']}}" aria-expanded="false" aria-controls="collapseThree">
-                                                                {{$inspection['type']}}
-                                                            </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div id="{{ $inspection['id'] }}{{$inspection['type']}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                                        <div class="panel-body">
-
-                                                        <div style="position: relative;" class="dummy_car carcondition-img" id="{{$inspection['type']}}">
-                                                            @foreach($inspection['data'] as $image)
-                                                               <div  style=" top: {{ $image[2] }}; 
-                                                                           left: {{ $image[3] }}; z-index: 9999" class="mydraggable  ">
-                                                                <div id="mydragcontrols">
-                                                                    <span id="mydeldrag" style="color: red">
-                                                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                                                    </span>
-                                                                    <span id="mydeldrag" style="color: green" onClick="spotAction(inspection)">
-                                                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                            @endforeach
-                                                             <img src="/images/{{$inspection['type']}}.png" alt="" style="margin: 0px;">
-
-                                                        </div>
-
-                                                        </div>
-                                                    </div>
-                                               </div>
-                                                @endforeach
-                                            </div>
-
+                                            
+                                        </div>
                                     </div>
                                 </div>
 
