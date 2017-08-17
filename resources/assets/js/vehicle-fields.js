@@ -31,9 +31,10 @@ export default {
     fault_accident: '',
     discounts:[],
     documents: [
+                    {title: 'Car Log Book/V5', name:'',path: '',type: '', doc: 'car_log_book', status: '' },
                     {title: 'Incourence Documents', name:'',path: '',type: '', doc: 'incourence_document', status: '' },
                     {title: 'PCO Certificate', name:'',path: '',type: '', doc: 'pco_certificate', status: '' },
-                    {title: 'Rent Document', name:'',path: '',type: '', doc: 'rent_document', status: '' },
+                    {title: ' MOT certificate', name:'',path: '',type: '', doc: ' mot_certificate', status: '' },
     ],
     extension: '',
     notes: '',

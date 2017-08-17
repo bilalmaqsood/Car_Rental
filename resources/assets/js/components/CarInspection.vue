@@ -41,7 +41,10 @@
 
 <div class="input-group login-input">
                         <input type="text" palceholder="add description" v-model="description" class="form-control">
-    <button @click="dispute_status=!dispute_status" class="primary-button"> <i v-if="dispute_status" class="fa fa-check "></i> {{ dispute_status==true?'Disputed':'Dispute'}}</button>
+                    <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
+                     <i v-if="dispute_status" class="fa fa-check "></i>
+                      {{ dispute_status==true?'Disputed':'Dispute'}}
+                    </button>
 <div class="input-group-addon">
 <span>
 									<svg  @click="saveSpots('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -89,6 +92,10 @@
                 </div>
                 <div class="front_back_size" >
                     <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
+                    <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
+                     <i v-if="dispute_status" class="fa fa-check "></i>
+                      {{ dispute_status==true?'Disputed':'Dispute'}}
+                    </button>
 <div class="input-group login-input">
                         <input type="text" class="form-control" palceholder="add description" v-model="description">
 <div class="input-group-addon">
@@ -139,6 +146,10 @@
                     <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
 <div class="input-group login-input">
                         <input type="text" palceholder="add description" v-model="description" class="form-control">
+                        <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
+                     <i v-if="dispute_status" class="fa fa-check "></i>
+                      {{ dispute_status==true?'Disputed':'Dispute'}}
+                    </button>
 <div class="input-group-addon">
                         <span>
 									<svg  @click="saveSpots('driver_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -186,6 +197,10 @@
                     <div v-if="User.state.auth.type=='owner'" class="add_description_icon">
 <div class="input-group login-input">
                         <input type="text" class="form-control" palceholder="add description" v-model="description">
+                        <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
+                     <i v-if="dispute_status" class="fa fa-check "></i>
+                      {{ dispute_status==true?'Disputed':'Dispute'}}
+                    </button>
 <div class="input-group-addon">
                         <span>
 									<svg  @click="saveSpots('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -304,6 +319,8 @@
             axios.get('/api/booking/'+this.booking.id+'/inspection').then(function (r) {
                 $scope.inspections.data = r.data.success;
             })
+
+            
         },
 
         methods: {
@@ -343,7 +360,7 @@
                 GtotalHeight = parseInt($('.carcondition-img').height());
 
 
-                $('#' + spotSide).prepend('<div id="mydraggable" data-drag-id="' + sportNum +'" style="top:50%; left:50%; z-index: 99;" class="mydraggable draggable' + sportNum + '"><div id="mydragcontrols"><span id="myfix" data-drag-id="' + sportNum + '" style="color: green"><i class="fa fa-check" aria-hidden="true"></i></span><span id="mydeldrag" style="color: red"><i class="fa fa-times" aria-hidden="true"></i></span></div></div>');
+                $('#' + spotSide).prepend('<div id="mydraggable" data-drag-id="' + sportNum +'" style="top:50%; left:50%; z-index: 99;" class="mydraggable draggable' + sportNum + '"><div id="mydragcontrols"><span id="myfix" data-drag-id="' + sportNum + '" style="color: green"></span><span id="mydeldrag" style="color: red"><i id="remove" class="fa fa-times" aria-hidden="true"></i></span></div></div>');
                 $('.mydraggable').show();
                 sportNum++;
                     $('.mydraggable').draggable({
@@ -359,6 +376,11 @@
                         $(this).css("top", t+'%');
                     }
                 });
+
+                    $("#remove").on('click', function(event) {
+                       $(this).parents("#mydraggable").remove();
+                       $scope.sportPending = false;
+                    });
                     
                     $scope.sportPending = true;
             },
@@ -471,7 +493,8 @@
                 }
                 else
                 return false;
-            }
+            },
+
         }
     }
 </script>
