@@ -61,7 +61,7 @@ class SearchController extends Controller
     protected function getVehicleResults(Request $request)
     {
         $this->validate($request, [
-            'search' => 'string',
+            'vehicle' => 'string',
             'radius' => 'numeric',
             'latitude' => 'regex:/^(\-?\d+(\.\d+)?)$/',
             'longitude' => 'regex:/^(\-?\d+(\.\d+)?)$/',
@@ -78,9 +78,9 @@ class SearchController extends Controller
 
         $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at');
 
-        if ($request->has('search') && $request->search != '||_||')
+        if ($request->has('vehicle') && $request->vehicle != '||_||')
             $vehicles = $vehicles->where(function (Builder $q) use ($request) {
-                $q->whereRaw('TRIM(BOTH \' \' FROM CONCAT_WS(\' \', `make`, `model`, `variant`, `year`)) like ?', ['%' . $request->search . '%']);
+                $q->whereRaw('TRIM(BOTH \' \' FROM CONCAT_WS(\' \', `make`, `model`, `variant`, `year`)) like ?', ['%' . $request->vehicle . '%']);
 //                $q->orWhere('make', 'like', '%' . $request->search . '%');
 //                $q->orWhere('model', 'like', '%' . $request->search . '%');
 //                $q->orWhere('variant', 'like', '%' . $request->search . '%');
@@ -152,16 +152,16 @@ class SearchController extends Controller
     protected function getMakeModelResults(Request $request)
     {
         $this->validate($request, [
-            'search' => 'required|string',
+            'vehicle' => 'required|string',
         ]);
 
         $vehicles = Vehicle::select(['id', 'make', 'model', 'variant']);
 
-        if ($request->has('search') && $request->search != '||_||')
+        if ($request->has('vehicle') && $request->vehicle != '||_||')
             $vehicles->where(function (Builder $q) use ($request) {
-                $q->orWhere('make', 'like', '%' . $request->search . '%');
-                $q->orWhere('model', 'like', '%' . $request->search . '%');
-                $q->orWhere('variant', 'like', '%' . $request->search . '%');
+                $q->orWhere('make', 'like', '%' . $request->vehicle . '%');
+                $q->orWhere('model', 'like', '%' . $request->vehicle . '%');
+                $q->orWhere('variant', 'like', '%' . $request->vehicle . '%');
             });
 
         return $vehicles->get();
