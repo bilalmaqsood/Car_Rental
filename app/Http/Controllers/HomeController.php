@@ -35,7 +35,7 @@ class HomeController extends Controller
             if ($key == 'rating')
                 throw new NotFoundHttpException();
 
-            return api_response(Vehicle::orderBy($key, $value)->get()->take(10));
+            return api_response(Vehicle::orderBy($key, $value)->get()->take(12));
         }
 
         return api_response(Vehicle::all());
