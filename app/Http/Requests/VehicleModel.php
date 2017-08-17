@@ -64,8 +64,8 @@ class VehicleModel extends FormRequest
             'images.*' => 'string',
 
             'documents' => 'array',
-            'documents.*.name' => 'string',
-            'documents.*.path' => 'string',
+//            'documents.*.name' => 'string',
+//            'documents.*.path' => 'string',
         ];
     }
 }

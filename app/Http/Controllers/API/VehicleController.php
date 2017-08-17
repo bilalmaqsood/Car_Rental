@@ -8,9 +8,10 @@ use Illuminate\Support\Facades\File;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Http\Requests\VehicleModel;
 use Qwikkar\Models\Vehicle;
-
+use Qwikkar\Concerns\VehicleOperations;
 class VehicleController extends Controller
 {
+    use VehicleOperations;
     /**
      * VehicleController constructor.
      */
@@ -47,6 +48,11 @@ class VehicleController extends Controller
 
         if (!$vehicle->exists) {
             $vehicle->fill($request->except(['available_from', 'available_to', 'vlc']));
+
+            if(count($this->dcoumentsExists())>0)
+                $vehicle->vlc=0;
+            else
+                $vehicle->vlc=1;
 
             $request->user()->owner->vehicles()->save($vehicle);
 
@@ -90,6 +96,11 @@ class VehicleController extends Controller
         if (!$vehicle) throw new ModelNotFoundException();
 
         $vehicle->fill($request->except(['available_from', 'available_to', 'vlc']));
+
+        if(count($this->dcoumentsExists())>0)
+            $vehicle->vlc=0;
+        else
+            $vehicle->vlc=1;
 
         $vehicle->save();
 
