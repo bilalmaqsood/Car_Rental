@@ -66,7 +66,7 @@ trait BookingOperations
         $vehicle->booking()
             ->where('start_date', Carbon::parse($request->start_date))
             ->where('end_date', Carbon::parse($request->end_date))
-            ->whereNotIn('status', [3, 4, 7])
+            ->whereNotIn('status', [3, 4, 7,6])
             ->count()
         )
             return api_response(trans('booking.exist', ['vehicle' => $vehicle->vehicle_name]), Response::HTTP_CONFLICT);        
