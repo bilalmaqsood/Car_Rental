@@ -399,7 +399,7 @@ class BookingController extends Controller
         if ($this->validateBooking($booking, $request))
             return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
-        if (!in_array($booking->status, [6, 9]))
+        if (!in_array($booking->status, [12]))
             api_response(trans('booking.in-progress'), Response::HTTP_BAD_REQUEST);
 
         if (Feedback::whereBookingId($booking->id)->whereUserId($request->user()->id)->count())

@@ -63,10 +63,6 @@
                             <p>Transmission: {{vehicle.transmission}}</p>
                         </li>
                         <li>
-                            <p>Seats: 5 </p>
-                            <p>Transmission: manual</p>
-                        </li>
-                        <li>
                             <p>Fuel type: {{vehicle.fuel}} </p>
                             <p>Consumption: {{vehicle.mpg_eco}} mpg (ec.)</p>
                         </li>
