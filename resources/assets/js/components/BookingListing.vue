@@ -92,7 +92,7 @@
                         this.showView = true;
                         setTimeout(() => {
                             _.each(r.data.success, (b) => {
-                                if (b.status === 9 || b.status === 10 || b.status === 11)
+                                if ( b.status === 12)
                                     this.pastBookings.push(b);
                                 else
                                     this.bookings.push(b);

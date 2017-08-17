@@ -60,7 +60,7 @@
 
                 <div class="booking_tab">
                     <ul class="nav nav-tabs">
-                        <li v-if="User.state.auth.type == 'owner' && booking.status == 4 ">
+                        <li v-if="User.state.auth.type == 'owner' && booking.status >= 6 ">
                             <a @click="loadSideView('return_inspection')" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
@@ -134,6 +134,14 @@
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#contract_view_icon"></use>
                                 </svg>
                                 documents
+                            </a>
+                        </li>
+                        <li v-if="User.state.auth.type == 'owner' && booking.status < 4 ">
+                            <a @click="cancleBooking" href="javascript:">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
+                                </svg>
+                                Cancel Booking
                             </a>
                         </li>
                         <li>
@@ -229,6 +237,23 @@
                     params.status = 9;
                     params.note = 'booking closed by owner';
                 }
+
+                $('#sideLoader').show();
+                axios.patch('/api/booking/' + this.booking.id + '/status', params)
+                    .then((r) => {
+                        $('#sideLoader').hide();
+                        this.booking.status = params.status;
+                        new Noty({
+                            type: 'information',
+                            text: r.data.success
+                        }).show();
+                    });
+            },
+            cancleBooking() {
+                let params = {};
+
+               params.status = 6;
+               params.note = 'booking request canceled .';
 
                 $('#sideLoader').show();
                 axios.patch('/api/booking/' + this.booking.id + '/status', params)

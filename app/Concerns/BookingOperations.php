@@ -43,10 +43,11 @@ trait BookingOperations
      * @param Vehicle $vehicle
      * @param int $status
      */
-    protected function changeSlotsStatus(Vehicle $vehicle, $status = 1)
+    protected function changeSlotsStatus(Vehicle $vehicle,$booking_id=null, $status = 1)
     {
-        $vehicle->timeSlots->each(function ($ts) use ($status) {
+        $vehicle->timeSlots->each(function ($ts) use ($status, $booking_id) {
             $ts->status = $status;
+            $ts->booking_id = $booking_id;
             $ts->save();
         });
     }
@@ -68,9 +69,7 @@ trait BookingOperations
             ->whereNotIn('status', [3, 4, 7])
             ->count()
         )
-            return api_response(trans('booking.exist', ['vehicle' => $vehicle->vehicle_name]), Response::HTTP_CONFLICT);
-
-        $this->changeSlotsStatus($vehicle, 2);
+            return api_response(trans('booking.exist', ['vehicle' => $vehicle->vehicle_name]), Response::HTTP_CONFLICT);        
 
         $booking = new Booking($request->all());
 
@@ -80,6 +79,8 @@ trait BookingOperations
         $booking->user()->associate($request->user());
 
         $booking->save();
+
+        $this->changeSlotsStatus($vehicle,$booking->id, 2);
 
         Couponize::processPromoCode($booking, $request);
 
@@ -351,11 +352,11 @@ trait BookingOperations
      */
     protected function updateBooking(Request $request, Vehicle $vehicle, Booking $booking)
     {
-        $this->changeSlotsStatus($vehicle, 2);
+        
 
         $booking->fill($request->all());
         $booking->save();
-
+        $this->changeSlotsStatus($vehicle,$booking->id, 2);
         return api_response($booking->fresh(['vehicle' => function ($with) {
             $with->select('id', 'make', 'model', 'variant', 'year', 'deposit');
         }]));
@@ -372,12 +373,16 @@ trait BookingOperations
 
         $booking->fill($log->requested_data);
 
+        $vehicle = $booking->vehicle;
+
         if (isset($log->requested_data['start_date']) || isset($log->requested_data['end_date'])) {
             $booking->status = 8;
-        } elseif ($log->requested_data['status'] == 5) {
+        } elseif ($log->requested_data['status'] == 5 || $request->status==6) {
+            $this->changeSlotsStatus($vehicle);
             $booking->status = 6;
         } else {
             $booking->status = $request->status;
+
         }
 
         $booking->save();

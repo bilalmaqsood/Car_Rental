@@ -23,7 +23,7 @@
             <div id="car_front" class="tab-pane fade in active" v-if="menuView=='front'">
                 <div class="dummy_car carcondition-img" id="front">
 
-                     <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
+                     <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" :class="{'return_point': inspection.is_return==1, 'handover_point': inspection.is_return==0, mydraggable: true}">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -78,7 +78,7 @@
 
             <div id="car_rear" class="tab-pane fade in active" v-if="menuView=='rear'">
                 <div class="dummy_car carcondition-img" id="rear">
-                    <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
+                    <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" :class="{'return_point': inspection.is_return==1, 'handover_point': inspection.is_return==0, mydraggable: true}">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -130,7 +130,7 @@
 
             <div id="car_driver_side" class="tab-pane fade in active" v-if="menuView=='driver_side'">
                 <div class="dummy_car carcondition-img" id="driver_side">
-                    <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
+                    <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" :class="{'return_point': inspection.is_return==1, 'handover_point': inspection.is_return==0, mydraggable: true}">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -181,7 +181,7 @@
 
             <div id="car_off_side" class="tab-pane fade in active" v-if="menuView=='off_side'">
                 <div class="dummy_car carcondition-img" id="off_side">
-                    <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="mydraggable  ">
+                    <div v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" :class="{'return_point': inspection.is_return==1, 'handover_point': inspection.is_return==0, mydraggable: true}">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -244,7 +244,7 @@
 
                 
                 <div class="front_back_size">
-                    <div class="add_description_icon">
+                    <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
 <div class="input-group login-input">
                         <input type="text" palceholder="add description" v-model="description" class="form-control">
 <div class="input-group-addon">
@@ -313,7 +313,7 @@
 
         mounted() {
             let $scope = this;
-            if(this.booking.status>=4){
+            if(this.booking.status>=6){
                 this.is_return=true;
             }
             axios.get('/api/booking/'+this.booking.id+'/inspection').then(function (r) {
@@ -459,6 +459,7 @@
                 
                 axios.post('/api/booking/'+this.booking.id+'/inspection',{data: [param]}).then(function(r){
                       $this.sportPending = false;
+                      $("#remove").click();
                     $this.inspections.data.push(param);
                       new Noty({
                             type: 'information',
@@ -473,6 +474,7 @@
                     this.X_Axis = '';
                     this.Y_Axis = '';
                     this.spot_image = '';
+                    $("#remove").click();
             },
             spotAction(inspection){
                 this.spot_image = inspection.path;
@@ -485,14 +487,8 @@
                 }, time);
             },
             isShowable(inspection){
-                if(inspection.type==this.menuView) {
-                    if (inspection.is_return===true && this.is_return===true)
-                        return true;
-                    else if (this.is_return===false && inspection.is_return===false )
-                        return true;
-                }
-                else
-                return false;
+                return inspection.type==this.menuView;
+
             },
 
         }
