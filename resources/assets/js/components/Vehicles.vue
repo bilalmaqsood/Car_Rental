@@ -99,7 +99,7 @@
                 <div class="availabe">
                     <p>John Doe <span>16.05.2017</span></p>
                 </div>
-                <div class="ratting" data-score="1"></div>
+                <div class="ratting"></div>
             </div>
 
             <div class="pofile_content_wrapper" v-for="vehicle in vehicles">
@@ -132,6 +132,7 @@
 
 <script>
     import Form from '../vehicle-fields';
+    import User from '../user';
 
     var $scope;
     export default {
@@ -140,6 +141,7 @@
                 menuView: '',
                 isEdit: false,
                 vehicles: '',
+                avg_rating: User.state.auth.avg_rating,
                 vehicle: false,
             };
         },
@@ -166,6 +168,7 @@
         mounted() {
             $scope = this;
             this.prepareComponent();
+            console.log(User);
         },
 
         methods: {
@@ -178,7 +181,10 @@
                     if(r.data.success[0]){
                         this.vehicle = r.data.success[0];
                     }
-
+                let rating = this.avg_rating;
+                $('.ratting').starrr({
+                    rating: rating
+                });
             },
             fetchAddress(arg){
                 console.log(arg);
