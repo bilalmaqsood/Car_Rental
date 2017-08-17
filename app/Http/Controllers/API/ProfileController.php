@@ -32,9 +32,11 @@ class ProfileController extends Controller
             'pco_release_date' => 'date',
             'pco_expiry_date' => 'date',
             'pco_number' => 'string',
+
+            'documents' => 'array',
         ]);
 
-        $data = $request->except(['email', 'dlc']);
+        $data = $request->except(['email', 'status', 'dlc']);
 
         $user = $request->user();
 
@@ -44,6 +46,25 @@ class ProfileController extends Controller
         $client = $user->client;
 
         $client->fill($data);
+
+        $client->documents = $request->documents;
+
+        if ($client->documents && $client->documents->count()) {
+            $docs = collect([]);
+
+            $client->documents->each(function ($d) use ($docs) {
+                if ((
+                    $d['doc'] == 'driving_licence' ||
+                    $d['doc'] == 'pco_licence' ||
+                    $d['doc'] == 'dbs_certificate' ||
+                    $d['doc'] == 'proof_of_address'
+                    ) && $d['path'])
+                    $docs->push($d['doc']);
+            });
+
+            if ($docs->count() == 4)
+                $client->dlc = true;
+        }
 
         $client->save();
 

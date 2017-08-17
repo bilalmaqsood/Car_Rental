@@ -12,6 +12,10 @@ const {mix} = require('laravel-mix');
  |
  */
 
+if (!mix.inProduction()) {
+    mix.sourceMaps();
+}
+
 mix
     .js('resources/assets/js/qwikkar.js', 'public/js')
     .js('resources/assets/js/admin.js', 'public/js')
