@@ -77,7 +77,7 @@
                             </a>
                         </li>
                         <transition name="flip" v-if="User.state.auth.type=='client'">
-                            <li v-if="!isSignatures">
+                            <li v-if="canSign && isSignDone">
                                 <a @click="loadSideView('sign')" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -95,7 +95,7 @@
                             </li>
                         </transition>
                         <transition name="flip" v-else-if="User.state.auth.type=='owner'">
-                            <li v-if="!isSignatures">
+                            <li v-if="canSign && isSignDone">
                                 <a @click="loadSideView('sign')" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -103,7 +103,7 @@
                                     sign contract
                                 </a>
                             </li>
-                            <li v-else-if="[2,3].includes(booking.status)">
+                            <li v-else-if="[3].includes(booking.status)">
                                 <a @click="approveBooking" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -165,18 +165,32 @@
     import User from '../user';
 
     export default {
-        props: ['booking', 'user', 'index'],
+        props: ['booking', 'user', 'index','signature'],
 
         data() {
             return {
                 User: User,
+                isSignDone: this.signature,
                 payments: []
             };
         },
-
+        watch: {
+            signature: function(signature) {
+                console.log("signature are now "+ signature);
+                this.isSignDone = signature;
+            }
+        },
         computed: {
-            isSignatures() {
-                return this.booking.signatures && (typeof this.booking.signatures.owner !== 'undefined' && this.booking.signatures.owner) && (typeof this.booking.signatures.client !== 'undefined' && this.booking.signatures.client);
+            
+            canSign() {
+                if(!this.booking.signatures)
+                    return true;
+                else if(this.User.state.auth.type==='owner' && (typeof this.booking.signatures.owner === 'undefined'))
+                    return  true;
+                else if(this.User.state.auth.type==='client' && (typeof this.booking.signatures.client === 'undefined'))
+                    return  true;
+                else
+                return false;
             },
 
             vehicleName() {
