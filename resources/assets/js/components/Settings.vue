@@ -150,12 +150,17 @@
                         <p>{{termsContent}}</p>
                     </li>
                 </transition>
-                <li>
+                <li @click="privacy = !privacy" class="cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#contract_view_icon"></use>
                     </svg>
                     <span>Privacy Policy</span>
                 </li>
+                <transition name="flip">
+                    <li v-if="privacy">
+                        <p>{{termsContent}}</p>
+                    </li>
+                </transition>
                 <li @click="logout" class="cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#log_out_icon"></use>
@@ -178,6 +183,7 @@
             return {
                 User: User,
                 terms: false,
+                privacy: false,
                 termsContent: '',
                 isEditing: false,
                 doc: false,
