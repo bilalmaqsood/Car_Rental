@@ -145,6 +145,7 @@
             return {
                 card: '',
                 cards: '',
+                withdraw: '',
                 editCard: false,
                 addCard: false,
                 viewAccount: true,
@@ -200,7 +201,7 @@
 
         methods: {
             processEarnings(r) {
-                this.current_balance = r.data.success;
+                this.total_balance = r.data.success;
                 this.earningView = true;
                 $('#sideLoader').hide();
             },
@@ -260,6 +261,20 @@
                     $('#sideLoader').hide();
                 });
             },
+            withdrawAmount(e) {
+                $('#sideLoader').show();
+
+                let $t = this;
+                let $btn = $(e.target).button('loading');
+
+                axios.post('/api/withdraw', {
+                    amount: this.withdraw
+                }).then(function (r) {
+                    $('#sideLoader').hide();
+                    $btn.button('reset');
+                    $t.prepareComponent();
+                });
+            }
         }
     }
 </script>
