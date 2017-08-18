@@ -3,47 +3,42 @@
         <ul>
             <li>
                 <div class="form-group">
-
-
-<div class="input-group login-input">
-                            <span class="input-group-addon">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
-                    </svg>
-</span>
-                    <input type="text" class="form-control" placeholder="vehicle" v-model="vehicle">
-
-</div>
-
-                    
+                    <div class="input-group login-input">
+                        <div class="input-group-addon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
+                            </svg>
+                        </div>
+                        <input type="text" class="form-control" placeholder="vehicle" v-model="vehicle">
+                    </div>
                 </div>
             </li>
             <li>
                 <div class="form-group">
-<div class="input-group login-input">
-                            <span class="input-group-addon">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-                    </svg></span>
-                    <input type="text" class="form-control" placeholder="location" v-model="location">
-
-</div>
-                    
+                    <div class="input-group login-input">
+                        <div class="input-group-addon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                            </svg>
+                        </div>
+                        <input type="text" class="form-control" placeholder="location" v-model="location">
+                    </div>
                 </div>
             </li>
-            
+
             <transition name="slide-fade">
                 <li v-if="advanceSearch">
                     <div class="form-group">
-<div class="input-group login-input">
-                            <span class="input-group-addon">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
-                        </svg></span>
-                        <input type="text" class="form-control" placeholder="price range" v-model="price">
+                        <div class="input-group login-input">
+                            <div class="input-group-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                                </svg>
+                            </div>
+                            <input type="text" class="form-control" placeholder="price range" v-model="price">
 
-</div>
-                        
+                        </div>
+
                     </div>
                 </li>
             </transition>
@@ -51,19 +46,18 @@
             <transition name="slide-fade">
                 <li v-if="advanceSearch">
                     <div class="form-group">
-<div class="input-group login-input">
-                            <span class="input-group-addon">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                        </svg>
-</span>
-                        <input type="text" class="form-control available" placeholder="available from" v-model="available">
-</div>
-                        
+                        <div class="input-group login-input">
+                            <div class="input-group-addon">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                </svg>
+                            </div>
+                            <input type="text" class="form-control available" placeholder="available from" v-model="available">
+                        </div>
                     </div>
                 </li>
             </transition>
-<li class="button-search">
+            <li class="button-search">
                 <button type="button" class="secodery_btn" @click="searchVehicles" data-loading-text="searching ...">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
@@ -78,7 +72,7 @@
                 </button>
             </li>
         </ul>
-<div class="clearfix"></div>
+        <div class="clearfix"></div>
     </form>
 </template>
 
@@ -118,7 +112,7 @@
                 axios
                     .get('/api/search/vehicle' + this.queryParams())
                     .then(function (r) {
-                        User.commit('view');
+                        User.commit('view', true);
                         User.commit('listing', r.data.success.data);
                         $t.$emit('showListing');
                         $btn.button('reset');
@@ -133,7 +127,7 @@
 
                 if (this.location.length > 0) {
                     $.ajax({
-                        beforeSend: function(request) {
+                        beforeSend: function (request) {
                             request.setRequestHeader('Access-Control-Request-Headers', '');
                         },
                         url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + this.location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
