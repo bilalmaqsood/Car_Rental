@@ -6,6 +6,7 @@ const state = {
     auth: null,
     home: true,
     bookNow: false,
+    menuView: false,
     searchView: false,
     authSection: false,
     showAdvance: false,
