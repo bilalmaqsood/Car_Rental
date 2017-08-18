@@ -14,102 +14,123 @@
             </transition>
 
             <button class="primary-button" type="button" @click="cardAdd">{{ addCard?'Cancle':'Add Card' }}</button>
-
+            <div class="current_balance">
+             <transition name="flip">
+                <div v-if="earningView">
+                    <h2>My Balance</h2>
+                    <div class="my_earnings">
+                        <ul>
+                            
+                            <li><p>Total Balance<span>{{total_balance | currency('0,0.00')}}</span></p></li>
+                            <li>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Amount to withdraw" v-model="withdraw">
+                                </div>
+                                <button :disabled="$v.withdraw.$invalid" @click="withdrawAmount" data-loading-text="processing ...">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#send"></use>
+                                    </svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </transition>
+            </div>
             <div class="add_bank_account">
-                <h2>My account</h2>
-<transition name="flip" mode="out-in">
-   <div key="edit" v-if="viewAccount">
-      <div v-if="editMenu">
-         <label>
-            <button class="danger" @click="removeAccount" data-loading-text="deleting ...">
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" class="svg-icon">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete_icon"></use>
-               </svg>
-               remove
-            </button>
-         </label>
-         <label>
-            <button class="primary" @click="viewAccount = false">
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
-               </svg>
-               edit
-            </button>
-         </label>
-      </div>
-      <label v-if="!editMenu">
-      <button class="primary" @click="viewAccount = false"><i class="fa fa-plus fa-2x" style="display:block;"></i> add</button>
-      </label>
-   </div>
-   <div key="save" v-else>
-      <label>
-         <button class="primary" @click="saveAccount" data-loading-text="saving ..." :disabled="$v.account.$invalid">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
-               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#send"></use>
-            </svg>
-            save
-         </button>
-      </label>
-      <label>
-         <button class="primary" @click="closeForm">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
-               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use>
-            </svg>
-            close
-         </button>
-      </label>
-   </div>
-</transition>
-<div :class="{card_recured_text:viewAccount, card_recured:!viewAccount}">
-   <ul>
-      <li>
-         <div class="input-group login-input">
-            <div class="input-group-addon">
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
-               </svg>
+                 <h2>My account</h2>
+                <transition name="flip" mode="out-in">
+                   <div key="edit" v-if="viewAccount">
+                      <div v-if="editMenu">
+                         <label>
+                            <button class="danger" @click="removeAccount" data-loading-text="deleting ...">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" class="svg-icon">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete_icon"></use>
+                               </svg>
+                               remove
+                            </button>
+                         </label>
+                         <label>
+                            <button class="primary" @click="viewAccount = false">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
+                               </svg>
+                               edit
+                            </button>
+                         </label>
+                      </div>
+                      <label v-if="!editMenu">
+                      <button class="primary" @click="viewAccount = false"><i class="fa fa-plus fa-2x" style="display:block;"></i> add</button>
+                      </label>
+                   </div>
+                   <div key="save" v-else>
+                      <label>
+                         <button class="primary" @click="saveAccount" data-loading-text="saving ..." :disabled="$v.account.$invalid">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
+                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#send"></use>
+                            </svg>
+                            save
+                         </button>
+                      </label>
+                      <label>
+                         <button class="primary" @click="closeForm">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
+                               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use>
+                            </svg>
+                            close
+                         </button>
+                      </label>
+                   </div>
+                </transition>
+                <div :class="{card_recured_text:viewAccount, card_recured:!viewAccount}">
+                   <ul>
+                      <li>
+                         <div class="input-group login-input">
+                            <div class="input-group-addon">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                               </svg>
+                            </div>
+                            <p v-if="viewAccount">Account holder name<span v-html="account.title"></span></p>
+                            <input v-else type="text" class="form-control" placeholder="Account holder name" v-model="account.title" @keyup="account.title = $event.target.value.toUpperCase()">
+                         </div>
+                      </li>
+                      <li>
+                         <div class="input-group login-input">
+                            <div class="input-group-addon">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                               </svg>
+                            </div>
+                            <p v-if="viewAccount">Account number<span v-html="account.number"></span></p>
+                            <input v-else type="text" class="form-control" placeholder="Account number" v-model="account.number">
+                         </div>
+                      </li>
+                      <li>
+                         <div class="input-group login-input">
+                            <div class="input-group-addon">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                               </svg>
+                            </div>
+                            <p v-if="viewAccount">Sort code<span v-html="account.sortcode"></span></p>
+                            <input v-else type="text" class="form-control" placeholder="Sort code" v-model="account.sortcode">
+                         </div>
+                      </li>
+                      <li>
+                         <div class="input-group login-input">
+                            <div class="input-group-addon">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon" style="height:30px">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                               </svg>
+                            </div>
+                            <p v-if="viewAccount">Billing address<span v-html="account.address"></span></p>
+                            <input v-else type="text" class="form-control" placeholder="Billing address" v-model="account.address">
+                         </div>
+                      </li>
+                   </ul>
+                </div>
             </div>
-            <p v-if="viewAccount">Account holder name<span v-html="account.title"></span></p>
-            <input v-else type="text" class="form-control" placeholder="Account holder name" v-model="account.title" @keyup="account.title = $event.target.value.toUpperCase()">
-         </div>
-      </li>
-      <li>
-         <div class="input-group login-input">
-            <div class="input-group-addon">
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
-               </svg>
-            </div>
-            <p v-if="viewAccount">Account number<span v-html="account.number"></span></p>
-            <input v-else type="text" class="form-control" placeholder="Account number" v-model="account.number">
-         </div>
-      </li>
-      <li>
-         <div class="input-group login-input">
-            <div class="input-group-addon">
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-               </svg>
-            </div>
-            <p v-if="viewAccount">Sort code<span v-html="account.sortcode"></span></p>
-            <input v-else type="text" class="form-control" placeholder="Sort code" v-model="account.sortcode">
-         </div>
-      </li>
-      <li>
-         <div class="input-group login-input">
-            <div class="input-group-addon">
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon" style="height:30px">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-               </svg>
-            </div>
-            <p v-if="viewAccount">Billing address<span v-html="account.address"></span></p>
-            <input v-else type="text" class="form-control" placeholder="Billing address" v-model="account.address">
-         </div>
-      </li>
-   </ul>
-</div>
-            </div>
-
         </div>
 
     </div>
@@ -128,6 +149,8 @@
                 addCard: false,
                 viewAccount: true,
                 editMenu: false,
+                earningView: false,
+                total_balance: false,
                  account: {
                     title: null,
                     number: null,
@@ -171,10 +194,16 @@
             axios.get('/api/credit-card').then(function (r) {
                 $scope.cards = r.data.success;
             });
+            axios.get('/api/current-balance').then(this.processEarnings);
             _.each(User.state.auth.accounts, this.setAccountData);
         },
 
         methods: {
+            processEarnings(r) {
+                this.current_balance = r.data.success;
+                this.earningView = true;
+                $('#sideLoader').hide();
+            },
             cardEdit(c) {
                 this.card=c;
                 this.editCard=! this.editCard;

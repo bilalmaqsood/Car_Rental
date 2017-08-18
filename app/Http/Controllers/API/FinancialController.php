@@ -46,4 +46,15 @@ class FinancialController extends Controller
 
         return api_response($total);
     }
+
+        /**
+     * Current Balance  of driver
+     *
+     * @param Request $request
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function balanceDetails(Request $request)
+    {
+        return api_response($request->user()->balance->current);
+    }
 }
