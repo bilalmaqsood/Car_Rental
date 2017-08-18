@@ -14,7 +14,7 @@ class AccountController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('owner');
+        $this->middleware('not-admin');
     }
 
     /**
