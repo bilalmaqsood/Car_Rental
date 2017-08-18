@@ -6,7 +6,8 @@
                     <div :class="{send_box: !isReceiver(m), receve_box: isReceiver(m)}">
                         <p>{{m.message}}</p>
                     </div>
-                    <span class="chat_date_time" :class="{chat_date_time_recive: isReceiver(m)}">{{isReceiver(m) ? m.receiver.name : m.sender.name}} | {{m.updated_at | date('format', 'DD.MM.YYYY')}} | {{m.updated_at | date('format', 'HH:mm a')}}</span>
+                    <span class="chat_date_time" :class="{chat_date_time_recive: isReceiver(m)}">
+                    {{ showUserName(m) }} | {{m.updated_at | date('format', 'DD.MM.YYYY')}} | {{m.updated_at | date('format', 'HH:mm a')}}</span>
                 </div>
             </transition-group>
         </div>
@@ -77,7 +78,15 @@
                         $('#sideLoader').hide();
                     });
                 }
-            }
+            },
+        
+        showUserName(m){
+            console.log(m);
+            if(this.user.state.auth.email === m.sender.email && m.receiver.email !== this.user.state.auth.email)
+                return this.user.state.auth.name;
+            else 
+                return m.sender.name;
         }
     }
+}
 </script>
