@@ -137,6 +137,9 @@
                         </svg>
                         done
                     </button>
+                    <button type="button" class="secodery_btn" @click="skipStep" style="right: 100px; z-index: 9999">
+                        Skip
+                    </button>
                     <button type="button" class="primary_btn" @click="changeView">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
@@ -380,6 +383,11 @@
                 }
                 if(value && this.oldstep=='owner_info'){
                     this.processOwner();
+                }
+            },
+            skipStep(){
+                if(confirm("Are you sure to skip this step")){
+                    this.changeStep();
                 }
             }
         }
