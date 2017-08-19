@@ -141,7 +141,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                 </svg>
-                                Cancel Booking
+                                cancel Request
                             </a>
                         </li>
                         <li>
@@ -183,6 +183,9 @@
         computed: {
             
             canSign() {
+                if(this.booking.status >= 4)
+                    return false; 
+
                 if(!this.booking.signatures)
                     return true;
                 else if(this.User.state.auth.type==='owner' && (typeof this.booking.signatures.owner === 'undefined'))
@@ -274,6 +277,7 @@
                     .then((r) => {
                         $('#sideLoader').hide();
                         this.booking.status = params.status;
+                        this.isSignDone = false;
                         new Noty({
                             type: 'information',
                             text: r.data.success
