@@ -1,6 +1,7 @@
 <template>
     <div class="chat_contrnt" :style="{ height: viewHeight + 'px' }">
         <div class="all-chat-messages">
+        <div id="chatmessages">
             <transition-group name="list" tag="div">
                 <div v-for="m in messages.data" :key="m.id">
                     <div :class="{send_box: !isReceiver(m), receve_box: isReceiver(m)}">
@@ -10,6 +11,7 @@
                     {{ showUserName(m) }} | {{m.updated_at | date('format', 'DD.MM.YYYY')}} | {{m.updated_at | date('format', 'HH:mm a')}}</span>
                 </div>
             </transition-group>
+        </div>
         </div>
 
         <div class="chat_btn_wrapper">
