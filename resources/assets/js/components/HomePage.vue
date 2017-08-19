@@ -61,7 +61,7 @@
             },
 
             switchToListing() {
-                User.commit('home');
+                User.commit('home', false);
             },
         
         itemDetails(item) {
@@ -75,7 +75,7 @@
                             $s.hide();
                             $t.details = true;
                         }, 500);
-                        User.commit('view');
+                        User.commit('view', true);
                         User.commit('listing', [response.data.success]);
                     });
             }

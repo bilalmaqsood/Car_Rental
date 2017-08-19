@@ -56,7 +56,7 @@
 
         methods: {
             trim(str){
-                return str.replace(/\s+/g, '');
+                return str ? str.replace(/\s+/g, '') : '';
             }
         }
     }

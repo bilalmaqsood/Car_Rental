@@ -95,8 +95,9 @@
 
             searchListing(response) {
                 User.commit('listing', response.data.success.data);
-                User.commit('home');
-                User.commit('view');
+                User.commit('home', false);
+                User.commit('view', true);
+                User.commit('menuView', '');
 
                 setTimeout(function () {
                     $('#sideLoader').hide();

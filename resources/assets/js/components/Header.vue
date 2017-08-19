@@ -3,7 +3,7 @@
         <div class="nav_wrapper">
             <nav class="navbar navbar-default navbar-fixed-top">
                 <transition name="slide-fade" mode="out-in">
-                    <advance-form v-if="storage.state.showAdvance && menuView=='advance'"></advance-form>
+                    <advance-form v-if="storage.state.showAdvance && storage.state.menuView=='advance'"></advance-form>
                 </transition>
 
                 <div class="navbar-header">
@@ -21,7 +21,7 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="search_filter" v-if="storage.state.detailsDisplay || storage.state.showAdvance" @click="closeDetailForm" key="close">
+                    <div class="search_filter" v-if="storage.state.detailsDisplay" @click="closeDetailForm" key="close">
                         <button class="search_filter_btn primary_btn">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use>
@@ -116,11 +116,11 @@
 
                                                                 <div class="input-group login-input">
 
-<span class="input-group-addon">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
-                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
-                                                                </svg>
-</span>
+                                                                    <div class="input-group-addon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
+                                                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                                                                        </svg>
+                                                                    </div>
                                                                     <input class="form-control" placeholder="email" type="email" @blur="$v.login.email.$touch()" v-model.trim="login.email">
 
                                                                 </div>
@@ -133,11 +133,11 @@
 
                                                                 <div class="input-group login-input">
 
-<span class="input-group-addon">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon cursor-pointer" @click="authSectionView='reset'">
-                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
-                                                                </svg>
-</span>
+                                                                    <div class="input-group-addon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon cursor-pointer" @click="authSectionView='reset'">
+                                                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
+                                                                        </svg>
+                                                                    </div>
                                                                     <input class="form-control" placeholder="password" type="password" @blur="$v.login.password.$touch()" v-model.trim="login.password" v-on:keyup.enter="loginUser">
 
                                                                 </div>
@@ -155,11 +155,11 @@
                                                             <div class="form-group" :class="{ 'has-error': $v.forgot.email.$error }">
 
                                                                 <div class="input-group login-input">
-<span class="input-group-addon">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
-                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
-                                                                </svg>
-</span>
+                                                                    <div class="input-group-addon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
+                                                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
+                                                                        </svg>
+                                                                    </div>
                                                                     <input class="form-control" placeholder="email" type="email" @blur="$v.forgot.email.$touch()" v-model.trim="forgot.email">
                                                                 </div>
 
@@ -167,11 +167,11 @@
                                                             </div>
                                                             <div class="form-group" :class="{ 'has-error': $v.forgot.password.$error }">
                                                                 <div class="input-group login-input">
-<span class="input-group-addon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
-                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
-                                                                </svg>
-</span>
+                                                                    <div class="input-group-addon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
+                                                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
+                                                                        </svg>
+                                                                    </div>
                                                                     <input type="password" class="form-control" placeholder="new password" @blur="$v.forgot.password.$touch()" v-model.trim="forgot.password">
                                                                 </div>
                                                             </div>
@@ -179,11 +179,11 @@
 
 
                                                                 <div class="input-group login-input">
-<span class="input-group-addon">
-                                                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
-                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
-                                                                </svg>
-</span>
+                                                                    <div class="input-group-addon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 30" class="svg-icon">
+                                                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
+                                                                        </svg>
+                                                                    </div>
                                                                     <input type="password" class="form-control" placeholder="re-type password" @blur="$v.forgot.password_confirmation.$touch()" v-model.trim="forgot.password_confirmation">
                                                                 </div>
 
@@ -200,7 +200,7 @@
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right" key="authenticated" v-else>
-                            <li :class="{active: menuView == 'settings'}">
+                            <li :class="{active: storage.state.menuView == 'settings'}">
                                 <a href="javascript:" @click="changeMenuView('settings')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cog_setting"></use>
@@ -209,7 +209,7 @@
                                 </a>
                             </li>
 
-                            <li :class="{active: menuView == 'payment'}">
+                            <li :class="{active: storage.state.menuView == 'payment'}">
                                 <a href="javascript:" @click="changeMenuView('payment')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
@@ -218,7 +218,7 @@
                                 </a>
                             </li>
 
-                            <li :class="{active: menuView == 'booking'}">
+                            <li :class="{active: storage.state.menuView == 'booking'}">
                                 <a href="javascript:" @click="changeMenuView('booking')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon svg-icon-booking">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
@@ -227,7 +227,7 @@
                                 </a>
                             </li>
 
-                            <li :class="{active: menuView == 'search'}" v-if="isClient()">
+                            <li :class="{active: storage.state.menuView == 'search'}" v-if="isClient()">
                                 <a href="javascript:" @click="showAdvanceForm">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
@@ -236,7 +236,7 @@
                                 </a>
                             </li>
 
-                            <li :class="{active: menuView == 'vehicles'}" v-if="isOwner()">
+                            <li :class="{active: storage.state.menuView == 'vehicles'}" v-if="isOwner()">
                                 <a href="javascript:" @click="changeMenuView('vehicles')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
@@ -245,7 +245,7 @@
                                 </a>
                             </li>
 
-                            <li :class="{active: menuView == 'profile'}">
+                            <li :class="{active: storage.state.menuView == 'profile'}">
                                 <a href="javascript:" @click="changeMenuView('profile')">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
@@ -266,14 +266,14 @@
                     </div>
                 </div>
 
-                <div class="menu-component-container" v-show="!!menuView" :style="{ height: height + 'px' }">
+                <div class="menu-component-container" v-show="!!storage.state.menuView" :style="{ height: height + 'px' }">
                     <transition name="slide-fade">
-                        <user-settings v-if="menuView == 'settings'"></user-settings>
-                        <user-profile v-if="menuView == 'profile'"></user-profile>
-                        <vehicle-crud v-if="menuView == 'vehicles'"></vehicle-crud>
-                        <booking-listing v-if="menuView == 'booking'" :viewHeight="height"></booking-listing>
-                        <payment-card-listing v-if="menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>
-                        <financial v-if="menuView == 'payment' && storage.state.auth.type == 'owner'"></financial>
+                        <user-settings v-if="storage.state.menuView == 'settings'"></user-settings>
+                        <user-profile v-if="storage.state.menuView == 'profile'"></user-profile>
+                        <vehicle-crud v-if="storage.state.menuView == 'vehicles'"></vehicle-crud>
+                        <booking-listing v-if="storage.state.menuView == 'booking'" :viewHeight="height"></booking-listing>
+                        <payment-card-listing v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>
+                        <financial v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'owner'"></financial>
                     </transition>
                 </div>
             </nav>
@@ -294,7 +294,6 @@
                 baseURL: window.Qwikkar.baseUrl,
                 message: null,
                 authSectionView: 'login',
-                menuView: '',
                 height: 0,
                 login: {
                     email: '',
@@ -354,10 +353,10 @@
             },
 
             changeMenuView(view) {
-                if (this.menuView && this.menuView === view)
-                    this.menuView = '';
+                if (User.state.menuView && User.state.menuView === view)
+                    User.commit('menuView', '');
                 else
-                    this.menuView = view;
+                    User.commit('menuView', view);
             },
 
             changeView() {
@@ -459,7 +458,10 @@
             },
 
             showAdvanceForm() {
-                this.menuView = 'advance';
+                if (User.state.showAdvance)
+                    User.commit('menuView', '');
+                else
+                    User.commit('menuView', 'advance');
                 User.commit('advance');
             },
 
@@ -480,8 +482,8 @@
                 if (User.state.home)
                     $("html, body").animate({scrollTop: 0}, 1000);
                 else {
-                    User.commit('home');
-                    User.commit('view');
+                    User.commit('home', true);
+                    User.commit('view', false);
                 }
             }
         }

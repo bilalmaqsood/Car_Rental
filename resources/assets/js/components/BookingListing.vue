@@ -7,7 +7,7 @@
                         <div class="current_booking" v-if="bookings.length">
                             <h2>Current booking</h2>
                             <transition-group name="list" tag="div">
-                                <booking v-for="(book,i) in bookings" :key="book.id" :booking="book" :user="storage" :index="i" @otherBooking="loadOtherBooking" @sideView="loadSideView" ref="booking"></booking>
+                                <booking v-for="(book,i) in bookings" :key="book.id" :signature="signature" :booking="book" :user="storage" :index="i" @otherBooking="loadOtherBooking" @sideView="loadSideView" ref="booking"></booking>
                             </transition-group>
                         </div>
                         <div v-if="pastBookings.length">
@@ -55,6 +55,7 @@
             return {
                 sideView: '',
                 showView: false,
+                signature: true,
                 booking: {},
                 bookings: [],
                 pastBookings: [],
@@ -142,7 +143,8 @@
                     if (User.state.auth.type === 'owner')
                         this.bookings[this.inProcess.index].status = 3;
                     else if (User.state.auth.type === 'client')
-                        this.bookings[this.inProcess.index].status = 2;
+                        this.bookings[this.inProcess.index].status = 2; 
+                    this.signature = false;
                 }
                 this.sideView = '';
                 this.inProcess = null;

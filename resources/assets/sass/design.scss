@@ -2017,7 +2017,22 @@ padding-top: 10px;
 
 .all-chat-messages {
     height: 82%;
+    
+    overflow:   none;
+    position:   relative;
+    width:      100%;
+    
+    border: 1px solid #ccc;
+}
+#chatmessages
+{
     overflow: auto;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 570px;
+    
 }
 
 .all-chat-messages:before,
@@ -2033,7 +2048,9 @@ padding-top: 10px;
 .chat_btn_wrapper {
     width: 100%;
     position: absolute;
-    bottom: 0;
+    margin-top: 30px;
+    border: 1px solid #ccc;
+    padding: 10px;
 }
 
 .chat_btn_wrapper .form-control {

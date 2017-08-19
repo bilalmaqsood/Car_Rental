@@ -13,12 +13,16 @@ export default {
         state.auth = user;
     },
 
-    home (state) {
-        state.home = !state.home;
+    home (state, show) {
+        state.home = show;
     },
 
-    view (state) {
-        state.searchView = !state.searchView;
+    view (state, show) {
+        state.searchView = show;
+    },
+
+    menuView (state, viewName) {
+        state.menuView = viewName;
     },
 
     advance (state) {
