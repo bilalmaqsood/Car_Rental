@@ -1,9 +1,14 @@
+<style>
+    .menu-component-container {
+        background: none !important;
+    }
+</style>
 <template>
 
-    <div class="search_map">
+    <div class="search_map hide_overlay">
         <div id="search_map" style="width: 100%; height: 100%;"></div>
 
-        <div class="search_container">
+        <div class="search_container search_container_width">
             <transition-group name="list" tag="div">
                 <div class="search_car" v-for="i in user.state.searchResults" :key="i.id">
                     <div class="search_car_content" :style="{width: user.state.detailsDisplay ? '0' : '', height: user.state.detailsDisplay ? '0px' : ''}">

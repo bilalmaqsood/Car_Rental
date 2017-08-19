@@ -15,7 +15,13 @@ h3 {
     position: absolute;
     z-index: 80;
 }
-
+.spinner-container.side-loader{
+    width: 100%;
+    height: 100%;
+    right: 0 !important;
+    top:0 !important;
+    background: rgba(0,0,0, 0.7) !important
+}
 .navbar-brand {
     height: 65px;
     width: 65px;
@@ -91,7 +97,9 @@ h3 {
     overflow: hidden;
     transition: width .3s ease;
 }
-
+.login-section, .basic_info, .terms_conditions, .user-want-container {
+    box-shadow: 1px 5px 9px #333;
+}
 .recover_password {
     z-index: 1050;
     width: 62%;
@@ -234,7 +242,7 @@ h3 {
 .login_form p {
     display: block;
     text-align: right;
-    margin-top: -5px;
+    margin-top: 0;
     padding-right: 18px;
 }
 
@@ -844,7 +852,7 @@ padding-top: 10px;
     position: absolute;
     float: left;
     z-index: 100;
-    left: 50%;
+    left: 40%;
     top: 0;
 }
 
@@ -1758,7 +1766,7 @@ padding-top: 10px;
 
 .booking_tab_content {
     float: left;
-    width: 50%;
+    width: 45%;
     background: rgba(255, 255, 255, 0.91);
     position: relative;
 
@@ -1778,7 +1786,7 @@ padding-top: 10px;
 }
 
 .booking_tab_content .active {
-    padding-top: 70px;
+    padding-top: 0;
 }
 
 .booking_tab_content .table-condensed .active {
@@ -1857,12 +1865,12 @@ padding-top: 10px;
 }
 
 .main_booking_container {
-    width: 90%;
+    width: 100%;
     float: right;
 }
 
 .main_booking_container .booking_container {
-    width: 50%;
+    width: 55%;
     float: right;
     background: rgba(255, 255, 255, 0.91);
 }
@@ -2069,8 +2077,8 @@ padding-top: 10px;
     margin: 0 auto;
 }
 
-.payment_wrapper .card_recured {;
-                                margin-bottom: 0;
+.payment_wrapper .card_recured {
+    margin-bottom: 0;
 }
 
 .setting_wrapper {
@@ -2142,6 +2150,7 @@ padding-top: 10px;
 }
 .vehicles_container .booking_tab ul li {
     width: 33.3%;
+    margin-top: 3px;
 }
 .vehicles_container .booking_tab ul li:last-child {
     /*width: 33.34%;*/
@@ -2696,8 +2705,6 @@ padding-top: 10px;
     background: #525252;
     padding: 10px;
     position: relative;
-    overflow-y: scroll;
-    max-height: 600px;
 }
 
 .terms_conditions h3 {
@@ -2721,7 +2728,7 @@ padding-top: 10px;
 
 .terms_conditions .secodery_btn {
     float: right;
-    margin-top: -80px;
+    margin-top: -75px;
 }
 
 .terms_conditions span {
@@ -3099,13 +3106,59 @@ button:disabled {
     line-height: 35px;
     width: auto !important;
 }
-
-
-
+.main_profile_container .profile_content .primary-button {
+    width: 49%;
+}
+.search_container_width {
+    width: 60%;
+}
+@media all and (max-width: 1920px) and (min-width: 1400px) {
+   .login-section {
+        width: 43%;
+    }
+    .login_form {
+        width: 70%;
+    }
+    .login_form .form-group {
+        width: 49%;
+    }
+    .form-inline .input-group {
+        width: 100%;
+    } 
+}
+@media screen and (max-width: 1300px) {
+    .login-section {
+        width: 75%;
+    }
+}
+@media screen and (max-width: 1199px) {
+    .terms_conditions {
+        width: 60%;
+    }
+    .login-section {
+        width: 82%;
+    }
+    .main_profile_container {
+        width: 60%;
+    }
+    .main_profile_container, .main_booking_container {
+        width: 80%; 
+    }
+    .main_booking_container .booking_container {
+        width: 100%;
+    }
+    .booking_tab_content {
+        width: 100%;
+        position: static;
+    }
+    .booking_tab_content .active {
+        padding-top: 0;
+    }
+}
 @media screen and (max-width: 1023px) {
 
     .main_profile_container, .main_booking_container {
-        width: 80%;
+        width: 83%;
     }
     .main_booking_container .booking_container, .booking_tab_content{
         width: 100%;
@@ -3162,9 +3215,54 @@ button:disabled {
         top: 0;
         width: 100%;
     }
-
+    .profile_content {
+        width: 100%;
+    }
+    .main_profile_container .profile_content .primary-button {
+        margin-top: 10px;
+        width: 49%;
+    }
+    .search_container_width {
+        width: 80%;
+    }
 }
-
+@media screen and (max-width: 992px) {
+    .login-section {
+        width: 340px;
+        height: auto;
+    }
+    .login_form {
+        width: 73%;
+    }
+    .login-section .secodery_btn {
+        width: 65px;
+    }
+    .login-section .primary_btn {
+        width: 65px;
+    }
+    .login-section .login_form {
+        width: 260px;
+    }
+    .button_box {
+        display: inline-block;
+        width: 65px;
+    }
+    .login_form p {
+        margin-top: -5px;
+        padding-right: 5px;
+        line-height: 16px;
+        text-align: left;
+    }
+    .login-input-password-gap{
+        margin-top: 40px;
+    }
+    .search_container {
+        width: 85%;
+    }
+    .search_filter {
+        left: 40%;
+    }
+}
 @media screen and (max-width: 767px) {
 
     .vehicles_container{
@@ -3233,10 +3331,10 @@ button:disabled {
         width: 100%;
         position: static;
     }
-    .search_car_content .availabe_item_price h3{
-        margin: 13px 0;
-        float: right;
-        display: block;
+    .search_car_content .availabe_item_price h3 {
+        margin: 0;
+        float: none;
+        display: inline-block;
     }
     .booking_tab ul li a {
         font-size: 12px;
@@ -3260,17 +3358,73 @@ button:disabled {
         margin: 20px auto 0 20px;
         position: static;
     }
+    .terms_conditions {
+        width: 100%;
+    }
+    .basic_info {
+        width: 100%;
+    }
+    .search_filter {
+        left: 100px;
+    }
+    .search_container {
+        width: 50%;
+    }
+    .search_container_width {
+        width: 100%;
+    }
 }
 
+@media screen and (max-width: 640px) {
+    .search_car_img {
+        float: right;
+        width: 100%;
+    }
+    .search_car_content {
+        width: 100%;
+    }
+    .navbar-default .navbar-nav > li > a {
+        padding: 6px;
+        font-size: 12px;
+    }
+    .nav.navbar-nav > li .svg-icon {
+        width: 17px;
+        height: 17px;
+    }
+    .navbar-brand {
+        height: auto;
+        width: 45px;
+    }
+    .availablity_price{
+        width: 100% !important;
+        float: left;
+        margin-top: 12px !important;
+    }
+    .availablity_price .availabe_item_price{
+        width: 100% !important;
+    }
+    .availablity_price .availabe_item_price h3{
+        display: inline-block;
+        width: auto;
+        position: relative;
+        top: -9px;
+    }
+    .availablity_price .availabe_item_price span{
+        display: inline-block;
+        width: auto;
+    }
+    .pickup_loction ul {
+        padding-right: 75px;
+    }
+}
 
 @media screen and (max-width: 470px) {
-
     .navbar-brand {
         height: auto;
         width: 45px;
     }   
     .navbar-default .navbar-nav > li > a {
-        padding: 6px;
+        padding: 4px;
         font-size: 12px;
     }
     .nav.navbar-nav > li .svg-icon {
@@ -3283,11 +3437,25 @@ button:disabled {
     #car_inspection .nav-tabs > li:nth-child(5n){
         width: 100%;
     }
-    .availablity_detail, .availablity_price, .availabe_item_price {
-        width: 100%;
+    .availablity_price, .availabe_item_price {
+        width: 109px;
+    }
+    .search_filter {
+        left: 60px;
+    }
+    .search_filter .primary_btn {
+        width: 55px;
+        height: 55px;
+    }
+    .search_filter {
+        width: 47px;
     }
 }
-
+@media screen and (max-width: 385px) {
+    .search_filter {
+        left: 47px;
+    }
+}
 @media screen and (max-width: 360px) {
 
     .navbar-default .navbar-nav > li > a {
@@ -3295,8 +3463,6 @@ button:disabled {
         padding: 3px 5px;
     }
     .search_filter {
-        float: right;
-        left: inherit;
         position: absolute;
         top: 0;
         width: 100%;
@@ -3323,8 +3489,6 @@ button:disabled {
     .booking_tab_content .active {
         padding-top: 5px;
     }
-
-
 }
 .liting-image{
    float: left;
@@ -3357,4 +3521,69 @@ button:disabled {
 }
 .clickable {
     cursor: pointer;
+}
+.date-of-birth-form .bootstrap-datetimepicker-widget table td span {
+    line-height: 22px !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 5px 10px !important;
+}
+.menu-component-container {
+    background: rgba(0, 0, 0, 0.78);
+}
+.terms_conditions_scroll{
+    float: right;
+    width: 100%;
+    background: #525252;
+    padding: 10px;
+    position: relative;
+    overflow-y: scroll;
+    max-height: 360px;
+}
+.noty_danger{
+    border-left: 5px solid #db202f;
+}
+.noty_warning{
+    border-left: 5px solid #f5a623;
+}
+.noty_info{
+    border-left: 5px solid #3108b6;
+}
+.noty_danger h3{
+    color: #db202f;
+}
+.noty_warning h3{
+    color: #f5a623;
+}
+.noty_info h3{
+    color: #3108b6;
+}
+.detail_img{
+    height: 220px;
+    overflow: hidden;
+}
+.detail_img img{
+    width: 100%;
+}
+.ratting a{
+    width: 1.28571429em;
+    text-align: center;
+    color: #98b927;
+    text-decoration: none;
+}
+.basic_info .bootstrap-datetimepicker-widget table td span {
+    line-height: 22px !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 5px 10px !important;
+}
+.btn-success {
+    color: #fff;
+    background-color: #87af1e;
+    border-color: #87af1e;
+}
+.btn-success:hover {
+    color: #fff;
+    background-color: #3c3c3b;
+    border-color: #3c3c3b;
 }

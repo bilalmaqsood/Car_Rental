@@ -7,7 +7,9 @@
     
     <div class="terms_conditions">
         <h3>Terms &amp; Conditions</h3>
+        <div class="terms_conditions_scroll">
         <p> {{ terms }} </p>
+        </div>
         <span>Please read and understand our T&amp;C.</span>
         <button class="secodery_btn" @click="processTerms">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">

@@ -55,7 +55,7 @@
                         </div>
                         <span class="help-block text-sm" v-if="$v.basic_info.phone.$error">Enter valid phone</span>
                     </div>
-                    <div class="form-group" :class="{ 'has-error': $v.basic_info.dob.$error }" v-if="user_type=='client'">
+                    <div class="form-group date-of-birth-form" :class="{ 'has-error': $v.basic_info.dob.$error }" v-if="user_type=='client'">
                         <div class="input-group login-input">
                             <span class="input-group-addon">
                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use> </svg>

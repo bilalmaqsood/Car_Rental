@@ -128,7 +128,7 @@
 
                                                                 <span class="help-block text-sm" v-if="$v.login.email.$error">Enter valid email</span>
                                                             </div>
-                                                            <div class="form-group" :class="{ 'has-error': $v.login.password.$error }">
+                                                            <div class="form-group login-input-password-gap" :class="{ 'has-error': $v.login.password.$error }">
 
 
                                                                 <div class="input-group login-input">
