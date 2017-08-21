@@ -127,7 +127,7 @@
 
             loadSideView(data) {
                 let $this = this;
-                if(data.view=='sign'){
+                if(data.view=='sign' && User.state.auth.type === 'client'){
                     axios.get('/api/credit-card').then(function(r){
                         if(!r.data.success.length){
                             User.commit('oldView', 'booking');

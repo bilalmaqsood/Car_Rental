@@ -239,11 +239,25 @@
             },
 
             approveBooking() {
-                let params = {};
+                var params = {};
 
                 if ([2,3].includes(this.booking.status)) {
-                    params.status = 4;
-                    params.note = 'booking approved after signatures.';
+                    
+                      axios.get('api/booking/'+this.booking.id+'/inspection').then(r=>{
+                        if(!r.data.success.length){
+                            new Noty({
+                                type: 'warning',
+                                text: 'Add inspection before accepting booking!'
+                            }).show();
+                            this.loadSideView("inspection");
+                            return false;
+                         } else{
+                          params.status = 4;
+                          params.note = 'booking approved after signatures.';
+                          this.updateStatus(params);
+                      }
+                    });  
+                    
                 } else if (this.booking.status===5) {
                     params.status = 6;
                     params.note = 'booking canceled from cancel request by client.';
@@ -255,16 +269,10 @@
                     params.note = 'booking closed by owner';
                 }
 
-                $('#sideLoader').show();
-                axios.patch('/api/booking/' + this.booking.id + '/status', params)
-                    .then((r) => {
-                        $('#sideLoader').hide();
-                        this.booking.status = params.status;
-                        new Noty({
-                            type: 'information',
-                            text: r.data.success
-                        }).show();
-                    });
+
+                if(params.length)
+                this.updateStatus(params);
+                
             },
             cancleBooking() {
                 let params = {};
@@ -278,6 +286,18 @@
                         $('#sideLoader').hide();
                         this.booking.status = params.status;
                         this.isSignDone = false;
+                        new Noty({
+                            type: 'information',
+                            text: r.data.success
+                        }).show();
+                    });
+            },
+            updateStatus(params){
+                $('#sideLoader').show();
+                axios.patch('/api/booking/' + this.booking.id + '/status', params)
+                    .then((r) => {
+                        $('#sideLoader').hide();
+                        this.booking.status = params.status;
                         new Noty({
                             type: 'information',
                             text: r.data.success

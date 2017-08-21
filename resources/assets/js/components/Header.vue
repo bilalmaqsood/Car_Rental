@@ -490,6 +490,7 @@
             },
             handleMenuView(view){
                 User.commit('menuView', view);
+                User.commit('oldView', false);
             }
         }
     }

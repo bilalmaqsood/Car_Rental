@@ -243,7 +243,7 @@
 
                         setTimeout(function () {
                             new Inputmask({
-                                mask: [{mask: '+44 (###) ### ####'}],
+                                mask: [{mask: '0### ### ####'}],
                                 greedy: false,
                                 definitions: {'#': {validator: "[0-9]", cardinality: 1}}
                             }).mask(document.querySelector('.phone-number'));
@@ -317,7 +317,7 @@
             processOwner(){
                 let $t = this;
                     let postData = JSON.parse(JSON.stringify(this.basic_info));
-                    postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
+                    postData.phone = postData.phone ? "+44"+postData.phone.replace(/[\s\(\)]/g, '') : null;
                     axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
                         $t.successRegister();
                     }).catch(function (r) {
@@ -326,7 +326,7 @@
             processClient(){
                         let $t = this;
                         let postData = JSON.parse(JSON.stringify(_.merge(this.basic_info, this.driver_info)));
-                        postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
+                        postData.phone = postData.phone ? "+44"+postData.phone.replace(/[\s\(\)]/g, '') : null;
                                 axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
                                     $t.successRegister();
                                 }).catch(function (r) {
