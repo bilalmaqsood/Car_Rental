@@ -1,7 +1,7 @@
 <template>
     <div id="extend_cancel">
 
-        <div v-if="user.state.auth.type=='client'" class="extend_booking">
+        <div v-if="user.state.auth.type=='client' && extend" class="extend_booking">
             <div class="extend_booking_content">Extend booking</div>
 
             <div class="extend_booking_content no-padding">
@@ -19,17 +19,19 @@
                 </div>
             </div>
 
-            <div class="extend_booking_content cursor-pointer btn-send" @click="extendBooking">Send request</div>
+            <button class="extend_booking_content cursor-pointer btn-send" @click="extendBooking">Send request</button>
+            <div @click="extend=!extend" class="cursor-pointer extend_booking_content">Cancel booking</div>
 
+            
+        </div>
+
+        <div v-else class="extend_booking">
             <div class="extend_booking_content">Cancel booking</div>
 
             <div class="extend_booking_content no-padding"><textarea class="form-control" placeholder="Reason for early cancellation" v-model="cancel_note"></textarea></div>
 
-            <div class="extend_booking_content cursor-pointer btn-send" @click="cancelBooking">Send request</div>
-        </div>
+            <button class="extend_booking_content cursor-pointer btn-send" @click="cancelBooking">Send request</button>
 
-        <div v-else>
-            Cancle booking request
         </div>
 
     </div>
@@ -44,6 +46,7 @@ import User from '../user';
         data() {
             return {
                 user: User,
+                extend: true,
                 end_date: '',
                 start_date: '',
                 cancel_note: ''
@@ -62,22 +65,34 @@ import User from '../user';
 
         methods: {
             
-            extendBooking() {
+            extendBooking(e) {
                 let $scope = this;
+
                 if (this.user.state.currentBook !== null) {
+                    $(e.target).attr('disabled', 'disabled').removeClass('cursor-pointer').html("Loading...");
+                    $("#centerLoader").show();
                     axios.post('/api/booking/' + this.user.state.currentBook + '/status', this.extendParams())
-                        .then(response => {
-                            console.log(response);
+                        .then(r => {
+                            new Noty({
+                                type: 'information',
+                                text: r.data.success,
+                            }).show();
+                             $("#centerLoader").show();
                             $scope.$emit("clearSideView");
                         });
                 }
             },
 
-            cancelBooking() {
+            cancelBooking(e) {
                 if (this.user.state.currentBook !== null) {
+                    $(e.target).attr('disabled', 'disabled').removeClass('cursor-pointer').html("Loading...");
                     axios.post('/api/booking/' + this.user.state.currentBook + '/status', this.cancelParams())
-                        .then(response => {
-                            console.log(response);
+                        .then(r => {
+                             new Noty({
+                                type: 'warning',
+                                text: r.data.success,
+                            }).show();
+                             this.$emit("clearSideView");
                         });
                 }
             },

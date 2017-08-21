@@ -407,6 +407,21 @@
                                 
                             </div>
                         </li>
+                        <li v-for="img in form.images">
+                            <div class="form-group">
+                                <label class="control-label">{{img.name}}</label>
+                                
+                                 <span v-if="!img.path" @click="upload(img)" class="clickable">
+                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                                </span>
+
+                        <span v-else>
+                            <i @click="edit(img)" class="fa fa-eye clickable" aria-hidden="true"></i>
+                            <i @click="deleteDocument(img)"  class="fa fa-trash clickable" aria-hidden="true"></i>
+                        </span> 
+                                
+                            </div>
+                        </li>
                         <li>
                             <button id="uploadImages" class="primary-button">Upload Images</button>
                             <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple"
