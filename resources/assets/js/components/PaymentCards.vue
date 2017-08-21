@@ -9,8 +9,10 @@
                         <p class="list-group-item-text"> {{ c.address }}</p>
                     </a>
                 </div>
+            </transition>
 
-                <payment-card-form :editCard="editCard" :selectedcard="card" key="add-cards" v-else></payment-card-form>
+            <transition name="flip" mode="out-in">
+                <payment-card-form  @changeView="handleForm" v-if="addCard" :editCard="editCard" :selectedcard="card" key="add-cards"></payment-card-form>
             </transition>
 
             <button class="primary-button" type="button" @click="cardAdd">{{ addCard?'Cancle':'Add Card' }}</button>
@@ -143,6 +145,7 @@
     export default {
         data() {
             return {
+                User: User,
                 card: '',
                 cards: '',
                 withdraw: '',
@@ -274,6 +277,14 @@
                     $btn.button('reset');
                     $t.prepareComponent();
                 });
+            },
+            handleForm(){
+              let $this = this;
+              if(User.state.oldView)
+                 setTimeout(function() {
+                     $this.$parent.$emit("oldMenuView",User.state.oldView);
+                }, 500);
+               this.addCard = !this.addCard;
             }
         }
     }

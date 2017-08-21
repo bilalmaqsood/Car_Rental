@@ -35,7 +35,7 @@
             </transition>
 
             <transition name="flip" mode="out-in">
-                <sign-contract v-if="sideView=='sign'" key="sign-contract" @closeContract="clearSideView" :booking="booking"></sign-contract>
+                <sign-contract v-if="sideView=='sign' || storage.state.menuView=='sign'" key="sign-contract" @closeContract="clearSideView" :booking="booking"></sign-contract>
                 <car-inspection v-if="sideView=='return_inspection' || sideView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
                 <extend-cancel-booking v-if="sideView=='extend'" key="booking-extend" :user="storage" @clearSideView="clearSideView"></extend-cancel-booking>
                 <booking-documents v-if="sideView=='documents'" key="booking-documents" :documents="documents"></booking-documents>
@@ -126,15 +126,25 @@
             },
 
             loadSideView(data) {
-                if (!this.inProcess || this.inProcess.id !== data.id || this.sideView !== data.view) {
-                    if (this.sideView === data.view) {
-                        this.sideView = '';
-                        setTimeout(() => {
-                            this.sideView = data.view;
-                        }, 450);
-                    }
-                    else this.sideView = data.view;
-                    this.inProcess = data;
+                let $this = this;
+                if(data.view=='sign'){
+                    axios.get('/api/credit-card').then(function(r){
+                        if(!r.data.success.length){
+                            User.commit('oldView', 'booking');
+                            User.commit('menuView', 'payment');
+
+                            new Noty({
+                                    type: 'warning',
+                                    text: 'Add credit card first before booking!'
+                                }).show();
+
+                            return false;
+                            // data.view='';
+                            // $this.sideView = '';
+                        } else{ $this.processView(data); }
+                    });
+                } else{
+                    this.processView(data);
                 }
             },
 
@@ -148,6 +158,18 @@
                 }
                 this.sideView = '';
                 this.inProcess = null;
+            },
+            processView(data){
+                if (!this.inProcess || this.inProcess.id !== data.id || this.sideView !== data.view) {
+                    if (this.sideView === data.view) {
+                        this.sideView = '';
+                        setTimeout(() => {
+                            this.sideView = data.view;
+                        }, 450);
+                    }
+                    else this.sideView = data.view;
+                    this.inProcess = data;
+                }
             }
         }
     }

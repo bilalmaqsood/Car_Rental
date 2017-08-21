@@ -51,6 +51,17 @@
                     </div>
                 </li>
                 <li>
+<div class="input-group login-input">
+<div class="input-group-addon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon" style="height:30px">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                        </svg>
+</div>
+                        
+                        <input type="text" class="form-control" placeholder="Billing address" v-model="card.address">
+</div>
+  </li>
+                <li>
                     <svg @click="card.terms = !card.terms" :class="{active: card.terms}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon cursor-pointer">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
                     </svg>
@@ -83,6 +94,7 @@
                     number: '',
                     expiry: '',
                     cvc: '',
+                    address: '',
                     terms: false,
                 }
             };
@@ -113,7 +125,6 @@
         },
 
         mounted() {
-            let $scope = this;
             if(this.editCard)
                 this.card =  this.selectedcard;
             else
@@ -123,7 +134,7 @@
 
         methods: {
             processCard(){
-
+                let $this = this;
                 if(!this.editCard){
                     axios.post('/api/credit-card', this.card)
                         .then(function (r) {
@@ -131,6 +142,7 @@
                                 type: 'information',
                                 text: 'Card added successfuly!',
                             }).show();
+                            $this.$emit("changeView");
                         });
                 } else {
                     axios.patch('/api/credit-card/'+this.selectedcard.id, this.card)
@@ -139,6 +151,7 @@
                                 type: 'information',
                                 text: 'Card update successfuly!',
                             }).show();
+                            $this.$emit("changeView");
                         });
                 }
 

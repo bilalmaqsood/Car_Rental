@@ -8,6 +8,7 @@ const state = {
     bookNow: false,
     menuView: false,
     searchView: false,
+    oldView: false,
     authSection: false,
     showAdvance: false,
     detailsDisplay: false,

@@ -339,7 +339,9 @@
         mounted() {
             this.prepareComponent();
         },
-
+        created: function(){
+             this.$on('oldMenuView', this.handleMenuView);
+        },
         methods: {
             prepareComponent() {
                 this.refreshUserData();
@@ -485,6 +487,9 @@
                     User.commit('home', true);
                     User.commit('view', false);
                 }
+            },
+            handleMenuView(view){
+                User.commit('menuView', view);
             }
         }
     }

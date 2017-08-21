@@ -28,7 +28,9 @@ export default {
     advance (state) {
         state.showAdvance = !state.showAdvance;
     },
-
+    oldView(state,viewName){
+        state.oldView = viewName;
+    },
     details (state, bool) {
         if (!bool)
             state.bookNow = false;
