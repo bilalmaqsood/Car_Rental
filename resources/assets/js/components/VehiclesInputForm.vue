@@ -412,6 +412,8 @@
                             <button id="uploadImages" class="primary-button">Upload Images</button>
                             <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple"
                                    value="upload" >
+                            <input type="file" class="hidden docUploader" name="docs[]" multiple="multiple"
+                                   value="upload" >
                             <button id="documents" class="primary-button">Upload documents</button>
                             <input type="file" class="hidden documentsUpload" name="documents[]" multiple="multiple" accept="image/*">
                             <button @click="processForm" class="primary-button">Save Vehicle</button>
@@ -584,6 +586,9 @@
                     minLength: minLength(1)
                 },
             }
+        },
+        created: function() {
+            this.$on("modelHiding",this.hideModal);
         },
         watch: {
             vehicle: function (val, oldVal) {
@@ -776,8 +781,8 @@
             },
            upload(obj){
                 let $this = this;
-                $(".hiddenUpload").click();
-                    $(".hiddenUpload").change(function () {
+                $(".docUploader").click();
+                    $(".docUploader").change(function () {
                         $.map(this.files, function (val) {
                            
                             obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
@@ -814,7 +819,9 @@
 
             },
             hideModal(){
-               this.doc = null;
+               this.doc = false;
+               console.log("calling thisss");
+               $('#updateModel').modal('hide');
                
             }
         }
