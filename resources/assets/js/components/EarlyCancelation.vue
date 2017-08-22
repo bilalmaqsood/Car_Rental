@@ -1,34 +1,24 @@
 <template>
-    <div id="extend_cancel">
-        <transition name="slide-fade" mode="out-in">
-            <div v-if="user.state.auth.type=='client' && extend" class="extend_booking">
-                <div class="extend_booking_content">Extend booking</div>
-
-                <div class="extend_booking_content no-padding">
-                    <div class="book_now_calender">
-                        <p>Select the day to extend to</p>
-                        <div style="overflow:hidden;">
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div id="extendCancelDate"></div>
-                                    </div>
+        <div class="extend_booking">
+            <div class="extend_booking_content">Cancel booking</div>
+            <div class="extend_booking_content no-padding">
+                <div class="book_now_calender">
+                    <p>Select the day to extend to</p>
+                    <div style="overflow:hidden;">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="CancelDate"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <button class="extend_booking_content cursor-pointer btn-send" @click="extendBooking">Send request</button>
-                <div @click="extend=!extend" class="cursor-pointer extend_booking_content">Cancel booking</div>
             </div>
-        </transition>
-            
-        
-         <transition name="slide-fade" mode="out-in">
-             <early-cancel-booking v-if="user.state.auth.type=='client' && !extend"></early-cancel-booking>
-        </transition>
-    </div>
+            <div class="extend_booking_content no-padding"><textarea class="form-control" placeholder="Reason for early cancellation" v-model="cancel_note"></textarea></div>
+
+            <button class="extend_booking_content cursor-pointer btn-send" @click="cancelBooking">Send request</button>
+        </div>
 </template>
 
 <script>
@@ -40,6 +30,7 @@ import User from '../user';
             return {
                 user: User,
                 extend: true,
+                total_slots: false,
                 booked_slots: false,
                 end_date: '',
                 start_date: '',
@@ -50,22 +41,14 @@ import User from '../user';
         mounted() {
             let $this = this; 
             this.fetchBookedSlots();
-            $('#extendCancelDate').datetimepicker({
+            $('#CancelDate').datetimepicker({
                     inline: true,
                     sideBySide: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
-                  .on('dp.update', function(){ $this.highlightOldDays($this.booked_slots) });
+                  .on('dp.update', function(){ $this.highlightOldDays($this.total_slots) });
                 $('[data-toggle="tooltip"]').tooltip();
 
-                $('#CancelDate').datetimepicker({
-                    inline: true,
-                    sideBySide: false,
-                    minDate: moment(new Date())
-                }).on('dp.change', this.calenderChange)
-                  .on('dp.update', function(){ $this.highlightOldDays($this.booked_slots) });
-                
-                $('[data-toggle="tooltip"]').tooltip();
         },
 
         methods: {
@@ -135,45 +118,23 @@ import User from '../user';
                 //     this.end_date = null;
                 // }
             },
-            highlightDays(bool) {
-                let $t = this;
-                let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
 
-                if (bool) {
-                    if (this.start_date.format('X') < this.end_date.format('X')) {
-                        let StartDate = this.start_date;
-                        let EndDate = this.end_date;
-                        $e.find('td').each(function (i, e) {
-                            let $elem = $(e);
-                            let eDate = moment.utc($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
-                            if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
-                        });
-                        this.highlightOldDays(this.booked_slots);
-                            new Noty({
-                                type: 'information',
-                                text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
-                            }).show();
-                            
-                    } 
-                } 
-            },
             resetDatesLessSeven() {
                 let $t = this;
-                this.start_date = null;
                 this.end_date = null;
 
                 setTimeout(function () {
                     $t.highlightDays(false);
+                    $t.highlightOldDays($t.total_slots);
                 }, 1000);
             },
             resetDates(e) {
                 let $btn = $(e.target);
 
                 $btn.removeClass('fa-undo').addClass('fa-refresh fa-spin');
-
-                this.start_date = null;
                 this.end_date = null;
                 this.highlightDays(false);
+                this.highlightOldDays(this.total_slots);
 
                 setTimeout(function () {
                     $btn.removeClass('fa-refresh fa-spin').addClass('fa-undo');
@@ -186,15 +147,63 @@ import User from '../user';
             },
             fetchBookedSlots(){
                 axios.get('/api/booking/'+this.user.state.currentBook+"/time-slots").then(r=>{
-                    this.booked_slots = r.data.success.totalSlots;
-
-                        let theDate = new Date(_.last(r.data.success.bookedSlots).day);
-                        theDate.setDate(theDate.getDate()+1);
-                    this.start_date = moment(theDate);;
+                    this.total_slots = r.data.success.totalSlots;
+                    this.booked_slots = r.data.success.bookedSlots;
+                    this.start_date = moment(_.head(r.data.success.bookedSlots).day);;
                     this.highlightOldDays(r.data.success.totalSlots);
                 });
             },
-            highlightOldDays(r){
+            highlightDays(bool) {
+                let $t = this;
+                let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
+
+                if (bool) {
+                    if (this.start_date.format('X') < this.end_date.format('X')) {
+                        let StartDate = this.start_date;
+                        let EndDate = this.end_date;
+                        $e.find('td').each(function (i, e) {
+                            let $elem = $(e);
+                            let eDate = moment($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
+                            if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')){
+                                console.log(eDate);
+                                $elem.addClass('highlight-day');
+                            } 
+                        });
+                        this.disabledExtraDays();
+                        if(this.end_date.diff(this.start_date, 'days')>this.booked_slots.length)
+                            {
+                            new Noty({
+                                type: 'warning',
+                                text: 'You cannot select extra days.'
+                            }).show();
+
+                            this.resetDatesLessSeven();
+                        }
+
+                        if (this.end_date.diff(this.start_date, 'days') < 6 ) {
+                            new Noty({
+                                type: 'warning',
+                                text: 'Booking should be at least one week.'
+                            }).show();
+
+                            this.resetDatesLessSeven();
+                        } else{
+                            new Noty({
+                                type: 'information',
+                                text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
+                            }).show();
+                            }
+                    } 
+                } else {
+                    $e.find('td').removeClass('highlight-day');
+                    new Noty({
+                        type: 'information',
+                        text: 'Dates are reset.',
+                        timeout: 600
+                    }).show();
+                }
+            },
+             highlightOldDays(r){
                 let $t = this;
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
                 let $dates=[];
@@ -210,9 +219,30 @@ import User from '../user';
 
                   $e.find('td').each(function (i, e) {
                             let $elem = $(e);
+                            $elem.removeClass('active');
                             if (_.indexOf($pastDates,$elem.data('day'))>=0)
                                 $elem.addClass('highlight-day');
-                            else if(_.indexOf($dates,$elem.data('day'))<0)
+                            else 
+                                    $elem.addClass('old disabled');
+                        });
+            },
+            disabledExtraDays(){
+                 let $t = this;
+                let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
+
+                let $pastDates = [];
+
+                _.forEach(this.total_slots, function(date) {
+                    if(date.status==2)
+                    $pastDates.push(moment(date.day,"YYYY-MM-DD").format("MM/DD/YYYY"));
+                  
+
+                });
+
+                  $e.find('td').each(function (i, e) {
+
+                            let $elem = $(e);
+                            if (_.indexOf($pastDates,$elem.data('day'))<0)
                                     $elem.addClass('old disabled');
                         });
             }
