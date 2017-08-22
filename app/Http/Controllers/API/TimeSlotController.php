@@ -9,6 +9,7 @@ use Qwikkar\Concerns\BookingOperations;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\TimeSlot;
 use Qwikkar\Models\Vehicle;
+use Qwikkar\Models\Booking;
 
 class TimeSlotController extends Controller
 {
@@ -86,6 +87,23 @@ class TimeSlotController extends Controller
              return api_response("error",404);
 
         return api_response($vehicle->timeSlots);
+
+    }
+
+    public function getBookedSlots($booking_id)
+    {
+        $booking = Booking::with("vehicle")->whereId($booking_id)->first();
+       
+        $totalSlots = $booking->vehicle->timeSlots()->get(["status","day"]);
+
+        if(!$totalSlots)
+             return api_response("error",404);
+
+        $bookedSlots = $totalSlots->where("status",2);
+        
+        
+
+        return api_response(compact("totalSlots","bookedSlots"));
 
     }
 }
