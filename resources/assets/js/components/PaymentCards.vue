@@ -2,45 +2,9 @@
     <div class="main_profile_container">
 
         <div class="payment_wrapper">
-            <transition name="flip" mode="out-in">
-                <div v-if="!addCard" class="list-group m-0" key="list-cards">
-                    <a href="javascript:" @click="cardEdit(c)" v-for="c in cards" class="list-group-item">
-                        <h4 class="list-group-item-heading">{{ c.name }}</h4>
-                        <p class="list-group-item-text"> {{ c.address }}</p>
-                    </a>
-                </div>
-            </transition>
 
-            <transition name="flip" mode="out-in">
-                <payment-card-form  @changeView="handleForm" v-if="addCard" :editCard="editCard" :selectedcard="card" key="add-cards"></payment-card-form>
-            </transition>
-
-            <button class="primary-button" type="button" @click="cardAdd">{{ addCard?'Cancle':'Add Card' }}</button>
-            <div class="current_balance">
-             <transition name="flip">
-                <div v-if="earningView">
-                    <h2>My Balance</h2>
-                    <div class="my_earnings">
-                        <ul>
-                            
-                            <li><p>Total Balance<span>{{total_balance | currency('0,0.00')}}</span></p></li>
-                            <li>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Amount to withdraw" v-model="withdraw">
-                                </div>
-                                <button :disabled="$v.withdraw.$invalid" @click="withdrawAmount" data-loading-text="processing ...">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#send"></use>
-                                    </svg>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </transition>
-            </div>
-            <div class="add_bank_account">
-                 <h2>My account</h2>
+          <div class="add_bank_account" >
+                <h2>Direct debit</h2>
                 <transition name="flip" mode="out-in">
                    <div key="edit" v-if="viewAccount">
                       <div v-if="editMenu">
@@ -132,7 +96,26 @@
                       </li>
                    </ul>
                 </div>
-            </div>
+          </div>
+          <div class="clearfix"></div>
+
+            <h2 style="float: none; clear: both;">My Cards</h2>
+            <transition name="flip" mode="out-in">
+                <div v-if="!addCard" class="list-group m-0" key="list-cards">
+                    <a href="javascript:" @click="cardEdit(c)" v-for="c in cards" class="list-group-item">
+                        <h4 class="list-group-item-heading">{{ c.name }}</h4>
+                        <p class="list-group-item-text"> {{ c.address }}</p>
+                    </a>
+                </div>
+            </transition>
+
+            <transition name="flip" mode="out-in">
+                <payment-card-form  @changeView="handleForm" v-if="addCard" :editCard="editCard" :selectedcard="card" key="add-cards"></payment-card-form>
+            </transition>
+
+            <button class="primary-button" type="button" @click="cardAdd">{{ addCard?'Cancle':'Add Card' }}</button>
+           
+            
         </div>
 
     </div>
