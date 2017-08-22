@@ -407,21 +407,7 @@
                                 
                             </div>
                         </li>
-                        <li v-for="img in form.images">
-                            <div class="form-group">
-                                <label class="control-label">{{img.name}}</label>
-                                
-                                 <span v-if="!img.path" @click="upload(img)" class="clickable">
-                                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-                                </span>
-
-                        <span v-else>
-                            <i @click="edit(img)" class="fa fa-eye clickable" aria-hidden="true"></i>
-                            <i @click="deleteDocument(img)"  class="fa fa-trash clickable" aria-hidden="true"></i>
-                        </span> 
-                                
-                            </div>
-                        </li>
+                        
                         <li>
                             <button id="uploadImages" class="primary-button">Upload Images</button>
                             <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple"
@@ -600,13 +586,24 @@
             }
         },
         watch: {
-            'vehicle': function (val, oldVal) {
+            vehicle: function (val, oldVal) {
                 if (this.isEdit) {
                     this.form = JSON.parse(JSON.stringify(Form));
                     this.form = val;
                     this.updateLocationNames();
                 }
+            },
+            isEdit: function(val, oldVal){
+                if (val) {
+                    this.form = JSON.parse(JSON.stringify(Form));
+                    this.form = this.vehicle;
+                    this.updateLocationNames();
+                } else {
+                   this.form = JSON.parse(JSON.stringify(Form)); 
+                }
+                this.prepareComponent();
             }
+
         },
         mounted() {
             $scope = this;

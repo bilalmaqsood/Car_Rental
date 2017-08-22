@@ -6,7 +6,7 @@
             </div>
             <div class="booking_tab">
                 <ul class="nav nav-tabs">
-                    <li :class="{active: menuView == 'add'}">
+                    <li :class="{active: menuView == 'add' && menuView !== '' }">
                         <a data-toggle="tab" href="javascript:void(0)" @click="changeMenuView('add')">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
@@ -15,7 +15,7 @@
                         </a>
                     </li>
                     <li  :class="{active: menuView == 'edit'}">
-                        <a @click="editVehicle" data-toggle="tab" href="javascript:void(0)">
+                        <a @click="changeMenuView('edit')" data-toggle="tab" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
                             </svg>
@@ -47,9 +47,15 @@
                         </a>
                     </li>
                 </ul>
+                <transition name="slide-fade" mode="out-in">
                 <vehicle-contract v-if="menuView=='editcontract'" :vehicle="vehicle"></vehicle-contract>
+                </transition>
+                <transition name="slide-fade" mode="out-in">
                 <vehicle-timeslots v-if="menuView=='timeslots'" :vehicle="vehicle"></vehicle-timeslots>
-                <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="menuView=='edit' || menuView=='add'"></vehicle-input-form>
+                </transition>
+                <transition name="slide-fade" mode="out-in">
+                <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="(menuView=='edit' && isEdit)|| menuView=='add'"></vehicle-input-form>
+                </transition>
             </div>
 
             <div class="car_detail"  v-if="vehicle">
@@ -158,6 +164,7 @@
 
             this.$on('vehicleUpdate', function(value){
                this.menuView='';
+               this.isEdit=false;
                 new Noty({
                     type: 'information',
                     text: value.make+" "+value.model+" "+value.make + " Updated!",
@@ -225,10 +232,20 @@
                 }
             },
             changeMenuView(view) {
-                if (this.menuView && this.menuView === view)
+                if(view=='edit')
+                    this.isEdit=! this.isEdit;
+                else 
+                    this.isEdit= false;
+
+                let oldView = this.menuView;
+                this.menuView = null;
+                setTimeout(()=>{
+
+                if (oldView === view)
                     this.menuView = '';
                 else
                     this.menuView = view;
+            }, 550);
             },
         }
     }
