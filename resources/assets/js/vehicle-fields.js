@@ -31,6 +31,7 @@ export default {
     fault_accident: '',
     discounts:[],
     documents: [
+                    {title: 'Last service certificate', name:'',path: '',type: '', doc: 'Last_service_certificate', status: '' },
                     {title: 'Car Log Book/V5', name:'',path: '',type: '', doc: 'car_log_book', status: '' },
                     {title: 'Incourence Documents', name:'',path: '',type: '', doc: 'incourence_document', status: '' },
                     {title: 'PCO Certificate', name:'',path: '',type: '', doc: 'pco_certificate', status: '' },

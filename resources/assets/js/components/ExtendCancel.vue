@@ -70,14 +70,14 @@ import User from '../user';
 
                 if (this.user.state.currentBook !== null) {
                     $(e.target).attr('disabled', 'disabled').removeClass('cursor-pointer').html("Loading...");
-                    $("#centerLoader").show();
+                    $("#sideLoader").show();
                     axios.post('/api/booking/' + this.user.state.currentBook + '/status', this.extendParams())
                         .then(r => {
                             new Noty({
                                 type: 'information',
                                 text: r.data.success,
                             }).show();
-                             $("#centerLoader").show();
+                             $("#sideLoader").hide();
                             $scope.$emit("clearSideView");
                         });
                 }
@@ -85,6 +85,7 @@ import User from '../user';
 
             cancelBooking(e) {
                 if (this.user.state.currentBook !== null) {
+                    $("#sideLoader").show();
                     $(e.target).attr('disabled', 'disabled').removeClass('cursor-pointer').html("Loading...");
                     axios.post('/api/booking/' + this.user.state.currentBook + '/status', this.cancelParams())
                         .then(r => {
@@ -92,8 +93,10 @@ import User from '../user';
                                 type: 'warning',
                                 text: r.data.success,
                             }).show();
+                             $("#sideLoader").hide();
                              this.$emit("clearSideView");
                         });
+
                 }
             },
 

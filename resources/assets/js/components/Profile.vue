@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="profile_content">
-                        <h3 :class="{clickable: notif.data.vehicle}" v-if="notif.data.title" @click="notify_action(notif)">{{notif.data.title}}</h3>
+                        <h3 :class="{clickable: notif.data.vehicle}" v-if="notif.data.title" @click="approve_action(notif)">{{notif.data.title}}</h3>
                         <div v-if="notif.data.status===12">
                             <p>You booking is successfully closed</p>
                             <div class="ratting"></div>
@@ -81,6 +81,7 @@
         },
 
         mounted() {
+
             this.prepareComponent();
         },
 
@@ -153,8 +154,13 @@
 
             approve_action(notification) {
                 if (notification.data.id) {
+                    $(".side-loader").show();
                     axios.get('/api/booking/' + notification.data.id + '/logs')
                         .then(this.approveRequest);
+
+                    setTimeout(function () {
+                        $(".side-loader").hide();
+                    },500)
                 }
             },
 
@@ -176,24 +182,30 @@
                     let log_id = response.data.success.booking_log[0].id;
                     let params = {log_id: log_id, status: ""};
                     console.log(response.data.success);
-                    if (status === 5) {
+                    if (status === 5)
                         params.status = 6;
-                        this.sendRequest(response.data.success.id, params);
-                    }
-                    if (status === 3) {
+
+                    if (status === 3)
                         params.status = 4;
+
+                    if (status === 7)
+                        params.status = 8;
+
+                    if(params.status)
                         this.sendRequest(response.data.success.id, params);
-                    }
+
                 }
             },
 
             sendRequest(booking_id, params) {
                 axios.patch('/api/booking/' + booking_id + '/status', params)
                     .then((response) => {
-                        if (response.error)
-                            new Noty({type: 'error', text: response.error}).show();
-                        if (response.success)
-                            new Noty({type: 'success', text: response.success}).show();
+                    console.log(response);
+
+                        if (response.status==200)
+                            new Noty({type: 'success', text: response.data.success}).show();
+                        if (response.status!==200)
+                            new Noty({type: 'error', text: response.data.error}).show();
                     });
             },
 
