@@ -57,8 +57,8 @@
                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                </svg>
                             </div>
-                            <p v-if="viewAccount">Account holder name<span v-html="account.title"></span></p>
-                            <input v-else type="text" class="form-control" placeholder="Account holder name" v-model="account.title" @keyup="account.title = $event.target.value.toUpperCase()">
+                            <p v-if="viewAccount">Accountholder name<span v-html="account.title"></span></p>
+                            <input v-else type="text" class="form-control" placeholder="Accountholder name" v-model="account.title" @keyup="account.title = $event.target.value.toUpperCase()">
                          </div>
                       </li>
                       <li>
