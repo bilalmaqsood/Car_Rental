@@ -107,7 +107,7 @@ import User from '../user';
 
             extendParams() {
                 return {
-                    start_date: this.start_date,
+                    start_date: moment(this.start_date).endOf('day'),
                     end_date: this.end_date,
                     status: 7
                 }
@@ -140,15 +140,25 @@ import User from '../user';
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
 
                 if (bool) {
-                    if (this.start_date.format('X') < this.end_date.format('X')) {
+
+                    if (this.end_date.diff(this.start_date, 'days') < 6 ) {
+                            new Noty({
+                                type: 'warning',
+                                text: 'Booking Extention should be at least one week.'
+                            }).show();
+
+                            this.resetDatesLessSeven();
+                            return false;
+                        }
+                    else if (this.start_date.format('X') < this.end_date.format('X')) {
                         let StartDate = this.start_date;
                         let EndDate = this.end_date;
                         $e.find('td').each(function (i, e) {
                             let $elem = $(e);
-                            let eDate = moment.utc($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
+                              let eDate = moment($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
                             if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
                         });
-                        this.highlightOldDays(this.booked_slots);
+                        this.highlightOldDays(this.booked_slots,false);
                             new Noty({
                                 type: 'information',
                                 text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
@@ -159,31 +169,14 @@ import User from '../user';
             },
             resetDatesLessSeven() {
                 let $t = this;
-                this.start_date = null;
                 this.end_date = null;
 
                 setTimeout(function () {
                     $t.highlightDays(false);
+                    $t.highlightOldDays($t.booked_slots);
                 }, 1000);
             },
-            resetDates(e) {
-                let $btn = $(e.target);
 
-                $btn.removeClass('fa-undo').addClass('fa-refresh fa-spin');
-
-                this.start_date = null;
-                this.end_date = null;
-                this.highlightDays(false);
-
-                setTimeout(function () {
-                    $btn.removeClass('fa-refresh fa-spin').addClass('fa-undo');
-                    new Noty({
-                        type: 'information',
-                        text: 'Dates are reset.',
-                        timeout: 600
-                    }).show();
-                }, 600);
-            },
             fetchBookedSlots(){
                 axios.get('/api/booking/'+this.user.state.currentBook+"/time-slots").then(r=>{
                     this.booked_slots = r.data.success.totalSlots;
@@ -191,10 +184,11 @@ import User from '../user';
                         let theDate = new Date(_.last(r.data.success.bookedSlots).day);
                         theDate.setDate(theDate.getDate()+1);
                     this.start_date = moment(theDate);;
+                    console.log(this.start_date);
                     this.highlightOldDays(r.data.success.totalSlots);
                 });
             },
-            highlightOldDays(r){
+            highlightOldDays(r,active=true){
                 let $t = this;
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
                 let $dates=[];
@@ -210,6 +204,8 @@ import User from '../user';
 
                   $e.find('td').each(function (i, e) {
                             let $elem = $(e);
+                            if(active)
+                            $elem.removeClass('active');
                             if (_.indexOf($pastDates,$elem.data('day'))>=0)
                                 $elem.addClass('highlight-day');
                             else if(_.indexOf($dates,$elem.data('day'))<0)
