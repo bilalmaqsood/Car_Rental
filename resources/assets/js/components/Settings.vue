@@ -81,15 +81,7 @@
                         <span v-show="isEditing=='pco_expiry'">
                              <input v-model="User.state.auth.pco_expiry_date" type="text" class="form-control pco_expiry" @blur="activateInEditMode(null)" v-on:keyup="track('pco_expiry_date')">
                         </span>
-                    </p><p v-if="typeof User.state.auth.pco_expiry_date !== 'undefined'">PCO certificate exp. date
-                        <span v-on:click="activateInEditMode('pco_expiry')" v-show="isEditing!=='pco_expiry'">
-                                {{User.state.auth.pco_expiry_date | date}}
-                        </span>
-                        <span v-show="isEditing=='pco_expiry'">
-                             <input v-model="User.state.auth.pco_expiry_date" type="text" class="form-control pco_expiry" @blur="activateInEditMode(null)" v-on:keyup="track('pco_expiry_date')">
-                        </span>
                     </p>
-
                     <p v-if="User.state.auth.type == 'client'" v-for="d in documents"> 
                                 {{d.title}}
                        <span v-if="!d.path" @click="upload(d)" class="clickable">
@@ -215,7 +207,11 @@
 
         methods: {
             prepareComponent() {
-                console.log('profile componenet mounted');
+                    $(".pco_expiry").datetimepicker({
+                    format: 'YYYY-MM-DD',
+                    }).on('dp.change',(e)=> {
+                    User.state.auth.pco_expiry_date = $(".pco_expiry").val();
+                    });
                 axios.get('/api/terms/app').then(this.termsPlaced);
             },
 
