@@ -231,11 +231,8 @@ class BookingController extends Controller
             'note' => 'string',
             'status' => 'in:5,7',
         ]);
-
-        if ($request->has('start_date') && $request->has('end_date'))
-            $status = 7;
-        else
-            $status = $request->status;
+        
+        $status = $request->status;
 
         $booking = Booking::findOrFail($id);
 

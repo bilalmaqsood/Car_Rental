@@ -398,12 +398,8 @@ trait BookingOperations
     {
         $booking = $log->booking;
         $data = $log->requested_data;
-
-        if (isset($data['start_date']) || isset($data['end_date'])) {
-            $status = 5;
-        } else {
-            $status = $data['status'];
-        }
+        $status = $data['status'];
+        
 
         $booking->status = $status;
         $booking->save();

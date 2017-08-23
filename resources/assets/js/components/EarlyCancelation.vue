@@ -52,25 +52,6 @@ import User from '../user';
         },
 
         methods: {
-            
-            extendBooking(e) {
-                let $scope = this;
-
-                if (this.user.state.currentBook !== null) {
-                    $(e.target).attr('disabled', 'disabled').removeClass('cursor-pointer').html("Loading...");
-                    $("#sideLoader").show();
-                    axios.post('/api/booking/' + this.user.state.currentBook + '/status', this.extendParams())
-                        .then(r => {
-                            new Noty({
-                                type: 'information',
-                                text: r.data.success,
-                            }).show();
-                             $("#sideLoader").hide();
-                            $scope.$emit("clearSideView");
-                        });
-                }
-            },
-
             cancelBooking(e) {
                 if (this.user.state.currentBook !== null) {
                     $("#sideLoader").show();

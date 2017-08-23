@@ -26,7 +26,7 @@
             
         
          <transition name="slide-fade" mode="out-in">
-             <early-cancel-booking v-if="user.state.auth.type=='client' && !extend"></early-cancel-booking>
+             <early-cancel-booking v-if="user.state.auth.type=='client' && !extend" @clearSideView="closeView"></early-cancel-booking>
         </transition>
     </div>
 </template>
@@ -215,6 +215,9 @@ import User from '../user';
                             else if(_.indexOf($dates,$elem.data('day'))<0)
                                     $elem.addClass('old disabled');
                         });
+            },
+            closeView(){
+                this.$emit('clearSideView');
             }
         }
     }
