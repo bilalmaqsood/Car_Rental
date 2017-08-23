@@ -53,7 +53,7 @@
                         <h3>Rent book</h3>
                         <ul>
                             <li><span>Week no.</span><span>Cost</span><span>Due date</span><span>Status</span></li>
-                            <li v-for="p in payments"><span>{{p.title}}</span><span>{{p.cost | currency}}</span><span>{{p.due_date | date('format', 'DD.MM.YYYY')}}</span><span v-if="p.paid">Paid</span><span v-else>Pending</span></li>
+                            <li v-for="p in payments"><span>{{p.title}}</span><span>{{p.cost | currency}}</span><span>{{p.due_date | date('format', 'DD.MM.YYYY')}}</span><span v-if="p.paid"><b class="label label-success">Paid</b></span><span v-else><b class="label label-danger">Pending</b></span></li>
                         </ul>
                     </div>
                 </transition>

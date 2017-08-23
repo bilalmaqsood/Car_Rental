@@ -1,5 +1,5 @@
 <template>
-    <div class="main_profile_container">
+    <div class="main_profile_container" v-bind:style="{'min-height': viewHeight+'px'}">
 
         <div class="payment_wrapper">
 
@@ -126,6 +126,7 @@
     import {AlphaSpaceValidator} from '../validators';
     import {required, numeric, between} from 'vuelidate/lib/validators';
     export default {
+      props: ["viewHeight"],
         data() {
             return {
                 User: User,

@@ -272,7 +272,7 @@
                         <user-profile v-if="storage.state.menuView == 'profile'"></user-profile>
                         <vehicle-crud v-if="storage.state.menuView == 'vehicles'"></vehicle-crud>
                         <booking-listing v-if="storage.state.menuView == 'booking'" :viewHeight="height"></booking-listing>
-                        <payment-card-listing v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>
+                        <payment-card-listing  :viewHeight="height" v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>
                         <financial v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'owner'"></financial>
                     </transition>
                 </div>
