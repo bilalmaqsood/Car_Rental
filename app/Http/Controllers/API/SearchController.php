@@ -99,6 +99,9 @@ class SearchController extends Controller
 
             if ($request->price_max)
                 $q->where('rent', '<=', $request->price_max);
+
+            if ($request->price)
+                $q->where('rent', '<=', $request->price);
         });
 
         $vehicles->where(function (Builder $q) use ($request) {
