@@ -232,6 +232,9 @@
                     .then((r) => {
                         $('#sideLoader').hide();
                         this.booking = r.data.success;
+                        setTimeout(function() {
+                           $(".menu-component-container").animate({scrollTop: 0});
+                        }, 500);
                     });
             },
 
