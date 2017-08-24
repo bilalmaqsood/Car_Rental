@@ -34,7 +34,7 @@
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                         </svg>
 </div>
-                        <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="card expira/on date" name="expiry">
+                        <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="card expiraton date (MM/YYY)" name="expiry">
 </div>
                     </div>
                 </li>

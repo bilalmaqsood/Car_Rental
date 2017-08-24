@@ -94,7 +94,7 @@
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
 </div>
-                                <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="card expiration date" name="expiry">
+                                <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="card expiration date (MM/YYYY)" name="expiry">
 </div>
                                 <span class="help-block text-sm" v-if="$v.card.expiry.$error">Enter valid expiry date</span>
                             </div>
