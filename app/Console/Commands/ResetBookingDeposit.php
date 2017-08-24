@@ -38,7 +38,7 @@ class ResetBookingDeposit extends Command
      */
     public function handle()
     {
-        Booking::whereStatus(9)->chunk(20, function ($bookings) {
+        Booking::whereIn("status",[9,11])->chunk(20, function ($bookings) {
             foreach ($bookings as $booking) {
                 $balanceLog = new BalanceLog([
                     'amount' => $booking->deposit,
