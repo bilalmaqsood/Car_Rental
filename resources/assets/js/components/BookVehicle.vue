@@ -27,7 +27,7 @@
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tag_icon"></use>
                                     </svg>
                                 </div>
-                                <input class="form-control" placeholder="promotional code" type="text" @blur="checkPromoCode" v-model.trim="promo_code">
+                                <input class="form-control" placeholder="promotional code" type="text" @blur="checkPromoCode" v-model.trim="promo_code" @keypress.enter="checkPromoCode">
                             </div>
                         </div>
                     </li>
@@ -156,6 +156,11 @@
                 </li>
                 <li>
                     <p><label>Total</label> <label>{{ totalBooking | currency }}</label></p>
+                    <span v-if="!promo_code_reward">amount that will be paid by the end of the contract</span>
+                    <span v-else>total amount without discount</span>
+                </li>
+                <li v-if="promo_code_reward">
+                    <p><label>Sub Total</label> <label>{{ subTotalBooking | currency }}</label></p>
                     <span>amount that will be paid by the end of the contract</span>
                 </li>
             </ul>
@@ -242,7 +247,7 @@
             },
 
             totalRent() {
-                return this.vehicle.rent * this.days - this.promo_code_reward;
+                return this.vehicle.rent * this.days;
             },
 
             totalInsurance() {
@@ -256,6 +261,15 @@
                     this.vehicle.deposit
                 );
             },
+            subTotalBooking() {
+                return (
+                    this.totalRent +
+                    this.totalInsurance +
+                    this.vehicle.deposit -
+                    this.promo_code_reward
+                );
+            },
+
 
             validBooking() {
                 return this.days >= 7;
@@ -552,9 +566,8 @@
 
                   $e.find('td').each(function (i, e) {
                             let $elem = $(e);
-                            console.log(_.indexOf($dates,$elem.data('day')));
                             if (_.indexOf($dates,$elem.data('day'))<0) 
-                                $elem.addClass('old');
+                                $elem.addClass('old disabled');
 
                         });
             }

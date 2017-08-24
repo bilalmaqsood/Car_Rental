@@ -40,4 +40,9 @@ class HomeController extends Controller
 
         return api_response(Vehicle::all());
     }
+
+    public function TermsConditions()
+    {
+       return view("terms.index");
+    }
 }

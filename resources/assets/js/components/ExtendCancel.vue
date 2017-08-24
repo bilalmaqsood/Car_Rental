@@ -160,7 +160,7 @@ import User from '../user';
                         });
                         this.highlightOldDays(this.booked_slots,false);
                             new Noty({
-                                type: 'information',
+                                type: 'success',
                                 text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
                             }).show();
                             
