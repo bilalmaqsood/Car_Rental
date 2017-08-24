@@ -261,17 +261,16 @@
                 } else if (this.booking.status===5) {
                     params.status = 6;
                     params.note = 'booking canceled from cancel request by client.';
+                    this.updateStatus(params);
                 } else if (this.booking.status===7) {
                     params.status = 8;
                     params.note = 'booking extended from extend request by client.';
+                    this.updateStatus(params);
                 } else if ([4,6,8].includes(this.booking.status)) {
                     params.status = 9;
                     params.note = 'booking closed by owner';
+                    this.updateStatus(params);
                 }
-
-
-                if(params.length)
-                this.updateStatus(params);
                 
             },
             cancleBooking() {

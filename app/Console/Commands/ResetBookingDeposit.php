@@ -41,7 +41,7 @@ class ResetBookingDeposit extends Command
             foreach ($bookings as $booking) {
                 $balanceLog = new BalanceLog([
                     'amount' => $booking->deposit,
-                    'comment' => 'deposit return from booking',
+                    'comment' => 'Deposit returned from booking after completion.',
                 ]);
 
                 $balanceLog->balance()->associate($booking->user->balance);
@@ -77,6 +77,7 @@ class ResetBookingDeposit extends Command
 
                 $booking->status = 12;
                 $booking->save();
+
             }
         });
     }
