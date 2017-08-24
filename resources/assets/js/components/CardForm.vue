@@ -142,7 +142,8 @@
                                 type: 'information',
                                 text: 'Card added successfuly!',
                             }).show();
-                            $this.$emit("changeView");
+                            console.log(r.data.success);
+                            $this.$emit("changeView",r.data.success);
                         });
                 } else {
                     axios.patch('/api/credit-card/'+this.selectedcard.id, this.card)
@@ -151,7 +152,7 @@
                                 type: 'information',
                                 text: 'Card update successfuly!',
                             }).show();
-                            $this.$emit("changeView");
+                            $this.$emit("changeView",null);
                         });
                 }
 

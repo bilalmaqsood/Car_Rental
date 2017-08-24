@@ -102,10 +102,13 @@
             <h2 style="float: none; clear: both;">My Cards</h2>
             <transition name="flip" mode="out-in">
                 <div v-if="!addCard" class="list-group m-0" key="list-cards">
-                    <a href="javascript:" @click="cardEdit(c)" v-for="c in cards" class="list-group-item">
+                  <div  v-for="c in cards" >
+                    <a href="javascript:" @click="cardEdit(c)" class="list-group-item col-sm-11">
                         <h4 class="list-group-item-heading">{{ c.name }}</h4>
                         <p class="list-group-item-text"> {{ c.address }}</p>
                     </a>
+                    <a class="btn btn-danger pull-right col-sm-1" @click="removeCard(c)"><i class="fa fa-trash"></i></a>
+                  </div>
                 </div>
             </transition>
 
@@ -131,7 +134,7 @@
             return {
                 User: User,
                 card: '',
-                cards: '',
+                cards: [],
                 withdraw: '',
                 editCard: false,
                 addCard: false,
@@ -262,13 +265,49 @@
                     $t.prepareComponent();
                 });
             },
-            handleForm(){
+            handleForm(data=null){
+              if(data !== null){
+                this.cards.push(data);
+              }
               let $this = this;
               if(User.state.oldView)
                  setTimeout(function() {
                      $this.$parent.$emit("oldMenuView",User.state.oldView);
                 }, 500);
                this.addCard = !this.addCard;
+            },
+            removeCard(c){
+              let $this=this;
+              var n = new Noty({
+                  text: '<b>Do you want to continue?</b>',
+                  timeout: false,
+                  buttons: [
+                    Noty.button('YES', 'btn btn-success', function () {
+                      n.close();
+                      setTimeout(function() { $this.processDestroy(c); }, 100);
+                    
+                    }, {id: 'button1', 'data-status': 'ok'}),
+
+                    Noty.button('NO', 'btn btn-error', function () {
+                        console.log('button 2 clicked');
+                        n.close();
+                    })
+                  ]
+                }).show();
+
+              
+            },
+            processDestroy(c){
+
+
+                 axios.delete('/api/credit-card/'+c.id).then((r)=>{
+                  this.cards.splice(this.cards.indexOf(c), 1);
+
+                          new Noty({
+                                type: 'success',
+                                text: r.data.success
+                            }).show();
+                  });
             }
         }
     }
