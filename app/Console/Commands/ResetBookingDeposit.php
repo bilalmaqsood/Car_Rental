@@ -63,7 +63,7 @@ class ResetBookingDeposit extends Command
                     'image' => $booking->vehicle->images->first(),
                     'title' => 'Your deposit has been added in your account.',
                     'user' => 'Qwikkar Cron Application',
-                    'credit_card' => $booking->account->last_numbers,
+                    'credit_card' => $booking->account->last_numbers?:'',
                     'vehicle' => $booking->vehicle->vehicle_name,
                     'contract_start' => $booking->start_date,
                     'contract_end' => $booking->end_date,
