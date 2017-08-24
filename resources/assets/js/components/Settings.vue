@@ -251,7 +251,7 @@
                             type: 'information',
                             text: "Profile updated successfully!"
                         }).show();
-
+                     $scope.refreshUserData();
                     $scope.isEditing = false;
                 });
             },
@@ -279,7 +279,7 @@
                 $(".hiddenUpload").click();
                     $(".hiddenUpload").change(function () {
                         $.map(this.files, function (val) {
-                           
+                           $('#sideLoader').show();
                             obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
                             obj.type = val.name.split('.').pop();
                             
@@ -290,6 +290,7 @@
                             reader.onload = function (e) {
                                 axios.post('/api/upload/document', fd).then(function(r){
                                     obj.path = r.data.success;
+                                    setTimeout(function() { $('#sideLoader').hide(); }, 500);
                                     // User.state.auth.documents.push(obj);
                                 });
                             };
@@ -315,7 +316,23 @@
              },
              docUpdated(){
                 
-             }
+             },
+            refreshUserData() {
+                axios.get('/api/user').then(this.setUserData).catch(function (r) {
+                    if (r.response.status === 401)
+                        localStorage.removeItem('reloadData');
+                });
+            },
+
+            setUserData(r) {
+               User.commit('update', r.data.success);
+                if(User.state.oldView.length){
+                    setTimeout(function() {
+                        User.commit('oldView', false);
+                        User.commit('menuView', false);
+                        }, 500);
+                }
+            },
             
         }
     }
