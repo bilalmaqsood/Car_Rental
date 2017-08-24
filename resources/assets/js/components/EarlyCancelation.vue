@@ -130,7 +130,7 @@ import User from '../user';
                 axios.get('/api/booking/'+this.user.state.currentBook+"/time-slots").then(r=>{
                     this.total_slots = r.data.success.totalSlots;
                     this.booked_slots = r.data.success.bookedSlots;
-                    this.start_date = moment(_.head(r.data.success.bookedSlots).day);;
+                    this.start_date = moment(r.data.success.firstDay);;
                     this.highlightOldDays(r.data.success.totalSlots);
                 });
             },
@@ -171,7 +171,7 @@ import User from '../user';
                         } else{
                             new Noty({
                                 type: 'information',
-                                text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
+                                text: '<div><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
                             }).show();
                             }
                     } 

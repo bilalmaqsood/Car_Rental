@@ -161,7 +161,7 @@ import User from '../user';
                         this.highlightOldDays(this.booked_slots,false);
                             new Noty({
                                 type: 'success',
-                                text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
+                                text: '<div><p class="m-0"><b>Extend Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
                             }).show();
                             
                     } 
@@ -181,9 +181,8 @@ import User from '../user';
                 axios.get('/api/booking/'+this.user.state.currentBook+"/time-slots").then(r=>{
                     this.booked_slots = r.data.success.totalSlots;
 
-                        let theDate = new Date(_.last(r.data.success.bookedSlots).day);
-                        theDate.setDate(theDate.getDate()+1);
-                    this.start_date = moment(theDate);;
+                       
+                    this.start_date = moment(r.data.success.nextDay);;
                     console.log(this.start_date);
                     this.highlightOldDays(r.data.success.totalSlots);
                 });

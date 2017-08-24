@@ -101,9 +101,13 @@ class TimeSlotController extends Controller
 
         $bookedSlots = $totalSlots->where("status",2);
         
-        
+        $nextDay =   $bookedSlots->last()->day->format("Y-m-d");  
 
-        return api_response(compact("totalSlots","bookedSlots"));
+        $firstDay =   $bookedSlots->first()->day->format("Y-m-d");
+
+             
+
+        return api_response(compact("totalSlots","bookedSlots","nextDay","firstDay"));
 
     }
 }
