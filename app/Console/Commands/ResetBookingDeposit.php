@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Qwikkar\Models\BalanceLog;
 use Qwikkar\Models\Booking;
 use Qwikkar\Notifications\BookingNotify;
+use Qwikkar\Notifications\RatingNotify;
 
 class ResetBookingDeposit extends Command
 {
@@ -69,16 +70,40 @@ class ResetBookingDeposit extends Command
                     'deposit' => $booking->deposit
                 ];
 
+
                 $booking->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
 
                 $notificationData['title'] = 'Deposit has been returned to ' . $booking->user->name . '\'s account.';
 
                 $booking->vehicle->owner->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
+                $this->generateRatingNotification($booking);
 
                 $booking->status = 12;
                 $booking->save();
 
             }
         });
+    }
+
+    protected function generateRatingNotification($booking){
+
+        $owner = $booking->vehicle->owner->user->name;
+        $driver = $booking->user->name;
+
+ 
+       $booking->vehicle->owner->user->notify((new RatingNotify([
+            "title" => "Rate to ".$driver,
+            "booking_id" => $booking->id,
+            "status" => 12,
+            "old_status" => $booking->status,
+        ]))->delay(Carbon::now()->addMinute()));
+
+       $booking->user->notify((new RatingNotify([
+            "title" => "Rate to ".$owner,
+            "booking_id" => $booking->id,
+            "status" => 12,
+            "old_status" => $booking->status,
+        ]))->delay(Carbon::now()->addMinute()));
+
     }
 }
