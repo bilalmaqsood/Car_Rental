@@ -134,7 +134,7 @@ class InspectionController extends Controller
             'note' => 'string',
         ]);
 
-        $data = collect($request->data)->first();
+         $data = request()->all();
 
         $booking = Booking::findOrFail($booking_id);
 
