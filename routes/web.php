@@ -31,7 +31,7 @@ Route::get('/vehicle/document/path', function () {
 });
 
 Route::get('/test/{id}', function ($id) {
-   $booking = \Qwikkar\Models\Booking::whereId($id);
+   $booking = \Qwikkar\Models\Booking::whereId($id)->first();
    $owner = $booking->vehicle->owner->user->name;
    $driver = $booking->user->name;
 
