@@ -1,11 +1,11 @@
 <style>
     .menu-component-container {
-        background: none !important;
+       
     }
 </style>
 <template>
 
-    <div class="search_map hide_overlay">
+    <div class="search_map ">
         <div id="search_map" style="width: 100%; height: 100%;"></div>
 
         <div class="search_container search_container_width">
