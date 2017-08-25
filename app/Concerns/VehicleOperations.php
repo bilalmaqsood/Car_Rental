@@ -6,6 +6,7 @@ trait VehicleOperations
 {
     public function dcoumentsExists()
     {
+        logger(request()->documents);
         $error = array();
         foreach (request()->documents as $key => $doc){
             if(isset($doc['doc']) && filter_var($doc['path'], FILTER_VALIDATE_URL) ===false){
