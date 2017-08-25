@@ -158,7 +158,7 @@ class SearchController extends Controller
             'vehicle' => 'required|string',
         ]);
 
-        $vehicles = Vehicle::select(['id', 'make', 'model', 'variant']);
+        $vehicles = Vehicle::select(['id', 'make', 'model', 'variant'])->where('vlc', 1);
 
         if ($request->has('vehicle') && $request->vehicle != '||_||')
             $vehicles->where(function (Builder $q) use ($request) {
