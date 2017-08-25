@@ -37,12 +37,14 @@ Route::get('/test/{id}', function ($id) {
 
  
    $booking->vehicle->owner->user->notify(new \Qwikkar\Notifications\RatingNotify([
+    'id' => $booking->id,
    	"title" => "Rate to ".$driver,
    	"booking_id" => $id,
    	"status" => 12,
    	"old_status" => 12,
    	]));
    $booking->user->notify(new \Qwikkar\Notifications\RatingNotify([
+    'id' => $booking->id,
    	"title" => "Rate to ".$owner,
    	"booking_id" => $id,
    	"status" => 12,
