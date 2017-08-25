@@ -230,6 +230,8 @@
             },
 
             loadSideView(view) {
+             $(".menu-component-container").animate({scrollTop: 0});
+
                 this.$emit('sideView', {
                     id: this.booking.id,
                     index: this.index,

@@ -213,6 +213,7 @@
             },
             vechicleDetails(arg){
                 this.vehicle = arg;
+                 $(".menu-component-container").animate({scrollTop: 0});
             },
 
             editVehicle(){
