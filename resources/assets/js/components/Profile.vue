@@ -49,7 +49,7 @@
             </transition-group>
         </div>
 
-        <transition name="slide-fade">
+        <transition name="slide-fade" mode="in-out">
             <sign-contract v-if="booking" :booking="booking" @closeContract="cleanViewContract"></sign-contract>
         </transition>
     </div>
@@ -228,6 +228,7 @@
             viewContract(notify) {
                 $('#sideLoader').show();
                 this.notify = notify;
+                this.booking=null;
                 axios.get('/api/booking/' + notify.data.id)
                     .then((r) => {
                         $('#sideLoader').hide();
@@ -240,7 +241,6 @@
 
             cleanViewContract() {
                 this.booking = null;
-                this.markRead();
             },
             processAvatar(r){
                 let param = {avatar: r.data.success};
