@@ -103,7 +103,7 @@
                                     sign contract
                                 </a>
                             </li>
-                            <li v-else-if="[3].includes(booking.status)">
+                            <li v-if="canApprove && [2,3].includes(booking.status)">
                                 <a @click="approveBooking" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -165,19 +165,24 @@
     import User from '../user';
 
     export default {
-        props: ['booking', 'user', 'index','signature'],
+        props: ['Booking', 'user', 'index','signature'],
 
         data() {
             return {
                 User: User,
+                booking: this.Booking,
                 isSignDone: this.signature,
                 payments: []
             };
         },
         watch: {
             signature: function(signature) {
-                console.log("signature are now "+ signature);
                 this.isSignDone = signature;
+                  axios.get('/api/booking/' + this.Booking.id).then(r => {
+                        this.booking.status = r.data.success.status;
+                        this.booking.signatures = r.data.success.signatures;
+                    });
+
             }
         },
         computed: {
@@ -194,6 +199,16 @@
                     return  true;
                 else
                 return false;
+            },
+
+               canApprove() {
+
+                if(!this.booking.signatures)
+                    return false;
+                else if(typeof this.booking.signatures.owner === 'undefined' || typeof this.booking.signatures.client === 'undefined')
+                    return  false;
+                else
+                return true;
             },
 
             vehicleName() {
