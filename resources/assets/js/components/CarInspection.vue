@@ -20,6 +20,7 @@
         </ul>
 
         <div class="tab-content">
+        <input type="file" class="hidden" id="FileUploader" name="">
             <div id="car_front" class="tab-pane fade in active" v-if="menuView=='front'">
                 <div class="dummy_car carcondition-img" id="front">
 
@@ -71,7 +72,7 @@
 
 
                     </div>
-                            <p>{{description}}</p>
+                            <p>{{content}}</p>
                             <img :src="spot_image" />
                 </div>
             </div>
@@ -122,7 +123,7 @@
 </div>
                     </div>
 </div>
-                <p>{{description}}</p>
+                <p>{{content}}</p>
                             <img :src="spot_image"  />
 
                 </div>
@@ -174,7 +175,7 @@
 </div>
                     </div>
                     </div>
-                    <p>{{description}}</p>
+                    <p>{{content}}</p>
                             <img :src="spot_image"  />
                 </div>
             </div>
@@ -224,7 +225,7 @@
                         </span>
 </div>
                     </div> </div>
-                    <p>{{description}}</p>
+                    <p>{{content}}</p>
                             <img :src="spot_image"  />
 </div>
                 </div>
@@ -274,6 +275,7 @@
                         </span>
 </div></div>
                     </div>
+                            <p>{{content}}</p>
                             <img :src="spot_image"  />
                 </div>
             </div>
@@ -305,6 +307,7 @@
                     data: [],
                 },
                 description: '',
+                content: '',
                 X_Axis: '',
                 Y_Axis: '',
                 spot_image: '',
@@ -387,22 +390,26 @@
             
             uploadImage(side){
                 let $scope = this;
-                $('#'+side+'Uploader').click();
-                $('#'+side+'Uploader').change(function () {
+                $('#FileUploader').click();
+                $('#FileUploader').change(function () {
                     $('#centerLoader').show();
-                        $.map(this.files, function (val) {
+                    console.log(this.files[0]);
+                        
                             var reader = new FileReader();
-                            reader.readAsDataURL(val);
+                            reader.readAsDataURL(this.files[0]);
                             var fd = new window.FormData();
-                            fd.append('upload', val);
+                            fd.append('upload', this.files[0]);
                             reader.onload = function (e) {
                                 axios.post('/api/upload/image',fd).then(function(r){
+                                    
+                                    $('#FileUploader').val('');
+
                                     $scope.spot_image = r.data.success;
                                 });
 
                             };
-                        });
-                    $scope.hideLoader(500);
+                        
+                    $scope.hideLoader(1000);
 
                     });
             },
@@ -476,9 +483,10 @@
                     this.spot_image = '';
                     $("#remove").click();
             },
+
             spotAction(inspection){
                 this.spot_image = inspection.path;
-                this.description = inspection.note;
+                this.content = inspection.note;
                 this.dispute_status = inspection.status===1?true:false;
             },
             hideLoader(time){
