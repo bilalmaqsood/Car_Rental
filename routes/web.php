@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('/terms-and-conditions', 'HomeController@TermsConditions');
 
 Route::get('#reset-password-{token}', 'HomeController@index')->name('password.reset');
