@@ -126,14 +126,16 @@
             },
 
             doBooking() {
-                if(!User.state.auth.dlc){
-                    User.commit('menuView', 'settings');
+                if(User.state.auth){
+                    if(!User.state.auth.dlc){
+                        User.commit('menuView', 'settings');
                     User.commit('oldView', 'booking');
                     new Noty({
                                 type: 'warning',
                                 text: 'Upload you driving documents before booking!'
                             }).show();
                     return false;
+                    }
                 }
                 
                 this.user.commit('booking', true);
