@@ -1,9 +1,9 @@
 <template>
         <div class="extend_booking">
-            <div class="extend_booking_content">Cancel booking</div>
+            <div class="extend_booking_content">Early Cancel booking</div>
             <div class="extend_booking_content no-padding">
                 <div class="book_now_calender">
-                    <p>Select the day to extend to</p>
+                    <p>Select the last day</p>
                     <div style="overflow:hidden;">
                         <div class="form-group">
                             <div class="row">
