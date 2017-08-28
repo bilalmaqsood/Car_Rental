@@ -123,11 +123,22 @@ class DeductWeeklyPayment extends Command
 
         $nextDue = $payment->due_date->addWeek();
         $weekNo = $booking->start_date->diffInWeeks($nextDue);
-             
+        $currentWeek = $booking->start_date->diffInWeeks(Carbon::now());
+            
+         /**
+         * Calculate discount of the week
+         **/ 
+        $rent = $booking->vehicle->rent;
+        if (count($booking->vehicle->discounts))
+            foreach ($booking->vehicle->discounts as $discount) {
+                if ($discount['week'] == $currentWeek)
+                    $rent -= (100 + $discount['percent']) / 100;
+            }
+
         if($nextDue <= $booking->end_date)
             $booking->payments()->create([
-                "title" => 'Week'. $weekNo,
-                "cost"  => '0.00',
+                "title" => 'Week '. $weekNo,
+                "cost"  => $rent,
                 "due_date" => $nextDue,
                 "paid" => 0,
 
