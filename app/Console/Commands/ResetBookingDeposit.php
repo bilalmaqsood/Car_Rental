@@ -45,13 +45,17 @@ class ResetBookingDeposit extends Command
                     'comment' => 'Deposit returned from booking after completion.',
                 ]);
 
+                   $sriptResponse = json_decode($booking->user->balanceLogs()->first()->payment_response);
+
                 $balanceLog->balance()->associate($booking->user->balance);
 
                 $balanceLog->loggable()->associate($booking);
 
                 $booking->user->balanceLogs()->save($balanceLog);
 
-                $booking->user->balance->current += $booking->deposit;
+                $response = $booking->user->refund($sriptResponse->id, array('amount' => $booking->deposit*100)); // refund to client
+
+                // $booking->user->balance->current += $booking->deposit;
 
                 $booking->user->balance->save();
 

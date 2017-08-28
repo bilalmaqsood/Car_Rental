@@ -67,50 +67,6 @@ class DeductWeeklyPayment extends Command
                 if($result)
                     $this->updateBalancedue($payment,$booking);
 
-               
-               
-                
-            //     $balanceLog = new BalanceLog([
-            //         'amount' => $booking->deposit,
-            //         'comment' => 'Deposit returned from booking after completion.',
-            //     ]);
-
-            //     $balanceLog->balance()->associate($booking->user->balance);
-
-            //     $balanceLog->loggable()->associate($booking);
-
-            //     $booking->user->balanceLogs()->save($balanceLog);
-
-            //     $booking->user->balance->current += $booking->deposit;
-
-            //     $booking->user->balance->save();
-
-            //     $notificationData = [
-            //         'id' => $booking->id,
-            //         'type' => 'Booking',
-            //         'status' => $booking->status,
-            //         'vehicle_id' => $booking->vehicle->id,
-            //         'image' => $booking->vehicle->images->first(),
-            //         'title' => 'Your deposit has been added in your account.',
-            //         'user' => 'Qwikkar Cron Application',
-            //         'credit_card' => $booking->account?$booking->account->last_numbers:"",
-            //         'vehicle' => $booking->vehicle->vehicle_name,
-            //         'contract_start' => $booking->start_date,
-            //         'contract_end' => $booking->end_date,
-            //         'deposit' => $booking->deposit
-            //     ];
-
-
-            //     $booking->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
-
-            //     $notificationData['title'] = 'Deposit has been returned to ' . $booking->user->name . '\'s account.';
-
-            //     $booking->vehicle->owner->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
-            //     $this->generateRatingNotification($booking);
-
-            //     $booking->status = 12;
-            //     $booking->save();
-
             }
         });
     }

@@ -35,11 +35,11 @@
                                 Rate now
                             </button>
                         </div>
-                        <p v-if="propExist(notif.data,'user')"><span>{{notif.data.user}}</span> sent you booking request</p>
+                        <p v-if="[1].includes(notif.data.status)"><span>{{notif.data.user}}</span> sent you booking request</p>
                         <p v-if="propExist(notif.data,'vehicle')">{{notif.data.vehicle}}</p>
                         <p v-if="propExist(notif.data,'contract_start')"><b>Contract start:</b> {{ date_format(notif.data.contract_start) }} </p>
                         <p v-if="propExist(notif.data,'contract_end')"><b>Contract end:</b> {{ date_format(notif.data.contract_end) }}</p>
-                        <p v-if="propExist(notif.data,'deposit')" class="m-t-1">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notif.data.deposit | currency }}</span> have been taken from your default card.</p>
+                        <p v-if="[1].includes(notif.data.status)" class="m-t-1">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notif.data.deposit | currency }}</span> have been taken from your default card.</p>
                         <p class="m-t-1">
                             <a href="javascript:" class="primary-button" v-if="isActionable(notif)" @click="viewContract(notif)">view contract</a>
                             <a href="javascript:" class="primary-button" @click="markRead(notif)">mark read</a>

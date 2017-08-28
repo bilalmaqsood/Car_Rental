@@ -290,6 +290,7 @@
                             reader.onload = function (e) {
                                 axios.post('/api/upload/document', fd).then(function(r){
                                     obj.path = r.data.success;
+                                    $(".hiddenUpload").val('');
                                     setTimeout(function() { $('#sideLoader').hide(); }, 500);
                                     // User.state.auth.documents.push(obj);
                                 });
