@@ -20,7 +20,7 @@
             </div>
 
             <transition-group name="slide-fade" tag="div">
-                <div v-for="notif in notifications" :class="notif.data.noti_type" v-bind:key="notif.id" class="pofile_content_wrapper">
+                <div v-for="notif in notifications" :class="NotyClass(notif)" v-bind:key="notif.id" class="pofile_content_wrapper">
                     <div v-if="propExist(notif.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notif.data.image + ')' }">
                         <img :src="notif.data.image" alt="">
                     </div>
@@ -277,6 +277,15 @@
                                  $this.markRead(notification);
                              }, 1000);
                         });
+            },
+             NotyClass(notif){
+                if([5,9].includes(notif.data.status))
+                    return "noty_warning";
+                else if([6,10,7].includes(notif.data.status))
+                    return "noty_danger";
+                else if([12,0].includes(notif.data.status))
+                    return "noty_info";
+
             }
         },
     }
