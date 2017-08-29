@@ -31,6 +31,24 @@ Route::get('/vehicle/document/path', function () {
     return response(File::get(resource_path('assets/images/car_img.png')), 200, array('content-type' => 'image/png'));
 });
 
+
+
+
+
+// Testig routes
+
+Route::get('/return-deposit', function()
+{
+    $exitCode = Artisan::call('reset:deposit'); 
+});
+
+Route::get('/weekly-deposit', function()
+{
+    $exitCode = Artisan::call('weekly:deduction'); 
+});
+
+
+
 Route::get('/test/{id}', function ($id) {
    $booking = \Qwikkar\Models\Booking::whereId($id)->first();
    $owner = $booking->vehicle->owner->user->name;
