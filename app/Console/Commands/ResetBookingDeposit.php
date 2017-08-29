@@ -63,12 +63,12 @@ class ResetBookingDeposit extends Command
                     'id' => $booking->id,
                     'type' => 'Booking',
                     'status' => $booking->status,
-                    'vehicle_id' => $booking->vehicle->id,
-                    'image' => $booking->vehicle->images->first(),
+                    'vehicle_id' => $booking->vehicle ? $booking->vehicle->id : '',
+                    'image' => $booking->vehicle ? $booking->vehicle->images->first() : [],
                     'title' => 'Your deposit has been added in your account.',
                     'user' => 'Qwikkar Cron Application',
                     'credit_card' => $booking->account?$booking->account->last_numbers:"",
-                    'vehicle' => $booking->vehicle->vehicle_name,
+                    'vehicle' => $booking->vehicle ? $booking->vehicle->vehicle_name : '',
                     'contract_start' => $booking->start_date,
                     'contract_end' => $booking->end_date,
                     'deposit' => $booking->deposit
@@ -80,6 +80,8 @@ class ResetBookingDeposit extends Command
                 $notificationData['title'] = 'Deposit has been returned to ' . $booking->user->name . '\'s account.';
 
                 $booking->vehicle->owner->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
+
+                if($booking->vehicle)
                 $this->generateRatingNotification($booking);
 
                 $booking->status = 12;
