@@ -21,3 +21,4 @@ Homestead.yaml
 public/0.js
 public/*.worker.js
 /nbproject
+/laravel-echo-server.json
