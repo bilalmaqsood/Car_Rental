@@ -130,13 +130,23 @@
             else
                 this.card =  {};
 
+            setTimeout(function () {
+                            $('input.cc-num').payment('formatCardNumber');
+                            $('input.cc-exp').payment('formatCardExpiry');
+                            $('input.cc-cvc').payment('formatCardCVC');
+                        }, 450);
+
         },
 
         methods: {
             processCard(){
                 let $this = this;
+                let card = this.card;
+                card.number =  this.card.number.replace(/\s/g, '');
+                card.expiry = this.card.expiry.replace(/\s/g, '');
+                
                 if(!this.editCard){
-                    axios.post('/api/credit-card', this.card)
+                    axios.post('/api/credit-card', card)
                         .then(function (r) {
                             new Noty({
                                 type: 'information',
@@ -146,7 +156,7 @@
                             $this.$emit("changeView",r.data.success);
                         });
                 } else {
-                    axios.patch('/api/credit-card/'+this.selectedcard.id, this.card)
+                    axios.patch('/api/credit-card/'+this.selectedcard.id, card)
                         .then(function (r) {
                             new Noty({
                                 type: 'information',
