@@ -249,8 +249,8 @@ class User extends Authenticatable
             })
             ->addColumn('status', function ($user) {
                 if($user->client)
-                    return $user->client->status==1?"<label class='label label-danger'>Disputed</label>" : "N/A";
-                return "N/A";
+                    return $user->client->status==1?"<label class='label label-danger'>Disputed</label>" : "<label class='label label-success'>Ok</label>";
+                return "";
                 // return (string)view('admin.users.partials.actions', compact('user'));
             })
             ->addColumn('action', function ($user) {
