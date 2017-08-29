@@ -11,7 +11,6 @@
                         </svg>
 </div>
                         <input @keyup="card.name = $event.target.value.toUpperCase()" @blur="$v.card.name.$touch()" v-model.trim="card.name" type="text" class="form-control" placeholder="Name on card" name="name">
-                        <span class="help-block text-sm" v-if="$v.card.name.$error">Enter valid name</span>
 </div>
                     </div>
                 </li>
@@ -24,7 +23,6 @@
                         </svg>
 </div>
                         <input @blur="$v.card.number.$touch()" v-model.trim="card.number" type="text" class="form-control cc-num" placeholder="Card number" name="number">
-                        <span class="help-block text-sm" v-if="$v.card.number.$error">Enter valid card number</span>
 </div>
                     </div>
                 </li>
@@ -37,7 +35,6 @@
                         </svg>
 </div>
                         <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="Card expiraton date (MM/YYY)" name="expiry">
-                        <span class="help-block text-sm" v-if="$v.card.expiry.$error">Enter valid expire date</span>
 </div>
                     </div>
                 </li>
@@ -50,7 +47,6 @@
                         </svg>
 </div>
                         <input @blur="$v.card.cvc.$touch()" v-model.trim="card.cvc" type="password" class="form-control cc-cvc" placeholder="cvc" name="cvc">
-                        <span class="help-block text-sm" v-if="$v.card.cvc.$error">Enter valid cvc</span>
 </div>
                     </div>
                 </li>
@@ -120,6 +116,9 @@
                 cvc: {
                     required,
                     minLength: minLength(3)
+                },
+                 address: {
+                    required,
                 },
                 terms: {
                     required,
