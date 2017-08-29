@@ -19,8 +19,8 @@
                     </div>
                 </div>
 
-                <button class="text-left extend_booking_content cursor-pointer btn-send" @click="extendBooking">Send request</button>
-                <div @click="extend=!extend" class="text-left cursor-pointer extend_booking_content">Cancel booking</div>
+                <button class="p-l-40 txt-lft extend_booking_content cursor-pointer btn-send" @click="extendBooking">Send request</button>
+                <div @click="extend=!extend" class="p-l-40 txt-lft cursor-pointer extend_booking_content">Cancel booking</div>
             </div>
         </transition>
             

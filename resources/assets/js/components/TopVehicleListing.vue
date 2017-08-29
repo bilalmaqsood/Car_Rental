@@ -57,12 +57,13 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                     </svg>
-                                    <p>available from: <span>{{vehicle.available_from | date('fromNow')}}</span></p>
+                                    <p> <strong>available from: </strong><span>{{vehicle.available_from | date('fromNow')}}</span></p>
                                 </div>
                                 <div class="availabe_item_price">
                                     <h3>{{vehicle.rent | currency}}</h3>
-                                    <span>/week</span>
+                                    <strong><span>/week</span>
                                     <span v-if="vehicle.insurance>0.0">insurance included</span>
+                                    </strong>
                                 </div>
                             </div>
                         </div>
