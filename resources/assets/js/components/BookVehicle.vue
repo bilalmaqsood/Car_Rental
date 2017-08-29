@@ -120,10 +120,10 @@
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                                         </svg>
                                     </div>
-                                     <input type="text" class="form-control" placeholder="billing address">
+                                     <input @blur="$v.card.address.$touch()" type="text" v-model="card.address" class="form-control" placeholder="billing address">
 
                                 </div>
-                                <span class="help-block text-sm" v-if="$v.card.cvc.$error">Enter valid cvc </span>
+                                <span class="help-block text-sm" v-if="$v.card.address.$error">Enter valid address </span>
                             </div>
                         </li>
                         
@@ -209,6 +209,7 @@
                     number: '',
                     expiry: '',
                     cvc: '',
+                    address: '',
                     terms: false,
                 }
             };
@@ -217,6 +218,9 @@
         validations: {
             card: {
                 name: {
+                    required
+                },
+                address: {
                     required
                 },
                 number: {
@@ -443,6 +447,7 @@
             },
 
             fillCard(card, e) {
+                this.card.address = card.address;
                 this.card.name = card.name;
                 this.card.number = card.number;
                 this.card.expiry = card.expiry;
