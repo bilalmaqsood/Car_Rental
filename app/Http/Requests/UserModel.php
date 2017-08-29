@@ -32,7 +32,7 @@ class UserModel extends FormRequest
                 return [
                     'name' => 'required|alpha_spaces',
                     'email' => 'required|email|unique:users,email',
-                    'phone' => 'numeric|min:11',
+                    'phone' => 'required|min:11',
                     'password' => 'required|string',
 
                     'postcode' => [
