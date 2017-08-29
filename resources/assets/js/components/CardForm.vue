@@ -10,7 +10,8 @@
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                         </svg>
 </div>
-                        <input @keyup="card.name = $event.target.value.toUpperCase()" @blur="$v.card.name.$touch()" v-model.trim="card.name" type="text" class="form-control" placeholder="name on card" name="name">
+                        <input @keyup="card.name = $event.target.value.toUpperCase()" @blur="$v.card.name.$touch()" v-model.trim="card.name" type="text" class="form-control" placeholder="Name on card" name="name">
+                        <span class="help-block text-sm" v-if="$v.card.name.$error">Enter valid name</span>
 </div>
                     </div>
                 </li>
@@ -22,7 +23,8 @@
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                         </svg>
 </div>
-                        <input @blur="$v.card.number.$touch()" v-model.trim="card.number" type="text" class="form-control cc-num" placeholder="card number" name="number">
+                        <input @blur="$v.card.number.$touch()" v-model.trim="card.number" type="text" class="form-control cc-num" placeholder="Card number" name="number">
+                        <span class="help-block text-sm" v-if="$v.card.number.$error">Enter valid card number</span>
 </div>
                     </div>
                 </li>
@@ -34,7 +36,8 @@
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                         </svg>
 </div>
-                        <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="card expiraton date (MM/YYY)" name="expiry">
+                        <input @blur="$v.card.expiry.$touch()" v-model.trim="card.expiry" type="text" class="form-control cc-exp" placeholder="Card expiraton date (MM/YYY)" name="expiry">
+                        <span class="help-block text-sm" v-if="$v.card.expiry.$error">Enter valid expire date</span>
 </div>
                     </div>
                 </li>
@@ -47,6 +50,7 @@
                         </svg>
 </div>
                         <input @blur="$v.card.cvc.$touch()" v-model.trim="card.cvc" type="password" class="form-control cc-cvc" placeholder="cvc" name="cvc">
+                        <span class="help-block text-sm" v-if="$v.card.cvc.$error">Enter valid cvc</span>
 </div>
                     </div>
                 </li>
@@ -144,7 +148,7 @@
                 let card = this.card;
                 card.number =  this.card.number.replace(/\s/g, '');
                 card.expiry = this.card.expiry.replace(/\s/g, '');
-                
+
                 if(!this.editCard){
                     axios.post('/api/credit-card', card)
                         .then(function (r) {

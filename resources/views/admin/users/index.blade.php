@@ -25,6 +25,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Type</th>
+                        <th>Status</th>
                         <th>Action</th>
 
                     </tr>
@@ -60,6 +61,7 @@
                 { data: 'email', name: 'email' },
                 { data: 'phone', name: 'phone' },
                 { data: 'user_type', name: 'user_type' },
+                { data: 'status', name: 'status' },
                 { data: 'action', name: 'action', searchable: "false", orderable: "false" }
 
                 

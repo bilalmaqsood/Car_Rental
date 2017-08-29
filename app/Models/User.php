@@ -247,9 +247,16 @@ class User extends Authenticatable
             ->addColumn('user_type', function ($query) {
                 return $query->types->first()->name;
             })
+            ->addColumn('status', function ($user) {
+                if($user->client)
+                    return $user->client->status==1?"<label class='label label-danger'>Disputed</label>" : "N/A";
+                return "N/A";
+                // return (string)view('admin.users.partials.actions', compact('user'));
+            })
             ->addColumn('action', function ($user) {
                 return (string)view('admin.users.partials.actions', compact('user'));
             })
+            ->rawColumns(['status', 'action'])
             ->make(true);
     }
 
