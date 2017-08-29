@@ -79,6 +79,7 @@ class ResetBookingDeposit extends Command
 
                 $notificationData['title'] = 'Deposit has been returned to ' . $booking->user->name . '\'s account.';
 
+                if($booking->vehicle)
                 $booking->vehicle->owner->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
 
                 if($booking->vehicle)
