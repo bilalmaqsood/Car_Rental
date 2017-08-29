@@ -20,6 +20,7 @@
         </ul>
 
         <div class="tab-content">
+        <input type="file" class="hidden" id="FileUploader" name="">
             <div id="car_front" class="tab-pane fade in active" v-if="menuView=='front'">
                 <div class="dummy_car carcondition-img" id="front">
 
@@ -40,7 +41,7 @@
                     <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
 
 <div class="input-group login-input">
-                        <input type="text" palceholder="add description" v-model="description" class="form-control">
+                        <input type="text" placeholder="add description" v-model="description" class="form-control">
                     <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
                      <i v-if="dispute_status" class="fa fa-check "></i>
                       {{ dispute_status==true?'Disputed':'Dispute'}}
@@ -71,7 +72,7 @@
 
 
                     </div>
-                            <p>{{description}}</p>
+                            <p>{{content}}</p>
                             <img :src="spot_image" />
                 </div>
             </div>
@@ -97,7 +98,7 @@
                       {{ dispute_status==true?'Disputed':'Dispute'}}
                     </button>
 <div class="input-group login-input">
-                        <input type="text" class="form-control" palceholder="add description" v-model="description">
+                        <input type="text" class="form-control" placeholder="add description" v-model="description">
 <div class="input-group-addon">
 <span>
 									<svg  @click="saveSpots('rear')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -122,7 +123,7 @@
 </div>
                     </div>
 </div>
-                <p>{{description}}</p>
+                <p>{{content}}</p>
                             <img :src="spot_image"  />
 
                 </div>
@@ -145,7 +146,7 @@
                 <div class="front_back_size">
                     <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
 <div class="input-group login-input">
-                        <input type="text" palceholder="add description" v-model="description" class="form-control">
+                        <input type="text" placeholder="add description" v-model="description" class="form-control">
                         <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
                      <i v-if="dispute_status" class="fa fa-check "></i>
                       {{ dispute_status==true?'Disputed':'Dispute'}}
@@ -174,7 +175,7 @@
 </div>
                     </div>
                     </div>
-                    <p>{{description}}</p>
+                    <p>{{content}}</p>
                             <img :src="spot_image"  />
                 </div>
             </div>
@@ -196,7 +197,7 @@
                 <div class="front_back_size">
                     <div v-if="User.state.auth.type=='owner'" class="add_description_icon">
 <div class="input-group login-input">
-                        <input type="text" class="form-control" palceholder="add description" v-model="description">
+                        <input type="text" class="form-control" placeholder="add description" v-model="description">
                         <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
                      <i v-if="dispute_status" class="fa fa-check "></i>
                       {{ dispute_status==true?'Disputed':'Dispute'}}
@@ -224,7 +225,7 @@
                         </span>
 </div>
                     </div> </div>
-                    <p>{{description}}</p>
+                    <p>{{content}}</p>
                             <img :src="spot_image"  />
 </div>
                 </div>
@@ -246,7 +247,7 @@
                 <div class="front_back_size">
                     <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
 <div class="input-group login-input">
-                        <input type="text" palceholder="add description" v-model="description" class="form-control">
+                        <input type="text" placeholder="add description" v-model="description" class="form-control">
 <div class="input-group-addon">
     <span>
 									<svg  @click="saveSpots('notes')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -274,6 +275,7 @@
                         </span>
 </div></div>
                     </div>
+                            <p>{{content}}</p>
                             <img :src="spot_image"  />
                 </div>
             </div>
@@ -305,6 +307,7 @@
                     data: [],
                 },
                 description: '',
+                content: '',
                 X_Axis: '',
                 Y_Axis: '',
                 spot_image: '',
@@ -387,22 +390,27 @@
             
             uploadImage(side){
                 let $scope = this;
-                $('#'+side+'Uploader').click();
-                $('#'+side+'Uploader').change(function () {
-                    $('#centerLoader').show();
-                        $.map(this.files, function (val) {
+                $('#FileUploader').click();
+                $('#FileUploader').change(function () {
+                    
+                    console.log(this.files[0]);
+                        
                             var reader = new FileReader();
-                            reader.readAsDataURL(val);
+                            reader.readAsDataURL(this.files[0]);
                             var fd = new window.FormData();
-                            fd.append('upload', val);
+                            fd.append('upload', this.files[0]);
                             reader.onload = function (e) {
+                                $('#centerLoader').show();
                                 axios.post('/api/upload/image',fd).then(function(r){
+                                    
+                                    $('#FileUploader').val('');
+                                    $scope.hideLoader(1000);
                                     $scope.spot_image = r.data.success;
                                 });
 
                             };
-                        });
-                    $scope.hideLoader(500);
+                        
+                    
 
                     });
             },
@@ -476,9 +484,10 @@
                     this.spot_image = '';
                     $("#remove").click();
             },
+
             spotAction(inspection){
                 this.spot_image = inspection.path;
-                this.description = inspection.note;
+                this.content = inspection.note;
                 this.dispute_status = inspection.status===1?true:false;
             },
             hideLoader(time){

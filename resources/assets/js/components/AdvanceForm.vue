@@ -24,7 +24,7 @@
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                             </svg>
 </div>
-                            <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control" placeholder="location" v-model.trim="location">
+                            <input type="text" id="gmap_geocoding_address2" v-on:keydown.enter="searchVehicles" class="form-control" placeholder="location" v-model.trim="location">
                         </div>
 </div>
                     </li>
@@ -80,6 +80,22 @@
 
         methods: {
             prepareComponent() {
+
+                 var input = document.getElementById('gmap_geocoding_address2');
+                   if (input) {
+                       var options = {
+                           componentRestrictions: {country: 'uk'}
+                       };
+                   var autocomplete2 = new google.maps.places.Autocomplete(input, options);
+
+                   google.maps.event.addListener(autocomplete2, 'place_changed', (e,val)=> {
+                    console.log(e);
+                    console.log(val);
+                        this.location =  $("#gmap_geocoding_address2").val();
+                        
+                    });
+               }
+
                 setTimeout(function () {
                     $('.available-from').datetimepicker();
                     console.log('loaded');
@@ -113,6 +129,9 @@
 
                 if (this.location.length > 0) {
                     $.ajax({
+                        beforeSend: function (request) {
+                            request.setRequestHeader('Access-Control-Request-Headers', '');
+                        },
                         url: 'https://maps.googleapis.com/maps/api/geocode/json?address=' + this.location + '&key=AIzaSyDp8Pjc5ZmcmTb-ci-Fj-xNh2KLTUlguk0',
                         type: 'GET',
                         dataType: 'json',

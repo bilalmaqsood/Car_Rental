@@ -99,6 +99,9 @@ class SearchController extends Controller
 
             if ($request->price_max)
                 $q->where('rent', '<=', $request->price_max);
+
+            if ($request->price)
+                $q->where('rent', '<=', $request->price);
         });
 
         $vehicles->where(function (Builder $q) use ($request) {
@@ -121,14 +124,14 @@ class SearchController extends Controller
 
         if ($request->latitude && $request->longitude)
             $vehiclesList = $this->filterListRadius(
-                $request->radius,
+                $request->radius?: 5,
                 (object)[
                     'lat' => $request->latitude,
                     'long' => $request->longitude
                 ],
                 $vehiclesList
             );
-
+        // $vehiclesList= new \Illuminate\Pagination\LengthAwarePaginator($vehiclesList,$vehiclesList->count(),10);
         return $vehiclesList;
     }
 
@@ -155,7 +158,7 @@ class SearchController extends Controller
             'vehicle' => 'required|string',
         ]);
 
-        $vehicles = Vehicle::select(['id', 'make', 'model', 'variant']);
+        $vehicles = Vehicle::select(['id', 'make', 'model', 'variant'])->where('vlc', 1);
 
         if ($request->has('vehicle') && $request->vehicle != '||_||')
             $vehicles->where(function (Builder $q) use ($request) {
@@ -175,16 +178,18 @@ class SearchController extends Controller
      * @param $list
      * @return mixed
      */
-    protected function filterListRadius($radius, $search, $list)
+    protected function filterListRadius($radius=5, $search, $list)
     {
-        $list->each(function ($each) use ($search, $radius) {
+        $list->each(function (&$each,$key) use (&$list, $search, $radius) {
             $latLong = explode(',', $each->location);
 
             if (count($latLong) == 2) {
-                $distance = $this->distanceGeoPoints($search, (object)['lat' => $latLong[0], 'long' => $latLong[1]]);
+                $distance  = (int) $this->distanceGeoPoints($search, (object)['lat' => $latLong[0], 'long' => $latLong[1]]);
+               if($distance > $radius){
+                   $list->forget($key);
+               }
+                
 
-                $each->inRadius = $distance <= $radius;
-                $each->distance = (float)number_format($distance, 2);
             }
         });
 
@@ -206,6 +211,7 @@ class SearchController extends Controller
         $a = sin($lat / 2) * sin($lat / 2) + cos(deg2rad($search->lat)) * cos(deg2rad($find->lat)) * sin($long / 2) * sin($long / 2);
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        return 6371 * $c;
+        return 3956  * $c;
+        // return 6371 * $c;
     }
 }

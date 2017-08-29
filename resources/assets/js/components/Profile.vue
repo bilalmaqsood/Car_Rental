@@ -20,13 +20,13 @@
             </div>
 
             <transition-group name="slide-fade" tag="div">
-                <div v-for="notif in notifications" :class="notif.data.noti_type" v-bind:key="notif.id" class="pofile_content_wrapper">
+                <div v-for="notif in notifications" :class="NotyClass(notif)" v-bind:key="notif.id" class="pofile_content_wrapper">
                     <div v-if="propExist(notif.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notif.data.image + ')' }">
                         <img :src="notif.data.image" alt="">
                     </div>
 
                     <div class="profile_content">
-                        <h3 :class="{clickable: notif.data.vehicle}" v-if="notif.data.title" @click="notify_action(notif)">{{notif.data.title}}</h3>
+                        <h3 :class="{clickable: notif.data.vehicle}" v-if="notif.data.title" @click="approve_action(notif)">{{notif.data.title}}</h3>
                         <div v-if="notif.data.status===12">
                             <p>You booking is successfully closed</p>
                             <div class="ratting"></div>
@@ -35,11 +35,11 @@
                                 Rate now
                             </button>
                         </div>
-                        <p v-if="propExist(notif.data,'user')"><span>{{notif.data.user}}</span> sent you booking request</p>
+                        <p v-if="[1].includes(notif.data.status)"><span>{{notif.data.user}}</span> sent you booking request</p>
                         <p v-if="propExist(notif.data,'vehicle')">{{notif.data.vehicle}}</p>
                         <p v-if="propExist(notif.data,'contract_start')"><b>Contract start:</b> {{ date_format(notif.data.contract_start) }} </p>
                         <p v-if="propExist(notif.data,'contract_end')"><b>Contract end:</b> {{ date_format(notif.data.contract_end) }}</p>
-                        <p v-if="propExist(notif.data,'deposit')" class="m-t-1">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notif.data.deposit | currency }}</span> have been taken from your default card.</p>
+                        <p v-if="[1].includes(notif.data.status)" class="m-t-1">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notif.data.deposit | currency }}</span> have been taken from your default card.</p>
                         <p class="m-t-1">
                             <a href="javascript:" class="primary-button" v-if="isActionable(notif)" @click="viewContract(notif)">view contract</a>
                             <a href="javascript:" class="primary-button" @click="markRead(notif)">mark read</a>
@@ -49,7 +49,7 @@
             </transition-group>
         </div>
 
-        <transition name="slide-fade">
+        <transition name="slide-fade" mode="in-out">
             <sign-contract v-if="booking" :booking="booking" @closeContract="cleanViewContract"></sign-contract>
         </transition>
     </div>
@@ -81,6 +81,7 @@
         },
 
         mounted() {
+
             this.prepareComponent();
         },
 
@@ -153,8 +154,13 @@
 
             approve_action(notification) {
                 if (notification.data.id) {
+                    $(".side-loader").show();
                     axios.get('/api/booking/' + notification.data.id + '/logs')
                         .then(this.approveRequest);
+
+                    setTimeout(function () {
+                        $(".side-loader").hide();
+                    },500)
                 }
             },
 
@@ -176,24 +182,30 @@
                     let log_id = response.data.success.booking_log[0].id;
                     let params = {log_id: log_id, status: ""};
                     console.log(response.data.success);
-                    if (status === 5) {
+                    if (status === 5)
                         params.status = 6;
-                        this.sendRequest(response.data.success.id, params);
-                    }
-                    if (status === 3) {
+
+                    if (status === 3)
                         params.status = 4;
+
+                    if (status === 7)
+                        params.status = 8;
+
+                    if(params.status)
                         this.sendRequest(response.data.success.id, params);
-                    }
+
                 }
             },
 
             sendRequest(booking_id, params) {
                 axios.patch('/api/booking/' + booking_id + '/status', params)
                     .then((response) => {
-                        if (response.error)
-                            new Noty({type: 'error', text: response.error}).show();
-                        if (response.success)
-                            new Noty({type: 'success', text: response.success}).show();
+                    console.log(response);
+
+                        if (response.status==200)
+                            new Noty({type: 'success', text: response.data.success}).show();
+                        if (response.status!==200)
+                            new Noty({type: 'error', text: response.data.error}).show();
                     });
             },
 
@@ -216,16 +228,19 @@
             viewContract(notify) {
                 $('#sideLoader').show();
                 this.notify = notify;
+                this.booking=null;
                 axios.get('/api/booking/' + notify.data.id)
                     .then((r) => {
                         $('#sideLoader').hide();
                         this.booking = r.data.success;
+                        setTimeout(function() {
+                           $(".menu-component-container").animate({scrollTop: 0});
+                        }, 500);
                     });
             },
 
             cleanViewContract() {
                 this.booking = null;
-                this.markRead();
             },
             processAvatar(r){
                 let param = {avatar: r.data.success};
@@ -262,6 +277,15 @@
                                  $this.markRead(notification);
                              }, 1000);
                         });
+            },
+             NotyClass(notif){
+                if([5,9].includes(notif.data.status))
+                    return "noty_warning";
+                else if([6,10,7].includes(notif.data.status))
+                    return "noty_danger";
+                else if([12,0].includes(notif.data.status))
+                    return "noty_info";
+
             }
         },
     }

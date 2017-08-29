@@ -7,7 +7,7 @@
                         <div class="current_booking" v-if="bookings.length">
                             <h2>Current booking</h2>
                             <transition-group name="list" tag="div">
-                                <booking v-for="(book,i) in bookings" :key="book.id" :booking="book" :user="storage" :index="i" @otherBooking="loadOtherBooking" @sideView="loadSideView" ref="booking"></booking>
+                                <booking v-for="(book,i) in bookings" :key="book.id" :signature="signature" :Booking="book" :user="storage" :index="i" @otherBooking="loadOtherBooking" @sideView="loadSideView" ref="booking"></booking>
                             </transition-group>
                         </div>
                         <div v-if="pastBookings.length">
@@ -35,7 +35,7 @@
             </transition>
 
             <transition name="flip" mode="out-in">
-                <sign-contract v-if="sideView=='sign'" key="sign-contract" @closeContract="clearSideView" :booking="booking"></sign-contract>
+                <sign-contract v-if="sideView=='sign' || storage.state.menuView=='sign'" key="sign-contract" @closeContract="clearSideView" :booking="booking"></sign-contract>
                 <car-inspection v-if="sideView=='return_inspection' || sideView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
                 <extend-cancel-booking v-if="sideView=='extend'" key="booking-extend" :user="storage" @clearSideView="clearSideView"></extend-cancel-booking>
                 <booking-documents v-if="sideView=='documents'" key="booking-documents" :documents="documents"></booking-documents>
@@ -55,6 +55,7 @@
             return {
                 sideView: '',
                 showView: false,
+                signature: true,
                 booking: {},
                 bookings: [],
                 pastBookings: [],
@@ -125,6 +126,40 @@
             },
 
             loadSideView(data) {
+                let $this = this;
+                if(data.view=='sign' && User.state.auth.type === 'client'){
+                    axios.get('/api/credit-card').then(function(r){
+                        if(!r.data.success.length){
+                            User.commit('oldView', 'booking');
+                            User.commit('menuView', 'payment');
+
+                            new Noty({
+                                    type: 'warning',
+                                    text: 'Add credit card first before booking!'
+                                }).show();
+
+                            return false;
+                            // data.view='';
+                            // $this.sideView = '';
+                        } else{ $this.processView(data); }
+                    });
+                } else{
+                    this.processView(data);
+                }
+            },
+
+            clearSideView(e) {
+                if (typeof e !== 'undefined' && e === 'sign') {
+                    if (User.state.auth.type === 'owner')
+                        this.bookings[this.inProcess.index].status = 3;
+                    else if (User.state.auth.type === 'client')
+                        this.bookings[this.inProcess.index].status = 2; 
+                    this.signature = false;
+                }
+                this.sideView = '';
+                this.inProcess = null;
+            },
+            processView(data){
                 if (!this.inProcess || this.inProcess.id !== data.id || this.sideView !== data.view) {
                     if (this.sideView === data.view) {
                         this.sideView = '';
@@ -135,17 +170,6 @@
                     else this.sideView = data.view;
                     this.inProcess = data;
                 }
-            },
-
-            clearSideView(e) {
-                if (typeof e !== 'undefined' && e === 'sign') {
-                    if (User.state.auth.type === 'owner')
-                        this.bookings[this.inProcess.index].status = 3;
-                    else if (User.state.auth.type === 'client')
-                        this.bookings[this.inProcess.index].status = 2;
-                }
-                this.sideView = '';
-                this.inProcess = null;
             }
         }
     }

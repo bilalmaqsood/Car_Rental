@@ -1,44 +1,10 @@
 <template>
-    <div class="main_profile_container">
+    <div class="main_profile_container" v-bind:style="{'min-height': viewHeight+'px'}">
 
         <div class="payment_wrapper">
-            <transition name="flip" mode="out-in">
-                <div v-if="!addCard" class="list-group m-0" key="list-cards">
-                    <a href="javascript:" @click="cardEdit(c)" v-for="c in cards" class="list-group-item">
-                        <h4 class="list-group-item-heading">{{ c.name }}</h4>
-                        <p class="list-group-item-text"> {{ c.address }}</p>
-                    </a>
-                </div>
 
-                <payment-card-form :editCard="editCard" :selectedcard="card" key="add-cards" v-else></payment-card-form>
-            </transition>
-
-            <button class="primary-button" type="button" @click="cardAdd">{{ addCard?'Cancle':'Add Card' }}</button>
-            <div class="current_balance">
-             <transition name="flip">
-                <div v-if="earningView">
-                    <h2>My Balance</h2>
-                    <div class="my_earnings">
-                        <ul>
-                            
-                            <li><p>Total Balance<span>{{total_balance | currency('0,0.00')}}</span></p></li>
-                            <li>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Amount to withdraw" v-model="withdraw">
-                                </div>
-                                <button :disabled="$v.withdraw.$invalid" @click="withdrawAmount" data-loading-text="processing ...">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#send"></use>
-                                    </svg>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </transition>
-            </div>
-            <div class="add_bank_account">
-                 <h2>My account</h2>
+          <div class="add_bank_account" >
+                <h2>Direct debit</h2>
                 <transition name="flip" mode="out-in">
                    <div key="edit" v-if="viewAccount">
                       <div v-if="editMenu">
@@ -91,8 +57,8 @@
                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use>
                                </svg>
                             </div>
-                            <p v-if="viewAccount">Account holder name<span v-html="account.title"></span></p>
-                            <input v-else type="text" class="form-control" placeholder="Account holder name" v-model="account.title" @keyup="account.title = $event.target.value.toUpperCase()">
+                            <p v-if="viewAccount">Accountholder name<span v-html="account.title"></span></p>
+                            <input v-else type="text" class="form-control" placeholder="Accountholder name" v-model="account.title" @keyup="account.title = $event.target.value.toUpperCase()">
                          </div>
                       </li>
                       <li>
@@ -130,7 +96,29 @@
                       </li>
                    </ul>
                 </div>
-            </div>
+          </div>
+          <div class="clearfix"></div>
+
+            <h2 style="float: none; clear: both;">My Cards</h2>
+            <transition name="flip" mode="out-in">
+                <div v-if="!addCard" class="list-group m-0" key="list-cards">
+                  <div  v-for="c in cards" >
+                    <a href="javascript:" @click="cardEdit(c)" class="list-group-item col-sm-11">
+                        <h4 class="list-group-item-heading">{{ c.name }}</h4>
+                        <p class="list-group-item-text"> {{ c.address }}</p>
+                    </a>
+                    <a class="btn btn-danger pull-right col-sm-1" @click="removeCard(c)"><i class="fa fa-trash"></i></a>
+                  </div>
+                </div>
+            </transition>
+
+            <transition name="flip" mode="out-in">
+                <payment-card-form  @changeView="handleForm" v-if="addCard" :editCard="editCard" :selectedcard="card" key="add-cards"></payment-card-form>
+            </transition>
+
+            <button class="primary-button" type="button" @click="cardAdd">{{ addCard?'Cancle':'Add Card' }}</button>
+           
+            
         </div>
 
     </div>
@@ -141,10 +129,12 @@
     import {AlphaSpaceValidator} from '../validators';
     import {required, numeric, between} from 'vuelidate/lib/validators';
     export default {
+      props: ["viewHeight"],
         data() {
             return {
+                User: User,
                 card: '',
-                cards: '',
+                cards: [],
                 withdraw: '',
                 editCard: false,
                 addCard: false,
@@ -274,6 +264,50 @@
                     $btn.button('reset');
                     $t.prepareComponent();
                 });
+            },
+            handleForm(data=null){
+              if(data !== null){
+                this.cards.push(data);
+              }
+              let $this = this;
+              if(User.state.oldView)
+                 setTimeout(function() {
+                     $this.$parent.$emit("oldMenuView",User.state.oldView);
+                }, 500);
+               this.addCard = !this.addCard;
+            },
+            removeCard(c){
+              let $this=this;
+              var n = new Noty({
+                  text: '<b>Do you want to continue?</b>',
+                  timeout: false,
+                  buttons: [
+                    Noty.button('YES', 'btn btn-success', function () {
+                      n.close();
+                      setTimeout(function() { $this.processDestroy(c); }, 100);
+                    
+                    }, {id: 'button1', 'data-status': 'ok'}),
+
+                    Noty.button('NO', 'btn btn-error', function () {
+                        console.log('button 2 clicked');
+                        n.close();
+                    })
+                  ]
+                }).show();
+
+              
+            },
+            processDestroy(c){
+
+
+                 axios.delete('/api/credit-card/'+c.id).then((r)=>{
+                  this.cards.splice(this.cards.indexOf(c), 1);
+
+                          new Noty({
+                                type: 'success',
+                                text: r.data.success
+                            }).show();
+                  });
             }
         }
     }

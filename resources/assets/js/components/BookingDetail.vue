@@ -53,7 +53,7 @@
                         <h3>Rent book</h3>
                         <ul>
                             <li><span>Week no.</span><span>Cost</span><span>Due date</span><span>Status</span></li>
-                            <li v-for="p in payments"><span>{{p.title}}</span><span>{{p.cost | currency}}</span><span>{{p.due_date | date('format', 'DD.MM.YYYY')}}</span><span v-if="p.paid">Paid</span><span v-else>Pending</span></li>
+                            <li v-for="p in payments"><span>{{p.title}}</span><span>{{p.cost | currency}}</span><span>{{p.due_date | date('format', 'DD.MM.YYYY')}}</span><span v-if="p.paid"><b class="label label-success">Paid</b></span><span v-else><b class="label label-danger">Pending</b></span></li>
                         </ul>
                     </div>
                 </transition>
@@ -77,7 +77,7 @@
                             </a>
                         </li>
                         <transition name="flip" v-if="User.state.auth.type=='client'">
-                            <li v-if="!isSignatures">
+                            <li v-if="canSign && isSignDone">
                                 <a @click="loadSideView('sign')" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -95,7 +95,7 @@
                             </li>
                         </transition>
                         <transition name="flip" v-else-if="User.state.auth.type=='owner'">
-                            <li v-if="!isSignatures">
+                            <li v-if="canSign && isSignDone">
                                 <a @click="loadSideView('sign')" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -103,7 +103,7 @@
                                     sign contract
                                 </a>
                             </li>
-                            <li v-else-if="[2,3].includes(booking.status)">
+                            <li v-if="canApprove && [2,3].includes(booking.status)">
                                 <a @click="approveBooking" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -141,7 +141,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                 </svg>
-                                Cancel Booking
+                                cancel Request
                             </a>
                         </li>
                         <li>
@@ -165,18 +165,50 @@
     import User from '../user';
 
     export default {
-        props: ['booking', 'user', 'index'],
+        props: ['Booking', 'user', 'index','signature'],
 
         data() {
             return {
                 User: User,
+                booking: this.Booking,
+                isSignDone: this.signature,
                 payments: []
             };
         },
+        watch: {
+            signature: function(signature) {
+                this.isSignDone = signature;
+                  axios.get('/api/booking/' + this.Booking.id).then(r => {
+                        this.booking.status = r.data.success.status;
+                        this.booking.signatures = r.data.success.signatures;
+                    });
 
+            }
+        },
         computed: {
-            isSignatures() {
-                return this.booking.signatures && (typeof this.booking.signatures.owner !== 'undefined' && this.booking.signatures.owner) && (typeof this.booking.signatures.client !== 'undefined' && this.booking.signatures.client);
+            
+            canSign() {
+                if(this.booking.status >= 4)
+                    return false; 
+
+                if(!this.booking.signatures)
+                    return true;
+                else if(this.User.state.auth.type==='owner' && (typeof this.booking.signatures.owner === 'undefined'))
+                    return  true;
+                else if(this.User.state.auth.type==='client' && (typeof this.booking.signatures.client === 'undefined'))
+                    return  true;
+                else
+                return false;
+            },
+
+               canApprove() {
+
+                if(!this.booking.signatures)
+                    return false;
+                else if(typeof this.booking.signatures.owner === 'undefined' || typeof this.booking.signatures.client === 'undefined')
+                    return  false;
+                else
+                return true;
             },
 
             vehicleName() {
@@ -213,6 +245,8 @@
             },
 
             loadSideView(view) {
+             $(".menu-component-container").animate({scrollTop: 0});
+
                 this.$emit('sideView', {
                     id: this.booking.id,
                     index: this.index,
@@ -222,32 +256,39 @@
             },
 
             approveBooking() {
-                let params = {};
+                var params = {};
 
                 if ([2,3].includes(this.booking.status)) {
-                    params.status = 4;
-                    params.note = 'booking approved after signatures.';
+                    
+                      axios.get('api/booking/'+this.booking.id+'/inspection').then(r=>{
+                        if(!r.data.success.length){
+                            new Noty({
+                                type: 'warning',
+                                text: 'Add inspection before accepting booking!'
+                            }).show();
+                            this.loadSideView("inspection");
+                            return false;
+                         } else{
+                          params.status = 4;
+                          params.note = 'booking approved after signatures.';
+                          this.updateStatus(params);
+                      }
+                    });  
+                    
                 } else if (this.booking.status===5) {
                     params.status = 6;
                     params.note = 'booking canceled from cancel request by client.';
+                    this.updateStatus(params);
                 } else if (this.booking.status===7) {
                     params.status = 8;
                     params.note = 'booking extended from extend request by client.';
+                    this.updateStatus(params);
                 } else if ([4,6,8].includes(this.booking.status)) {
                     params.status = 9;
                     params.note = 'booking closed by owner';
+                    this.updateStatus(params);
                 }
-
-                $('#sideLoader').show();
-                axios.patch('/api/booking/' + this.booking.id + '/status', params)
-                    .then((r) => {
-                        $('#sideLoader').hide();
-                        this.booking.status = params.status;
-                        new Noty({
-                            type: 'information',
-                            text: r.data.success
-                        }).show();
-                    });
+                
             },
             cancleBooking() {
                 let params = {};
@@ -255,6 +296,19 @@
                params.status = 6;
                params.note = 'booking request canceled .';
 
+                $('#sideLoader').show();
+                axios.patch('/api/booking/' + this.booking.id + '/status', params)
+                    .then((r) => {
+                        $('#sideLoader').hide();
+                        this.booking.status = params.status;
+                        this.isSignDone = false;
+                        new Noty({
+                            type: 'information',
+                            text: r.data.success
+                        }).show();
+                    });
+            },
+            updateStatus(params){
                 $('#sideLoader').show();
                 axios.patch('/api/booking/' + this.booking.id + '/status', params)
                     .then((r) => {

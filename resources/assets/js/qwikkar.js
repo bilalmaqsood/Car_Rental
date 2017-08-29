@@ -44,6 +44,7 @@ Vue.component('car-return-inspection', require('./components/CarReturnInspection
 Vue.component('booking-documents', require('./components/Documents.vue'));
 Vue.component('chat-booking', require('./components/Chat.vue'));
 Vue.component('extend-cancel-booking', require('./components/ExtendCancel.vue'));
+Vue.component('early-cancel-booking', require('./components/EarlyCancelation.vue'));
 Vue.component('payment-card-listing', require('./components/PaymentCards.vue'));
 Vue.component('payment-card-form', require('./components/CardForm.vue'));
 Vue.component('financial', require('./components/Financial.vue'));

@@ -55,7 +55,7 @@
                         </div>
                         <span class="help-block text-sm" v-if="$v.basic_info.phone.$error">Enter valid phone</span>
                     </div>
-                    <div class="form-group" :class="{ 'has-error': $v.basic_info.dob.$error }" v-if="user_type=='client'">
+                    <div class="form-group date-of-birth-form" :class="{ 'has-error': $v.basic_info.dob.$error }" v-if="user_type=='client'">
                         <div class="input-group login-input">
                             <span class="input-group-addon">
                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use> </svg>
@@ -136,6 +136,9 @@
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
                         </svg>
                         done
+                    </button>
+                    <button type="button" class="secodery_btn" @click="skipStep" style="right: 100px; z-index: 9999">
+                        Skip
                     </button>
                     <button type="button" class="primary_btn" @click="changeView">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon">
@@ -240,7 +243,7 @@
 
                         setTimeout(function () {
                             new Inputmask({
-                                mask: [{mask: '+44 (###) ### ####'}],
+                                mask: [{mask: '0### ### ####'}],
                                 greedy: false,
                                 definitions: {'#': {validator: "[0-9]", cardinality: 1}}
                             }).mask(document.querySelector('.phone-number'));
@@ -314,7 +317,7 @@
             processOwner(){
                 let $t = this;
                     let postData = JSON.parse(JSON.stringify(this.basic_info));
-                    postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
+                    postData.phone = postData.phone ? "+44"+postData.phone.replace(/[\s\(\)]/g, '') : null;
                     axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
                         $t.successRegister();
                     }).catch(function (r) {
@@ -323,7 +326,7 @@
             processClient(){
                         let $t = this;
                         let postData = JSON.parse(JSON.stringify(_.merge(this.basic_info, this.driver_info)));
-                        postData.phone = postData.phone ? postData.phone.replace(/[\s\(\)]/g, '') : null;
+                        postData.phone = postData.phone ? "+44"+postData.phone.replace(/[\s\(\)]/g, '') : null;
                                 axios.post('/api/register/' + this.user_type, this.cleanParams(postData)).then(function (r) {
                                     $t.successRegister();
                                 }).catch(function (r) {
@@ -380,6 +383,11 @@
                 }
                 if(value && this.oldstep=='owner_info'){
                     this.processOwner();
+                }
+            },
+            skipStep(){
+                if(confirm("Are you sure to skip this step")){
+                    this.changeStep();
                 }
             }
         }

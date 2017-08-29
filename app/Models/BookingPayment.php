@@ -2,6 +2,7 @@
 
 namespace Qwikkar\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class BookingPayment extends Model
@@ -46,4 +47,13 @@ class BookingPayment extends Model
     {
         return $this->morphMany(BalanceLog::class, 'loggable');
     }
+
+    /**
+     * Query scope to get all due payments
+     */
+    public function scopeDuePayment($query)
+    {
+        return $query->where("due_date","<=",Carbon::now())->where("paid",0);
+    }
+
 }

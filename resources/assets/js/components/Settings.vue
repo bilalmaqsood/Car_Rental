@@ -81,15 +81,7 @@
                         <span v-show="isEditing=='pco_expiry'">
                              <input v-model="User.state.auth.pco_expiry_date" type="text" class="form-control pco_expiry" @blur="activateInEditMode(null)" v-on:keyup="track('pco_expiry_date')">
                         </span>
-                    </p><p v-if="typeof User.state.auth.pco_expiry_date !== 'undefined'">PCO certificate exp. date
-                        <span v-on:click="activateInEditMode('pco_expiry')" v-show="isEditing!=='pco_expiry'">
-                                {{User.state.auth.pco_expiry_date | date}}
-                        </span>
-                        <span v-show="isEditing=='pco_expiry'">
-                             <input v-model="User.state.auth.pco_expiry_date" type="text" class="form-control pco_expiry" @blur="activateInEditMode(null)" v-on:keyup="track('pco_expiry_date')">
-                        </span>
                     </p>
-
                     <p v-if="User.state.auth.type == 'client'" v-for="d in documents"> 
                                 {{d.title}}
                        <span v-if="!d.path" @click="upload(d)" class="clickable">
@@ -150,12 +142,17 @@
                         <p>{{termsContent}}</p>
                     </li>
                 </transition>
-                <li>
+                <li @click="privacy = !privacy" class="cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#contract_view_icon"></use>
                     </svg>
                     <span>Privacy Policy</span>
                 </li>
+                <transition name="flip">
+                    <li v-if="privacy">
+                        <p>{{termsContent}}</p>
+                    </li>
+                </transition>
                 <li @click="logout" class="cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#log_out_icon"></use>
@@ -178,6 +175,7 @@
             return {
                 User: User,
                 terms: false,
+                privacy: false,
                 termsContent: '',
                 isEditing: false,
                 doc: false,
@@ -209,7 +207,11 @@
 
         methods: {
             prepareComponent() {
-                console.log('profile componenet mounted');
+                    $(".pco_expiry").datetimepicker({
+                    format: 'YYYY-MM-DD',
+                    }).on('dp.change',(e)=> {
+                    User.state.auth.pco_expiry_date = $(".pco_expiry").val();
+                    });
                 axios.get('/api/terms/app').then(this.termsPlaced);
             },
 
@@ -249,7 +251,7 @@
                             type: 'information',
                             text: "Profile updated successfully!"
                         }).show();
-
+                     $scope.refreshUserData();
                     $scope.isEditing = false;
                 });
             },
@@ -277,7 +279,7 @@
                 $(".hiddenUpload").click();
                     $(".hiddenUpload").change(function () {
                         $.map(this.files, function (val) {
-                           
+                           $('#sideLoader').show();
                             obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
                             obj.type = val.name.split('.').pop();
                             
@@ -288,6 +290,8 @@
                             reader.onload = function (e) {
                                 axios.post('/api/upload/document', fd).then(function(r){
                                     obj.path = r.data.success;
+                                    $(".hiddenUpload").val('');
+                                    setTimeout(function() { $('#sideLoader').hide(); }, 500);
                                     // User.state.auth.documents.push(obj);
                                 });
                             };
@@ -313,7 +317,23 @@
              },
              docUpdated(){
                 
-             }
+             },
+            refreshUserData() {
+                axios.get('/api/user').then(this.setUserData).catch(function (r) {
+                    if (r.response.status === 401)
+                        localStorage.removeItem('reloadData');
+                });
+            },
+
+            setUserData(r) {
+               User.commit('update', r.data.success);
+                if(User.state.oldView.length){
+                    setTimeout(function() {
+                        User.commit('oldView', false);
+                        User.commit('menuView', false);
+                        }, 500);
+                }
+            },
             
         }
     }

@@ -128,7 +128,7 @@
 
                                                                 <span class="help-block text-sm" v-if="$v.login.email.$error">Enter valid email</span>
                                                             </div>
-                                                            <div class="form-group" :class="{ 'has-error': $v.login.password.$error }">
+                                                            <div class="form-group login-input-password-gap" :class="{ 'has-error': $v.login.password.$error }">
 
 
                                                                 <div class="input-group login-input">
@@ -272,7 +272,7 @@
                         <user-profile v-if="storage.state.menuView == 'profile'"></user-profile>
                         <vehicle-crud v-if="storage.state.menuView == 'vehicles'"></vehicle-crud>
                         <booking-listing v-if="storage.state.menuView == 'booking'" :viewHeight="height"></booking-listing>
-                        <payment-card-listing v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>
+                        <payment-card-listing  :viewHeight="height" v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>
                         <financial v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'owner'"></financial>
                     </transition>
                 </div>
@@ -339,7 +339,9 @@
         mounted() {
             this.prepareComponent();
         },
-
+        created: function(){
+             this.$on('oldMenuView', this.handleMenuView);
+        },
         methods: {
             prepareComponent() {
                 this.refreshUserData();
@@ -485,6 +487,10 @@
                     User.commit('home', true);
                     User.commit('view', false);
                 }
+            },
+            handleMenuView(view){
+                User.commit('menuView', view);
+                User.commit('oldView', false);
             }
         }
     }

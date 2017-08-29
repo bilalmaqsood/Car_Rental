@@ -1,19 +1,22 @@
 <template>
     <div class="chat_contrnt" :style="{ height: viewHeight + 'px' }">
         <div class="all-chat-messages">
+        <div id="chatmessages">
             <transition-group name="list" tag="div">
                 <div v-for="m in messages.data" :key="m.id">
                     <div :class="{send_box: !isReceiver(m), receve_box: isReceiver(m)}">
                         <p>{{m.message}}</p>
                     </div>
-                    <span class="chat_date_time" :class="{chat_date_time_recive: isReceiver(m)}">{{isReceiver(m) ? m.receiver.name : m.sender.name}} | {{m.updated_at | date('format', 'DD.MM.YYYY')}} | {{m.updated_at | date('format', 'HH:mm a')}}</span>
+                    <span class="chat_date_time" :class="{chat_date_time_recive: isReceiver(m)}">
+                    {{ showUserName(m) }} | {{m.updated_at | date('format', 'DD.MM.YYYY')}} | {{m.updated_at | date('format', 'HH:mm a')}}</span>
                 </div>
             </transition-group>
+        </div>
         </div>
 
         <div class="chat_btn_wrapper">
             <div class="input-group login-input">
-                <input class="form-control" placeholder="Your message" v-model="message">
+                <input class="form-control" placeholder="Your message" v-model="message" v-on:keyup.enter="sendMessage">
                 <div class="input-group-addon">
                     <button @click="sendMessage">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
@@ -77,7 +80,15 @@
                         $('#sideLoader').hide();
                     });
                 }
-            }
+            },
+        
+        showUserName(m){
+            console.log(m);
+            if(this.user.state.auth.email === m.sender.email && m.receiver.email !== this.user.state.auth.email)
+                return this.user.state.auth.name;
+            else 
+                return m.sender.name;
         }
     }
+}
 </script>

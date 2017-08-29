@@ -231,11 +231,8 @@ class BookingController extends Controller
             'note' => 'string',
             'status' => 'in:5,7',
         ]);
-
-        if ($request->has('start_date') && $request->has('end_date'))
-            $status = 7;
-        else
-            $status = $request->status;
+        
+        $status = $request->status;
 
         $booking = Booking::findOrFail($id);
 
@@ -263,7 +260,7 @@ class BookingController extends Controller
             'image' => $booking->vehicle->images->first(),
             'title' => 'Booking ' . strtolower($booking->statusTypes[$status]) . ' request',
             'user' => $request->user()->name,
-            'credit_card' => $booking->account->last_numbers,
+            'credit_card' => $booking->account?$booking->account->last_numbers:'',
             'vehicle' => $booking->vehicle->vehicle_name,
             'contract_start' => $booking->start_date,
             'contract_end' => $booking->end_date,
@@ -348,7 +345,7 @@ class BookingController extends Controller
             'image' => $booking->vehicle->images->first(),
             'title' => $title,
             'user' => $request->user()->name,
-            'credit_card' => $booking->account->last_numbers,
+            'credit_card' => $booking->account?$booking->account->last_numbers:'',
             'vehicle' => $booking->vehicle->vehicle_name,
             'contract_start' => $booking->start_date,
             'contract_end' => $booking->end_date,

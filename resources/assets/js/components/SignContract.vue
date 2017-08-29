@@ -1,5 +1,6 @@
 <template>
     <div class="signature-container">
+
         <pdf-document v-if="contract" :d="contract"></pdf-document>
 
         <div class="add-signature" style="display: none;">
@@ -7,7 +8,7 @@
             <div class="js-signature" data-width="540" data-height="320" data-line-color="#000" data-line-width="3"></div>
         </div>
 
-        <div class="row m-0">
+        <div class="row m-0" v-if="canView">
             <img :src="signature" alt="">
             <button data-loading-text="Signing Contract" class="primary-button m-0 pull-left" @click="showSignContainer" v-html="sign"></button>
             <button data-loading-text="Canceling Contract" v-if="storage.state.auth.type=='owner'" class="primary-button m-0 pull-right danger-button" @click="cancelContract">Cancel Contract</button>
@@ -32,6 +33,12 @@
             };
         },
 
+        watch: {
+            booking: function(booking) {
+                this.booking = booking;      
+            }
+        },
+
         mounted() {
             this.prepareComponent();
         },
@@ -39,6 +46,18 @@
         computed: {
             contract() {
                 return this.booking ? this.booking.documents[0] : null;
+            },
+            canView(){
+
+                if(!this.booking.signatures)
+                    return true;
+
+                if(User.state.auth.type === "owner" && typeof this.booking.signatures.owner === 'undefined')
+                    return true;
+
+                if(User.state.auth.type === "client" && typeof this.booking.signatures.client === 'undefined')
+                return true;
+            return false;
             }
         },
 

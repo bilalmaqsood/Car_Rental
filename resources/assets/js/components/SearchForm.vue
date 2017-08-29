@@ -21,7 +21,7 @@
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                             </svg>
                         </div>
-                        <input type="text" class="form-control" placeholder="location" v-model="location">
+                        <input type="text" class="form-control" id="gmap_geocoding_address" placeholder="location" v-model="location">
                     </div>
                 </div>
             </li>
@@ -89,7 +89,21 @@
                 advanceSearch: false,
             };
         },
+        mounted(){
+            var input = document.getElementById('gmap_geocoding_address');
+               if (input) {
+                   var options = {
+                       componentRestrictions: {country: 'uk'}
+                   };
+                   var autocomplete = new google.maps.places.Autocomplete(input, options);
 
+                     google.maps.event.addListener(autocomplete, 'place_changed', ()=> {
+                        this.location =  $("#gmap_geocoding_address").val();
+                        
+                    });
+
+               }
+        },
         methods: {
             searchVehicles(e) {
                 this.fetchVehicles(e);
