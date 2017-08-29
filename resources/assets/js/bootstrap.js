@@ -36,7 +36,7 @@ window.Noty = require('noty');
 
 Noty.overrideDefaults({
     layout: 'topRight',
-    theme: 'mint',
+    theme: 'nest',
     timeout: 4000
 });
 

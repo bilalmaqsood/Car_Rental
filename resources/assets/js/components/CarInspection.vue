@@ -474,7 +474,14 @@
                             text: 'Inspection added success',
                         }).show();  
                         $this.clearSpot();
-                  });
+                  })
+                .catch(r => {
+                                new Noty({
+                                    type: 'error',
+                                    text: r.data.error,
+                                }).show();
+                            
+                        });
                 $this.hideLoader(1000);
             },
             clearSpot(){
