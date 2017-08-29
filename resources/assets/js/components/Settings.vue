@@ -248,7 +248,7 @@
                     this.params()
                 ).then(function (r) {
                      new Noty({
-                            type: 'information',
+                            type: 'success',
                             text: "Profile updated successfully!"
                         }).show();
                      $scope.refreshUserData();

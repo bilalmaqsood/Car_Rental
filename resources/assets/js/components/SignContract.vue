@@ -81,7 +81,7 @@
                         .then((r) => {
                             $('#sideLoader').hide();
                             new Noty({
-                                type: 'information',
+                                type: 'success',
                                 text: r.data.success
                             }).show();
                             this.$emit('closeContract', 'sign');

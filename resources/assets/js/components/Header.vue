@@ -388,7 +388,7 @@
                 axios.post('/login', this.login).then(function (r) {
                     $btn.button('reset');
                     new Noty({
-                        type: 'information',
+                        type: 'success',
                         text: '<b>' + r.data.success.name + '</b> has been logged in.',
                     }).show();
                     $this.resetAuthView();
@@ -410,7 +410,7 @@
                 axios.post('/api/forgot', {email: this.login.email}).then(function (r) {
                     $btn.button('reset');
                     new Noty({
-                        type: 'information',
+                        type: 'success',
                         text: r.data.success,
                     }).show();
                     $this.resetAuthView();
@@ -425,7 +425,7 @@
                 axios.post('/password/reset', this.forgot).then(function (r) {
                     $btn.button('reset');
                     new Noty({
-                        type: 'information',
+                        type: 'success',
                         text: r.data.success,
                     }).show();
                     $this.resetAuthView();

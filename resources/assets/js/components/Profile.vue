@@ -270,7 +270,7 @@
                             setTimeout(function() { 
                                 $('#sideLoader').hide(); 
                                 new Noty({
-                                    type: 'information',
+                                    type: 'success',
                                     text: 'Rating saved successfully.',
                                     
                                 }).show();

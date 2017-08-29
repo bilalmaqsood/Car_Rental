@@ -98,7 +98,7 @@ this.prepareComponent();
                 setTimeout(function () {
                     $btn.removeClass('fa-refresh fa-spin').addClass('fa-undo');
                     new Noty({
-                        type: 'information',
+                        type: 'success',
                         text: 'Dates are reset.',
                         timeout: 600
                     }).show();
@@ -143,7 +143,7 @@ this.prepareComponent();
                             this.resetDatesLessSeven();
                         } else{
                             new Noty({
-                                type: 'information',
+                                type: 'success',
                                 text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
                             }).show();
                             }
@@ -159,7 +159,7 @@ this.prepareComponent();
                 } else {
                     $e.find('td').removeClass('highlight-day');
                     new Noty({
-                        type: 'information',
+                        type: 'success',
                         text: 'Dates are reset.',
                         timeout: 600
                     }).show();
@@ -190,7 +190,7 @@ this.prepareComponent();
                     }
                     axios.post('/api/time-slot',{vehicle_id: this.vehicle.id,days: dateArr}).then(function (r) {
                         new Noty({
-                            type: 'information',
+                            type: 'success',
                             text: r.data.success,
                         }).show();
                     });

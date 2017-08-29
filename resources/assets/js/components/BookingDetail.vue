@@ -303,7 +303,7 @@
                         this.booking.status = params.status;
                         this.isSignDone = false;
                         new Noty({
-                            type: 'information',
+                            type: 'success',
                             text: r.data.success
                         }).show();
                     });
@@ -315,7 +315,7 @@
                         $('#sideLoader').hide();
                         this.booking.status = params.status;
                         new Noty({
-                            type: 'information',
+                            type: 'success',
                             text: r.data.success
                         }).show();
                     });

@@ -79,7 +79,7 @@ import User from '../user';
                     axios.post('/api/booking/' + this.user.state.currentBook + '/status', this.extendParams())
                         .then(r => {
                             new Noty({
-                                type: 'information',
+                                type: 'success',
                                 text: r.data.success,
                             }).show();
                              $("#sideLoader").hide();

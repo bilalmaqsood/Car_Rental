@@ -380,7 +380,7 @@
                             }).then(r => {
                                 if (r.data.success)
                                     new Noty({
-                                        type: 'information',
+                                        type: 'success',
                                         text: '<div><p><b>Selected Start Date:</b> ' + this.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + this.end_date.format('M/D/Y') + '</p></div>',
                                     }).show();
                                 else {
@@ -403,7 +403,7 @@
                 } else {
                     $e.find('td').removeClass('highlight-day');
                     new Noty({
-                        type: 'information',
+                        type: 'warning',
                         text: 'Dates are reset.',
                         timeout: 600
                     }).show();
@@ -460,7 +460,7 @@
                         .then(r => {
                             if (r.data.success && r.data.success.is_active) {
                                 new Noty({
-                                    type: 'information',
+                                    type: 'success',
                                     text: 'Promo code available.'
                                 }).show();
                                 this.promo_code_reward = r.data.success.reward;
@@ -525,7 +525,7 @@
                     $btn.button('reset');
                     User.commit('details', false);
                     new Noty({
-                        type: 'information',
+                        type: 'warning',
                         text: 'Booking created successfully for ' + User.state.auth.name,
                     }).show();
                 }).catch(r => {

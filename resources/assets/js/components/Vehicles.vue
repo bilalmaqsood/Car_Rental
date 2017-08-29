@@ -156,7 +156,7 @@
             this.$on('vehicleAdded', function(value){
                this.menuView='';
                 new Noty({
-                    type: 'information',
+                    type: 'success',
                     text: value.make+" "+value.model+" "+value.make + " Added!",
                 }).show();
                 this.vehicle=value;
@@ -166,7 +166,7 @@
                this.menuView='';
                this.isEdit=false;
                 new Noty({
-                    type: 'information',
+                    type: 'success',
                     text: value.make+" "+value.model+" "+value.make + " Updated!",
                 }).show();
                 this.vehicle=value;

@@ -155,7 +155,7 @@
                     axios.post('/api/credit-card', card)
                         .then(function (r) {
                             new Noty({
-                                type: 'information',
+                                type: 'success',
                                 text: 'Card added successfuly!',
                             }).show();
                             console.log(r.data.success);
@@ -165,7 +165,7 @@
                     axios.patch('/api/credit-card/'+this.selectedcard.id, card)
                         .then(function (r) {
                             new Noty({
-                                type: 'information',
+                                type: 'success',
                                 text: 'Card update successfuly!',
                             }).show();
                             $this.$emit("changeView",null);

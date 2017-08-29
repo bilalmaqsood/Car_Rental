@@ -62,7 +62,7 @@
                 axios.post('/api/vehicle/'+this.vehicle.id+'/contract-template',this.contractTemplate)
                     .then(function (r) {
                         new Noty({
-                            type: 'information',
+                            type: 'success',
                             text: r.data.success,
                         }).show();
                     });

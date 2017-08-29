@@ -361,7 +361,7 @@
                 let $t = this;
 
                 new Noty({
-                    type: 'information',
+                    type: 'success',
                     text: this.basic_info.name + ' has been registered successfully.',
                 }).show();
 

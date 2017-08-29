@@ -600,7 +600,7 @@
                 this.form = JSON.parse(JSON.stringify(Form));
                 
                  new Noty({
-                                type: 'information',
+                                type: 'success',
                                 text: 'Vehicle updated!'
                             }).show();
 

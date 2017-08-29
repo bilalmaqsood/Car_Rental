@@ -120,7 +120,7 @@ import User from '../user';
                 setTimeout(function () {
                     $btn.removeClass('fa-refresh fa-spin').addClass('fa-undo');
                     new Noty({
-                        type: 'information',
+                        type: 'success',
                         text: 'Dates are reset.',
                         timeout: 600
                     }).show();
@@ -170,7 +170,7 @@ import User from '../user';
                             this.resetDatesLessSeven();
                         } else{
                             new Noty({
-                                type: 'information',
+                                type: 'success',
                                 text: '<div><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
                             }).show();
                             }
@@ -178,7 +178,7 @@ import User from '../user';
                 } else {
                     $e.find('td').removeClass('highlight-day');
                     new Noty({
-                        type: 'information',
+                        type: 'success',
                         text: 'Dates are reset.',
                         timeout: 600
                     }).show();

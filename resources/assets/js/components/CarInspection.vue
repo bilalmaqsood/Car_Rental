@@ -423,7 +423,7 @@
                             let index = $this.inspections.data.indexOf(spot);
                             $this.inspections.data.splice(index,1);
                             new Noty({
-                                type: 'information',
+                                type: 'success',
                                 text: 'Spot delted successfully',
                             }).show();
                         });
@@ -470,7 +470,7 @@
                       $("#remove").click();
                     $this.inspections.data.push(param);
                       new Noty({
-                            type: 'information',
+                            type: 'success',
                             text: 'Inspection added success',
                         }).show();  
                         $this.clearSpot();
