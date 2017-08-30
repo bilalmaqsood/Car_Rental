@@ -476,9 +476,10 @@
                         $this.clearSpot();
                   })
                 .catch(r => {
+                    this.clearSpot();
                                 new Noty({
                                     type: 'error',
-                                    text: r.data.error,
+                                    text: r.response.data.error,
                                 }).show();
                             
                         });

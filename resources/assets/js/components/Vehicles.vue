@@ -58,7 +58,8 @@
                 </transition>
             </div>
 
-            <div class="car_detail"  v-if="vehicle">
+<transition-group name="flip" mode="out-in" tag="div">
+            <div class="car_detail"  v-if="vehicle" key="1">
                 <div class="availablity_detail">
                     <h3>{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
                     <ul>
@@ -88,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            <div class="pickup_loction" v-if="vehicle">
+            <div class="pickup_loction" v-if="vehicle" key="2">
                 <button class="secodery_btn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
@@ -96,19 +97,19 @@
                 </button>
                     <vehicle-location :pickup_location="vehicle.pickup_location" :return_location="vehicle.return_location"></vehicle-location>
             </div>
-            <div class="pickup_loction_map" v-if="vehicle">
+            <div class="pickup_loction_map" v-if="vehicle" key="3">
                 <iframe width="100%" height="450" frameborder="0" style="border:0" :src="'https://www.google.com/maps/embed/v1/place?q='+vehicle.location.split(',')[0]+','+vehicle.location.split(',')[1]+'&amp;key=AIzaSyDFkedYDgj286xDo9Sp9XRWsOiPfu9T3Ak'"></iframe>
                 <p>{{ vehicle.notes }}</p>
             </div>
 
-            <div class="pickup_loction_datebox">
+            <div class="pickup_loction_datebox" key="4">
                 <div class="availabe">
                     <p>John Doe <span>16.05.2017</span></p>
                 </div>
                 <div class="ratting"></div>
             </div>
 
-            <div class="pofile_content_wrapper" v-for="vehicle in vehicles">
+            <div class="pofile_content_wrapper" v-for="vehicle in vehicles" key="5">
                 <div v-if="vehicle.images" class="clickable img_box" v-bind:style="{'background': 'url('+vehicle.images[0]+')'}" @click="vechicleDetails(vehicle)">
                     <img :src="vehicle.images[0]" alt="">
                 </div>
@@ -131,7 +132,7 @@
 
                 </div>
             </div>
-
+</transition-group>
         </div>
     </div>
 </template>
@@ -174,8 +175,10 @@
         },
         mounted() {
             $scope = this;
+            $('#sideLoader').show();
             this.prepareComponent();
-            console.log(User);
+            setTimeout(function() { $('#sideLoader').hide(); }, 1000);
+            
         },
 
         methods: {
