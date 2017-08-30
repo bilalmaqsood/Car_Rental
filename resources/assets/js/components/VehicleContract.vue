@@ -50,6 +50,7 @@
         },
 
         mounted() {
+            
             $scope = this;
             axios.get('/api/vehicle/'+this.vehicle.id+'/contract-template')
                 .then(function (r) {
@@ -59,6 +60,13 @@
 
         methods: {
             updateContract(){
+                if(this.vehicle.is_booked){
+                new Noty({
+                    type: 'error',
+                    text: "You cannot update contract unless booking complete.",
+                }).show();
+                return false;
+            } else {
                 axios.post('/api/vehicle/'+this.vehicle.id+'/contract-template',this.contractTemplate)
                     .then(function (r) {
                         new Noty({
@@ -66,6 +74,7 @@
                             text: r.data.success,
                         }).show();
                     });
+              }
             },
         }
     }
