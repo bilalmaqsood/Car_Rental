@@ -15,8 +15,8 @@ class AddClientIdToTikcetsTable extends Migration
     {
         Schema::table('tickets', function (Blueprint $table) {
             $table->integer("client_id");
-            $table->string("comments");
-            
+            $table->string("comments")->nullable();
+
         });
     }
 

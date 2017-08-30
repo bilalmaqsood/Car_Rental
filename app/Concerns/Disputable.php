@@ -33,7 +33,7 @@ trait Disputable
 
         $ticket->user()->associate($request->user());
 
-        $ticket->client()->associate($booking->user());
+        $ticket->client()->associate($booking->user);
 
         $inspection->ticket()->save($ticket);
 
