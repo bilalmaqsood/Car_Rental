@@ -525,7 +525,7 @@
                     $btn.button('reset');
                     User.commit('details', false);
                     new Noty({
-                        type: 'warning',
+                        type: 'success',
                         text: 'Booking created successfully for ' + User.state.auth.name,
                     }).show();
                 }).catch(r => {

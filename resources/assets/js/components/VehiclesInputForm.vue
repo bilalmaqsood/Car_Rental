@@ -40,7 +40,7 @@
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.model.$error}">
-                                <input type="number" class="form-control" @keyup="checkSeriveDoc" placeholder="vehicle model" v-model="form.model"
+                                <input type="text" class="form-control" placeholder="vehicle model" v-model="form.model"
                                        @blur="$v.form.model.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.model.$error">
                                     Enter valid model of vehicle</p>
@@ -137,24 +137,6 @@
                                 
                                 <p class=" help-block text-sm" v-if="$v.form.transmission.$error">
                                     Enter transmission </p>
-
-                            </div>
-                        </li>
-
-                        <li>
-                            <div class="form-group" :class="{'has-error': $v.form.available_from.$error}">
-                                <input type="text" class="form-control available_from" placeholder="Available from"
-                                       v-model="form.available_from" @blur="$v.form.available_from.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.available_from.$error">
-                                    Enter available from </p>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="form-group" :class="{'has-error': $v.form.available_to.$error}">
-                                <input type="text" class="form-control available_to" placeholder="available to"
-                                       v-model="form.available_to" @blur="$v.form.available_to.$touch()">
-                                <p class=" help-block text-sm" v-if="$v.form.available_to.$error">Enter available to</p>
 
                             </div>
                         </li>
@@ -459,9 +441,8 @@
                 },
                 model: {
                     required,
-                    minLength: minLength(4),
-                    maxLength: maxLength(4),
-                    between: between(1990,new Date().getFullYear())
+                    minLength: minLength(1),
+                    
                 },
                 variant: {
                     required,
@@ -675,18 +656,6 @@
 
             prepareComponent() {
                 let $this = this;
-                $('.available_to').datetimepicker({
-                    format: 'YYYY-MM-DD',
-                }).on('dp.change', function (e) {
-                    $scope.form.available_to = $(".available_to").val();
-                });
-
-                $('.available_from').datetimepicker({
-                    format: 'YYYY-MM-DD',
-                }).on('dp.change', function (e) {
-                    $scope.form.available_from = $(".available_from").val();
-                });
-
 
                 $('.registration_year').datetimepicker({
                     format: 'YYYY',
@@ -694,12 +663,14 @@
                     maxDate: moment(new Date())
                 }).on('dp.change', function (e) {
                     $scope.form.year = $(".registration_year").val();
+                    $scope.checkSeriveDoc(e);
                 });
 
 
                 $("#documents").click(function () {
                     $(".documentsUpload").click();
                     $(".documentsUpload").change(function () {
+                        $('#sideLoader').show();
                         $.map(this.files, function (val) {
 
                             var reader = new FileReader();
@@ -719,12 +690,15 @@
                                 });
                             };
                         });
+                        setTimeout(function() { $('#sideLoader').hide(); }, 500);
                     });
+                    
                 });
 
                 $("#uploadImages").click(function () {
                     $(".hiddenUpload").click();
                     $(".hiddenUpload").change(function () {
+                        $('#sideLoader').show();
                         $.map(this.files, function (val) {
                             var reader = new FileReader();
                             reader.readAsDataURL(val);
@@ -734,6 +708,7 @@
                                 axios.post('/api/upload/image', fd).then($scope.imagesResponse);
                             };
                         });
+                    setTimeout(function() { $('#sideLoader').hide(); }, 500);
                     });
                 });
 
@@ -752,8 +727,10 @@
             },
             verifyByAVLA() {
                 let param = {registration_number: this.form.registration_number}
+                $('#sideLoader').show();
                 axios.post('/api/driver-and-vehicle-licensing-agency', param)
                     .then((r) => {
+                        setTimeout(function() { $('#sideLoader').hide(); }, 500);
                         if (r.data.success.Response.DataItems.VehicleRegistration) {
                             this.form.year = r.data.success.Response.DataItems.VehicleRegistration.YearOfManufacture;
                             this.form.make = r.data.success.Response.DataItems.VehicleRegistration.Make;
@@ -786,6 +763,7 @@
                 let $this = this;
                 $(".docUploader").click();
                     $(".docUploader").change(function () {
+                        $('#sideLoader').show();
                         $.map(this.files, function (val) {
                            
                             obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
@@ -797,11 +775,15 @@
                             reader.onload = function (e) {
                                 axios.post('/api/upload/document', fd).then(function(r){
                                     obj.path = r.data.success;
-                                    // User.state.auth.documents.push(obj);
+                                    $(".docUploader").val("");
                                 });
-                            };
+                            }
                         });
+                         setTimeout(function() { $('#sideLoader').hide(); }, 500);
+
                     });
+
+                   
             },
             edit(doc){
                 this.doc = doc;
