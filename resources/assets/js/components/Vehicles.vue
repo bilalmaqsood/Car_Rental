@@ -222,15 +222,30 @@
 
             },
             deleteVehicle(){
-                let value = confirm('Are you sure you want to delte '+ this.vehicle.make+" "+this.vehicle.model+" "+this.vehicle.make);
-                if(value){
-                        axios.delete('/api/vehicle/'+this.vehicle.id).then(function () {
-                           let index = $scope.vehicles.indexOf($scope.vehicle);
-                            $scope.vehicles.splice(index, 1);
-                            if($scope.vehicles.length>0)
-                                $scope.vehicle = $scope.vehicles[0];
-                        });
-                }
+            if(this.vehicle.is_booked){
+                new Noty({
+                    type: 'error',
+                    text: "You cannot delete vehicle unless booking complete.",
+                }).show();
+                return false;
+            }
+             let $this=this;
+              var n = new Noty({
+                  text: "<b>Are you sure you want to delte "+ this.vehicle.make+" "+this.vehicle.model+" "+this.vehicle.make+" </b>",
+                  timeout: false,
+                  buttons: [
+                    Noty.button('YES', 'btn btn-success', function () {
+                      n.close();
+                      setTimeout(function() { $this.processDestroy(); }, 100);
+                    
+                    }, {id: 'button1', 'data-status': 'ok'}),
+
+                    Noty.button('NO', 'btn btn-error', function () {
+                        console.log('button 2 clicked');
+                        n.close();
+                    })
+                  ]
+                }).show();
             },
             changeMenuView(view) {
                 if(view=='edit')
@@ -248,6 +263,15 @@
                     this.menuView = view;
             }, 550);
             },
+
+            processDestroy(){
+                axios.delete('/api/vehicle/'+this.vehicle.id).then(()=>{
+                           let index = this.vehicles.indexOf(this.vehicle);
+                            this.vehicles.splice(index, 1);
+                            if(this.vehicles.length>0)
+                                this.vehicle = this.vehicles[0];
+                        });
+            }
         }
     }
 </script>

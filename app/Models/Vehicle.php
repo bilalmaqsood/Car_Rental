@@ -122,7 +122,7 @@ class Vehicle extends Model
      */
     public function getIsBookedAttribute()
     {
-        return (bool) $this->booking()->count();
+        return (bool) $this->booking()->whereIn("status",[4,5,7,8])->count();
     }
 
         /**
