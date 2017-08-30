@@ -27,6 +27,14 @@ class Ticket extends Model
     }
 
     /**
+     * Get the driver of the vehicle
+     */
+    public function client()
+    {
+        return $this->belongsTo(User::class,"client_id");
+    }
+
+    /**
      * Get the inspection of ticket
      */
     public function inspection()
