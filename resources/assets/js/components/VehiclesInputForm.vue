@@ -40,7 +40,7 @@
                         </li>
                         <li>
                             <div class="form-group" :class="{'has-error': $v.form.model.$error}">
-                                <input type="text" class="form-control" placeholder="vehicle model" v-model="form.model"
+                                <input type="number" class="form-control" @keyup="checkSeriveDoc" placeholder="vehicle model" v-model="form.model"
                                        @blur="$v.form.model.$touch()">
                                 <p class=" help-block text-sm" v-if="$v.form.model.$error">
                                     Enter valid model of vehicle</p>
@@ -431,7 +431,7 @@
 
     import Local from '../local';
     import {Boolean} from '../validators';
-    import {required, minLength} from 'vuelidate/lib/validators';
+    import {required, minLength, maxLength, between} from 'vuelidate/lib/validators';
     import User from '../user';
     import Form from '../vehicle-fields';
 
@@ -459,7 +459,9 @@
                 },
                 model: {
                     required,
-                    minLength: minLength(1)
+                    minLength: minLength(4),
+                    maxLength: maxLength(4),
+                    between: between(1990,new Date().getFullYear())
                 },
                 variant: {
                     required,
@@ -688,7 +690,8 @@
 
                 $('.registration_year').datetimepicker({
                     format: 'YYYY',
-                    viewMode: 'years'
+                    viewMode: 'years',
+                    maxDate: moment(new Date())
                 }).on('dp.change', function (e) {
                     $scope.form.year = $(".registration_year").val();
                 });
@@ -823,6 +826,25 @@
                console.log("calling thisss");
                $('#updateModel').modal('hide');
                
+            },
+
+            checkSeriveDoc(e){
+                   let $this = this;
+                    let doc = {title: 'Last service certificate', name:'',path: '',type: '', doc: 'Last_service_certificate', status: '' };
+                    let input = $(e.target).val();
+                if(input.length==4){
+                    let currentYear = new Date().getFullYear();
+                        if(currentYear - input >= 2 ){
+                                this.form.documents.push(doc);
+                        } else {
+                            $this.form.documents.filter(function (val) {
+                                if(JSON.stringify(val) == JSON.stringify(doc))
+                                    $this.form.documents.splice($this.form.documents.indexOf(val), 1); 
+                                   
+                                });
+                        }
+                }
+
             }
         }
 
