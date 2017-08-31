@@ -3,7 +3,7 @@
         <h2>Top vehicles</h2>
 
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
+            <li role="presentation">
                 <a @click="queryVehicles('location')" href="javascript:void(0)" aria-controls="by_location" role="tab" data-toggle="tab">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>

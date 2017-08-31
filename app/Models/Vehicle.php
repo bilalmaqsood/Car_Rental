@@ -2,10 +2,15 @@
 
 namespace Qwikkar\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Vehicle extends Model
 {
+
+    const DISTANCE_UNIT_KILOMETERS = 111.045;
+    const DISTANCE_UNIT_MILES = 69.0;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -111,6 +116,82 @@ class Vehicle extends Model
     protected $appends = [
         'is_booked',
     ];
+
+
+
+
+
+
+    /**
+     * @param        $query
+     * @param        $lat
+     * @param        $lng
+     * @param int    $radius
+     * @param string $units
+     *
+     * @throws \Exception
+     */
+    public function scopeNearLatLng( $query, $lat, $lng, $radius = 500, $units = 'K' )
+    {
+        
+        $distanceUnit = $this->distanceUnit( $units );
+        
+        if ( !( is_numeric( $lat ) && $lat >= -90 && $lat <= 90 ) ) {
+            throw new Exception( "Latitude must be between -90 and 90 degrees." );
+        }
+        
+        if ( !( is_numeric( $lng ) && $lng >= -180 && $lng <= 180 ) ) {
+            throw new Exception( "Longitude must be between -180 and 180 degrees." );
+        }
+        
+        $haversine = sprintf( '(%f * DEGREES(ACOS(COS(RADIANS(%f)) * COS(RADIANS(SUBSTRING_INDEX(location, ",", 1))) * COS(RADIANS(%f - SUBSTRING_INDEX(location, ",", -1))) + SIN(RADIANS(%f)) * SIN(RADIANS(SUBSTRING_INDEX(location, ",", 1)))))) AS distance',
+            $distanceUnit,
+            $lat,
+            $lng,
+            $lat
+        );
+        
+        $subselect = clone $query;
+        $subselect->selectRaw( DB::raw( $haversine ) );
+        
+        // Optimize the query, see details here:
+        // http://www.plumislandmedia.net/mysql/haversine-mysql-nearest-loc/
+        
+        $latDistance = $radius / $distanceUnit;
+        $latNorthBoundary = $lat - $latDistance;
+        $latSouthBoundary = $lat + $latDistance;
+        $subselect->whereRaw( sprintf( "SUBSTRING_INDEX(location, ',', 1) BETWEEN %f AND %f", $latNorthBoundary, $latSouthBoundary ) );
+        
+        $lngDistance = $radius / ( $distanceUnit * cos( deg2rad( $lat ) ) );
+        $lngEastBoundary = $lng - $lngDistance;
+        $lngWestBoundary = $lng + $lngDistance;
+        $subselect->whereRaw( sprintf( "SUBSTRING_INDEX(location, ',', -1) BETWEEN %f AND %f", $lngEastBoundary, $lngWestBoundary ) );
+        $query->from( DB::raw( '(' . $subselect->toSql() . ') as vehicles' ) )
+            ->where( 'distance', '<=', $radius );
+        //$query->withoutGlobalScope('deleted_at');
+    }
+    
+    
+    /**
+     * @param string $units
+     *
+     * @return float
+     * @throws \Exception
+     */
+    private function distanceUnit( $units = 'K' )
+    {
+        
+        if ( $units == 'K' ) {
+            return self::DISTANCE_UNIT_KILOMETERS;
+        } else if ( $units == 'M' ) {
+            return self::DISTANCE_UNIT_MILES;
+        } else {
+            throw new Exception( "Unknown distance unit measure '$units'." );
+        }
+    }
+
+
+
 
 
 

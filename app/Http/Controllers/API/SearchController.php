@@ -76,14 +76,14 @@ class SearchController extends Controller
             'longitude.regex' => 'The longitude is invalid.',
         ]);
 
-        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at')->where('vlc', 1);
+        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at','vlc');
+
+        if ($request->latitude && $request->longitude)
+             $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius?: 5);
 
         if ($request->has('vehicle') && $request->vehicle != '||_||')
             $vehicles = $vehicles->where(function (Builder $q) use ($request) {
                 $q->whereRaw('TRIM(BOTH \' \' FROM CONCAT_WS(\' \', `make`, `model`, `variant`, `year`)) like ?', ['%' . $request->vehicle . '%']);
-//                $q->orWhere('make', 'like', '%' . $request->search . '%');
-//                $q->orWhere('model', 'like', '%' . $request->search . '%');
-//                $q->orWhere('variant', 'like', '%' . $request->search . '%');
             });
 
         if ($request->has('booking_start') && $request->has('booking_end'))
@@ -120,17 +120,17 @@ class SearchController extends Controller
 
         $vehicles->orderBy('created_at', 'desc');
 
-        $vehiclesList = $vehicles->paginate(30);
+        $vehiclesList = $vehicles->where('vlc', 1)->paginate(30);
 
-        if ($request->latitude && $request->longitude)
-            $vehiclesList = $this->filterListRadius(
-                $request->radius?: 5,
-                (object)[
-                    'lat' => $request->latitude,
-                    'long' => $request->longitude
-                ],
-                $vehiclesList
-            );
+
+            // $vehiclesList = $this->filterListRadius(
+            //     $request->radius?: 5,
+            //     (object)[
+            //         'lat' => $request->latitude,
+            //         'long' => $request->longitude
+            //     ],
+            //     $vehiclesList
+            // );
         // $vehiclesList= new \Illuminate\Pagination\LengthAwarePaginator($vehiclesList,$vehiclesList->count(),10);
         return $vehiclesList;
     }
