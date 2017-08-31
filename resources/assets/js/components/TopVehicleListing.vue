@@ -83,16 +83,24 @@
         },
 
         mounted() {
-            this.queryVehicles('location');
+            this.queryVehicles();
         },
 
         methods: {
             queryVehicles(by) {
                 $('#sideLoader').show();
-                let params = "?" + by + '=desc';
+
+
+                let params="?";
 
                 if (by === "rent")
                     params = "?" + by + '=asc';
+
+                if (by === "rating")
+                    params = "?" + by + '=asc';
+
+                if (by === "location")
+                    params = "?" + this.currentLocation();
 
                 axios.get('/vehicles' + params).then(this.listVehicles);
             },
@@ -111,6 +119,19 @@
             },
             itemSelected(vehicle){
                 this.$emit("vehicleSelect",vehicle);
+            },
+            currentLocation(){
+
+                let param;
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position){
+                            param.latitude = position.coords.latitude;
+                            param.longitude = position.coords.longitude;
+                        });
+                    } else { 
+                       return false;
+                    }
+                    return $.param(params);
             }   
         }
     }
