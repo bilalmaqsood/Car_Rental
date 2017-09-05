@@ -40,4 +40,7 @@ return [
 
     'inspection_added' => ':count inspections added.',
 
+    'decline' => 'Booking :status request decline.',
+
+
 ];

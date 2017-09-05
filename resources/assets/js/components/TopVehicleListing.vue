@@ -131,7 +131,7 @@
                     } else { 
                        return false;
                     }
-                    return $.param(params);
+                    return $.param(param);
             }   
         }
     }

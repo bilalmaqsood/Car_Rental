@@ -371,15 +371,21 @@ trait BookingOperations
     {
         $booking = $log->booking;
 
-        $booking->fill($log->requested_data);
+        // $booking->fill($log->requested_data);
 
         $vehicle = $booking->vehicle;
 
-        if (isset($log->requested_data['start_date']) || isset($log->requested_data['end_date'])) {
+        if ($log->requested_data['status'] == 8) {
             $booking->status = 8;
-        } elseif ($log->requested_data['status'] == 5 || $request->status==6) {
-            $this->changeSlotsStatus($vehicle);
-            $booking->status = 6;
+            $booking->end_date = Carbon::parse($log->requested_data['end_date'])->format("Y-m-d");
+
+            $this->extendBooking($booking,$log);
+        } elseif ($log->requested_data['status'] == 6) {
+            // $this->changeSlotsStatus($vehicle);
+            // Accept early cancelation and update booking end date
+            $booking->status = 4;
+            $booking->end_date = Carbon::parse($log->requested_data['end_date'])->format("Y-m-d");
+            $this->earlyCancleBooking($booking,$log);
         } else {
             $booking->status = $request->status;
 
@@ -420,9 +426,59 @@ trait BookingOperations
     {
         $booking = $log->booking;
 
+
+        if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===5 && $booking->status===4)
+            return trans('booking.decline', [
+            'status' => strtolower($booking->statusTypes[$log->requested_data['old_status']])
+        ]);
+
+        if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===7 && $booking->status===4)
+            return trans('booking.decline', [
+            'status' => strtolower($booking->statusTypes[$log->requested_data['old_status']])
+        ]);
+
+        if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===5)
+            return trans('booking.fulfilled', [
+            'user' => $log->fulfilled->name,
+            'status' => strtolower($booking->statusTypes[6])
+        ]);
+
         return trans('booking.fulfilled', [
             'user' => $log->fulfilled->name,
             'status' => strtolower($booking->statusTypes[$booking->status])
         ]);
+    }
+
+    protected function extendBooking($booking,$log){
+        $booking->vehicle->timeslots()->where("day","<=",Carbon::parse($log->requested_data['end_date'])->format("Y-m-d"))
+                             ->update(["status" => 2, "booking_id" => $booking->id]);
+
+
+
+    }
+
+    protected function earlyCancleBooking($booking,$log){
+        $start_date = $booking->timeslots->first();
+        $booking->timeslots()->where("day",">",Carbon::parse($log->requested_data['end_date'])->format("Y-m-d"))->update(["status" => 1, "booking_id" => null]);
+
+    }
+
+        public function verifySlots(Request $request)
+    {
+        $dates = $this->generateDateRange($request->start_date, $request->end_date);
+
+        $vehicle = Vehicle::whereId($request->vehicle_id)->with(['timeSlots' => function ($with) use ($request) {
+            $with->where('status', 1);
+            $with->whereBetween('day', [Carbon::parse($request->start_date), Carbon::parse($request->end_date)]);
+        }])->first();
+
+        // validate days for free time slots
+        $vehicle->timeSlots->each(function ($ts) use (&$dates) {
+            if (false !== $key = array_search($ts->day->format('Y-m-d'), $dates))
+                unset($dates[$key]);
+        });
+        $dates = array_values($dates);
+
+        return api_response(!count($dates));
     }
 }

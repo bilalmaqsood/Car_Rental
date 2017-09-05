@@ -3,6 +3,7 @@
 namespace Qwikkar\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Qwikkar\Models\TimeSlot;
 
 class Booking extends Model
 {
@@ -73,6 +74,15 @@ class Booking extends Model
         'vehicle_id',
         'user_id',
     ];
+
+
+    /**
+     * Get all the timeslots of the vehicle.
+     */
+    public function timeslots()
+    {
+        return $this->hasMany(TimeSlot::class);
+    }
 
     /**
      * Get all of the balance logs for the withdraws.

@@ -79,7 +79,8 @@ import User from '../user';
 
             cancelParams() {
                 return {
-                    note: this.cancle_note,
+                    note: this.cancel_note,
+                    end_date: this.end_date,
                     status: 5
                 }
             },

@@ -257,6 +257,8 @@ class BookingController extends Controller
             'status' => $status,
             'old_status' => $booking->status,
             'vehicle_id' => $booking->vehicle->id,
+            'note' => $request->note,
+            'target_date' => $request->end_date,
             'image' => $booking->vehicle->images->first(),
             'title' => 'Booking ' . strtolower($booking->statusTypes[$status]) . ' request',
             'user' => $request->user()->name,
@@ -316,6 +318,11 @@ class BookingController extends Controller
         $requestData = $request->all();
         unset($requestData['note']);
         unset($requestData['log_id']);
+        
+        if(isset($log->requested_data['end_date']))
+        $requestData["end_date"] =  $log->requested_data['end_date']; 
+         
+        $requestData["old_status"] =  $log->requested_data['status'];  
 
         $log->requested_data = $requestData;
 

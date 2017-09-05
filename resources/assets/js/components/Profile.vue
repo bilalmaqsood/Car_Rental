@@ -26,7 +26,7 @@
                     </div>
 
                     <div class="profile_content">
-                        <h3 :class="{clickable: notif.data.vehicle}" v-if="notif.data.title" @click="approve_action(notif)">{{notif.data.title}}</h3>
+                        <h3 :class="{clickable: notif.data.vehicle}" v-if="notif.data.title" >{{notif.data.title}}</h3>
                         <div v-if="notif.data.status===12">
                             <p>You booking is successfully closed</p>
                             <div class="ratting"></div>
@@ -40,6 +40,12 @@
                         <p v-if="propExist(notif.data,'contract_start')"><b>Contract start:</b> {{ date_format(notif.data.contract_start) }} </p>
                         <p v-if="propExist(notif.data,'contract_end')"><b>Contract end:</b> {{ date_format(notif.data.contract_end) }}</p>
                         <p v-if="[1].includes(notif.data.status)" class="m-t-1">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notif.data.deposit | currency }}</span> have been taken from your default card.</p>
+
+                        <div class="btn-group" v-if="showActionButtons(notif)">
+                          <button type="button" class="btn btn-success" @click="approve_action(notif)">Approve</button>
+                          <button type="button" class="btn btn-danger" @click="cancle_action(notif)">Decline</button>
+                        </div>
+
                         <p class="m-t-1">
                             <a href="javascript:" class="primary-button" v-if="isActionable(notif)" @click="viewContract(notif)">view contract</a>
                             <a href="javascript:" class="primary-button" @click="markRead(notif)">mark read</a>
@@ -86,6 +92,10 @@
         },
 
         methods: {
+            showActionButtons(noti){
+                let allowed = [5, 7];
+                return allowed.includes(noti.data.status) &&  User.state.auth.type=='owner'; 
+            },
             isActionable(notification) {
                 let allowed = [1, 2, 3];
 
@@ -166,12 +176,23 @@
 
             cancle_action(notification) {
 //                TODO: need to do this
-                if (notification.data.id) {
-                    axios.patch('/api/booking/' + notification.data.id + '/status', this.cancleParams())
-                        .then(response => {
-                            console.log(response);
-                        });
+                    
+                     if (notification.data.id) {
+                    $(".side-loader").show();
+                    axios.get('/api/booking/' + notification.data.id + '/logs')
+                        .then(this.cancelRequest);
+
+                    setTimeout(function () {
+                        $(".side-loader").hide();
+                    },500)
                 }
+
+                // if (notification.data.id) {
+                //     axios.patch('/api/booking/' + notification.data.id + '/status', this.cancleParams())
+                //         .then(response => {
+                //             console.log(response);
+                //         });
+                // }
             },
 
             approveRequest(response) {
@@ -180,7 +201,7 @@
                     let booking_id = response.data.success.booking_log[0].booking_id;
                     let status = response.data.success.booking_log[0].requested_data.status;
                     let log_id = response.data.success.booking_log[0].id;
-                    let params = {log_id: log_id, status: ""};
+                    let params = {log_id: response.data.success.booking_log[0].id, status: ""};
                     console.log(response.data.success);
                     if (status === 5)
                         params.status = 6;
@@ -192,6 +213,15 @@
                         params.status = 8;
 
                     if(params.status)
+                        this.sendRequest(response.data.success.id, params);
+
+                }
+            },
+
+            cancelRequest(response) {
+                if (response.data.success.booking_log[0] !== undefined) {
+                    let params = {log_id: response.data.success.booking_log[0].id, status: 4};
+                    console.log(response.data.success);
                         this.sendRequest(response.data.success.id, params);
 
                 }
