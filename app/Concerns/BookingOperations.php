@@ -430,12 +430,12 @@ trait BookingOperations
         $booking = $log->booking;
 
 
-        if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===5 && $booking->status===4)
+        if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===5 && request()->status===4)
             return trans('booking.decline', [
             'status' => strtolower($booking->statusTypes[$log->requested_data['old_status']])
         ]);
 
-        if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===7 && $booking->status===4)
+        if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===7 && request()->status===4)
             return trans('booking.decline', [
             'status' => strtolower($booking->statusTypes[$log->requested_data['old_status']])
         ]);
