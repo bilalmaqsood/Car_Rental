@@ -206,7 +206,7 @@ trait BookingOperations
     protected function compileTemplate(Booking $booking)
     {
         $compiledString = \Blade::compileString($booking->vehicle->contractTemplate->template);
-
+        
         $dataPlaced = render($compiledString, [
             'owner_company' => $booking->vehicle->owner->company ?: '',
             'owner_name' => $booking->vehicle->owner->user->name ?: '',
@@ -380,12 +380,15 @@ trait BookingOperations
             $booking->end_date = Carbon::parse($log->requested_data['end_date'])->format("Y-m-d");
 
             $this->extendBooking($booking,$log);
+            $this->updateContractTemplate($booking);            
+
         } elseif ($log->requested_data['status'] == 6) {
             // $this->changeSlotsStatus($vehicle);
             // Accept early cancelation and update booking end date
             $booking->status = 4;
             $booking->end_date = Carbon::parse($log->requested_data['end_date'])->format("Y-m-d");
             $this->earlyCancleBooking($booking,$log);
+            $this->updateContractTemplate($booking);
         } else {
             $booking->status = $request->status;
 
@@ -480,5 +483,15 @@ trait BookingOperations
         $dates = array_values($dates);
 
         return api_response(!count($dates));
+    }
+
+    protected function updateContractTemplate($booking){
+            $dataPlaced = $this->compileTemplate($booking);
+
+            $fileName = '/document/' . md5($booking->vehicle->vehicle_name . '-' . $booking->id) . '.pdf';
+
+            $pdfData = ['content' => $dataPlaced];
+
+            \PDF::loadView('pdf.contract', $pdfData)->save(storage_path('app/public' . $fileName));
     }
 }
