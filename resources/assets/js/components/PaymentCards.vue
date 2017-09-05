@@ -116,7 +116,7 @@
                 <payment-card-form  @changeView="handleForm" v-if="addCard" :editCard="editCard" :selectedcard="card" key="add-cards"></payment-card-form>
             </transition>
 
-            <button class="primary-button" type="button" @click="cardAdd">{{ addCard?'Cancle':'Add Card' }}</button>
+            <button class="primary-button" type="button" @click="cardAdd">{{ addCard?'Cancel':'Add Card' }}</button>
            
             
         </div>
