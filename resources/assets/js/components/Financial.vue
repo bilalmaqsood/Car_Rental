@@ -254,6 +254,14 @@
             },
 
             withdrawAmount(e) {
+                if(!this.account.number){
+                         new Noty({
+                            type: 'warning',
+                            text: 'Set your bank account first!.'
+                        }).show();
+                    return false;
+                }                
+
                 $('#sideLoader').show();
 
                 let $t = this;
@@ -265,6 +273,12 @@
                     $('#sideLoader').hide();
                     $btn.button('reset');
                     $t.prepareComponent();
+                }).catch(function(r){
+                    new Noty({
+                            type: 'error',
+                            text: r.response.data.error
+                        }).show();
+                    
                 });
             }
         }
