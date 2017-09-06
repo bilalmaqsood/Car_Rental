@@ -17,7 +17,7 @@ class CreateWithdrawsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->decimal('amount');
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

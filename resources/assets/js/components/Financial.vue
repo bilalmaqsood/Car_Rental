@@ -13,7 +13,7 @@
                             <li><p>Total withdraws<span>{{earnings.withdraw | currency('0,0.00')}}</span></p></li>
                             <li>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Amount to withdraw" v-model="withdraw">
+                                    <input id="amount-withdraw"type="text" class="form-control" placeholder="Amount to withdraw" v-model="withdraw">
                                 </div>
                                 <button :disabled="$v.withdraw.$invalid" @click="withdrawAmount" data-loading-text="processing ...">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
@@ -189,6 +189,8 @@
 
         methods: {
             prepareComponent() {
+                this.withdraw=null;
+                
                 $('#sideLoader').show();
 
                 axios.get('/api/earnings').then(this.processEarnings);
@@ -271,7 +273,12 @@
                     amount: this.withdraw
                 }).then(function (r) {
                     $('#sideLoader').hide();
+                     new Noty({
+                            type: 'success',
+                            text: 'withdraw amount will be tranfer in your account in 48 hours.'
+                        }).show();
                     $btn.button('reset');
+                    $("#amount-withdraw").val("");
                     $t.prepareComponent();
                 }).catch(function(r){
                     new Noty({
