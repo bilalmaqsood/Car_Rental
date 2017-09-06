@@ -3,13 +3,13 @@
         <ul>
             <li>
                 <div class="form-group">
-                    <div class="input-group login-input">
+                    <div class="input-group login-input" id="prefetch-make">
                         <div class="input-group-addon">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                             </svg>
                         </div>
-                        <input type="text" class="form-control" placeholder="vehicle" v-model="vehicle">
+                        <input type="text" class="form-control typeahead" placeholder="vehicle" v-model="vehicle">
                     </div>
                 </div>
             </li>

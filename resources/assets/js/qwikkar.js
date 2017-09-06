@@ -9,6 +9,8 @@ require('./bootstrap');
 
 require('./locationpicker.jquery');
 
+window.Bloodhound = require('./typeahead');
+
 require('./design');
 
 require('jq-signature');

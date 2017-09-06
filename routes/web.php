@@ -31,7 +31,10 @@ Route::get('/vehicle/document/path', function () {
     return response(File::get(resource_path('assets/images/car_img.png')), 200, array('content-type' => 'image/png'));
 });
 
-
+Route::get('/search/vehicle-titles', function(){
+          $vehicles =  \Qwikkar\Models\Vehicle::select([\DB::raw("CONCAT(make,model,variant) AS vehicle")])->pluck("vehicle");
+            echo json_encode( $vehicles->toArray() );
+});
 
 
 
