@@ -83,6 +83,7 @@ this.prepareComponent();
 
                 setTimeout(function () {
                     $t.highlightDays(false);
+                    $t.highlightOldDays($t.old_slots);
                 }, 1000);
             },
 
@@ -141,11 +142,13 @@ this.prepareComponent();
                             }).show();
 
                             this.resetDatesLessSeven();
+                            
                         } else{
                             new Noty({
                                 type: 'success',
                                 text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
                             }).show();
+
                             }
                     } else {
                         new Noty({
@@ -154,10 +157,11 @@ this.prepareComponent();
                         }).show();
                         this.start_date = null;
                         this.end_date = null;
-                        $e.find('td').removeClass('highlight-day');
+                        $t.highlightOldDays($t.old_slots);
+                        
                     }
                 } else {
-                    $e.find('td').removeClass('highlight-day');
+                    $t.highlightOldDays($t.old_slots);
                     new Noty({
                         type: 'success',
                         text: 'Dates are reset.',
@@ -196,7 +200,7 @@ this.prepareComponent();
                     });
                 }
             },
-            highlightOldDays(response){
+            highlightOldDays(response,active=true){
                 let $t = this;
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
                 let $dates=[];
@@ -206,6 +210,8 @@ this.prepareComponent();
 
                   $e.find('td').each(function (i, e) {
                             let $elem = $(e);
+                            if(active)
+                            $elem.removeClass('active');
                             if (_.indexOf($dates,$elem.data('day'))>0) 
                                 $elem.addClass('highlight-day');
                         });
