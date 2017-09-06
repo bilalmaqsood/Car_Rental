@@ -1,68 +1,10 @@
 <template>
     <div>
-        <div class="main_profile_container">
-            <div class="profile_top_content">
-                <div class="background_img" v-if="!!vuex.state.auth.avatar" :style="{'background-image': 'url(' + vuex.state.auth.avatar + ')'}"  alt=""></div>
-                <div v-else style="width:100%;height:250px;text-align:center;">
-                    <img src="/images/avatar-default.png" style="width:auto;" alt="">
-                </div>
-                <div class="update_profile">
-                    <h3>{{vuex.state.auth.name}}</h3>
-                    <p><span v-if="age">Age: <i>{{age}}</i>&nbsp; |</span> <span class="phone-number" v-if="vuex.state.auth.phone"><i>{{vuex.state.auth.phone}}</i></span></p>
-                    <button id="uploadImages" class="secodery_btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
-                        </svg>
-                    </button>
-                    <input type="file" class="hidden hiddenUpload" name="files[]"
-                           value="upload">
-                </div>
-            </div>
 
-            <transition-group name="slide-fade" tag="div">
-                <div v-for="notif in notifications" :class="NotyClass(notif)" v-bind:key="notif.id" class="pofile_content_wrapper">
-                    <div v-if="propExist(notif.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notif.data.image + ')' }">
-                        <img :src="notif.data.image" alt="">
-                    </div>
 
-                    <div class="profile_content">
-                        <h3 :class="{clickable: notif.data.vehicle}" v-if="notif.data.title" >{{notif.data.title}}</h3>
-                        <div v-if="notif.data.status===12">
-                            <p>You booking is successfully closed</p>
-                            <div class="ratting"></div>
-                            <input type="text" v-model="note">
-                            <button class="primary-button" @click="processRating(notif)">
-                                Rate now
-                            </button>
-                        </div>
-                        <p v-if="[1].includes(notif.data.status)"><span>{{notif.data.user}}</span> sent you booking request</p>
-                        <p v-if="propExist(notif.data,'vehicle')">{{notif.data.vehicle}}</p>
-                        <p v-if="propExist(notif.data,'contract_start')"><b>Contract start:</b> {{ date_format(notif.data.contract_start) }} </p>
-                        <p v-if="propExist(notif.data,'contract_end')"><b>Contract end:</b> {{ date_format(notif.data.contract_end) }}</p>
-                        <p v-if="[1].includes(notif.data.status)" class="m-t-1">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notif.data.deposit | currency }}</span> have been taken from your default card.</p>
 
-                        <div class="btn-group" v-if="showActionButtons(notif)">
-                          <button type="button" class="btn btn-success" @click="approve_action(notif)">Approve</button>
-                          <button type="button" class="btn btn-danger" @click="cancle_action(notif)">Decline</button>
-                        </div>
-
-                        <p class="m-t-1">
-                            <a href="javascript:" class="primary-button" v-if="isActionable(notif)" @click="viewContract(notif)">view contract</a>
-                            <a href="javascript:" class="primary-button" @click="markRead(notif)">mark read</a>
-                        </p>
-                    </div>
-                </div>
-            </transition-group>
-        </div>
-
-        <transition name="slide-fade" mode="in-out">
-            <sign-contract v-if="booking" :booking="booking" @closeContract="cleanViewContract"></sign-contract>
-        </transition>
-
-        <transition name="slide-fade" mode="in-out">
-            <driver-profile></driver-profile>
-        </transition>
-
+        
+        
     </div>
 </template>
 
@@ -72,28 +14,16 @@
     export default {
         data() {
             return {
-                notifications: '',
-                booking_log: '',
-                vuex: User,
-                booking: null,
-                notify: null,
-                rating: null,
-                note: null,
+                
             };
         },
 
         computed: {
-            age() {
-                if (!User.state.auth)
-                    return 0;
-                else if (typeof User.state.auth.dob !== 'undefined')
-                    return moment.utc().diff(moment.utc(User.state.auth.dob, 'YYYY-MM-DD H:m:s', true), 'years');
-            }
+        
         },
 
         mounted() {
 
-            this.prepareComponent();
         },
 
         methods: {
