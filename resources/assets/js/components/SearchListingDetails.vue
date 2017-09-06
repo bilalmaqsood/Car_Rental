@@ -147,7 +147,8 @@
 
             let rating = this.user.state.vehicleData.owner.avg_rating;
             $('.ratting').starrr({
-                  rating: rating
+                  rating: rating,
+                  readOnly: true
                 });
             }
         }

@@ -193,7 +193,8 @@
                     }
                 let rating = this.avg_rating;
                 $('.ratting').starrr({
-                    rating: rating
+                    rating: rating,
+                    readOnly: true
                 });
             },
             fetchAddress(arg){
