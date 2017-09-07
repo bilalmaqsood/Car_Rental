@@ -41,23 +41,6 @@
 
     <script>
         localStorage.removeItem('__' + Qwikkar.baseUrl + '/search/vehicle-titles__data');
-        function typeaheadMake() {
-            
-          var make = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.whitespace,
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            // url points to a json file that contains an array of country names, see
-            // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
-            prefetch: Qwikkar.baseUrl + '/search/vehicle-titles'
-          });
-          $('#prefetch-make .typeahead').typeahead(null, {
-            name: 'make',
-            source: make
-          });
-        }
-        $(document).ready(function() {
-            typeaheadMake();
-        });
     </script>
 </body>
 </html>

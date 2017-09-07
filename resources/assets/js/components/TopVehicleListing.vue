@@ -79,25 +79,39 @@
         data() {
             return {
                 vehicles: [],
+                sort: 'desc',
             };
         },
 
         mounted() {
             this.queryVehicles();
+            var make = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.whitespace,
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            // url points to a json file that contains an array of country names, see
+            // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+            prefetch: Qwikkar.baseUrl + '/search/vehicle-titles'
+          });
+          $('#prefetch-make .typeahead').typeahead(null, {
+            name: 'make',
+            source: make
+          });
         },
 
         methods: {
             queryVehicles(by) {
                 $('#sideLoader').show();
+                
+                if(this.sort === 'desc')
+                    this.sort='asc'
+                else
+                    this.sort='desc'
 
 
                 let params="?";
 
-                if (by === "rent")
-                    params = "?" + by + '=asc';
-
-                if (by === "rating")
-                    params = "?" + by + '=asc';
+                if (by === "rent" || by === "rating")
+                    params = "?" + by +"="+this.sort;
 
                 if (by === "location")
                     params = "?" + this.currentLocation();
@@ -106,7 +120,7 @@
             },
 
             listVehicles(response) {
-                this.vehicles = response.data.success;
+                this.vehicles = response.data.success.data;
 
                 setTimeout(function () {
                     $(".owl-slider").owlCarousel({
@@ -115,7 +129,7 @@
                         navigation: false
                     });
                     $('#sideLoader').hide();
-                }, 10);
+                }, 100);
             },
             itemSelected(vehicle){
                 this.$emit("vehicleSelect",vehicle);

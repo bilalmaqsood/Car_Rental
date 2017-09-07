@@ -32,13 +32,27 @@ class HomeController extends Controller
             $key = key($data);
             $value = $data[$key];
 
-            if ($key == 'rating')
-                throw new NotFoundHttpException();
+            if ($key == 'rating') {
 
-            return api_response(Vehicle::orderBy($key, $value)->get()->take(12));
+                $vehicles = Vehicle::leftjoin('feedback', 'feedback.user_id', '=', 'vehicles.owner_id')
+                    ->select(array('vehicles.*',
+                        \DB::raw('AVG(feedback.rating) as ratings_average')
+                    ))
+                    ->groupBy('vehicles.id')
+                    ->orderBy("ratings_average", $value)
+                    ->paginate(12);
+            }
+
+
+
+             else
+
+            $vehicles = Vehicle::orderBy($key, $value)->paginate(12);
+
+            return api_response($vehicles);
         }
 
-        return api_response(Vehicle::all());
+        return api_response(Vehicle::paginate(12));
     }
 
     public function TermsConditions()

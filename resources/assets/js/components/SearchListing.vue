@@ -48,6 +48,9 @@
                         </div>
                     </a>
                 </div>
+                <div  v-if="user.state.searchResults.length == 0" key="12121212">
+                    <h1>Oops! no result found.. </h1>
+                </div>
             </transition-group>
 
             <search-listing-details :user="user" v-if="user.state.detailsDisplay"></search-listing-details>
