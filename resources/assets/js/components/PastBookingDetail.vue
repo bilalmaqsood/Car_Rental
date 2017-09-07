@@ -86,6 +86,7 @@
             loadSideView(view) {
                 this.$emit('sideView', {
                     id: this.booking.id,
+                    data: this.booking,
                     index: this.index,
                     past: true,
                     view: view

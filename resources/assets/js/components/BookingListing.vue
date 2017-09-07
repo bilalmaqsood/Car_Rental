@@ -35,12 +35,14 @@
             </transition>
 
             <transition name="flip" mode="out-in">
+              
                 <sign-contract v-if="sideView=='sign' || storage.state.menuView=='sign'" key="sign-contract" @closeContract="clearSideView" :booking="booking"></sign-contract>
                 <car-inspection v-if="sideView=='return_inspection' || sideView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
                 <extend-cancel-booking v-if="sideView=='extend'" key="booking-extend" :user="storage" @clearSideView="clearSideView"></extend-cancel-booking>
                 <booking-documents v-if="sideView=='documents'" key="booking-documents" :documents="documents"></booking-documents>
                 <chat-booking v-if="sideView=='chat'" key="booking-chat" :viewHeight="viewHeight" :user="storage" :bookingId="inProcess.id"></chat-booking>
             </transition>
+        <search-listing-details :user="storage" v-if="book_past" key="past-booking"></search-listing-details>
         </div>
     </div>
 </template>
@@ -54,6 +56,7 @@
         data() {
             return {
                 sideView: '',
+                book_past: false,
                 showView: false,
                 signature: true,
                 booking: {},
@@ -126,6 +129,7 @@
             },
 
             loadSideView(data) {
+
                 let $this = this;
                 if(data.view=='sign' && User.state.auth.type === 'client'){
                     axios.get('/api/credit-card').then(function(r){
@@ -144,7 +148,17 @@
                         } else{ $this.processView(data); }
                     });
                 }else if(data.view=="bookNow"){
-                    console.log(data);
+                    
+                    let $this = this;
+                      axios.get('/api/vehicle/' + data.data.vehicle.id)
+                    .then(response => {
+                       setTimeout(function() { 
+                        User.commit('vehicle', response.data.success);
+                        $this.book_past = true;
+                       }, 500);
+                        
+                    });
+                    
                 } else{
                     this.processView(data);
                 }

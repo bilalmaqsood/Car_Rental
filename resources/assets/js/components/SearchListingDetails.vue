@@ -106,6 +106,7 @@
         },
 
         mounted() {
+            
             this.prepareComponent();
             this.inilizeRating();
         },
