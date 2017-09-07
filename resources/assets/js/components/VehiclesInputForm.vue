@@ -672,7 +672,7 @@
                     $(".documentsUpload").change(function () {
                         $('#sideLoader').show();
                         $.map(this.files, function (val) {
-
+                            if($this.isUploadAble(val)){
                             var reader = new FileReader();
                             let name = val.name.substring(0, val.name.lastIndexOf('.'));
                             let type = val.name.split('.').pop();
@@ -689,6 +689,7 @@
                                      });
                                 });
                             };
+                           } 
                         });
                         setTimeout(function() { $('#sideLoader').hide(); }, 500);
                     });
@@ -700,6 +701,7 @@
                     $(".hiddenUpload").change(function () {
                         $('#sideLoader').show();
                         $.map(this.files, function (val) {
+                            if($this.isUploadAble(val)){
                             var reader = new FileReader();
                             reader.readAsDataURL(val);
                             var fd = new window.FormData();
@@ -707,6 +709,7 @@
                             reader.onload = function (e) {
                                 axios.post('/api/upload/image', fd).then($scope.imagesResponse);
                             };
+                    }
                         });
                     setTimeout(function() { $('#sideLoader').hide(); }, 500);
                     });
@@ -765,7 +768,7 @@
                     $(".docUploader").change(function () {
                         $('#sideLoader').show();
                         $.map(this.files, function (val) {
-                           
+                           if($this.isUploadAble(val)){
                             obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
                             obj.type = val.name.split('.').pop();
                             var reader = new FileReader();
@@ -778,7 +781,8 @@
                                     $(".docUploader").val("");
                                 });
                             }
-                        });
+                        }
+                    });
                          setTimeout(function() { $('#sideLoader').hide(); }, 500);
 
                     });
@@ -809,7 +813,16 @@
                $('#updateModel').modal('hide');
                
             },
-
+            isUploadAble(file){
+                if(parseInt(file.size)/1024/1024 >5.00){
+                    new Noty({
+                                type: 'error',
+                                text: file.name+" Exceeds the Max Size! 5MB",
+                            }).show();
+                    return false;
+                }
+                return true;
+            },
             checkSeriveDoc(e){
                    let $this = this;
                     let doc = {title: 'Last service certificate', name:'',path: '',type: '', doc: 'Last_service_certificate', status: '' };
