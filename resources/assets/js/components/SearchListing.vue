@@ -10,7 +10,7 @@
 
         <div class="search_container search_container_width">
             <transition-group name="list" tag="div">
-                <div class="search_car" v-for="i in vehicles" :key="i.id">
+                <div class="search_car" v-for="i in user.state.searchResults.data" :key="i.id">
                     <div class="search_car_content" :style="{width: user.state.detailsDisplay ? '0' : '', height: user.state.detailsDisplay ? '0px' : ''}">
                         <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a></h3>
                         <ul>
@@ -52,7 +52,7 @@
                     <h1>Oops! no result found.. </h1>
                 </div>
             </transition-group>
-                <button @click="loadMore" v-show="next_page_url" class="primary-button">Load more..</button>
+                <button @click="loadMore" v-show="user.state.searchResults.next_page_url" class="primary-button">Load more..</button>
             <search-listing-details :user="user" v-if="user.state.detailsDisplay"></search-listing-details>
         </div>
     </div>
@@ -68,7 +68,6 @@
             return {
                 next_page_url: User.state.searchResults.next_page_url,
                 user: User,
-                vehicles: User.state.searchResults.data,
                 item: {},
                 filterDisplay: 'none',
                 detailsDisplay: false,
@@ -199,8 +198,8 @@
             loadMore(){
                $('#sideLoader').show();
                
-               axios.get(this.next_page_url).then(response=>{
-                   this.vehicles = this.vehicles.concat(response.data.success.data);
+               axios.get(User.state.searchResults.next_page_url).then(response=>{
+                   User.state.searchResults.data = User.state.searchResults.data.concat(response.data.success.data);
                    this.next_page_url = response.data.success.next_page_url;
                    setTimeout(function() { $('#sideLoader').hide(); }, 500); 
                });

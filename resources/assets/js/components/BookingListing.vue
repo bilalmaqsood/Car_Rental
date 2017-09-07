@@ -143,6 +143,8 @@
                             // $this.sideView = '';
                         } else{ $this.processView(data); }
                     });
+                }else if(data.view=="bookNow"){
+                    console.log(data);
                 } else{
                     this.processView(data);
                 }
@@ -160,6 +162,7 @@
                 this.inProcess = null;
             },
             processView(data){
+                
                 if (!this.inProcess || this.inProcess.id !== data.id || this.sideView !== data.view) {
                     if (this.sideView === data.view) {
                         this.sideView = '';

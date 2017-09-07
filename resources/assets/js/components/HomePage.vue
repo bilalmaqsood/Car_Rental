@@ -76,7 +76,7 @@
                             $t.details = true;
                         }, 500);
                         User.commit('view', true);
-                        User.commit('listing', [response.data.success]);
+                        User.commit('listing', {data: [response.data.success]});
                     });
             }
         }
