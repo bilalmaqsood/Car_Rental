@@ -68,6 +68,7 @@
                             </div>
                         </div>
                     </transition-group>
+                    <button @click="loadMore" v-show="next_page_url" class="primary-button">Load more..</button>
                 </div>
             </div>
         </div>
@@ -78,6 +79,9 @@
     export default {
         data() {
             return {
+                current_page: '',
+                total: '',
+                next_page_url: '',
                 vehicles: [],
                 sort: 'desc',
             };
@@ -121,7 +125,7 @@
 
             listVehicles(response) {
                 this.vehicles = response.data.success.data;
-
+                this.next_page_url = response.data.success.next_page_url;
                 setTimeout(function () {
                     $(".owl-slider").owlCarousel({
                         items: 1,
@@ -146,6 +150,17 @@
                        return false;
                     }
                     return $.param(param);
+            },
+            loadMore(){
+               $('#sideLoader').show();
+               
+               axios.get(this.next_page_url).then(response=>{
+                // _.merge
+                   this.vehicles = this.vehicles.concat(response.data.success.data);
+                   this.next_page_url = response.data.success.next_page_url;
+                   setTimeout(function() { $('#sideLoader').hide(); }, 500); 
+               });
+                
             }   
         }
     }

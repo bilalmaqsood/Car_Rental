@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function topVehicles(Request $request)
     {
-        $data = $request->all();
+        $data = $request->except('page');
 
         if (count($data)) {
             $key = key($data);
@@ -40,19 +40,19 @@ class HomeController extends Controller
                     ))
                     ->groupBy('vehicles.id')
                     ->orderBy("ratings_average", $value)
-                    ->paginate(12);
+                    ->paginate(6);
             }
 
 
 
              else
 
-            $vehicles = Vehicle::orderBy($key, $value)->paginate(12);
-
+            $vehicles = Vehicle::orderBy($key, $value)->paginate(6);
+            $vehicles->appends(request()->except('page'))->links();
             return api_response($vehicles);
         }
 
-        return api_response(Vehicle::paginate(12));
+        return api_response(Vehicle::paginate(6));
     }
 
     public function TermsConditions()
