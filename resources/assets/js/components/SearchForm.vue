@@ -127,7 +127,7 @@
                     .get('/api/search/vehicle' + this.queryParams())
                     .then(function (r) {
                         User.commit('view', true);
-                        User.commit('listing', r.data.success.data);
+                        User.commit('listing', r.data.success);
                         $t.$emit('showListing');
                         $btn.button('reset');
                     });
