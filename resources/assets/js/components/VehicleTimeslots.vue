@@ -35,18 +35,19 @@
                 contractTemplate: false,
                 start_date: '',
                 end_date: '',
-                old_slots: '',
+                old_slots: null,
             };
         },
 
         mounted() {
             $scope = this;
                         axios.get('/api/vehicle/'+this.vehicle.id+"/time-slot").then(r=>{
-                this.old_slots = r;
-                this.highlightOldDays(r);
-            }
-                );
-this.prepareComponent();
+                            this.old_slots = r;
+                            this.highlightOldDays(r);
+                        }).catch(function(){
+                            $scope.highlightOldDays(null);
+                        });
+                    this.prepareComponent();
 
 
             // $("th.next").on("click", function(event) {
@@ -171,6 +172,7 @@ this.prepareComponent();
             },
 
             processTimeslots(){
+                let $this = this;
                 if(this.end_date=='' && this.end_date==''){
                     new Noty({
                         type: 'warning',
@@ -185,6 +187,7 @@ this.prepareComponent();
 
                     this.resetDatesLessSeven();
                 } else {
+                    $('#sideLoader').show();
                     var dateArr=[];
                     var fromDate = this.start_date.format('YYYY-MM-DD');
                     var toDate = this.end_date.format('YYYY-MM-DD');
@@ -197,17 +200,20 @@ this.prepareComponent();
                             type: 'success',
                             text: r.data.success,
                         }).show();
+                        $this.$emit("changeView");
                     });
+                    setTimeout(function() { $('#sideLoader').hide(); }, 500);
                 }
             },
             highlightOldDays(response,active=true){
                 let $t = this;
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
                 let $dates=[];
+                if(response){
                 _.forEach(response.data.success, function(value) {
                     $dates.push(moment(value.day, "YYYY-MM-DD").format("MM/DD/YYYY") );
                     });
-
+                    }
                   $e.find('td').each(function (i, e) {
                             let $elem = $(e);
                             if(active)

@@ -10,6 +10,7 @@ use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\TimeSlot;
 use Qwikkar\Models\Vehicle;
 use Qwikkar\Models\Booking;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class TimeSlotController extends Controller
 {
@@ -84,7 +85,7 @@ class TimeSlotController extends Controller
 
         $vehicle = Vehicle::whereId($vehicle_id)->has("timeSlots")->with("timeSlots")->first();
         if(!$vehicle)
-             return api_response("error",404);
+             throw new NotFoundHttpException();
 
         return api_response($vehicle->timeSlots);
 

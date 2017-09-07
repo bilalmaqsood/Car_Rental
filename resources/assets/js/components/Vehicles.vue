@@ -51,7 +51,7 @@
                 <vehicle-contract v-if="menuView=='editcontract'" :vehicle="vehicle"></vehicle-contract>
                 </transition>
                 <transition name="slide-fade" mode="out-in">
-                <vehicle-timeslots v-if="menuView=='timeslots'" :vehicle="vehicle"></vehicle-timeslots>
+                <vehicle-timeslots v-if="menuView=='timeslots'" :vehicle="vehicle" @changeView="changeMenuView"></vehicle-timeslots>
                 </transition>
                 <transition name="slide-fade" mode="out-in">
                 <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="(menuView=='edit' && isEdit)|| menuView=='add'"></vehicle-input-form>
