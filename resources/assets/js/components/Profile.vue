@@ -19,6 +19,304 @@
                 </div>
             </div>
 
+<div class="booking-request-actions">
+    <div class="inlane-btn-wrap inlane-btn-wrap-btn3">
+        <ul class="three-btn-inlane">
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
+                    view driver
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                    </svg>
+                    approve
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use></svg>
+                    decline
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
+        <div class="driver-profile-text">
+            <h3>Booking terminated</h3>
+            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
+            <p><b>Contract start:</b> 20.8.2017 </p> 
+            <p><b>Contract end:</b> 26.8.2017</p>
+        </div>
+    </div>
+</div>
+<div class="booking-request-actions">
+    <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
+        <ul class="two-btn-inlane">
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
+                    view driver
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                    </svg>
+                    approve
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="btn-inlane-content btn-inlane-content-btn2 noty_warning">
+        <div class="driver-profile-text">
+            <h3>Booking terminated</h3>
+            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
+            <p><b>Contract start:</b> 20.8.2017 </p> 
+            <p><b>Contract end:</b> 26.8.2017</p>
+        </div>
+    </div>
+</div>
+<div class="booking-request-actions">
+    <div class="inlane-btn-wrap inlane-btn-wrap-btn1">
+        <ul class="one-btn-inlane">
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
+                    view driver
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="btn-inlane-content btn-inlane-content-btn1 noty_danger">
+        <div class="driver-profile-text">
+            <h3>Booking terminated</h3>
+            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
+            <p><b>Contract start:</b> 20.8.2017 </p> 
+            <p><b>Contract end:</b> 26.8.2017</p>
+        </div>
+    </div>
+</div>
+<div class="booking-request-actions">
+    <div class="btn-inlane-content noty_successfull">
+        <div class="driver-profile-text">
+            <h3>Booking terminated</h3>
+            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
+            <p><b>Contract start:</b> 20.8.2017 </p> 
+            <p><b>Contract end:</b> 26.8.2017</p>
+        </div>
+    </div>
+</div>
+<div class="booking-request-actions">
+    <div class="approved-actions-img">
+        <img src="/images/hero-img.jpg" alt="">
+    </div>
+    <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
+        <ul class="two-btn-inlane">
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
+                    </svg>
+                    contract
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
+                    </svg>
+                    chat
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="btn-inlane-content btn-inlane-content-btn2 noty_successfull">
+        <div class="driver-profile-text">
+            <h3>Booking terminated</h3>
+            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
+            <p><b>Contract start:</b> 20.8.2017 </p> 
+            <p><b>Contract end:</b> 26.8.2017</p>
+        </div>
+    </div>
+</div>
+<div class="booking-request-actions">
+    <div class="approved-actions-img">
+        <img src="/images/hero-img.jpg" alt="">
+    </div>
+    <div class="btn-inlane-content noty_successfull">
+        <div class="driver-profile-text">
+            <h3>Booking terminated</h3>
+            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
+            <p><b>Contract start:</b> 20.8.2017 </p> 
+            <p><b>Contract end:</b> 26.8.2017</p>
+        </div>
+    </div>
+</div>
+<div class="booking-request-actions">
+    <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
+        <ul class="two-btn-inlane">
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#extendrenew"></use></svg>
+                    extend/renew
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use></svg>
+                    </svg>
+                    chat
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="btn-inlane-content btn-inlane-content-btn2 noty_warning">
+        <div class="driver-profile-text">
+            <h3>Booking terminated</h3>
+            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
+            <p><b>Contract start:</b> 20.8.2017 </p> 
+            <p><b>Contract end:</b> 26.8.2017</p>
+        </div>
+    </div>
+</div>
+<div class="booking-request-actions booking-request-actions-2">
+    <div class="approved-actions-img">
+        <img src="/images/hero-img.jpg" alt="">
+    </div>
+    <div class="btn-inlane-content btn-inlane-content-btn2 noty_successfull">
+        <div class="driver-profile-text">
+            <h3>Booking terminated</h3>
+            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
+            <p><b>Contract start:</b> 20.8.2017 </p> 
+            <p><b>Contract end:</b> 26.8.2017</p>
+        </div>
+    </div>
+    <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
+        <ul class="two-btn-inlane">
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use></svg>
+                    find similar
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
+                    </svg>
+                    chat
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="pofile_content_wrapper">
+    <div class="img_box booking-request-img-box" style="background: url(images/car_img_1.png)">
+        <img src="images/car_img_1.png" alt="">
+    </div>
+    <div class="profile_content">
+        <h3>Booking approved</h3>
+        <p><span>Mike Myers</span> approved your request to book</p>
+        <p>Toyota Prius 1.8 Hybrid</p>
+        <p>Contract start: 06.05.2017 </p>
+        <p>Contract end: 20.05.2017</p>
+        <p>You can now check and sign the contract and set your
+        <span>Direct Debit.</span> A deposit of <span>£250.00</span> have been taken from your card ending in <span>1234</span></p>
+    </div>
+</div>
+<div class="booking-request-actions">
+    <button type="button" class="add-new-vehile-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use></svg>
+        <span>add new vehicle</span>
+    </button>
+</div>
+<div class="requests-counter-wrap">
+    <div class="detail_img">
+        <img src="images/car_img.png" alt="">
+    </div>
+    <div class="car_detail">
+        <div class="availablity_detail">
+            <h3>Toyota Prius 1.8 Hybrid</h3>
+            <ul>
+                <li>
+                    <p><b>Year:</b> 2015 </p>
+                    <p><b>Mileage:</b> 35,044</p>
+                    <p><b>Seats:</b> 5 </p>
+                    <p><b>Transmission:</b> manual</p>
+                </li>
+                <li>
+                    <p><b>Seats:</b> 5 </p>
+                    <p><b>Transmission:</b> manual</p>
+                </li>
+                <li>
+                    <p><b>Fuel type:</b> hybrid </p>
+                    <p><b>Consumption:</b> 95.2 mpg (ec.)</p>
+                </li>
+            </ul>
+            <div class="availabe">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                </svg>
+                <p>available from: <span>16.05.2017</span></p>
+            </div>
+        </div>
+        <div class="availablity_price">
+            <label class="quantity-label">10</label>
+            <div class="availabe_item_price">
+                <h3>£ 320</h3>
+                <span>/week</span>
+                <span>insurance included</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="requests-counter-wrap">
+    <div class="detail_img">
+        <img src="images/car_img.png" alt="">
+    </div>
+    <div class="car_detail">
+        <div class="availablity_detail">
+            <h3>Toyota Prius 1.8 Hybrid</h3>
+            <ul>
+                <li>
+                    <p><b>Year:</b> 2015 </p>
+                    <p><b>Mileage:</b> 35,044</p>
+                    <p><b>Seats:</b> 5 </p>
+                    <p><b>Transmission:</b> manual</p>
+                </li>
+                <li>
+                    <p><b>Seats:</b> 5 </p>
+                    <p><b>Transmission:</b> manual</p>
+                </li>
+                <li>
+                    <p><b>Fuel type:</b> hybrid </p>
+                    <p><b>Consumption:</b> 95.2 mpg (ec.)</p>
+                </li>
+            </ul>
+            <div class="availabe">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                </svg>
+                <p>available from: <span>16.05.2017</span></p>
+            </div>
+        </div>
+        <div class="availablity_price">
+            <label class="quantity-label">15</label>
+            <div class="availabe_item_price">
+                <h3>£ 320</h3>
+                <span>/week</span>
+                <span>insurance included</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
             <transition-group name="slide-fade" tag="div">
                 <div v-for="notif in notifications" :class="NotyClass(notif)" v-bind:key="notif.id" class="pofile_content_wrapper">
                     <div v-if="propExist(notif.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notif.data.image + ')' }">

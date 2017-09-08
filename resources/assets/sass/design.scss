@@ -482,7 +482,7 @@ h3 {
 .availabe_item_price {
     float: right;
     text-align: right;
-    width: 125px;
+    width: 152px;
 }
 
 .availabe_item_price h3 {
@@ -3454,7 +3454,7 @@ button:disabled {
         width: 100%;
     }
     .availablity_price, .availabe_item_price {
-        width: 109px;
+        width: 142px;
     }
     .search_filter {
         left: 60px;
@@ -3557,7 +3557,7 @@ button:disabled {
     max-height: 360px;
 }
 .noty_danger{
-    border-left: 5px solid #db202f;
+    border-left: 5px solid #d0021b;
 }
 .noty_warning{
     border-left: 5px solid #f5a623;
@@ -3565,14 +3565,26 @@ button:disabled {
 .noty_info{
     border-left: 5px solid #3108b6;
 }
+.noty_unsuccessfull{
+    border-left: 5px solid #4a4a4a;
+}
+.noty_successfull{
+    border-left: 5px solid #87af1e;
+}
 .noty_danger h3{
-    color: #db202f;
+    color: #d0021b;
 }
 .noty_warning h3{
     color: #f5a623;
 }
 .noty_info h3{
     color: #3108b6;
+}
+.noty_unsuccessfull h3{
+    color: #4a4a4a;
+}
+.noty_successfull h3{
+    color: #87af1e;
 }
 .detail_img{
     height: 220px;
@@ -3632,4 +3644,421 @@ button:disabled {
 }
 .p-l-40{
     padding-left: 40px !important;
+}
+.driver-profile-wrap{
+    float: left;
+    width: 50%;
+    background: #fff;
+    box-shadow: 2px 0px 4px #505050;
+}
+.driver-profile-img{
+    height: 280px;
+    overflow: hidden;
+    width: 100%;
+    text-align: center;
+}
+.driver-profile-img img{
+    max-width: 100%;
+    display: inline-block;
+}
+.driver-status{
+    padding: 0 15px 10px;
+    bottom: 0;
+    background: rgba(141, 199, 31, 0.74);
+    width: 100%;
+    float: left;
+    position: absolute;
+}
+.driver-status h3{
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 0;
+}
+.driver-status p {
+    color: #fff;
+    font-size: 14px;
+    font-family: arial;
+    font-weight: bold;
+}
+.driver-status p span {
+    color: #525252;
+    border-left: 1px solid #525252;
+    padding: 0 5px;
+}
+.driver-status p span:first-child {
+    border: none;
+    padding-left: 0;
+}
+.driver-status p span i {
+    color: #fff;
+    font-weight: normal;
+}
+.driver-profile-content-wrap{
+    float: left;
+    width: 100%;
+    position: relative;
+}
+.driver-detail-wrap{
+    float: left;
+    width: 100%;
+    display: block;
+    padding: 0 15px;
+}
+.driver-detail-wrap ul{
+    padding: 0;
+    margin: 0;
+}
+.driver-detail-wrap ul li{
+    list-style: none;
+    color: #525252;
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+.driver-detail-wrap ul li p{
+    margin: 0;
+    font-size: 14px;
+}
+.driver-detail-wrap ul li h5{
+    margin: 0;
+    font-size: 18px;
+}
+.driver-detail-text{
+    width: 80%;
+    display:inline-block;
+}
+.driver-detail-wrap ul li span{
+    width: 30px;
+    display: inline-block;
+    float: right;
+    margin-top: 5px;
+}
+.driver-detail-wrap ul li span .svg-icon{
+    width: 30px;
+    height: 30px;
+    fill: #87af1e !important;
+}
+.driver-detail-wrap ul li:last-child{
+    border-bottom: 0;
+}
+.booking-request-actions{
+    float: left;
+    width: 100%;
+    background: #fff;
+}
+
+.inlane-btn-wrap{
+    float: left;
+    display: inline-block;
+}
+.inlane-btn-wrap-btn3{
+    width: 50%;
+}
+.inlane-btn-wrap ul {
+    padding: 0;
+    margin: 0;
+}
+.inlane-btn-wrap ul li {
+    list-style: none;
+    display: inline-block;
+    float: left;
+    box-shadow: 1px 2px 6px #000;
+}
+.inlane-btn-wrap ul li a {
+    background: #525252;
+    padding: 28px 10px;
+    border-radius: 0;
+    color: #87af1e;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+}
+
+.inlane-btn-wrap-btn3 .three-btn-inlane li {
+    width: 33.3%
+}
+
+.inlane-btn-wrap-btn2{
+    width: 35%;
+}
+.inlane-btn-wrap-btn2 .two-btn-inlane li {
+    width: 50%
+}
+.inlane-btn-wrap-btn1{
+    width: 20%;
+}
+.inlane-btn-wrap-btn1 .one-btn-inlane li {
+    width: 100%
+}
+
+.btn-inlane-content{
+    display: inline-block;
+    padding: 10px;
+    width: 100%;
+}
+.btn-inlane-content-btn3{
+    width: 50%;
+}
+.inlane-btn-wrap ul li a .svg-icon{
+    width: 30px;
+    height: 30px;
+    fill: #87af1e !important;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 5px;
+}
+.driver-profile-text{
+    float: left;
+    width: 100%;
+}
+.driver-profile-text h3{
+    font-size: 22px;
+    margin-top: 0;
+}
+.driver-profile-text p {
+    margin: 0;
+    padding: 0 5px;
+    font-size: 13px;
+    line-height: 15px;
+    font-weight: normal;
+}
+.btn-inlane-content-btn2{
+    width: 65%;
+}
+.btn-inlane-content-btn1{
+    width: 80%;
+}
+.inlane-btn-wrap ul li:nth-child(3) a{
+    color: #f5a623;
+}
+.inlane-btn-wrap ul li:nth-child(3) a .svg-icon{
+    fill: #f5a623 !important;
+}
+.approved-actions-img {
+    display: block;
+    width: 100%;
+    max-height: 200px;
+    overflow: hidden;
+}
+.approved-actions-img img{
+    max-width: 100%;
+}
+.booking-request-actions-2 .inlane-btn-wrap-btn2 {
+    float: right;
+}
+.booking-request-actions-2 .noty_danger{
+    border-right: 5px solid #d0021b;
+    border-left: none;
+}
+.booking-request-actions-2 .noty_warning{
+    border-right: 5px solid #f5a623;
+    border-left: none;
+}
+.booking-request-actions-2 .noty_info{
+    border-right: 5px solid #3108b6;
+    border-left: none;
+}
+.booking-request-actions-2 .noty_unsuccessfull{
+    border-right: 5px solid #4a4a4a;
+    border-left: none;
+}
+.booking-request-actions-2 .noty_successfull{
+    border-right: 5px solid #87af1e;
+    border-left: none;
+}
+.booking-request-img-box{
+    min-height: 180px;
+}
+.requests-counter-wrap {
+    float: left;
+    width: 100%;
+    -webkit-box-shadow: 0 0 5px #0a0a0a;
+    box-shadow: 0 0 7px #353535;
+    background: rgba(255, 255, 255, 0.96);
+    margin-bottom: 10px;
+}
+.add-new-vehile-btn{
+    background: #525252;
+    color: #87af1e;
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+}
+.add-new-vehile-btn .svg-icon{
+    width: 30px;
+    height: 30px;
+    fill: #87af1e
+}
+.add-new-vehile-btn span{
+    position: relative;
+    top:-5px;
+    left: 10px;
+}
+.add-new-vehile-btn:hover {
+    background: #313131;
+}
+.inlane-btn-wrap ul li a:hover, .inlane-btn-wrap ul li a:focus {
+    background: #313131;
+}
+.requests-counter-wrap .detail_img {
+    height: auto;
+}
+.quantity-label {
+    color: #fff;
+    background: #87af1e;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 25px;
+    padding-top: 2px;
+    position: relative;
+    float: right;
+    margin-bottom: 10px;
+    box-shadow: 0px 0px 7px #000;
+}
+.quantity-span {
+    color: #fff;
+    background: #87af1e;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 18px;
+    padding-top: 2px;
+    position: absolute;
+    -webkit-box-shadow: 0px 0px 7px #000;
+    box-shadow: 0px 0px 7px #000;
+    bottom: -16px;
+    display: block;
+    right: 0;
+    z-index: 200;
+}
+.vehicle_registration .card_recured ul .vehicle-details-row1{
+    width: 100% !important;
+    float: left;
+    border: none !important;
+}
+.vehicle_registration .card_recured ul .vehicle-details-row2{
+    width: 50% !important;
+    float: left;
+}
+.vehicle_registration .card_recured ul .vehicle-details-row3{
+    width: 33.3% !important;
+    float: left;
+}
+.vehicle_registration .card_recured ul .vehicle-details-row1:nth-child(4) .form-group{
+    background: #525252 !important;
+    color: #ffffff !important;
+} 
+.vehicle_registration .card_recured ul .vehicle-details-row1:nth-child(4) .form-control{
+    color: #ffffff !important;
+} 
+.requests-counter-wrap .availablity_price {
+    margin-top: -40px;
+}
+.vehicle-details-row2 .seats-button {
+    border-radius: 0;
+    border-left: 1px solid #a7a5a5;
+    font-weight: normal;
+}
+.vehicle-details-row2 .seats-button:hover, .vehicle-details-row2 .seats-button:focus {
+    background:#525252;
+    color: #87af1e; 
+}
+.vehicle-details-row1 .add-new-vehile-btn{
+    background: #87af1e;
+    color: #fff;
+}
+.vehicle-details-row1 .add-new-vehile-btn:hover, .vehicle-details-row1 .add-new-vehile-btn:focus {
+    background: #525252;
+}
+.vehicle_registration .card_recured ul .vehicle-details-row1:nth-child(12) .form-control{
+    background-color: inherit;
+}
+.vehicle-registration-slider{
+    float: left;
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 2px 5px #424242;
+}
+.registration-slider-btn {
+    background: inherit;
+    border: none;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    bottom: 25px;
+    right: 30px;
+    z-index: 30;
+}
+.registration-slider-btn .svg-icon{
+    width: 35px;
+    height: 35px;
+    fill:#fff;
+}
+.vehicle_registration_3 .card_recured {
+    background: #fff;
+    padding-top: 30px;
+}
+@media screen and (max-width: 1199px) {
+    .driver-profile-wrap {
+        float: right;
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .driver-profile-wrap {
+        width: 83%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .driver-profile-wrap {
+        width: 100%;
+    }
+    .driver-profile-img {
+        height: auto;
+    }
+    .vehicle_registration .card_recured ul .vehicle-details-row2{
+        width: 100% !important;
+    }
+    .vehicle_registration .card_recured ul .vehicle-details-row3{
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .inlane-btn-wrap {
+        width: 100%;
+    }
+    .inlane-btn-wrap .three-btn-inlane li {
+        width: 33.3%
+    }
+    .driver-profile-text p {
+        max-width: 100%;
+    }
+    .driver-status {
+        padding: 0 15px;
+    }
+    .driver-status h3 {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+    .btn-inlane-content-btn3, .btn-inlane-content-btn2, .btn-inlane-content-btn1 {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 640px) {
+    .quantity-label {
+        margin-bottom: -35px;
+    }
+}
+@media screen and (max-width: 360px) {
+    .inlane-btn-wrap .three-btn-inlane li a {
+        padding: 14px;
+    }
 }
