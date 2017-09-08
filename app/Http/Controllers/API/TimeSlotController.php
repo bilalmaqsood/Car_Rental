@@ -100,7 +100,7 @@ class TimeSlotController extends Controller
         if(!$totalSlots)
              return api_response("error",404);
 
-        $bookedSlots = $totalSlots->where("status",2);
+        $bookedSlots = $booking->timeslots()->get(["status","day"]);
         
         $nextDay =   $bookedSlots->last()->day->format("Y-m-d");  
 
