@@ -10,7 +10,7 @@
 
         <div class="row m-0" v-if="canView">
             <img :src="signature" alt="">
-            <button data-loading-text="Signing Contract" class="primary-button m-0 pull-left" @click="showSignContainer" v-html="sign"></button>
+            <button :disabled="status == false" data-loading-text="Signing Contract" class="primary-button m-0 pull-left" @click="showSignContainer" v-html="sign"></button>
             <button data-loading-text="Canceling Contract" v-if="storage.state.auth.type=='owner'" class="primary-button m-0 pull-right danger-button" @click="cancelContract">Cancel Contract</button>
         </div>
     </div>
@@ -29,6 +29,7 @@
                 lastX: -1,
                 lastY: -1,
                 mousePressed: false,
+                status: true,
                 signature: ''
             };
         },
@@ -93,10 +94,14 @@
                 }
                 else {
                     $btn.button('reset');
-                    $('.js-signature').jqSignature();
+                    let e = $('.js-signature').jqSignature();
+                    $(e).on("pointerdown MSPointerDown",e=> {
+                        this.status = true;
+                    });
                     $('body').addClass('body-signature');
                     setTimeout(() => {
                         this.sign = 'Save Signature';
+                        this.status = false;
                     }, 200);
                 }
                 container.slideToggle();
