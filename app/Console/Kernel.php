@@ -30,6 +30,8 @@ class Kernel extends ConsoleKernel
                  ->daily();
         $schedule->command('weekly:deduction')
                  ->daily();
+        $schedule->command('overdue:check')
+                 ->daily();
 
     }
 
