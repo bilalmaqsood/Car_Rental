@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\ResetBookingDeposit::class,
         Commands\DeductWeeklyPayment::class,
+        Commands\CheckOverDueBookings::class,
     ];
 
     /**
