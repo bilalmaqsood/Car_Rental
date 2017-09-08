@@ -60,12 +60,12 @@
 
                 <div class="booking_tab">
                     <ul class="nav nav-tabs">
-                        <li v-if="User.state.auth.type == 'owner' && booking.status >= 6 ">
+                        <li v-if="(User.state.auth.type == 'owner' || User.state.auth.type == 'client') && booking.status >= 6 ">
                             <a @click="loadSideView('return_inspection')" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                 </svg>
-                                return inspection
+                                Return inspection
                             </a>
                         </li>
                         <li v-else>
@@ -73,7 +73,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                 </svg>
-                                car inspection
+                                Handover inspection
                             </a>
                         </li>
                         <transition name="flip" v-if="User.state.auth.type=='client'">
