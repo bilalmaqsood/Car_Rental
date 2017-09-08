@@ -19,7 +19,7 @@
                         <p><b>Consumption:</b> {{booking.vehicle.mpg}} mpg (ec.)</p>
                     </li>
                     <li>
-                        <div class="badge badge-primary">{{booking.status | bookingStatus}}</div>
+                        <div class="badge badge-primary" data-toggle="tooltip" :title="tooltip">{{booking.status | bookingStatus}}</div>
                     </li>
                 </ul>
                 <div class="search-btn-container">
@@ -187,6 +187,26 @@
         },
         computed: {
             
+            tooltip(){
+               if(this.booking.status==1) return "Booking requested"; 
+               if(this.booking.status==2) return "Contract signatures pending of owner"; 
+               if(this.booking.status==3 && (typeof this.booking.signatures.client === 'undefined')) return "Contract signatures pending of driver"; 
+               else if(this.booking.status==3 && this.booking.signatures.client)
+                    return "Waiting for owner approvel.";
+                else if(this.booking.status==4)
+                    return "Booking in progress";
+                else if(this.booking.status==5)
+                    return "Early cancelation requested by driver";
+                else if(this.booking.status==6)
+                    return "Booking terminated.";
+                else if(this.booking.status==7)
+                    return "Booking extention requested by driver.";
+                else if(this.booking.status==8)
+                    return "Booking extention request approved.";
+                else if(this.booking.status==10)
+                    return "Booking is disputed, deposit return is not possible unless admin resolve.";
+
+            },
             canSign() {
                 if(this.booking.status >= 4)
                     return false; 
@@ -221,6 +241,7 @@
         },
 
         mounted() {
+            setTimeout(function() { $('[data-toggle="tooltip"]').tooltip(); }, 100);
             setTimeout(() => {
                 if (this.user.state.currentBook === this.booking.id)
                     this.prepareComponent();
