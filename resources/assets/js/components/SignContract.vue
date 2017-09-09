@@ -1,6 +1,6 @@
 <template>
     <div class="signature-container">
-
+            <svg @click="closeContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use></svg>
         <pdf-document v-if="contract" :d="contract"></pdf-document>
 
         <div class="add-signature" style="display: none;">
@@ -124,7 +124,9 @@
 
                 return new Blob([ia], {type: mimeString});
             },
-
+            closeContract(){
+                this.$emit('closeContract');
+            },
             cancelContract(e) {
                 let $btn = $(e.target).button('loading');
                 $('#sideLoader').show();
