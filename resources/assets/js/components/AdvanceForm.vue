@@ -1,55 +1,53 @@
 <template>
-    <div>
         <div class="filter_hied_btn">
             <form>
                 <ul>
                     <li>
                         <div class="form-group">
-<div class="input-group login-input">
-<div class="input-group-addon">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
-                            </svg>
-</div>
-                            <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control" placeholder="vehicle" v-model.trim="vehicle" >
-</div>
-                            
+                            <div class="input-group login-input">
+                                <div class="input-group-addon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
+                                    </svg>
+                                </div>
+                                <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control" placeholder="vehicle" v-model.trim="vehicle" >
+                            </div>
                         </div>
                     </li>
                     <li>
                         <div class="form-group">
-<div class="input-group login-input">
-<div class="input-group-addon">                       
-     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
-                            </svg>
-</div>
-                            <input type="text" id="gmap_geocoding_address2" v-on:keydown.enter="searchVehicles" class="form-control" placeholder="location" v-model.trim="location">
+                            <div class="input-group login-input">
+                                <div class="input-group-addon">                       
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
+                                    </svg>
+                                </div>
+                                <input type="text" id="gmap_geocoding_address2" v-on:keydown.enter="searchVehicles" class="form-control" placeholder="location" v-model.trim="location">
+                            </div>
                         </div>
-</div>
                     </li>
                     <li>
                         <div class="form-group">
-<div class="input-group login-input">
-<div class="input-group-addon">      
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
-                            </svg>
-</div>
+                        <div class="input-group login-input">
+                            <div class="input-group-addon">      
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
+                                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
+                                </svg>
+                            </div>
                             <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control" placeholder="price range" v-model.trim="price">
-</div>
+                        </div>
                         </div>
                     </li>
                     <li>
                         <div class="form-group">
-      <div class="input-group login-input">
-<div class="input-group-addon">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                            </svg>
-</div>
-                            <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control available-from" placeholder="available from" v-model.trim="available">
-  </div>
+                              <div class="input-group login-input">
+                                                    <div class="input-group-addon">
+                                                                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                                                                </svg>
+                                                    </div>
+                                                    <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control available-from" placeholder="available from" v-model.trim="available">
+                          </div>
                       </div>
                     </li>
                     <li>
@@ -58,7 +56,6 @@
                 </ul>
             </form>
         </div>
-    </div>
 </template>
 
 <script>

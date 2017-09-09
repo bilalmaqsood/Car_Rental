@@ -3718,3 +3718,13 @@ span.twitter-typeahead {
 .input-group span.twitter-typeahead .tt-menu {
   top: 2.375rem !important;
 }
+
+.search_container  .filter_hied_btn {
+    width: 100%;
+    z-index: 100;
+    position: inherit;
+    background: #fff;
+    float: right;
+    right: 0;
+    top: 70px;
+}

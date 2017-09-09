@@ -1,6 +1,7 @@
 <style>
     .menu-component-container {
-       
+       height: 0px !important;
+       display: none !important;
     }
 </style>
 <template>
@@ -10,6 +11,7 @@
 
         <div class="search_container search_container_width">
             <transition-group name="list" tag="div">
+            <advance-form v-if="user.state.showAdvance && user.state.menuView=='advance'" key="advance"></advance-form>
                 <div class="search_car" v-for="i in user.state.searchResults.data" :key="i.id">
                     <div class="search_car_content" :style="{width: user.state.detailsDisplay ? '0' : '', height: user.state.detailsDisplay ? '0px' : ''}">
                         <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a></h3>

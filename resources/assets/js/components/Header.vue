@@ -3,7 +3,7 @@
         <div class="nav_wrapper">
             <nav class="navbar navbar-default navbar-fixed-top">
                 <transition name="slide-fade" mode="out-in">
-                    <advance-form v-if="storage.state.showAdvance && storage.state.menuView=='advance'"></advance-form>
+                    <advance-form v-if=" storage.state.searchView!==true && storage.state.showAdvance && storage.state.menuView=='advance'"></advance-form>
                 </transition>
 
                 <div class="navbar-header">
