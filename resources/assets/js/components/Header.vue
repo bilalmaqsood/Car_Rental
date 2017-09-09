@@ -242,6 +242,7 @@
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
                                     </svg>
                                     vehicles
+                                    <span class="quantity-span">25</span> 
                                 </a>
                             </li>
 

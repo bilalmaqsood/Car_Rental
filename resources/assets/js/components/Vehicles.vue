@@ -22,6 +22,14 @@
                             edit vehicle
                         </a>
                     </li>
+                    <li  :class="{active: menuView == 'edit'}">
+                        <a @click="changeMenuView('edit2')" data-toggle="tab" href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
+                            </svg>
+                            edit vehicle 2
+                        </a>
+                    </li>
                     <li :class="{active: menuView == 'editcontract'}" >
                         <a @click="changeMenuView('editcontract')"  data-toggle="tab" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
@@ -55,6 +63,7 @@
                 </transition>
                 <transition name="slide-fade" mode="out-in">
                 <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="(menuView=='edit' && isEdit)|| menuView=='add'"></vehicle-input-form>
+                <vehicle-input-form-copy :vehicle="vehicle" :isEdit="isEdit" v-if="(menuView=='edit2')|| menuView=='add'"></vehicle-input-form-copy>
                 </transition>
             </div>
 

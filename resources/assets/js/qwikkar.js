@@ -59,6 +59,8 @@ Vue.component('register-terms', require('./components/RegisterTerms.vue'));
 Vue.component('update-documents', require('./components/UpdateDocuments.vue'));
 Vue.component('driver-profile', require('./components/DriverInfo.vue'));
 
+Vue.component('vehicle-input-form-copy', require('./components/VehiclesInputFormCopy.vue'));
+
 Vue.filter('date', require('./filters/date'));
 Vue.filter('currency', require('./filters/currency'));
 Vue.filter('bookingStatus', require('./filters/booking-status'));
