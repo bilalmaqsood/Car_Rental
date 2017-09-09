@@ -3968,6 +3968,7 @@ button:disabled {
 }
 .vehicle-registration-slider{
     float: left;
+    height: 300px;
     width: 100%;
     position: relative;
     box-shadow: 0px 2px 5px #424242;
@@ -4144,4 +4145,11 @@ span.twitter-typeahead {
     float: right;
     right: 0;
     top: 70px;
+}
+.slider-img{
+    height: 300px;
+    float: left;
+    width: 100%;
+    background-size: cover !important;
+    background-position-x: center !important;
 }

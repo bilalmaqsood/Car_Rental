@@ -67,7 +67,7 @@
                 </transition>
             </div>
 
-<transition-group name="flip" mode="out-in" tag="div">
+
             <div class="car_detail"  v-if="vehicle" key="1">
                 <div class="availablity_detail">
                     <h3>{{vehicle.make}} {{vehicle.model}} {{vehicle.variant}}</h3>
@@ -141,7 +141,6 @@
 
                 </div>
             </div>
-</transition-group>
         </div>
     </div>
 </template>
