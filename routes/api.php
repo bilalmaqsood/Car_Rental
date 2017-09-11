@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/notifications', 'AuthController@notifications');
     Route::post('/notifications', 'AuthController@notificationsRead');
 
+    Route::get('/booking/{id}/user-profile','ProfileController@showProfile')->middleware('owner');
     Route::patch('/profile/client', 'ProfileController@updateClient')->middleware('client');
     Route::patch('/profile/owner', 'ProfileController@updateOwner')->middleware('owner');
 

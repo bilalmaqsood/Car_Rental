@@ -4,6 +4,7 @@ namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use Qwikkar\Http\Controllers\Controller;
+use Qwikkar\Models\Booking;
 
 class ProfileController extends Controller
 {
@@ -110,5 +111,13 @@ class ProfileController extends Controller
         $owner->save();
 
         return api_response(trans('auth.profile'));
+    }
+
+    public function showProfile($id)
+    {
+        $booking = Booking::find($id);
+        $user = $booking->user()->with("client")->first();
+        return api_response($user);
+
     }
 }

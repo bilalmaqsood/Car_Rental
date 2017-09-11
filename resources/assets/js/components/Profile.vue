@@ -19,220 +19,21 @@
                 </div>
             </div>
 
-<div class="booking-request-actions">
-    <div class="inlane-btn-wrap inlane-btn-wrap-btn3">
-        <ul class="three-btn-inlane">
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
-                    view driver
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
-                    </svg>
-                    approve
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use></svg>
-                    decline
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
-        <div class="driver-profile-text">
-            <h3>Booking terminated</h3>
-            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
-            <p><b>Contract start:</b> 20.8.2017 </p> 
-            <p><b>Contract end:</b> 26.8.2017</p>
-        </div>
-    </div>
-</div>
-<div class="booking-request-actions">
-    <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
-        <ul class="two-btn-inlane">
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
-                    view driver
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
-                    </svg>
-                    approve
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="btn-inlane-content btn-inlane-content-btn2 noty_warning">
-        <div class="driver-profile-text">
-            <h3>Booking terminated</h3>
-            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
-            <p><b>Contract start:</b> 20.8.2017 </p> 
-            <p><b>Contract end:</b> 26.8.2017</p>
-        </div>
-    </div>
-</div>
-<div class="booking-request-actions">
-    <div class="inlane-btn-wrap inlane-btn-wrap-btn1">
-        <ul class="one-btn-inlane">
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
-                    view driver
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="btn-inlane-content btn-inlane-content-btn1 noty_danger">
-        <div class="driver-profile-text">
-            <h3>Booking terminated</h3>
-            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
-            <p><b>Contract start:</b> 20.8.2017 </p> 
-            <p><b>Contract end:</b> 26.8.2017</p>
-        </div>
-    </div>
-</div>
-<div class="booking-request-actions">
-    <div class="btn-inlane-content noty_successfull">
-        <div class="driver-profile-text">
-            <h3>Booking terminated</h3>
-            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
-            <p><b>Contract start:</b> 20.8.2017 </p> 
-            <p><b>Contract end:</b> 26.8.2017</p>
-        </div>
-    </div>
-</div>
-<div class="booking-request-actions">
-    <div class="approved-actions-img">
-        <img src="/images/hero-img.jpg" alt="">
-    </div>
-    <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
-        <ul class="two-btn-inlane">
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
-                    </svg>
-                    contract
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
-                    </svg>
-                    chat
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="btn-inlane-content btn-inlane-content-btn2 noty_successfull">
-        <div class="driver-profile-text">
-            <h3>Booking terminated</h3>
-            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
-            <p><b>Contract start:</b> 20.8.2017 </p> 
-            <p><b>Contract end:</b> 26.8.2017</p>
-        </div>
-    </div>
-</div>
-<div class="booking-request-actions">
-    <div class="approved-actions-img">
-        <img src="/images/hero-img.jpg" alt="">
-    </div>
-    <div class="btn-inlane-content noty_successfull">
-        <div class="driver-profile-text">
-            <h3>Booking terminated</h3>
-            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
-            <p><b>Contract start:</b> 20.8.2017 </p> 
-            <p><b>Contract end:</b> 26.8.2017</p>
-        </div>
-    </div>
-</div>
-<div class="booking-request-actions">
-    <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
-        <ul class="two-btn-inlane">
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#extendrenew"></use></svg>
-                    extend/renew
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use></svg>
-                    </svg>
-                    chat
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="btn-inlane-content btn-inlane-content-btn2 noty_warning">
-        <div class="driver-profile-text">
-            <h3>Booking terminated</h3>
-            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
-            <p><b>Contract start:</b> 20.8.2017 </p> 
-            <p><b>Contract end:</b> 26.8.2017</p>
-        </div>
-    </div>
-</div>
-<div class="booking-request-actions booking-request-actions-2">
-    <div class="approved-actions-img">
-        <img src="/images/hero-img.jpg" alt="">
-    </div>
-    <div class="btn-inlane-content btn-inlane-content-btn2 noty_successfull">
-        <div class="driver-profile-text">
-            <h3>Booking terminated</h3>
-            <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p> 
-            <p><b>Contract start:</b> 20.8.2017 </p> 
-            <p><b>Contract end:</b> 26.8.2017</p>
-        </div>
-    </div>
-    <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
-        <ul class="two-btn-inlane">
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use></svg>
-                    find similar
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
-                    </svg>
-                    chat
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="pofile_content_wrapper">
-    <div class="img_box booking-request-img-box" style="background: url(images/car_img_1.png)">
-        <img src="images/car_img_1.png" alt="">
-    </div>
-    <div class="profile_content">
-        <h3>Booking approved</h3>
-        <p><span>Mike Myers</span> approved your request to book</p>
-        <p>Toyota Prius 1.8 Hybrid</p>
-        <p>Contract start: 06.05.2017 </p>
-        <p>Contract end: 20.05.2017</p>
-        <p>You can now check and sign the contract and set your
-        <span>Direct Debit.</span> A deposit of <span>£250.00</span> have been taken from your card ending in <span>1234</span></p>
-    </div>
-</div>
+
+            <div v-for="notif in notifications"> 
+            <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
+            <driver-signature :notification="notif" v-else-if="notif.data.status===2"></driver-signature>
+            <owner-signature :notification="notif" v-else-if="notif.data.status===3"></owner-signature>
+            <owner-signature :notification="notif" v-else-if="notif.data.status===6"></owner-signature>
+            <booking-deposit :notification="notif" v-else-if="notif.data.status===100"></booking-deposit>
+            <booking-payment-made :notification="notif" v-else-if="notif.data.status===101"></booking-payment-made>
+            </div>
 
 
 
-            <transition-group name="slide-fade" tag="div">
+
+
+            <!-- <transition-group name="slide-fade" tag="div">
                 <div v-for="notif in notifications" :class="NotyClass(notif)" v-bind:key="notif.id" class="pofile_content_wrapper">
                     <div v-if="propExist(notif.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notif.data.image + ')' }">
                         <img :src="notif.data.image" alt="">
@@ -265,7 +66,7 @@
                         </p>
                     </div>
                 </div>
-            </transition-group>
+            </transition-group> -->
         </div>
 
         <transition name="slide-fade" mode="in-out">
@@ -273,7 +74,7 @@
         </transition>
 
         <transition name="slide-fade" mode="in-out">
-            <driver-profile></driver-profile>
+            <driver-profile v-if="driver_info" :booking_id="driver_info"></driver-profile>
         </transition>
 
     </div>
@@ -287,6 +88,7 @@
             return {
                 notifications: '',
                 booking_log: '',
+                driver_info: false,
                 vuex: User,
                 booking: null,
                 notify: null,
@@ -294,7 +96,30 @@
                 note: null,
             };
         },
+        created: function(){
+            this.$on("viewPofile",(noti)=>{
+                if(this.driver_info==noti.booking_id)
+                    this.driver_info = false;
+                else 
+                this.driver_info = noti.booking_id;
+                    
+            });
 
+            this.$on("approve",(noti)=>{
+                this.approve_action(noti);     
+            });
+
+            this.$on("decline",(noti)=>{
+                this.cancle_action(noti);     
+            });
+
+            this.$on("contract",(noti)=>{
+                this.viewContract(noti);     
+            });
+            this.$on("chat",(noti)=>{
+                this.viewContract(noti);     
+            });
+        },
         computed: {
             age() {
                 if (!User.state.auth)
@@ -393,8 +218,6 @@
             },
 
             cancle_action(notification) {
-//                TODO: need to do this
-                    
                      if (notification.data.id) {
                     $(".side-loader").show();
                     axios.get('/api/booking/' + notification.data.id + '/logs')

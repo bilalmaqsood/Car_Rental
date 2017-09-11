@@ -25,6 +25,7 @@ trait Balanceable
             'title' => 'Payment made',
             'card_ending' => $creditCard->last_numbers,
             'amount' => $amount,
+             'status' => 101,
         ]));
 
         $balanceLog = new BalanceLog([

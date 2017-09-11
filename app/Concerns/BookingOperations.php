@@ -127,6 +127,7 @@ trait BookingOperations
             'user' => $user->name,
             'vehicle' => $booking->vehicle->vehicle_name,
             'deposit' => $booking->deposit,
+            'status'  => 100,
         ]));
 
         // update booking status for confirmed to requested
@@ -382,7 +383,7 @@ trait BookingOperations
             $this->extendBooking($booking,$log);
             $this->updateContractTemplate($booking);            
 
-        } elseif ($log->requested_data['status'] == 6) {
+        } elseif ($log->requested_data['status'] == 6 && isset($log->requested_data['end_date'])) {
             // $this->changeSlotsStatus($vehicle);
             // Accept early cancelation and update booking end date
             $booking->status = 4;

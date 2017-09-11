@@ -62,6 +62,26 @@ Vue.component('vehicles-listing', require('./components/VehicleListing.vue'));
 
 Vue.component('vehicle-input-form-copy', require('./components/VehiclesInputFormCopy.vue'));
 
+
+
+/**
+ * seprate components for notifications
+ */
+Vue.component('booking-request', require('./components/notifications/BookingRequest.vue'));
+Vue.component('booking-approved', require('./components/notifications/BookingApproved.vue'));
+Vue.component('booking-decline', require('./components/notifications/BookingDecline.vue'));
+Vue.component('booking-closed', require('./components/notifications/BookingClosed.vue'));
+Vue.component('booking-closing', require('./components/notifications/BookingClosing.vue'));
+Vue.component('booking-extend', require('./components/notifications/BookingExtend.vue'));
+Vue.component('booking-rating', require('./components/notifications/BookingRating.vue'));
+Vue.component('driver-signature', require('./components/notifications/BookingRating.vue'));
+Vue.component('owner-signature', require('./components/notifications/BookingRating.vue'));
+Vue.component('booking-deposit', require('./components/notifications/BookingDeposit.vue'));
+Vue.component('booking-payment-made', require('./components/notifications/BookingPayment.vue'));
+
+
+
+
 Vue.filter('date', require('./filters/date'));
 Vue.filter('currency', require('./filters/currency'));
 Vue.filter('bookingStatus', require('./filters/booking-status'));
