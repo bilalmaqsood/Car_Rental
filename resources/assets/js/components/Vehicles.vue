@@ -11,7 +11,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                             </svg>
-                            add new
+                            Add new
                         </a>
                     </li>
                     <li  :class="{active: menuView == 'edit'}">
@@ -19,15 +19,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
                             </svg>
-                            edit vehicle
-                        </a>
-                    </li>
-                    <li  :class="{active: menuView == 'edit'}">
-                        <a @click="changeMenuView('edit2')" data-toggle="tab" href="javascript:void(0)">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
-                            </svg>
-                            edit vehicle 2
+                            Edit vehicle
                         </a>
                     </li>
                     <li :class="{active: menuView == 'editcontract'}" >
@@ -35,7 +27,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
                             </svg>
-                            edit contract
+                            Edit contract
                         </a>
                     </li>
                     <li :class="{active: menuView == 'timeslots'}" >
@@ -51,7 +43,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete_icon"></use>
                             </svg>
-                            delete
+                            Delete
                         </a>
                     </li>
                 </ul>
