@@ -1,5 +1,5 @@
     <template>
-    <div class="booking-request-actions">
+    <div class="booking-request-actions notification-shadow">
         <div class="approved-actions-img">
             <img :src="notification.data.image" alt="">
         </div>

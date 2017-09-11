@@ -1,5 +1,5 @@
 <template>
-    <div class="booking-request-actions">
+    <div class="booking-request-actions notification-shadow">
         <div class="inlane-btn-wrap inlane-btn-wrap-btn3">
             <ul class="three-btn-inlane">
                 <li>

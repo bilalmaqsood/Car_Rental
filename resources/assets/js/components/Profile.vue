@@ -22,9 +22,10 @@
 
             <div v-for="notif in notifications"> 
             <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
-            <driver-signature :notification="notif" v-else-if="notif.data.status===2"></driver-signature>
-            <owner-signature :notification="notif" v-else-if="notif.data.status===3"></owner-signature>
-            <owner-signature :notification="notif" v-else-if="notif.data.status===6"></owner-signature>
+            
+            <booking-signature-client :notification="notif" v-else-if="notif.data.status===3"></booking-signature-client>
+            <booking-signature-owner :notification="notif" v-else-if="notif.data.status===2"></booking-signature-owner>
+            <booking-decline :notification="notif" v-else-if="notif.data.status===6"></booking-decline>
             <booking-deposit :notification="notif" v-else-if="notif.data.status===100"></booking-deposit>
             <booking-payment-made :notification="notif" v-else-if="notif.data.status===101"></booking-payment-made>
             </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="pofile_content_wrapper">
+    <div class="pofile_content_wrapper notification-shadow">
         <div class="img_box booking-request-img-box" style="background: url(images/car_img_1.png)">
             <img src="images/car_img_1.png" alt="">
         </div>

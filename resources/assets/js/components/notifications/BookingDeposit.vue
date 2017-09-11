@@ -1,5 +1,5 @@
 <template>
-    <div class="booking-request-actions">
+    <div class="booking-request-actions notification-shadow">
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_warning">
             <div class="driver-profile-text">
                 <h3>{{notification.data.title}}</h3>
