@@ -762,6 +762,12 @@
                         }
                 }
 
+            },
+            deleteImage(img){
+                let index = this.form.images.indexOf(img);
+                        this.form.images.splice(index, 1);
+                        $(".owl-slider").owlCarousel().trigger('destroy.owl.carousel').trigger('refresh');
+                setTimeout(()=>{  this.initSlider(); },50);
             }
         }
 
