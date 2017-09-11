@@ -58,6 +58,7 @@ Vue.component('vehicle-location', require('./components/VehicleLocation.vue'));
 Vue.component('register-terms', require('./components/RegisterTerms.vue'));
 Vue.component('update-documents', require('./components/UpdateDocuments.vue'));
 Vue.component('driver-profile', require('./components/DriverInfo.vue'));
+Vue.component('vehicles-listing', require('./components/VehicleListing.vue'));
 
 Vue.component('vehicle-input-form-copy', require('./components/VehiclesInputFormCopy.vue'));
 

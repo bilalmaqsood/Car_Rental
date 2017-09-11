@@ -141,6 +141,7 @@
 
                 </div>
             </div>
+            
         </div>
     </div>
 </template>
@@ -157,7 +158,7 @@
                 isEdit: false,
                 vehicles: '',
                 avg_rating: User.state.auth.avg_rating,
-                vehicle: false,
+                vehicle: User.state.vehicleData
             };
         },
         created: function() {
@@ -184,9 +185,13 @@
         mounted() {
             $scope = this;
             $('#sideLoader').show();
-            this.prepareComponent();
-            setTimeout(function() { $('#sideLoader').hide(); }, 1000);
             
+            setTimeout(function() { $('#sideLoader').hide(); }, 1000);
+              let rating = this.avg_rating;
+                $('.ratting').starrr({
+                    rating: rating,
+                    readOnly: true
+                });
         },
 
         methods: {
@@ -199,11 +204,7 @@
                     if(r.data.success[0]){
                         this.vehicle = r.data.success[0];
                     }
-                let rating = this.avg_rating;
-                $('.ratting').starrr({
-                    rating: rating,
-                    readOnly: true
-                });
+              
             },
             fetchAddress(arg){
                 console.log(arg);

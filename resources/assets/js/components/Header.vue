@@ -242,7 +242,7 @@
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
                                     </svg>
                                     vehicles
-                                    <span class="quantity-span">25</span> 
+                                    <span v-if="storage.state.menuView=='vehicles'" class="quantity-span">25</span> 
                                 </a>
                             </li>
 
@@ -271,7 +271,8 @@
                     <transition name="slide-fade">
                         <user-settings v-if="storage.state.menuView == 'settings'"></user-settings>
                         <user-profile v-if="storage.state.menuView == 'profile'"></user-profile>
-                        <vehicle-crud v-if="storage.state.menuView == 'vehicles'"></vehicle-crud>
+                        <vehicles-listing v-if="storage.state.menuView == 'vehicles'"></vehicles-listing>
+                        <vehicle-crud v-if="storage.state.menuView == 'vehiclesDetails'"></vehicle-crud>
                         <booking-listing v-if="storage.state.menuView == 'booking'" :viewHeight="height"></booking-listing>
                         <payment-card-listing  :viewHeight="height" v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>
                         <financial v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'owner'"></financial>
@@ -342,6 +343,7 @@
         },
         created: function(){
              this.$on('oldMenuView', this.handleMenuView);
+             this.$on('vehicleSelected', this.vehicleDetails);
         },
         methods: {
             prepareComponent() {
@@ -492,6 +494,9 @@
             handleMenuView(view){
                 User.commit('menuView', view);
                 User.commit('oldView', false);
+            },
+            vehicleDetails(){
+                User.commit('menuView', 'vehiclesDetails');
             }
         }
     }
