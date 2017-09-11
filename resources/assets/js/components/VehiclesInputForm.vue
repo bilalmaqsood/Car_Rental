@@ -90,6 +90,13 @@
                             </div>
                         </li>
                         <li class="vehicle-details-row1 vehicle-details-row3">
+                        <div class="form-group" :class="{'has-error': $v.form.mileage.$error}">
+                                <input type="text" class="form-control" placeholder="vehicle mileage"
+                                       v-model="form.mileage" @blur="$v.form.mileage.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.mileage.$error">Enter vehicle mileage</p>
+                            </div>
+                        </li>
+                        <li class="vehicle-details-row1 vehicle-details-row3">
                             <div class="form-group">
                                 <div class="input-group login-input">
                                     <input type="text" class="form-control registration_year"

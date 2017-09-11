@@ -73,12 +73,12 @@
         created: function() {
             let $this = this;
             this.$on('vehicleAdded', function(value){
-               this.menuView='';
+               this.addVehicle=false;
                 new Noty({
                     type: 'success',
                     text: value.make+" "+value.model+" "+value.make + " Added!",
                 }).show();
-                this.vehicle=value;
+                this.vehicle.push(value);
             });
 
             this.$on('vehicleUpdate', function(value){
