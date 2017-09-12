@@ -46,7 +46,7 @@ import User from '../user';
                     sideBySide: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
-                  .on('dp.update', function(){ $this.highlightOldDays($this.total_slots) });
+                  .on('dp.update', function(){ $this.highlightOldDays($this.booked_slots) });
                 $('[data-toggle="tooltip"]').tooltip();
 
         },
@@ -107,7 +107,7 @@ import User from '../user';
 
                 setTimeout(function () {
                     $t.highlightDays(false);
-                    $t.highlightOldDays($t.total_slots);
+                    $t.highlightOldDays($t.booked_slots);
                 }, 1000);
             },
             resetDates(e) {
@@ -116,7 +116,7 @@ import User from '../user';
                 $btn.removeClass('fa-undo').addClass('fa-refresh fa-spin');
                 this.end_date = null;
                 this.highlightDays(false);
-                this.highlightOldDays(this.total_slots);
+                this.highlightOldDays(this.booked_slots);
 
                 setTimeout(function () {
                     $btn.removeClass('fa-refresh fa-spin').addClass('fa-undo');
@@ -132,7 +132,7 @@ import User from '../user';
                     this.total_slots = r.data.success.totalSlots;
                     this.booked_slots = r.data.success.bookedSlots;
                     this.start_date = moment(r.data.success.firstDay);;
-                    this.highlightOldDays(r.data.success.totalSlots);
+                    this.highlightOldDays(r.data.success.booked_slots);
                 });
             },
             highlightDays(bool) {
@@ -223,9 +223,9 @@ import User from '../user';
 
                   $e.find('td').each(function (i, e) {
 
-                            let $elem = $(e);
-                            if (_.indexOf($pastDates,$elem.data('day'))<0)
-                                    $elem.addClass('old disabled');
+                            // let $elem = $(e);
+                            // if (_.indexOf($pastDates,$elem.data('day'))<0)
+                            //         $elem.addClass('old disabled');
                         });
             }
         }
