@@ -27,8 +27,7 @@
                 <h3>Extension requested</h3>
                 <p><b>{{notification.data.user}}</b> has requested to extend the contract for  {{ notification.data.vehicle }}
                 </p>
-                <p><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </p>
-                <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</p>
+                <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }} |  <b> Extend until:</b> {{notification.data.extend.contract_end | date('format', 'DD.MM.YYYY') }}</p>
             </div>
         </div>
     </div>
