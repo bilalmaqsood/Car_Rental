@@ -43,7 +43,7 @@ class VehicleModel extends FormRequest
             'insurance' => 'required|numeric',
             // 'mile_cap' => 'required|numeric',
             // 'after_mile' => 'required|numeric',
-            // 'deposit' => 'required|numeric',
+             'deposit' => 'required|numeric',
             // 'extension' => 'numeric',
             // 'license_years' => 'numeric',
             // 'pco_years' => 'numeric',
