@@ -73,6 +73,7 @@ Vue.component('booking-decline', require('./components/notifications/BookingDecl
 Vue.component('booking-closed', require('./components/notifications/BookingClosed.vue'));
 Vue.component('booking-closing', require('./components/notifications/BookingClosing.vue'));
 Vue.component('booking-extend', require('./components/notifications/BookingExtend.vue'));
+Vue.component('booking-extended', require('./components/notifications/BookingExtended.vue'));
 Vue.component('booking-rating', require('./components/notifications/BookingRating.vue'));
 Vue.component('booking-signature-client', require('./components/notifications/BookingSignatureClient.vue'));
 Vue.component('booking-signature-owner', require('./components/notifications/BookingSignatureOwner.vue'));

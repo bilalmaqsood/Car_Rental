@@ -1,24 +1,23 @@
 <template>
-    <div class="pofile_content_wrapper notification-shadow">
-        <div class="img_box booking-request-img-box" style="background: url(images/car_img_1.png)">
-            <img src="images/car_img_1.png" alt="">
-        </div>
-        <div class="profile_content">
+    <div class="booking-request-actions notification-shadow">
+        <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
+            <div class="driver-profile-text">
             <h3>Booking approved</h3>
-            <p><span>Mike Myers</span> approved your request to book</p>
-            <p>Toyota Prius 1.8 Hybrid</p>
-            <p>Contract start: 06.05.2017 </p>
-            <p>Contract end: 20.05.2017</p>
-            <p>You can now check and sign the contract and set your
-                <span>Direct Debit.</span> A deposit of <span>£250.00</span> have been taken from your card ending in <span>1234</span></p>
+            <p>Mike Myers approved your request to book <b> {{notification.data.vehicle}} </b>
+            <p><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </p>
+            <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</p>
+            You can now check and sign the contract and set your Direct Debit. A
+            deposit of <b>{{notification.data.amount | currency}}</b> have been taken from your card ending in <b>{{notification.data.card_ending}}</b></p>
         </div>
     </div>
+</div>
 </template>
 
 <script>
     import User from '../../user';
 
     export default {
+        props: ["notification"],
         data() {
             return {
 
@@ -30,8 +29,7 @@
         },
 
         mounted() {
-
-            this.prepareComponent();
+            
         },
 
         methods: {
