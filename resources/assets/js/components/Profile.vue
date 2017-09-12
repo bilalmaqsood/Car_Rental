@@ -20,9 +20,9 @@
             </div>
 
 
-            <div v-for="notif in notifications"> 
+            <div v-for="notif in notifications">
             <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
-            
+
             <booking-signature-client :notification="notif" v-else-if="notif.data.status===3"></booking-signature-client>
             <booking-signature-owner :notification="notif" v-else-if="notif.data.status===2"></booking-signature-owner>
             <booking-decline :notification="notif" v-else-if="notif.data.status===6"></booking-decline>
@@ -101,24 +101,24 @@
             this.$on("viewPofile",(noti)=>{
                 if(this.driver_info==noti.booking_id)
                     this.driver_info = false;
-                else 
+                else
                 this.driver_info = noti.booking_id;
-                    
+
             });
 
             this.$on("approve",(noti)=>{
-                this.approve_action(noti);     
+                this.approve_action(noti);
             });
 
             this.$on("decline",(noti)=>{
-                this.cancle_action(noti);     
+                this.cancle_action(noti);
             });
 
             this.$on("contract",(noti)=>{
-                this.viewContract(noti);     
+                this.viewContract(noti);
             });
             this.$on("chat",(noti)=>{
-                this.viewContract(noti);     
+                this.viewContract(noti);
             });
         },
         computed: {
@@ -138,7 +138,7 @@
         methods: {
             showActionButtons(noti){
                 let allowed = [5, 7];
-                return allowed.includes(noti.data.status) &&  User.state.auth.type=='owner'; 
+                return allowed.includes(noti.data.status) &&  User.state.auth.type=='owner';
             },
             isActionable(notification) {
                 let allowed = [1, 2, 3];
@@ -150,10 +150,10 @@
             let $scope = this;
 
             $("#uploadImages").click(function () {
-                
+
                 $(".hiddenUpload").click();
                 $(".hiddenUpload").change(function () {
-                    
+
                         let val = this.files[0];
                         console.log(val);
                         var reader = new FileReader();
@@ -165,12 +165,12 @@
                             axios.post('/api/upload/image', fd).then($scope.processAvatar);
                             setTimeout(function () {
                     $('#sideLoader').hide();
-                    
+
                 }, 1000);
                         };
                 });
 
-                
+
             });
 
 
@@ -179,20 +179,21 @@
                     .then(response => {
                         $('#sideLoader').hide();
                         this.notifications = response.data.success;
+                        console.log(JSON.stringify(response.data.success));
                         setTimeout(function() {
-                
-                
+
+
                 $('.ratting').starrr({
                   change: function(e, value){
                     $scope.rating = value;
                         }
                 });
-                
+
                 }, 1500);
                     });
 
 
-            
+
 
             },
 
@@ -333,18 +334,18 @@
             },
             processRating(notification){
                 let $this = this;
-                let param ={rating: $this.rating, note: $this.note}; 
+                let param ={rating: $this.rating, note: $this.note};
                 $('#sideLoader').show();
                  axios.post('/api/booking/'+notification.data.booking_id+'/feedback', param)
                         .then((r) => {
                             $this.note=null;
-                            
-                            setTimeout(function() { 
-                                $('#sideLoader').hide(); 
+
+                            setTimeout(function() {
+                                $('#sideLoader').hide();
                                 new Noty({
                                     type: 'success',
                                     text: 'Rating saved successfully.',
-                                    
+
                                 }).show();
                                  $this.markRead(notification);
                              }, 1000);

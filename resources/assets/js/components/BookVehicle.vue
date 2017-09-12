@@ -196,7 +196,7 @@
 
         data() {
             return {
-                old_slots: this.vehicle.time_slots,
+                available_slots: this.vehicle.time_slots,
                 isCard: false,
                 location: null,
                 promo_code: null,
@@ -283,7 +283,7 @@
 
         mounted() {
             this.prepareComponent();
-            this.highlightOldDays(this.old_slots);
+            this.highlightOldDays(this.available_slots);
         },
 
         methods: {
@@ -314,7 +314,7 @@
                     sideBySide: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
-                  .on('dp.update', function(){ $scope.highlightOldDays($scope.old_slots) });
+                  .on('dp.update', function(){ $scope.highlightOldDays($scope.available_slots) });
                 $('[data-toggle="tooltip"]').tooltip();
             },
 
@@ -325,6 +325,7 @@
 
                 setTimeout(function () {
                     $t.highlightDays(false);
+                    $t.highlightOldDays($t.available_slots);
                 }, 1000);
             },
 
@@ -365,7 +366,7 @@
                             let eDate = moment.utc($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
                             if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
                         });
-                        $t.highlightOldDays($t.old_slots);
+                        $t.highlightOldDays($t.available_slots);
                         if (this.end_date.diff(this.start_date, 'days') < 6) {
                             new Noty({
                                 type: 'warning',

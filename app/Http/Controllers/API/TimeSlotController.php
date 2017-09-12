@@ -95,7 +95,7 @@ class TimeSlotController extends Controller
     {
         $booking = Booking::with("vehicle")->whereId($booking_id)->first();
        
-        $totalSlots = $booking->vehicle->timeSlots()->get(["status","day"]);
+        $totalSlots = $booking->vehicle->timeSlots()->whereStatus("1")->get(["status","day"]);
 
         if(!$totalSlots)
              return api_response("error",404);

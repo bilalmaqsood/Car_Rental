@@ -3799,7 +3799,8 @@ button:disabled {
     width: 100%;
 }
 .btn-inlane-content-btn3{
-    width: 50%;
+    width: auto;
+    display: table-cell;
 }
 .inlane-btn-wrap ul li a .svg-icon{
     width: 30px;
@@ -3825,10 +3826,12 @@ button:disabled {
     font-weight: normal;
 }
 .btn-inlane-content-btn2{
-    width: 65%;
+    width: auto;
+    display: table-cell;
 }
 .btn-inlane-content-btn1{
-    width: 80%;
+    width: auto;
+    display: table-cell;
 }
 .inlane-btn-wrap ul li:nth-child(3) a{
     color: #f5a623;
@@ -4170,7 +4173,4 @@ span.twitter-typeahead {
     -webkit-box-shadow: 0 0 5px #0a0a0a;
     box-shadow: 0 0 5px #0a0a0a;
 }
-.upload-btn{
-    background: transparent;
-    border: none;
-}
+.upload-btn{}

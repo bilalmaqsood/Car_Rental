@@ -40,6 +40,7 @@ import User from '../user';
             return {
                 user: User,
                 extend: true,
+                available_slots: false,
                 booked_slots: false,
                 end_date: '',
                 start_date: '',
@@ -55,7 +56,7 @@ import User from '../user';
                     sideBySide: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
-                  .on('dp.update', function(){ $this.highlightOldDays($this.booked_slots) });
+                  .on('dp.update', function(){ $this.highlightOldDays($this.available_slots,$this.booked_slots) });
                 $('[data-toggle="tooltip"]').tooltip();
 
                 $('#CancelDate').datetimepicker({
@@ -63,7 +64,7 @@ import User from '../user';
                     sideBySide: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
-                  .on('dp.update', function(){ $this.highlightOldDays($this.booked_slots) });
+                  .on('dp.update', function(){ $this.highlightOldDays($this.available_slots,$this.booked_slots) });
                 
                 $('[data-toggle="tooltip"]').tooltip();
         },
@@ -158,7 +159,7 @@ import User from '../user';
                               let eDate = moment($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
                             if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
                         });
-                        this.highlightOldDays(this.booked_slots,false);
+                        this.highlightOldDays(this.available_slots,this.booked_slots,false);
                             new Noty({
                                 type: 'success',
                                 text: '<div><p class="m-0"><b>Extend Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
@@ -173,32 +174,33 @@ import User from '../user';
 
                 setTimeout(function () {
                     $t.highlightDays(false);
-                    $t.highlightOldDays($t.booked_slots);
+                    $t.highlightOldDays($t.available_slots,$t.booked_slots);
                 }, 1000);
             },
 
             fetchBookedSlots(){
                 axios.get('/api/booking/'+this.user.state.currentBook+"/time-slots").then(r=>{
-                    this.booked_slots = r.data.success.totalSlots;
+                    this.available_slots = r.data.success.totalSlots;
+                    this.booked_slots = r.data.success.bookedSlots;
 
                        
                     this.start_date = moment(r.data.success.nextDay);;
                     console.log(this.start_date);
-                    this.highlightOldDays(r.data.success.totalSlots);
+                    this.highlightOldDays(r.data.success.totalSlots,r.data.success.bookedSlots);
                 });
             },
-            highlightOldDays(r,active=true){
+            highlightOldDays(available,booked,active=true){
                 let $t = this;
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
                 let $dates=[];
                 let $pastDates = [];
 
-                _.forEach(r, function(date) {
-                    if(date.status==2)
-                    $pastDates.push(moment(date.day,"YYYY-MM-DD").format("MM/DD/YYYY"));
-                    if(date.status==1)
+                _.forEach(available, function(date) {
                     $dates.push(moment(date.day,"YYYY-MM-DD").format("MM/DD/YYYY"));
+                });
 
+                _.forEach(booked, function(date) {
+                    $pastDates.push(moment(date.day,"YYYY-MM-DD").format("MM/DD/YYYY"));
                 });
 
                   $e.find('td').each(function (i, e) {
