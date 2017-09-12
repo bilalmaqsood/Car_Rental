@@ -174,7 +174,15 @@
 
                             </div>
                         </li>
+                        <li>
+                            <div class="form-group" :class="{'has-error': $v.form.deposit.$error}">
+                                <input type="text" class="form-control" placeholder="deposit on vehicle booking"
+                                       v-model="form.deposit" @blur="$v.form.deposit.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.deposit.$error">
+                                    Enter deposit on vehicle booking </p>
 
+                            </div>
+                        </li>
                         <li class="vehicle-details-row1">
                             <div class="form-group" :class="{'has-error': $v.form.pickup_location.$error}">
 
