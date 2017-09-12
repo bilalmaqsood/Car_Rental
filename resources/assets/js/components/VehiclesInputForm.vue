@@ -815,7 +815,8 @@
                                     $this.form.documents.push({
                                         path: r.data.success,
                                         type: type,
-                                        title: name
+                                        title: name,
+                                        name: name,
 
                                     });
                                     $(".docUploader").val("");
