@@ -314,10 +314,12 @@
                         <li class="vehicle-details-row1">
                             <div class="form-group">
                                 <div class="input-group login-input">
-                                    <input type="text" class="form-control document_name" v-model="name" placeholder="Enter document name" >
+                                    <input type="text" class="form-control document_name" @keypress="name=true" placeholder="Enter document name" >
                                     <div class="input-group-addon">
                                         <span>
-                                            <div @click="other_upload" class="clickable"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cloud-computing"></use></svg></div>
+                                        <button class="upload-btn" @click="other_upload" :disabled="name==false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cloud-computing"></use></svg>
+                                        </button>
                                         </span>
                                     </div>
                                 </div>
@@ -350,7 +352,7 @@
 
         data() {
             return {
-                name: '',
+                name: false,
                 User: User,
                 location: '',
                 selectedLocation: '',
@@ -815,7 +817,7 @@
                             }
                         }
                     });
-                         setTimeout(function() { $('#sideLoader').hide(); }, 500);
+                         setTimeout(function() { $('#sideLoader').hide(); }, 1000);
 
                     });
 
