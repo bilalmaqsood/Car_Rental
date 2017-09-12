@@ -303,7 +303,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="vehicle-details-row1" v-for="d in form.documents">
+                        <li class="vehicle-details-row1" v-for="d in form.documents" v-if="d.title">
                             <div class="form-group">
                                 <div class="input-group login-input">
                                     <input type="text" class="form-control" v-model="d.title" placeholder="Vehicle registration document" :disabled="d.title">
@@ -613,7 +613,7 @@
                 }).on('dp.change', function (e) {
                     $scope.form.year = $(".registration_year").val();
                     $scope.checkSeriveDoc(e);
-                });
+                }).trigger("dp.change");
 
 
                 $("#documents").click(function () {
