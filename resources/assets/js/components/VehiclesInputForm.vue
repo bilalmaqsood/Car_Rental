@@ -311,7 +311,18 @@
                                 </div>
                             </div>
                         </li>
-
+                        <li class="vehicle-details-row1">
+                            <div class="form-group">
+                                <div class="input-group login-input">
+                                    <input type="text" class="form-control document_name" v-model="name" placeholder="Enter document name" >
+                                    <div class="input-group-addon">
+                                        <span>
+                                            <div @click="other_upload" class="clickable"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cloud-computing"></use></svg></div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                         <li class="vehicle-details-row1">
                             <button @click="processForm" class="add-new-vehile-btn">Done</button>
                         </li>
@@ -339,6 +350,7 @@
 
         data() {
             return {
+                name: '',
                 User: User,
                 location: '',
                 selectedLocation: '',
@@ -775,7 +787,40 @@
                         this.form.images.splice(index, 1);
                         $(".owl-slider").owlCarousel().trigger('destroy.owl.carousel').trigger('refresh');
                 setTimeout(()=>{  this.initSlider(); },50);
-            }
+            },
+            other_upload(){
+                let $this = this;
+                $(".docUploader").unbind().trigger("click").change(function () {
+                        $('#sideLoader').show();
+                        $.map(this.files, function (val) {
+                           if($this.isUploadAble(val)){
+                            let name = $(".document_name").val();
+                            let type = val.name.split('.').pop();
+                            var reader = new FileReader();
+                            reader.readAsDataURL(val);
+                            var fd = new window.FormData();
+                            fd.append('upload', val);
+                            reader.onload = function (e) {
+                                axios.post('/api/upload/document', fd).then(function(r){
+                                    $this.form.documents.push({
+                                        path: r.data.success,
+                                        type: type,
+                                        title: name
+
+                                    });
+                                    $(".docUploader").val("");
+                                    $(".document_name").val("");
+                                    $this.name=null;
+                                });
+                            }
+                        }
+                    });
+                         setTimeout(function() { $('#sideLoader').hide(); }, 500);
+
+                    });
+
+
+            },
         }
 
     }
