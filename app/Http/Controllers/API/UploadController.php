@@ -72,7 +72,7 @@ class UploadController extends Controller
     protected function uploadDocument(Request $request)
     {
         $this->validate($request, [
-            'upload' => 'required|file|max:5120'
+            'upload' => 'required|file|max:10000'
         ]);
 
         return $request->upload->store('document', 'public');
