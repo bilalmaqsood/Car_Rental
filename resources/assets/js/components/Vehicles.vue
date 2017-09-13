@@ -54,8 +54,7 @@
                 <vehicle-timeslots v-if="menuView=='timeslots'" :vehicle="vehicle" @changeView="changeMenuView"></vehicle-timeslots>
                 </transition>
                 <transition name="slide-fade" mode="out-in">
-                <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="(menuView=='edit' && isEdit)|| menuView=='add'"></vehicle-input-form>
-                <vehicle-input-form-copy :vehicle="vehicle" :isEdit="isEdit" v-if="(menuView=='edit2')|| menuView=='add'"></vehicle-input-form-copy>
+                     <vehicle-input-form :vehicle="vehicle" :isEdit="isEdit" v-if="(menuView=='edit' && isEdit)|| menuView=='add'"></vehicle-input-form>
                 </transition>
             </div>
 

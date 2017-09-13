@@ -742,7 +742,8 @@
             },
             edit(doc){
                 this.doc = doc;
-                $('#updateModel').modal('show');
+                setTimeout(function() { $('#updateModel').modal('show');}, 100);
+                
 
             },
             deleteDocument(doc){
@@ -776,7 +777,7 @@
             },
             checkSeriveDoc(e){
                    let $this = this;
-                    let doc = {title: 'Last service certificate', name:'',path: '',type: '', doc: 'Last_service_certificate', status: '' };
+                    let doc = {title: ' MOT certificate', name:'',path: '',type: '', doc: ' mot_certificate', status: '' };
                     let input = $(e.target).val();
                 if(input.length==4){
                     let currentYear = new Date().getFullYear();
