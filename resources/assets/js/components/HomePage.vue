@@ -77,6 +77,7 @@
                         }, 500);
                         User.commit('view', true);
                         User.commit('listing', {data: [response.data.success]});
+                        localStorage.reloadData = JSON.stringify({vehicleData: response.data.success})
                     });
             }
         }
