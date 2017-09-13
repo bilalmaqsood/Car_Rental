@@ -358,10 +358,14 @@
             },
 
             changeMenuView(view) {
-                if (User.state.menuView && User.state.menuView === view)
+                if (User.state.menuView && User.state.menuView === view){
                     User.commit('menuView', '');
-                else
+                    document.body.style.overflow='scroll';
+                }
+                else{
                     User.commit('menuView', view);
+                    document.body.style.overflow='hidden';
+                }
             },
 
             changeView() {

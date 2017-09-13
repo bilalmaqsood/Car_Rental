@@ -26,6 +26,8 @@
             <booking-signature-owner :notification="notif" v-else-if="notif.data.status===2"></booking-signature-owner>
             <booking-signature-client :notification="notif" v-else-if="notif.data.status===3"></booking-signature-client>
             <booking-approved :notification="notif" v-else-if="notif.data.status===4"></booking-approved>
+            <booking-cancel-request :notification="notif" v-else-if="notif.data.status===5"></booking-cancel-request>
+            <booking-cancel-approved :notification="notif" v-else-if="notif.data.status===6 && notif.data.old_status ===5"></booking-cancel-approved>
             <booking-decline :notification="notif" v-else-if="notif.data.status===6"></booking-decline>
                 <booking-extend :notification="notif" v-else-if="notif.data.status===7"></booking-extend>
                 <booking-extended :notification="notif" v-else-if="notif.data.status===8"></booking-extended>
@@ -134,7 +136,7 @@
         },
 
         mounted() {
-
+            
             this.prepareComponent();
         },
 
