@@ -115,6 +115,7 @@ class Vehicle extends Model
      */
     protected $appends = [
         'is_booked',
+        'can_book'
     ];
 
 
@@ -204,6 +205,20 @@ class Vehicle extends Model
     public function getIsBookedAttribute()
     {
         return (bool) $this->booking()->whereIn("status",[4,5,7,8])->count();
+    }
+
+    /**
+
+     * Get the booking status on the vehicle .
+     *
+     * @return boolean if any booking exists for this vehicle
+     */
+    public function getCanBookAttribute()
+    {
+        $date = $this->timeSlots()->whereStatus("1")->get(["day"])->pluck("day")->first();
+        if($date)
+            return $date->format("Y-m-d");
+        return null;
     }
 
         /**

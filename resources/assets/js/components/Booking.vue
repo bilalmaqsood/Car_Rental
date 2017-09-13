@@ -31,7 +31,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                         </svg>
-                                        <p>available from: <span>{{booking.vehicle.available_from | date('fromNow')}}</span></p>
+                                        <p>available from: <span v-if="booking.vehicle.can_book">{{booking.vehicle.can_book | date('fromNow')}}</span><span v-else>Not Available</span></p>
                                     </div>
                                     <div class="availabe_item_price">
                                         <h3>{{ booking.vehicle.rent | currency }}</h3>
@@ -125,7 +125,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                     </svg>
-                                    <p>available from: <span>{{booking.vehicle.available_from | date('fromNow')}}</span></p>
+                                    <p>available from: <span v-if="booking.vehicle.can_book">{{booking.vehicle.can_book | date('fromNow')}}</span><span v-else>Not available</span></p>
                                 </div>
                                 <div class="availabe_item_price">
                                     <h3>{{ booking.vehicle.rent | currency }} </h3>

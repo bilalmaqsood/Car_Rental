@@ -57,7 +57,7 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                     </svg>
-                                    <p> <strong>available from: </strong><span>{{vehicle.available_from | date('fromNow')}}</span></p>
+                                    <p> <strong>available from: </strong><span v-if="vehicle.can_book">{{vehicle.can_book | date('fromNow')}}</span><span v-else>Not available</span></p>
                                 </div>
                                 <div class="availabe_item_price">
                                     <h3>{{vehicle.rent | currency}}</h3>
