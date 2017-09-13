@@ -51,7 +51,6 @@
 
         mounted() {
 
-            this.prepareComponent();
         },
 
         methods: {

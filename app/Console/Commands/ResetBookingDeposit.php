@@ -62,7 +62,8 @@ class ResetBookingDeposit extends Command
                 $notificationData = [
                     'id' => $booking->id,
                     'type' => 'Booking',
-                    'status' => $booking->status,
+                    'status' => 12,
+                    'old_status' => 9,
                     'vehicle_id' => $booking->vehicle ? $booking->vehicle->id : '',
                     'image' => $booking->vehicle ? $booking->vehicle->images->first() : [],
                     'title' => 'Your deposit has been added in your account.',
@@ -103,7 +104,7 @@ class ResetBookingDeposit extends Command
             'id' => $booking->id,
             "booking_id" => $booking->id,
             "status" => 12,
-            "old_status" => $booking->status,
+            "old_status" => 12,
         ]))->delay(Carbon::now()->addMinute()));
 
        $booking->user->notify((new RatingNotify([
@@ -111,7 +112,7 @@ class ResetBookingDeposit extends Command
             'id' => $booking->id,
             "booking_id" => $booking->id,
             "status" => 12,
-            "old_status" => $booking->status,
+            "old_status" => 12,
         ]))->delay(Carbon::now()->addMinute()));
 
     }

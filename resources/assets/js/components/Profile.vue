@@ -33,6 +33,8 @@
             <booking-extend :notification="notif" v-else-if="notif.data.status===7"></booking-extend>
             <booking-extended :notification="notif" v-else-if="notif.data.status===8"></booking-extended>
             <booking-closed :notification="notif" v-else-if="notif.data.status===9 && notif.data.old_status === 4"></booking-closed>
+            <booking-deposit-return :notification="notif" v-else-if="notif.data.status===12 && notif.data.old_status ===9 "></booking-deposit-return>
+            <booking-rating :notification="notif" v-else-if="notif.data.status===12 && notif.data.old_status ===12 "></booking-rating>
             <booking-deposit :notification="notif" v-else-if="notif.data.status===100"></booking-deposit>
             <booking-payment-made :notification="notif" v-else-if="notif.data.status===101"></booking-payment-made>
             </div>

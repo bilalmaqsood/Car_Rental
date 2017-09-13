@@ -81,6 +81,7 @@ Vue.component('booking-rating', require('./components/notifications/BookingRatin
 Vue.component('booking-signature-client', require('./components/notifications/BookingSignatureClient.vue'));
 Vue.component('booking-signature-owner', require('./components/notifications/BookingSignatureOwner.vue'));
 Vue.component('booking-deposit', require('./components/notifications/BookingDeposit.vue'));
+Vue.component('booking-deposit-return', require('./components/notifications/BookingDepositReturn.vue'));
 Vue.component('booking-payment-made', require('./components/notifications/BookingPayment.vue'));
 
 

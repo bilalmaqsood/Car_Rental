@@ -2,9 +2,8 @@
     <div class="booking-request-actions notification-shadow">
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
             <div class="driver-profile-text">
-                <h3>Extension request approved</h3>
-                <p>Your request for the contract for  <b>{{ notification.data.vehicle }} </b>  extend until
-                <b>{{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</b> has been approved.</p>
+                <h3>{{notification.data.title}}</h3>
+                <p>Deposit <b>{{notification.data.deposit | currency}}</b> For vehicle <b> {{notification.data.vehicle}} </b> has been added in your card ending <b>{{notification.data.card_ending}}</b></p>
             </div>
         </div>
     </div>
@@ -28,23 +27,17 @@
         },
 
         mounted() {
-
+            
         },
 
         methods: {
-            viewProfileEvent(){
-                this.$parent.$emit("viewPofile",{booking_id: this.notification.data.id});
-            },
-            approveEvent(){
-                this.$parent.$emit("approve",this.notification);
 
-            },
-            declineEvent(){
-                this.$parent.$emit("decline",this.notification);
-
-            },
             contractEvent(){
                 this.$parent.$emit("contract",this.notification);
+
+            },
+            chatEvent(){
+                this.$parent.$emit("chat",this.notification);
 
             },
 
