@@ -537,8 +537,12 @@
                 this.form = JSON.parse(JSON.stringify(Form));
                 this.form = this.vehicle;
                 this.updateLocationNames();
+                $(".owl-slider").owlCarousel().trigger('destroy.owl.carousel').trigger('refresh');
+                
             }
-            this.initSlider();
+            setTimeout(()=>{  
+                    this.initSlider();
+            },1000);
             this.prepareComponent();
         },
 
