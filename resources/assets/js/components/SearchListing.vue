@@ -1,7 +1,7 @@
 <style>
     .menu-component-container {
-       height: 0px !important;
-       display: none !important;
+       /*height: 0px !important;*/
+       /*display: none !important;*/
     }
 </style>
 <template>

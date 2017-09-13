@@ -267,7 +267,7 @@
                     </div>
                 </div>
 
-                <div class="menu-component-container" v-show="!!storage.state.menuView" :style="{ height: height + 'px' }">
+                <div class="menu-component-container" v-show="!!storage.state.menuView && storage.state.menuView!=='advance'" :style="{ height: height + 'px' }">
                     <transition name="slide-fade">
                         <user-settings v-if="storage.state.menuView == 'settings'"></user-settings>
                         <user-profile v-if="storage.state.menuView == 'profile'"></user-profile>
