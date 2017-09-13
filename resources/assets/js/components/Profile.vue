@@ -30,9 +30,10 @@
             <booking-cancel-request :notification="notif" v-else-if="notif.data.status===5"></booking-cancel-request>
             <booking-cancel-approved :notification="notif" v-else-if="notif.data.status===6 && notif.data.old_status ===5"></booking-cancel-approved>
             <booking-decline :notification="notif" v-else-if="notif.data.status===6"></booking-decline>
-                <booking-extend :notification="notif" v-else-if="notif.data.status===7"></booking-extend>
-                <booking-extended :notification="notif" v-else-if="notif.data.status===8"></booking-extended>
-                <booking-deposit :notification="notif" v-else-if="notif.data.status===100"></booking-deposit>
+            <booking-extend :notification="notif" v-else-if="notif.data.status===7"></booking-extend>
+            <booking-extended :notification="notif" v-else-if="notif.data.status===8"></booking-extended>
+            <booking-closed :notification="notif" v-else-if="notif.data.status===9 && notif.data.old_status === 4"></booking-closed>
+            <booking-deposit :notification="notif" v-else-if="notif.data.status===100"></booking-deposit>
             <booking-payment-made :notification="notif" v-else-if="notif.data.status===101"></booking-payment-made>
             </div>
 
@@ -217,7 +218,11 @@
                 if (notification.data.id) {
                     $(".side-loader").show();
                     axios.get('/api/booking/' + notification.data.id + '/logs')
-                        .then(this.approveRequest);
+                        .then(this.approveRequest)
+                        .then(()=>{
+                            setTimeout(()=>{ this.markRead(notification); }, 500);
+                            
+                        });
 
                     setTimeout(function () {
                         $(".side-loader").hide();
@@ -229,7 +234,11 @@
                      if (notification.data.id) {
                     $(".side-loader").show();
                     axios.get('/api/booking/' + notification.data.id + '/logs')
-                        .then(this.cancelRequest);
+                        .then(this.cancelRequest)
+                        .then(()=>{
+                           setTimeout(()=>{ this.markRead(notification); }, 500);
+
+                        });
 
                     setTimeout(function () {
                         $(".side-loader").hide();
@@ -279,7 +288,7 @@
             sendRequest(booking_id, params) {
                 axios.patch('/api/booking/' + booking_id + '/status', params)
                     .then((response) => {
-                    console.log(response);
+                    
 
                         if (response.status==200)
                             new Noty({type: 'success', text: response.data.success}).show();
