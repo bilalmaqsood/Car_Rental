@@ -158,10 +158,20 @@
                 // _.merge
                    this.vehicles = this.vehicles.concat(response.data.success.data);
                    this.next_page_url = response.data.success.next_page_url;
-                   setTimeout(function() { $('#sideLoader').hide(); }, 500); 
+                   setTimeout(function() { $('#sideLoader').hide(); }, 500);
+                   $(".owl-slider").owlCarousel().trigger('destroy.owl.carousel').trigger('refresh');
+                setTimeout(()=>{  this.initSlider(); },400); 
                });
                 
-            }   
+            },
+            initSlider(){
+                let $slider = $(".owl-slider").owlCarousel({
+                    items: 1,
+                    margin: 0,
+                    navigation: false,
+                    autoplay:true,
+                }).trigger('refresh');
+            },   
         }
     }
 </script>

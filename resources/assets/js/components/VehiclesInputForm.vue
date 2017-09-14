@@ -560,6 +560,7 @@
             },
             postForm() {
                 if (this.isEdit) {
+                    console.log(this.form);
                     axios.patch('/api/vehicle/' + this.form.id, this.prepareForm())
                         .then(this.responseHandler);
                 } else {
