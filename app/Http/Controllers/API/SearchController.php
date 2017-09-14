@@ -118,6 +118,9 @@ class SearchController extends Controller
             // $with->where('status', 2); // accepted booking from owner
         }]);
 
+        if ($request->latitude && $request->longitude)
+        $vehicles->orderBy('distance', 'asc');
+        else
         $vehicles->orderBy('created_at', 'desc');
 
         $vehiclesList = $vehicles->where('vlc', 1)->paginate(30);
