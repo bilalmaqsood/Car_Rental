@@ -90,7 +90,7 @@ import Echo from 'laravel-echo'
 try {
     window.Echo = new Echo({
         broadcaster: 'socket.io',
-        host: 'http://' + window.location.hostname,
+        host: 'http://' + window.location.hostname + ':7946',
         namespace: 'Qwikkar.Events'
     });
 } catch (e) {
