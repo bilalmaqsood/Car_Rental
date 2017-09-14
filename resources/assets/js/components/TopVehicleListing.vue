@@ -118,7 +118,7 @@
                     params = "?" + by +"="+this.sort;
 
                 if (by === "location")
-                    params = "?" + $.param({latitude: window.lat,longitude: window.lng});
+                    params = "?location=asc&" + $.param({latitude: window.lat,longitude: window.lng});
 
                 axios.get('/vehicles' + params).then(this.listVehicles);
             },
