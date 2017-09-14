@@ -297,13 +297,9 @@
                     });  
                     
                 } else if (this.booking.status===5) {
-                    params.status = 6;
-                    params.note = 'booking canceled from cancel request by client.';
-                    this.updateStatus(params);
+                    this.approve_action(this.booking.id);
                 } else if (this.booking.status===7) {
-                    params.status = 8;
-                    params.note = 'booking extended from extend request by client.';
-                    this.updateStatus(params);
+                    this.approve_action(this.booking.id);
                 } else if ([4,6,8].includes(this.booking.status)) {
                     params.status = 9;
                     params.note = 'booking closed by owner';
@@ -330,6 +326,7 @@
                     });
             },
             updateStatus(params){
+                
                 $('#sideLoader').show();
                 axios.patch('/api/booking/' + this.booking.id + '/status', params)
                     .then((r) => {
@@ -340,7 +337,67 @@
                             text: r.data.success
                         }).show();
                     });
-            }
+            },
+            approve_action(booking_id) {
+                if (booking_id) {
+                    $(".side-loader").show();
+                    axios.get('/api/booking/' + booking_id + '/logs')
+                        .then(this.approveRequest);
+                    setTimeout(function () {
+                        $(".side-loader").hide();
+                    },500)
+                }
+            },
+            approveRequest(response) {
+                if (response.data.success.booking_log[0] !== undefined) {
+                    let data = response.data.success.booking_log[0];
+                    let booking_id = response.data.success.booking_log[0].booking_id;
+                    let status = response.data.success.booking_log[0].requested_data.status;
+                    let log_id = response.data.success.booking_log[0].id;
+                    let params = {log_id: response.data.success.booking_log[0].id, status: ""};
+                    console.log(response.data.success);
+                    if (status === 5)
+                        params.status = 6;
+
+                    if (status === 3)
+                        params.status = 4;
+
+                    if (status === 7)
+                        params.status = 8;
+
+                    if(params.status)
+                        this.sendRequest(response.data.success.id, params);
+
+                }
+            },
+              cancle_action(booking_id) {
+                     if (booking_id) {
+                    $(".side-loader").show();
+                    axios.get('/api/booking/' + booking_id + '/logs')
+                        .then(this.cancelRequest);
+
+                    setTimeout(function () {
+                        $(".side-loader").hide();
+                    },500)
+                }
+            },
+            sendRequest(booking_id, params) {
+                axios.patch('/api/booking/' + booking_id + '/status', params)
+                    .then((response) => {
+                        if (response.status==200)
+                            new Noty({type: 'success', text: response.data.success}).show();
+                        if (response.status!==200)
+                            new Noty({type: 'error', text: response.data.error}).show();
+                    });
+            },
+            cancelRequest(response) {
+                if (response.data.success.booking_log[0] !== undefined) {
+                    let params = {log_id: response.data.success.booking_log[0].id, status: 4};
+                    console.log(response.data.success);
+                        this.sendRequest(response.data.success.id, params);
+
+                }
+            },
         }
     }
 </script>
