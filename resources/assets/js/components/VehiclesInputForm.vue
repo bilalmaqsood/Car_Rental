@@ -364,6 +364,7 @@
                 User: User,
                 location: '',
                 selectedLocation: '',
+                vehicle_id: this.vehicle?this.vehicle.id:null,
                 week: '',
                 percent: '',
                 doc: false,
@@ -516,6 +517,7 @@
                 if (this.isEdit) {
                     this.form = JSON.parse(JSON.stringify(Form));
                     this.form = val;
+                    this.vehicle_id = val.id;
                     this.updateLocationNames();
                 }
             },
@@ -523,6 +525,7 @@
                 if (val) {
                     this.form = JSON.parse(JSON.stringify(Form));
                     this.form = this.vehicle;
+                    this.vehicle_id = this.vehicle.id;
                     this.updateLocationNames();
                 } else {
                    this.form = JSON.parse(JSON.stringify(Form));
@@ -561,7 +564,7 @@
             postForm() {
                 if (this.isEdit) {
                     console.log(this.form);
-                    axios.patch('/api/vehicle/' + this.form.id, this.prepareForm())
+                    axios.patch('/api/vehicle/' + this.vehicle_id, this.prepareForm())
                         .then(this.responseHandler);
                 } else {
                     axios.post('/api/vehicle', this.prepareForm())

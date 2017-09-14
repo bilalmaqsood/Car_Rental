@@ -143,12 +143,14 @@
                 let param;
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function(position){
+                            console.log(position);
                             param.latitude = position.coords.latitude;
                             param.longitude = position.coords.longitude;
                         });
                     } else { 
                        return false;
                     }
+                    console.log(param);
                     return $.param(param);
             },
             loadMore(){
