@@ -46,7 +46,8 @@ class HomeController extends Controller
 
                 if ($request->latitude && $request->longitude)
                     $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius?: 1000);
-                $vehicles->orderBy('created_at', 'desc');
+
+                $vehicles->orderBy('distance', 'asc');
 
                 $vehiclesList = $vehicles->where('vlc', 1)->paginate(30);
 
