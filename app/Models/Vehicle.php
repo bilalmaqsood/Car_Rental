@@ -3,6 +3,7 @@
 namespace Qwikkar\Models;
 
 use DB;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Vehicle extends Model
@@ -215,7 +216,7 @@ class Vehicle extends Model
      */
     public function getCanBookAttribute()
     {
-        $date = $this->timeSlots()->whereStatus("1")->get(["day"])->pluck("day")->first();
+        $date = $this->timeSlots()->whereStatus("1")->where("day",">=",Carbon::now()->format("Y-m-d"))->get(["day"])->pluck("day")->first();
         if($date)
             return $date->format("Y-m-d");
         return null;
