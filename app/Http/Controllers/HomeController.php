@@ -45,7 +45,7 @@ class HomeController extends Controller
                 $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at','vlc');
 
                 if ($request->latitude && $request->longitude)
-                    $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius?: 5);
+                    $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius?: 1000);
                 $vehicles->orderBy('created_at', 'desc');
 
                 $vehiclesList = $vehicles->where('vlc', 1)->paginate(30);
