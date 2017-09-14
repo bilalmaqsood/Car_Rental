@@ -95,8 +95,9 @@
                 else {
                     $btn.button('reset');
                     let e = $('.js-signature').jqSignature();
-                    $(e).on("pointerdown MSPointerDown",e=> {
+                    $(e).on("touchstart mousedown",e=> {
                         this.status = true;
+                        
                     });
                     $('body').addClass('body-signature');
                     setTimeout(() => {
