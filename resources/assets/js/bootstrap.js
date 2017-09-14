@@ -66,7 +66,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 axios.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    if (error.response && (error.response.status === 422 || error.response.status=== 400 )) {
+    if (error.response && (error.response.status === 422 || error.response.status === 400 )) {
         $.each(error.response.data, function (k, v) {
             new Noty({
                 type: 'error',
@@ -90,7 +90,7 @@ import Echo from 'laravel-echo'
 try {
     window.Echo = new Echo({
         broadcaster: 'socket.io',
-        host: window.location.hostname + ':7945',
+        host: 'http://' + window.location.hostname + ':7946',
         namespace: 'Qwikkar.Events'
     });
 } catch (e) {
