@@ -41,10 +41,17 @@ class HomeController extends Controller
                     ->groupBy('vehicles.id')
                     ->orderBy("ratings_average", $value)
                     ->paginate(6);
+            } else if($key=='location'){
+                $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at','vlc');
+
+                if ($request->latitude && $request->longitude)
+                    $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius?: 5);
+                $vehicles->orderBy('created_at', 'desc');
+
+                $vehiclesList = $vehicles->where('vlc', 1)->paginate(30);
+
+                return api_response($vehiclesList);
             }
-
-
-
              else
 
             $vehicles = Vehicle::orderBy($key, $value)->paginate(6);

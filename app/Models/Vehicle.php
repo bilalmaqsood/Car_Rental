@@ -219,7 +219,7 @@ class Vehicle extends Model
         $date = $this->timeSlots()->whereStatus("1")->where("day",">=",Carbon::now()->format("Y-m-d"))->get(["day"])->pluck("day")->first();
         if($date)
             return $date->format("Y-m-d");
-        return null;
+        return false;
     }
 
         /**
