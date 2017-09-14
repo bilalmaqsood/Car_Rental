@@ -42,6 +42,39 @@
 
     <script>
         localStorage.removeItem('__' + Qwikkar.baseUrl + '/search/vehicle-titles__data');
+
+        function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.")
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.")
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.")
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.")
+            break;
+    }
+}
+
+        function showPosition(position) {
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+    window.lat = lat;
+    window.lng = lng;
+}
+        $(document).ready(function() {
+             if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition, showError);
+                  } else {
+                    showError("Your browser does not support Geolocation!");
+                  }
+        });
+
+
     </script>
 </body>
 </html>

@@ -118,7 +118,7 @@
                     params = "?" + by +"="+this.sort;
 
                 if (by === "location")
-                    params = "?" + this.currentLocation();
+                    params = "?" + $.param({latitude: window.lat,longitude: window.lng});
 
                 axios.get('/vehicles' + params).then(this.listVehicles);
             },
@@ -141,6 +141,7 @@
             currentLocation(){
 
                 let param;
+                console.log(navigator.geolocation);
                     if (navigator.geolocation) {
                         navigator.geolocation.getCurrentPosition(function(position){
                             console.log(position);
