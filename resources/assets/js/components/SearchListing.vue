@@ -1,19 +1,11 @@
-<style>
-    .menu-component-container {
-       /*height: 0px !important;*/
-       /*display: none !important;*/
-    }
-</style>
 <template>
-
     <div class="search_map ">
-        <div id="search_map" style="width: 100%; height: 100%;"></div>
-
+        <map-markers :hover="hover_vehicle"></map-markers>
         <div class="search_container search_container_width">
             <transition-group name="list" tag="div">
             <advance-form v-if="user.state.showAdvance && user.state.menuView=='advance'" key="advance"></advance-form>
-                <div class="search_car" v-for="i in user.state.searchResults.data" :key="i.id">
-                    <div class="search_car_content" :style="{width: user.state.detailsDisplay ? '0' : '', height: user.state.detailsDisplay ? '0px' : ''}">
+                <div :class="{'highlighted-vehicle': user.state.highlighted==i.id}" @mouseover="hover_vehicle=i" class="search_car" v-for="i in user.state.searchResults.data" :key="i.id">
+                    <div   class="search_car_content" :style="{width: user.state.detailsDisplay ? '0' : '', height: user.state.detailsDisplay ? '0px' : ''}">
                         <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a></h3>
                         <ul>
                             <li>
@@ -73,7 +65,8 @@
                 item: {},
                 filterDisplay: 'none',
                 detailsDisplay: false,
-                SearchMap: null
+                SearchMap: null,
+                hover_vehicle: false,
             };
         },
 
@@ -85,18 +78,6 @@
             prepareComponent(){
                 let $t = this;
                 setTimeout(function () {
-                    $t.SearchMap = new google.maps.Map(document.getElementById('search_map'), {
-                        zoom: 10,
-                        center: {
-                            lat: 51.508653,
-                            lng: -0.083792
-                        }
-                    });
-                    google.maps.event.addListenerOnce($t.SearchMap, 'idle', function () {
-                        setTimeout(function () {
-                            $t.drawMarker();
-                        }, 500);
-                    });
                     let vehicleData = Local.get('vehicleData');
                     if (vehicleData) {
                         setTimeout(function () {
@@ -206,7 +187,7 @@
                    setTimeout(function() { $('#sideLoader').hide(); }, 500); 
                });
                 
-            }
+            },
         }
     }
 </script>

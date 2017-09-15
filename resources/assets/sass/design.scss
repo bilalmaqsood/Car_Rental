@@ -2357,6 +2357,10 @@ padding-top: 10px;
     color: #87af1e;
 }
 
+.bootstrap-datetimepicker-widget table td{
+    color: #87af1e;
+}
+
 .bootstrap-datetimepicker-widget table td.active,
 .bootstrap-datetimepicker-widget table td.active:hover,
 .bootstrap-datetimepicker-widget table td.highlight-day {
@@ -4176,4 +4180,12 @@ span.twitter-typeahead {
 .upload-btn{
     background: transparent;
     border-color: transparent;
+}
+.highlighted-vehicle{
+    background:  #98b927;
+
+}
+
+.bootstrap-datetimepicker-widget table td.disabled, .bootstrap-datetimepicker-widget table td.disabled:hover {
+    color: orange !important;
 }
