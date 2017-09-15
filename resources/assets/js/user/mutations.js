@@ -52,5 +52,8 @@ export default {
 
     saveBooking (state, data) {
         state.bookingData = data;
+    },
+    highlight (state, data) {
+        state.highlighted = data;
     }
 }
