@@ -57,7 +57,7 @@
 
                 <div class="pickup_loction_datebox">
                     <div class="availabe">
-                        <p>{{ user.state.vehicleData.owner.user.name }} <span> {{ date_format(user.state.vehicleData.owner.created_at) }}</span></p>
+                        <p>{{ user.state.vehicleData.owner.user.name }} <span> {{ date_format(user.state.vehicleData.created_at) }}</span></p>
                     </div>
                     <div class="ratting">
                     </div>

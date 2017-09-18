@@ -162,7 +162,9 @@
                 <input type="file" class="hidden hiddenUpload" name="files[]" multiple="multiple"
                                    value="upload" >
             </ul>
-            <update-documents :doc="doc"  @modelHiding="hideModal" @docUpdate="docUpdated"></update-documents> 
+            <transition name="slide-fade" mode="in-out">
+            <update-documents v-if="doc" :doc="doc"  @modelHiding="hideModal" @docUpdate="docUpdated"></update-documents>
+            </transition> 
         </div>
     </div>
 </template>
@@ -312,8 +314,6 @@
              },            
              edit(doc){
                  this.doc = doc;
-                  $('#updateModel').modal('show');
-                 
              },
              docUpdated(){
                 

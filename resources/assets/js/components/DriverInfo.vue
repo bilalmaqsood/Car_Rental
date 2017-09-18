@@ -104,7 +104,9 @@
             </ul>
         </div>
     </div>
-    <update-documents :doc="doc"  @modelHiding="hideModal" ></update-documents>
+            <transition name="slide-fade" mode="in-out">
+                 <update-documents v-if="doc" :doc="doc"  @modelHiding="hideModal"></update-documents>
+            </transition> 
 </div>
 </template>
 
@@ -145,13 +147,11 @@
                 this.info = r.data.success;
             },
             hideModal(){
-                // this.doc = null;
+                 this.doc = null;
 
             },
             edit(doc){
                 this.doc = doc;
-                $('#updateModel').modal('show');
-
             },
         }
     }

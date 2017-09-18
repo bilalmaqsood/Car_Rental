@@ -341,7 +341,9 @@
 
             </div>
         </div>
-        <update-documents :doc="doc" :title="'Update vehicle documents'" @modelHiding="hideModal" @docUpdate="docUpdated"></update-documents>
+        <transition name="slide-fade" mode="in-out">
+        <update-documents v-if="doc" :doc="doc" :title="'Update vehicle documents'" @modelHiding="hideModal" @docUpdate="docUpdated"></update-documents>
+        </transition>
         <location-coordinates-picker :location="location"
                                      @locationEvent="saveLocationCoordinates" ></location-coordinates-picker>
     </div>
@@ -749,8 +751,9 @@
 
             },
             edit(doc){
+
                 this.doc = doc;
-                setTimeout(function() { $('#updateModel').modal('show');}, 100);
+                // setTimeout(function() { $('#updateModel').modal('show');}, 100);
                 
 
             },

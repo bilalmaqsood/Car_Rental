@@ -52,7 +52,7 @@
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
                             </div>
-                            <input type="text" class="form-control available" placeholder="available from" v-model="available">
+                            <input type="text" class="form-control available" placeholder="available from">
                         </div>
                     </div>
                 </li>
@@ -85,11 +85,14 @@
                 vehicle: "",
                 location: "",
                 available: "",
+                start_date: '',
+                end_date: '',
                 price: "",
                 advanceSearch: false,
             };
         },
         mounted(){
+
             var input = document.getElementById('gmap_geocoding_address');
                if (input) {
                    var options = {
@@ -110,16 +113,34 @@
             },
 
             searchFilters() {
+                var $this = this;
                 this.advanceSearch = !this.advanceSearch;
 
                 if (this.advanceSearch)
                     setTimeout(function () {
                         $('.available').datetimepicker({
-                            useCurrent: false
-                        });
+                            inline: true,
+                            sideBySide: false,
+                            format: 'D-M-Y',
+                            minDate: moment(new Date())
+                        }).on('dp.change', $this.calenderChange);
+                
                     }, 450);
             },
+            calenderChange(e) {
+                    
+                if (!this.start_date)
+                    this.start_date = e.date.utc().startOf('day');
+                else if (!this.end_date) {
+                    this.end_date = e.date.utc().endOf('day');
+                    this.highlightDays(true);
+                } else {
+                    
+                    this.start_date = null;
+                    this.end_date = null;
+                }
 
+            },
             fetchVehicles(e) {
                 let $t = this;
                 let $btn = $(e.target).button('loading');
@@ -159,8 +180,9 @@
                     params.price = this.price;
                 }
 
-                if (this.available.length > 0) {
-                    params.available = this.available;
+                if (this.start_date  && this.end_date ) {
+                    params.booking_start = this.start_date.format("D-M-Y");
+                    params.booking_end = this.end_date.format("D-M-Y");;
                 }
 
                 if (!$.isEmptyObject(params)) {
@@ -168,7 +190,54 @@
                 }
 
                 return "";
-            }
+            },
+             highlightDays(bool) {
+                let $t = this;
+                let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
+
+                if (bool) {
+                    if (this.start_date.format('X') < this.end_date.format('X')) {
+                        let StartDate = this.start_date;
+                        let EndDate = this.end_date;
+                        $e.find('td').each(function (i, e) {
+                            let $elem = $(e);
+                            let eDate = moment.utc($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
+                            if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
+                        });
+                        
+                        
+                            new Noty({
+                                type: 'success',
+                                text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
+                            }).show();
+
+                            $(".available").val($t.start_date.format("D-M-Y") + " - " + $t.end_date.format("D-M-Y"));
+
+                    } else {
+                        new Noty({
+                            type: 'warning',
+                            text: '<div><p>Start date should greater than end date.</p><p>Please select dates again.</p></div>',
+                        }).show();
+                        this.start_date = null;
+                        this.end_date = null;
+                        
+                        
+                    }
+                } else {
+                    $e.find('td').each(function (i, e) {
+                            let $elem = $(e);       
+                            $elem.removeClass('active');
+                        });
+                    $(".available").val('');
+                        this.start_date=null;
+                        this.end_date=null;
+                    new Noty({
+                        type: 'success',
+                        text: 'Dates are reset.',
+                        timeout: 600
+                    }).show();
+                }
+            },
         }
     }
 </script>
