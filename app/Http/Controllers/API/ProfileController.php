@@ -64,7 +64,7 @@ class ProfileController extends Controller
                     $docs->push($d['doc']);
             });
 
-            if ($docs->count() == 4)
+            if ($docs->count() == 5)
                 $client->dlc = true;
         }
 
