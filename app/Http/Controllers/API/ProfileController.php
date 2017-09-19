@@ -58,7 +58,8 @@ class ProfileController extends Controller
                     $d['doc'] == 'driving_licence' ||
                     $d['doc'] == 'pco_licence' ||
                     $d['doc'] == 'dbs_certificate' ||
-                    $d['doc'] == 'proof_of_address'
+                    $d['doc'] == 'proof_of_address' ||
+                    $d['doc'] == 'pco_licence_badge' 
                     ) && $d['path'])
                     $docs->push($d['doc']);
             });

@@ -11,11 +11,11 @@ trait VehicleOperations
         $documents = [
             'pco_certificate',
             'car_log_book',
-            'incourence_document',
             'mot_certificate',
+            'permission_letter',
         ];
         if(request()->year <= $year)
-            array_push($documents,"Last_service_certificate");
+            array_push($documents,"mot_certificate");
 
         $error = array();
         foreach (request()->documents as $key => $doc){

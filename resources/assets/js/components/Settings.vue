@@ -183,7 +183,8 @@
                 doc: false,
                 documents: [
                     {title: 'Driving Licence', name:'',path: '',type: '', doc: 'driving_licence', status: '' },
-                    {title: 'PCO Licence', name:'',path: '',type: '', doc: 'pco_licence', status: '' },
+                    {title: 'PCO License Certificate', name:'',path: '',type: '', doc: 'pco_licence', status: '' },
+                    {title: 'PCO License (badge)', name:'',path: '',type: '', doc: 'pco_licence_badge', status: '' },
                     {title: 'DBS certificate', name:'',path: '',type: '', doc: 'dbs_certificate', status: '' },
                     {title: 'Proof of address', name:'',path: '',type: '', doc: 'proof_of_address', status: '' },
                    
