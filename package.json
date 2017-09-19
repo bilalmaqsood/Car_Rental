@@ -12,6 +12,7 @@
   "devDependencies": {
     "axios": "^0.16.1",
     "bootstrap-sass": "^3.3.7",
+    "bootstrap-slider": "^9.8.1",
     "cross-env": "^5.0.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "font-awesome": "^4.7.0",

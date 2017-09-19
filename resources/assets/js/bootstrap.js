@@ -10,6 +10,8 @@ window.$ = window.jQuery = require('jquery');
 
 require('jquery.easing');
 
+require('bootstrap-slider');
+
 window.$ = $.extend(require('jquery-ui-dist/jquery-ui.js'));
 
 require('owl.carousel');

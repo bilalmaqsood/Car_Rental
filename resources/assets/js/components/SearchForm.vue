@@ -35,7 +35,8 @@
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                                 </svg>
                             </div>
-                            <input type="text" class="form-control" placeholder="price range" v-model="price">
+                            
+                            <input id="slider-range" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/>
 
                         </div>
 
@@ -88,6 +89,8 @@
                 start_date: '',
                 end_date: '',
                 price: "",
+                price_min: false,
+                price_max: false,
                 advanceSearch: false,
             };
         },
@@ -106,6 +109,7 @@
                     });
 
                }
+            // this.initPriceRange();
         },
         methods: {
             searchVehicles(e) {
@@ -118,6 +122,7 @@
 
                 if (this.advanceSearch)
                     setTimeout(function () {
+                        $this.initPriceRange();
                         $('.available').datetimepicker({
                             inline: true,
                             sideBySide: false,
@@ -176,8 +181,10 @@
                         });
                 }
 
-                if (this.price.length > 0) {
-                    params.price = this.price;
+                if (this.price_min && this.price_max) {
+                    params.price_min = this.price_min;
+                    params.price_max = this.price_max;
+
                 }
 
                 if (this.start_date  && this.end_date ) {
@@ -238,6 +245,17 @@
                     }).show();
                 }
             },
+            initPriceRange(){
+                let $this = this;
+                $( function() {
+                    let $slider = $( "#slider-range" ).bootstrapSlider();
+                    $slider.on("slide", function(slideEvt) {
+                            $this.price_min = slideEvt.value[0];
+                            $this.price_max = slideEvt.value[1];
+                        });
+
+                  } );
+            }
         }
     }
 </script>
