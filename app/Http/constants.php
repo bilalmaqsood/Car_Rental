@@ -2,6 +2,11 @@
 
 	define('DATE_FORMAT', "d-m-Y h:i A");
 
+	define('OWNER_REMINDER_INTERVAL', 60);
+	define('DRIVER_REMINDER_INTERVAL', 30);
+	define('BOOKING_REMINDER_ATTEMPTS_LIMIT', 4);
+
+
 //////////////Bookings Status////////////////////////////////////////
 
 	define('BOOKING_REQUESTED',0);
@@ -18,5 +23,7 @@
 	define('BOOKING_DISPUTE_RESOLVED',11);
 	define('BOOKING_DEPOSIT_RETURNED',12);
 	define('BOOKING_UNSUCCESSFULL',400);
+	define('BOOKING_UNRESPONSIVE',401);
+	define('BOOKING_PENDING',402);
 
 ////////////Booking Status////////////////////////////////////////

@@ -75,7 +75,17 @@ class Booking extends Model
         'user_id',
     ];
 
-
+    /**
+     * All the booking that are requested
+     * 
+     */
+    public static function scopeBookingRequests($query)
+    {
+        return $query->whereStatus(BOOKING_REQUESTED);
+    }
+    
+    
+    
     /**
      * Get all the timeslots of the vehicle.
      */
@@ -139,6 +149,18 @@ class Booking extends Model
     {
         return $this->morphToMany(PromoCode::class, 'promo_code_able');
     }
+
+    /**
+     * Get all the reminders on the bookings
+     *
+     */
+    public function reminders()
+    {
+       return  $this->hasMany(BookingReminder::class);
+    }
+
+
+
 
     /**
      * Get all of the booking  for the datatable listing.

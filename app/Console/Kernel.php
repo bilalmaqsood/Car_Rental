@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\ResetBookingDeposit::class,
         Commands\DeductWeeklyPayment::class,
         Commands\CheckOverDueBookings::class,
+        Commands\BookingReminder::class,
     ];
 
     /**

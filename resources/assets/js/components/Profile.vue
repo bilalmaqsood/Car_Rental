@@ -24,6 +24,8 @@
 
             <booking-unsuccessfull :notification="notif" v-if="notif.data.status === CONSTANTS.BOOKING_UNSUCCESSFULL"></booking-unsuccessfull>
 
+            <booking-request-pending :notification="notif" v-if="notif.data.status=== CONSTANTS.BOOKING_PENDING"></booking-request-pending>
+
             <booking-request :notification="notif" v-if="notif.data.status=== CONSTANTS.BOOKING_REQUESTED && vuex.state.auth.type === 'owner'" ></booking-request>
 
             <booking-signature-owner :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_SIGN_BY_CLIENT"></booking-signature-owner>
@@ -317,12 +319,15 @@
             sendRequest(booking_id, params) {
                 axios.patch('/api/booking/' + booking_id + '/status', params)
                     .then((response) => {
-                    $('#sideLoader').show();
-                        if([1].includes(params.status))
-                            setTimeout(()=>{ 
-                             this.viewContract(this.in_action);
-                             $('#sideLoader').hide();
-                         }, 5000);
+                    
+                        if([1].includes(params.status)){
+                           $('#sideLoader').show();
+                                setTimeout(()=>{ 
+                                 this.viewContract(this.in_action);
+                                 $('#sideLoader').hide();
+                             }, 5000);
+                        } 
+
                         if (response.status==200)
                             new Noty({type: 'success', text: response.data.success}).show();
                         if (response.status!==200)
