@@ -8,21 +8,13 @@
                         view driver
                     </a>
                 </li>
-                <!-- <li>
+                <li>
                     <a  href="javascript:void(0)"  @click="approveEvent">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
                         </svg>
                         approve
                     </a>
-                </li> -->
-                <li>
-                <a  href="javascript:void(0)"  @click="contractEvent">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
-                    </svg>
-                    contract
-                </a>
                 </li>
                 <li>
                     <a  href="javascript:void(0)" @click="declineEvent">

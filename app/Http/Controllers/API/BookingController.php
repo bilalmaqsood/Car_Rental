@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Qwikkar\Concerns\BookingOperations;
+use Qwikkar\Events\BookingUnsuccessfull;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
 use Qwikkar\Models\BookingLog;
@@ -297,7 +298,7 @@ class BookingController extends Controller
     {
         $this->validate($request, [
             'log_id' => 'exists:booking_logs,id',
-            'status' => 'required|in:4,6,8,9',
+            'status' => 'required|in:1,4,6,8,9',
             'note' => 'string',
         ]);
 
@@ -333,8 +334,15 @@ class BookingController extends Controller
         $log->status = 2;
 
         $title = 'Booking ' . strtolower($booking->statusTypes[$request->status]);
+
         if ($request->status == 4 && in_array($booking->status, [5, 7]))
             $title = 'Booking ' . strtolower($booking->statusTypes[$booking->status]) . ' request declined';
+
+        if ($request->status == 4 && $booking->status==0){
+            $title = trans('booking.request-unsuccessfull'); //Owner denided request for booking
+            event(new BookingUnsuccessfull($booking));
+            return api_response(trans('booking.request-decline'));
+        }
 
         $log->fulfilled()->associate($request->user());
 
@@ -342,6 +350,8 @@ class BookingController extends Controller
             $log->save();
         else
             $booking->bookingLog()->save($log);
+
+        
 
         $booking->user->notify(new BookingNotify([
             'id' => $booking->id,

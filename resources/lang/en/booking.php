@@ -42,5 +42,6 @@ return [
 
     'decline' => 'Booking :status request decline.',
 
+    'request-decline' => 'Booking request decline',
 
 ];

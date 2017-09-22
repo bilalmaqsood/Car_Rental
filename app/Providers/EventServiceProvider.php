@@ -16,6 +16,9 @@ class EventServiceProvider extends ServiceProvider
         'Qwikkar\Events\Event' => [
             'Qwikkar\Listeners\EventListener',
         ],
+        'Qwikkar\Events\BookingUnsuccessfull' => [
+           'Qwikkar\Listeners\BookingUnsuccessfullListener',
+       ],
 
 //        'Laravel\Passport\Events\AccessTokenCreated' => [
 //            'Qwikkar\Listeners\RevokeOldTokens',

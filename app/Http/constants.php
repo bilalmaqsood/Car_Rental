@@ -1,21 +1,22 @@
 <?php
 
-define('DATE_FORMAT', "d-m-Y h:i A");
+	define('DATE_FORMAT', "d-m-Y h:i A");
 
 //////////////Bookings Status////////////////////////////////////////
-class BOOKING {
-	const REQUESTED = 0;
-	const ACCEPTED = 1;
-	const SIGN_BY_CLIENT =  2;
-	const SIGN_BY_OWNER = 3;
-	const ACTIVE = 4;
-	const EARLY_TERMINATION_REQUESTED = 5;
-	const EARLY_TERMINATION_APPROVED = 6;
-	const EXTEND_REQUESTED = 7;
-	const EXTEND_APPROVED = 8;
-	const CLOSED = 9;
-	const DISPUTED = 10;
-	const DISPUTE_RESOLVED = 11;
-	const DEPOSIT_RETURNED = 12;
-}
+
+	define('BOOKING_REQUESTED',0);
+	define('BOOKING_ACCEPTED',1);
+	define('BOOKING_SIGN_BY_CLIENT',2);
+	define('BOOKING_SIGN_BY_OWNER',3);
+	define('BOOKING_ACTIVE',4);
+	define('BOOKING_EARLY_TERMINATION_REQUESTED',5);
+	define('BOOKING_EARLY_TERMINATION_APPROVED',6);
+	define('BOOKING_EXTEND_REQUESTED',7);
+	define('BOOKING_EXTEND_APPROVED',8);
+	define('BOOKING_CLOSED',9);
+	define('BOOKING_DISPUTED',10);
+	define('BOOKING_DISPUTE_RESOLVED',11);
+	define('BOOKING_DEPOSIT_RETURNED',12);
+	define('BOOKING_UNSUCCESSFULL',400);
+
 ////////////Booking Status////////////////////////////////////////

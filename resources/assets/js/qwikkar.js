@@ -69,6 +69,7 @@ Vue.component('vehicle-input-form-copy', require('./components/VehiclesInputForm
  * seprate components for notifications
  */
 Vue.component('booking-request', require('./components/notifications/BookingRequest.vue'));
+Vue.component('booking-unsuccessfull', require('./components/notifications/BookingUnsuccessfull.vue'));
 Vue.component('booking-approved', require('./components/notifications/BookingApproved.vue'));
 Vue.component('booking-decline', require('./components/notifications/BookingDecline.vue'));
 Vue.component('booking-closed', require('./components/notifications/BookingClosed.vue'));

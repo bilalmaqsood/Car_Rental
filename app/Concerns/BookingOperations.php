@@ -77,16 +77,37 @@ trait BookingOperations
 
         $booking->vehicle()->associate($vehicle);
         $booking->user()->associate($request->user());
-
+        $booking->status = BOOKING_REQUESTED;
         $booking->save();
 
+        $log = new BookingLog();
+        $log->requested_note = "Booking requested";
+        $log->requested_data = ["status" => BOOKING_ACCEPTED];
+        $log->requested_time = Carbon::now();
+        $log->requested()->associate($request->user());
+        $booking->bookingLog()->save($log);
+        
         $this->changeSlotsStatus($vehicle,$booking->id, 2);
 
         Couponize::processPromoCode($booking, $request);
 
-        $this->deductDeposit($booking, $request->user());
+        // $this->deductDeposit($booking, $request->user()); deduct after booking accepted
 
-        $this->generateContract($booking);
+        // $this->generateContract($booking); generate after booking accepted
+
+        $booking->vehicle->owner->user->notify(new BookingNotify([
+            'id' => $booking->id,
+            'type' => 'Booking',
+            'status' => $booking->status,
+            'old_status' => $booking->status,
+            'vehicle_id' => $booking->vehicle->id,
+            'image' => $booking->vehicle->images->first(),
+            'title' => 'Booking requested',
+            'user' => $request->user()->name,
+            'vehicle' => $booking->vehicle->vehicle_name,
+            'contract_start' => $booking->start_date,
+            'contract_end' => $booking->end_date,
+        ]));
 
         return api_response($booking->fresh(['vehicle' => function ($with) {
             $with->select('id', 'make', 'model', 'variant', 'year', 'deposit', 'images');
@@ -375,6 +396,13 @@ trait BookingOperations
         // $booking->fill($log->requested_data);
 
         $vehicle = $booking->vehicle;
+
+        if ($log->requested_data['status'] == 1  && $request->status==1) {
+            // User approved booking do payment here
+           $this->deductDeposit($booking, $booking->user);//  deduct after booking accepted
+
+           $this->generateContract($booking); // generate after booking accepted
+        }
 
         if ($log->requested_data['status'] == 8) {
             $booking->status = 8;

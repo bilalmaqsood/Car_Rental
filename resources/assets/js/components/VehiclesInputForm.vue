@@ -829,6 +829,8 @@
                                         type: type,
                                         title: name,
                                         name: name,
+                                        doc: "optional",
+                                        status: false,
 
                                     });
                                     $(".docUploader").val("");

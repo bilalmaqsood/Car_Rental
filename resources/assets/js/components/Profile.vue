@@ -21,22 +21,38 @@
 
 
             <div v-for="notif in notifications">
-            <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
 
-            <booking-signature-owner :notification="notif" v-else-if="notif.data.status===2"></booking-signature-owner>
-            <booking-signature-client :notification="notif" v-else-if="notif.data.status===3"></booking-signature-client>
-            <booking-extend-declined :notification="notif" v-else-if="notif.data.status===4 && notif.data.old_status ===7"></booking-extend-declined>
-            <booking-approved :notification="notif" v-else-if="notif.data.status===4"></booking-approved>
-            <booking-cancel-request :notification="notif" v-else-if="notif.data.status===5"></booking-cancel-request>
-            <booking-cancel-approved :notification="notif" v-else-if="notif.data.status===6 && notif.data.old_status ===5"></booking-cancel-approved>
-            <booking-decline :notification="notif" v-else-if="notif.data.status===6"></booking-decline>
-            <booking-extend :notification="notif" v-else-if="notif.data.status===7"></booking-extend>
-            <booking-extended :notification="notif" v-else-if="notif.data.status===8"></booking-extended>
-            <booking-closed :notification="notif" v-else-if="notif.data.status===9 && notif.data.old_status === 4"></booking-closed>
-            <booking-deposit-return :notification="notif" v-else-if="notif.data.status===12 && notif.data.old_status ===9 "></booking-deposit-return>
-            <booking-rating :notification="notif" v-else-if="notif.data.status===12 && notif.data.old_status ===12 "></booking-rating>
-            <booking-deposit :notification="notif" v-else-if="notif.data.status===100"></booking-deposit>
-            <booking-payment-made :notification="notif" v-else-if="notif.data.status===101"></booking-payment-made>
+            <booking-unsuccessfull :notification="notif" v-if="notif.data.status === CONSTANTS.BOOKING_UNSUCCESSFULL"></booking-unsuccessfull>
+
+            <booking-request :notification="notif" v-if="notif.data.status=== CONSTANTS.BOOKING_REQUESTED && vuex.state.auth.type === 'owner'" ></booking-request>
+
+            <booking-signature-owner :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_SIGN_BY_CLIENT"></booking-signature-owner>
+
+            <booking-signature-client :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_SIGN_BY_OWNER"></booking-signature-client>
+
+            <booking-extend-declined :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_ACTIVE && notif.data.old_status === CONSTANTS.BOOKING_EXTEND_REQUESTED"></booking-extend-declined>
+
+            <booking-approved :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_ACTIVE"></booking-approved>
+
+            <booking-cancel-request :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_EARLY_TERMINATION_REQUESTED"></booking-cancel-request>
+
+            <booking-cancel-approved :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_EARLY_TERMINATION_APPROVED && notif.data.old_status === CONSTANTS.BOOKING_EARLY_TERMINATION_REQUESTED"></booking-cancel-approved>
+
+            <booking-decline :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_EARLY_TERMINATION_APPROVED"></booking-decline>
+
+            <booking-extend :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_EXTEND_REQUESTED"></booking-extend>
+
+            <booking-extended :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_EXTEND_APPROVED"></booking-extended>
+
+            <booking-closed :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_CLOSED && notif.data.old_status === CONSTANTS.BOOKING_ACTIVE"></booking-closed>
+
+            <booking-deposit-return :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_DEPOSIT_RETURNED && notif.data.old_status ===CONSTANTS.BOOKING_CLOSED "></booking-deposit-return>
+
+            <booking-rating :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_DEPOSIT_RETURNED && notif.data.old_status ===CONSTANTS.BOOKING_DEPOSIT_RETURNED "></booking-rating>
+
+            <booking-deposit :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_DEPOSIT_MADE"></booking-deposit>
+
+            <booking-payment-made :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_PAYMENT_MADE"></booking-payment-made>
             </div>
 
 
@@ -92,10 +108,13 @@
 
 <script>
     import User from '../user';
+    import CONSTANTS from '../constants';
 
     export default {
         data() {
             return {
+                CONSTANTS,
+                in_action: null,
                 notifications: '',
                 booking_log: '',
                 driver_info: false,
@@ -140,7 +159,6 @@
         },
 
         mounted() {
-
             this.prepareComponent();
         },
 
@@ -188,7 +206,6 @@
                     .then(response => {
                         $('#sideLoader').hide();
                         this.notifications = response.data.success;
-                        console.log(JSON.stringify(response.data.success));
                         setTimeout(function() {
 
 
@@ -217,12 +234,16 @@
             },
 
             approve_action(notification) {
+                this.in_action = notification;
                 if (notification.data.id) {
                     $(".side-loader").show();
                     axios.get('/api/booking/' + notification.data.id + '/logs')
                         .then(this.approveRequest)
                         .then(()=>{
-                            setTimeout(()=>{ this.markRead(notification); }, 500);
+                            if([0].includes(notification.data.status))
+                            setTimeout(()=>{
+                             this.markRead(notification); 
+                         }, 2000);
                             
                         });
 
@@ -233,12 +254,14 @@
             },
 
             cancle_action(notification) {
+                    this.in_action = notification;
                      if (notification.data.id) {
                     $(".side-loader").show();
                     axios.get('/api/booking/' + notification.data.id + '/logs')
                         .then(this.cancelRequest)
                         .then(()=>{
-                           setTimeout(()=>{ this.markRead(notification); }, 500);
+                            if([0].includes(notification.data.status))
+                           setTimeout(()=>{ this.markRead(notification); }, 2000);
 
                         });
 
@@ -257,20 +280,24 @@
 
             approveRequest(response) {
                 if (response.data.success.booking_log[0] !== undefined) {
+                    
                     let data = response.data.success.booking_log[0];
                     let booking_id = response.data.success.booking_log[0].booking_id;
                     let status = response.data.success.booking_log[0].requested_data.status;
                     let log_id = response.data.success.booking_log[0].id;
                     let params = {log_id: response.data.success.booking_log[0].id, status: ""};
-                    console.log(response.data.success);
-                    if (status === 5)
-                        params.status = 6;
+                    
+                    if (status === CONSTANTS.BOOKING_ACCEPTED)
+                        params.status = CONSTANTS.BOOKING_ACCEPTED;
 
-                    if (status === 3)
-                        params.status = 4;
+                    if (status === CONSTANTS.BOOKING_EARLY_TERMINATION_REQUESTED)
+                        params.status = CONSTANTS.BOOKING_EARLY_TERMINATION_APPROVED;
 
-                    if (status === 7)
-                        params.status = 8;
+                    if (status === CONSTANTS.BOOKING_SIGN_BY_OWNER)
+                        params.status = CONSTANTS.BOOKING_ACTIVE;
+
+                    if (status === CONSTANTS.BOOKING_EXTEND_REQUESTED)
+                        params.status = CONSTANTS.BOOKING_EXTEND_APPROVED;
 
                     if(params.status)
                         this.sendRequest(response.data.success.id, params);
@@ -290,8 +317,12 @@
             sendRequest(booking_id, params) {
                 axios.patch('/api/booking/' + booking_id + '/status', params)
                     .then((response) => {
-                    
-
+                    $('#sideLoader').show();
+                        if([1].includes(params.status))
+                            setTimeout(()=>{ 
+                             this.viewContract(this.in_action);
+                             $('#sideLoader').hide();
+                         }, 5000);
                         if (response.status==200)
                             new Noty({type: 'success', text: response.data.success}).show();
                         if (response.status!==200)

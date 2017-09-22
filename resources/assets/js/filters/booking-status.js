@@ -1,6 +1,6 @@
 let statusTypes = [
     'Requested',
-    'Confirmed',
+    'Approved',
     'Signed by client',
     'Signed by owner',
     'Accepted',

@@ -14,7 +14,7 @@ class Booking extends Model
      */
     public $statusTypes = [
         'Requested',
-        'Confirmed',
+        'Approved',
         'Signed by client',
         'Signed by owner',
         'Accepted',
