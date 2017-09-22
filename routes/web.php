@@ -23,6 +23,8 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::get('/vehicles', 'HomeController@topVehicles');
 
+Route::get('/all-vehicles', 'HomeController@allVehicles');
+
 Route::get('/vehicle/image/hash', function () {
     return response(File::get(resource_path('assets/images/car_img.png')), 200, array('content-type' => 'image/png'));
 });

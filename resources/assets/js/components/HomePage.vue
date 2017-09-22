@@ -47,6 +47,9 @@
         },
 
         mounted() {
+            axios.get('/all-vehicles').then(r=>{
+                localStorage.allVehicles = JSON.stringify(r.data.success);
+            });
         },
 
         methods: {
@@ -76,7 +79,7 @@
                             $t.details = true;
                         }, 500);
                         User.commit('view', true);
-                        User.commit('listing', {data: [response.data.success]});
+                        User.commit('listing', {data: JSON.parse(localStorage.allVehicles)});
                         localStorage.reloadData = JSON.stringify({vehicleData: response.data.success})
                     });
             }
