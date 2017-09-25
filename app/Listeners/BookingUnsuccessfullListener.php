@@ -54,7 +54,7 @@ class BookingUnsuccessfullListener
         $driver->notify(new BookingNotify($data));
         $owner->notify(new BookingNotify($data));
 
-        // TODO: return payment here 
+        
         $booking->timeslots()->update(["status" => 1, "booking_id" => null]);
 
         $booking->delete();
