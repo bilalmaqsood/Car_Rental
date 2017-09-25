@@ -83,7 +83,7 @@ class BookingReminder extends Command
                     ]));
 
                     $booking->reminders()->create([
-                        
+                        "owner_id" => null,
                         "client_id" => $client->id
                     ]);
 
@@ -125,7 +125,7 @@ class BookingReminder extends Command
 
                     $booking->reminders()->create([
                         "owner_id" => $owner_id,
-                        
+                        "client_id" => null
                     ]);
 
                 }
