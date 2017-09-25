@@ -70,6 +70,7 @@ Vue.component('vehicle-input-form-copy', require('./components/VehiclesInputForm
  */
 Vue.component('booking-request', require('./components/notifications/BookingRequest.vue'));
 Vue.component('booking-request-pending', require('./components/notifications/BookingRequestPending.vue'));
+Vue.component('booking-request-pending-driver', require('./components/notifications/BookingRequestPendingDriver.vue'));
 Vue.component('booking-unsuccessfull', require('./components/notifications/BookingUnsuccessfull.vue'));
 Vue.component('booking-approved', require('./components/notifications/BookingApproved.vue'));
 Vue.component('booking-decline', require('./components/notifications/BookingDecline.vue'));

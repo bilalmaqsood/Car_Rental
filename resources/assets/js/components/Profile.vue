@@ -24,7 +24,9 @@
 
             <booking-unsuccessfull :notification="notif" v-if="notif.data.status === CONSTANTS.BOOKING_UNSUCCESSFULL"></booking-unsuccessfull>
 
-            <booking-request-pending :notification="notif" v-if="notif.data.status=== CONSTANTS.BOOKING_PENDING"></booking-request-pending>
+            <booking-request-pending-driver :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_PENDING"></booking-request-pending-driver>
+
+            <booking-request-pending :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_PENDING"></booking-request-pending>
 
             <booking-request :notification="notif" v-if="notif.data.status=== CONSTANTS.BOOKING_REQUESTED && vuex.state.auth.type === 'owner'" ></booking-request>
 
