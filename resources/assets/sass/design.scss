@@ -3073,7 +3073,9 @@ button:disabled {
 .handover_point {
     background: #857bf2 !important;
 }
-
+.last-point{
+    background: #a7a6b3 !important;  
+}
 
 .card_recured .form-control {
     background: none;
@@ -4188,4 +4190,10 @@ span.twitter-typeahead {
 
 .bootstrap-datetimepicker-widget table td.disabled, .bootstrap-datetimepicker-widget table td.disabled:hover {
     color: orange !important;
+}
+.driver-last-inspection {
+    position: absolute;
+    width: 40%;
+    top: 10%;
+    left: 0%;
 }

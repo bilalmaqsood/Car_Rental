@@ -19,8 +19,8 @@
         <div class="btn-inlane-content btn-inlane-content-btn2 noty_danger">
             <div class="driver-profile-text">
                 <h3>No response from owner</h3>
-                <p><b>{{notification.data.user}}</b>  has not taken any action for the booking of <b>{{ notification.data.vehicle }}</b></p>
-                <p>You can cancel your request now or wait for 30 min</p>
+                <p><b>{{notification.data.user}}</b>  has not taken any action regarding your booking request for <b>{{ notification.data.vehicle }}</b></p>
+                <p>You can cancel your request now or allow the owner more time to reply</p>
             </div>
         </div>
     </div>

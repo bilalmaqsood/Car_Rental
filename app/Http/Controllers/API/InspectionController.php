@@ -20,9 +20,9 @@ class InspectionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('owner')->except('index');
+        $this->middleware('owner')->except(['index','lastInspection']);
 
-        $this->middleware('not-admin')->only('index');
+        $this->middleware('not-admin')->only(['index','lastInspection']);
     }
 
     /**
@@ -179,5 +179,24 @@ class InspectionController extends Controller
         if (!$inspection) throw new ModelNotFoundException();
 
         return api_response($inspection->delete());
+    }
+
+
+    /**
+     * Show last inspection
+     *
+     * @param $vehicle_id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+
+    public function lastInspection($vehicle_id){
+
+        $vehicle = Vehicle::find($vehicle_id);
+
+        $inspection = $vehicle->inspection;
+            
+        if (!$inspection) throw new ModelNotFoundException();
+
+        return api_response($inspection);  
     }
 }

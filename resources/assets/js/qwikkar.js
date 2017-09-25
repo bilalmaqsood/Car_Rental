@@ -42,7 +42,7 @@ Vue.component('booking-listing', require('./components/BookingListing.vue'));
 Vue.component('booking', require('./components/BookingDetail.vue'));
 Vue.component('past-booking', require('./components/PastBookingDetail.vue'));
 Vue.component('car-inspection', require('./components/CarInspection.vue'));
-Vue.component('car-return-inspection', require('./components/CarReturnInspection.vue'));
+Vue.component('last-inspection', require('./components/LastInspection.vue'));
 Vue.component('booking-documents', require('./components/Documents.vue'));
 Vue.component('chat-booking', require('./components/Chat.vue'));
 Vue.component('extend-cancel-booking', require('./components/ExtendCancel.vue'));

@@ -49,6 +49,9 @@
                 <button @click="loadMore" v-show="user.state.searchResults.next_page_url" class="primary-button">Load more..</button>
             <search-listing-details :user="user" v-if="user.state.detailsDisplay"></search-listing-details>
         </div>
+         <transition name="slide-fade" mode="out-in">
+              <last-inspection class="driver-last-inspection" :vehicle="user.state.vehicleData" v-if="last_inspection"></last-inspection>
+        </transition>
     </div>
 
 </template>
@@ -67,13 +70,18 @@
                 detailsDisplay: false,
                 SearchMap: null,
                 hover_vehicle: false,
+                last_inspection: false,
             };
         },
 
         mounted() {
             this.prepareComponent();
         },
-
+        created: function(){
+            this.$on("lastinspection",()=>{
+                 this.last_inspection = !this.last_inspection;   
+            });
+        },
         methods: {
             prepareComponent(){
                 let $t = this;

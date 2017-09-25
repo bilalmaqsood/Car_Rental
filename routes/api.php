@@ -93,6 +93,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/booking/{id}/payment-weekly', 'FinancialController@paymentDetailWeekly')->middleware('not-admin');
 
+    Route::get('/vehicle/{vehicle_id}/inspection', 'InspectionController@lastInspection');
+    
     Route::resource('/booking/{booking_id}/inspection', 'InspectionController');
 
     Route::post('withdraw', 'WithdrawController');
