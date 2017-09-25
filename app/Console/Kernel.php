@@ -33,6 +33,8 @@ class Kernel extends ConsoleKernel
                  ->daily();
         $schedule->command('overdue:check')
                  ->daily();
+        $schedule->command('booking:reminder')
+                 ->everyMinute();
 
     }
 

@@ -2,8 +2,8 @@
 
 	define('DATE_FORMAT', "d-m-Y h:i A");
 
-	define('OWNER_REMINDER_INTERVAL', 60);
-	define('DRIVER_REMINDER_INTERVAL', 30);
+	define('OWNER_REMINDER_INTERVAL', 5);
+	define('DRIVER_REMINDER_INTERVAL', 5);
 	define('BOOKING_REMINDER_ATTEMPTS_LIMIT', 4);
 
 
