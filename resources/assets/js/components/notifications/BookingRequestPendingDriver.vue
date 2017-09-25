@@ -56,9 +56,14 @@
 
             },
             declineEvent(){
-                axios.delete('/api/booking/'+this.notification.data.id).then(r=>{
-                    console.log(r);
-                });
+                axios.delete('/api/booking/'+this.notification.data.id+'/cancel-request').then(r=>{
+                         new Noty({
+                                type: 'warning',
+                                text: 'Booking request is has been cancel',
+                            }).show();
+                         this.$parent.$emit("markread",this.notification);
+                        console.log(r);
+                    });
             }
     }
 }

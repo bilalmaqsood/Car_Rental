@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::resource('booking', 'BookingController', ['except' => ['create', 'edit']]);
     Route::post('booking/{id}/status', 'BookingController@updateStatusRequest');
+    Route::delete('booking/{id}/cancel-request', 'BookingController@cancelRequest');
     Route::patch('booking/{id}/status', 'BookingController@updateStatusFulfill');
     Route::post('booking/{id}/feedback', 'BookingController@giveFeedback');
     Route::get('booking/{id}/logs', 'BookingController@lastBookingLog')->middleware('owner');

@@ -501,4 +501,15 @@ class BookingController extends Controller
 
         return api_response(trans('booking.mileage', ['name' => $booking->vehicle->vehicle_name, 'miles' => $request->miles]));
     }
+
+    /**
+     * Delete the booking request and free the timeslots of vehicle
+     *
+     * @param Request $request
+     * @param Booking ID $id
+     */
+    public function cancelRequest(Request $request, $id)
+    {
+        $this->cancelBookingRequest($request,$id);
+    }
 }

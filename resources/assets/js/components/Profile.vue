@@ -149,8 +149,12 @@
             this.$on("contract",(noti)=>{
                 this.viewContract(noti);
             });
+
             this.$on("chat",(noti)=>{
                 this.viewContract(noti);
+            });
+            this.$on("markread",(noti)=>{
+                this.markRead(noti);
             });
         },
         computed: {

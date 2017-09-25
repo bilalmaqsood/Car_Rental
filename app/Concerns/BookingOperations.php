@@ -3,16 +3,18 @@
 namespace Qwikkar\Concerns;
 
 use Carbon\Carbon;
+use Qwikkar\Models\User;
+use Qwikkar\Models\Vehicle;
+use Qwikkar\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Qwikkar\Models\BalanceLog;
-use Qwikkar\Models\Booking;
 use Qwikkar\Models\BookingLog;
 use Qwikkar\Models\BookingPayment;
-use Qwikkar\Models\User;
-use Qwikkar\Models\Vehicle;
+use Qwikkar\Events\BookingUnsuccessfull;
 use Qwikkar\Notifications\BookingNotify;
 use Qwikkar\Notifications\BookingPaymentNotify;
+
 
 trait BookingOperations
 {
@@ -522,5 +524,13 @@ trait BookingOperations
             $pdfData = ['content' => $dataPlaced];
 
             \PDF::loadView('pdf.contract', $pdfData)->save(storage_path('app/public' . $fileName));
+    }
+
+    protected function cancelBookingRequest($request,$booking_id){
+            $booking = $request->user()->booking()->whereId($booking_id)->first();
+            if(!$booking)
+                return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+            $result = event(new BookingUnsuccessfull($booking));
+            
     }
 }
