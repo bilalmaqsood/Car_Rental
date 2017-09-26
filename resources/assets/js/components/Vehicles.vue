@@ -269,11 +269,18 @@
             },
 
             processDestroy(){
+
+                
+                
                 axios.delete('/api/vehicle/'+this.vehicle.id).then(()=>{
-                           let index = this.vehicles.indexOf(this.vehicle);
-                            this.vehicles.splice(index, 1);
-                            if(this.vehicles.length>0)
-                                this.vehicle = this.vehicles[0];
+
+                                User.commit('menuView', 'vehicles');
+                           // let index = this.vehicles.indexOf(this.vehicle);
+                           //  this.vehicles.splice(index, 1);
+                           //  if(this.vehicles.length>0)
+                           //      this.vehicle = this.vehicles[0];
+
+
                         });
             }
         }

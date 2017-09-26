@@ -93,9 +93,9 @@
         },
         mounted() {
             $scope = this;
-            $('#sideLoader').show();
+            $('.side-loader').show();
             this.prepareComponent();
-            setTimeout(function() { $('#sideLoader').hide(); }, 1000);
+            
             
         },
 
@@ -105,6 +105,7 @@
                     .then(this.vehiclesCallback);
             },
             vehiclesCallback(r) {
+                setTimeout(function() { $('.side-loader').hide(); }, 1000);
                     this.vehicles = r.data.success;
                     if(r.data.success[0]){
                         this.vehicle = r.data.success[0];
