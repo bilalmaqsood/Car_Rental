@@ -4,6 +4,7 @@ namespace Qwikkar\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Qwikkar\Models\TimeSlot;
+use Carbon\Carbon;
 
 class Booking extends Model
 {
@@ -74,6 +75,27 @@ class Booking extends Model
         'vehicle_id',
         'user_id',
     ];
+
+
+
+    /**
+     * The attributes that should be appended to array.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'handover_inspection',
+    ];
+
+    /**
+     * Open handover inspection before 24 hours of booking
+     * 
+     */
+
+    public function getHandoverInspectionAttribute(){
+        return  $this->start_date > Carbon::now() && $this->start_date->diffInHours(Carbon::now()) <= 24;
+    }
+
 
     /**
      * All the booking that are requested

@@ -41,6 +41,7 @@
                 <extend-cancel-booking v-if="sideView=='extend'" key="booking-extend" :user="storage" @clearSideView="clearSideView"></extend-cancel-booking>
                 <booking-documents v-if="sideView=='documents'" key="booking-documents" :documents="documents"></booking-documents>
                 <chat-booking v-if="sideView=='chat'" key="booking-chat" :viewHeight="viewHeight" :user="storage" :bookingId="inProcess.id"></chat-booking>
+                <last-inspection v-if="sideView=='last_inspection'" key="lat-last-inspection" :vehicle="booking.vehicle"></last-inspection>
             </transition>
         <search-listing-details :user="storage" v-if="book_past" key="past-booking"></search-listing-details>
         </div>

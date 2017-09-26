@@ -60,7 +60,7 @@
 
                 <div class="booking_tab">
                     <ul class="nav nav-tabs">
-                        <li v-if="(User.state.auth.type == 'owner' || User.state.auth.type == 'client') && booking.status >= 6 ">
+                        <li v-if="booking.status >= 6 ">
                             <a @click="loadSideView('return_inspection')" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
@@ -68,12 +68,21 @@
                                 Return inspection
                             </a>
                         </li>
-                        <li v-else>
+                        
+                         <li v-else-if="booking.handover_inspection"> <!-- 24 hours before booking start -->
                             <a @click="loadSideView('inspection')" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                 </svg>
                                 Handover inspection
+                            </a>
+                        </li>
+                        <li v-if="booking.status<CONSTANTS.BOOKING_ACTIVE && !booking.handover_inspection">
+                            <a @click="loadSideView('last_inspection')" href="javascript:">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
+                                </svg>
+                                last inspection
                             </a>
                         </li>
                         <transition name="flip" v-if="User.state.auth.type=='client'">
@@ -128,7 +137,7 @@
                                 </a>
                             </li>
                         </transition>
-                        <li>
+                        <li v-else-if="booking.status >= 1 && booking.status<=4">
                             <a @click="loadSideView('documents')" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#contract_view_icon"></use>
@@ -163,12 +172,15 @@
 <script>
 
     import User from '../user';
+    import CONSTANTS from '../constants';
+
 
     export default {
         props: ['Booking', 'user', 'index','signature'],
 
         data() {
             return {
+                CONSTANTS,
                 User: User,
                 booking: this.Booking,
                 isSignDone: this.signature,
@@ -188,7 +200,8 @@
         computed: {
             
             tooltip(){
-               if(this.booking.status==1) return "Booking requested"; 
+               if(this.booking.status==0) return "Booking requested"; 
+               if(this.booking.status==1) return "Booking approved"; 
                if(this.booking.status==2) return "Contract signatures pending of owner"; 
                if(this.booking.status==3 && (typeof this.booking.signatures.client === 'undefined')) return "Contract signatures pending of driver"; 
                else if(this.booking.status==3 && this.booking.signatures.client)
@@ -208,7 +221,7 @@
 
             },
             canSign() {
-                if(this.booking.status >= 4)
+                if(this.booking.status >= 4 || this.booking.status <= 1)
                     return false; 
 
                 if(!this.booking.signatures)
