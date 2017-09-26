@@ -201,7 +201,8 @@
                                     </div>
                                 </div>
                                 <p class=" help-block text-sm" v-if="$v.form.pickup_location.$error">
-                                    Enter availability</p>
+                                Select vehicle pickup location
+                                </p>
                             </div>
                         </li>
                         <li class="vehicle-details-row1">
@@ -223,7 +224,7 @@
                                     </div>
                                 </div>
                                 <p class=" help-block text-sm" v-if="$v.form.return_location.$error">
-                                    Enter return location</p>
+                                    Enter vehicle return location</p>
                             </div>
                         </li>
                         <li class="vehicle-details-row1">
@@ -245,7 +246,7 @@
                                     </div>
                                 </div>
                                 <p class=" help-block text-sm" v-if="$v.form.location.$error">
-                                    Enter return location </p>
+                                    Enter vehicle location </p>
                             </div>
                         </li>
                         <li class="vehicle-details-row1">
