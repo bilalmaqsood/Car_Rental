@@ -74,6 +74,7 @@ class InspectionController extends Controller
                 if (!$inspection->exists) {
                     $inspection->fill($spot);
                     $inspection->vehicle()->associate($booking->vehicle);
+                    $inspection->booking()->associate($booking);
                     $inspection->save();
 
                     return $inspection;
@@ -149,6 +150,7 @@ class InspectionController extends Controller
             return api_response(trans('booking.handover'), Response::HTTP_CONFLICT);
 
         $inspection->fill($request->all());
+        $inspection->booking()->associate($booking);
         $inspection->save();
 
         if (isset($data['status']) && $data['status'] == 1 && $booking->status != 10) {

@@ -57,4 +57,8 @@ class Inspection extends Model
     {
         return $this->hasOne(Ticket::class);
     }
+
+    public function booking(){
+        return $this->belongsTo(Booking::class);
+    }
 }
