@@ -36,8 +36,9 @@
                                 </svg>
                             </div>
                             
-                            <input id="slider-range" type="text" class="span2" value="" data-slider-min="10" data-slider-max="1000" data-slider-step="5" data-slider-value="[250,450]"/>
-
+                            <input id="slider-range" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,1000]"/>
+                            <span>{{price_min}}</span>-
+                            <span>{{price_max}}</span>
                         </div>
 
                     </div>
@@ -89,8 +90,8 @@
                 start_date: '',
                 end_date: '',
                 price: "",
-                price_min: false,
-                price_max: false,
+                price_min: 0,
+                price_max: 1000,
                 advanceSearch: false,
             };
         },
