@@ -6,7 +6,8 @@
                 <div class="user_type_selection text-left user-want-rent">
                     <div class="btn-group" style="padding-top: 1rem">
                         <label class="btn btn-primary" :class="{active:user_type=='client', focus:user_type=='client'}" @click="user_type='client'">I want to rent</label>
-                        <label class="btn btn-primary" :class="{active:user_type=='owner', focus:user_type=='owner'}" @click="user_type='owner'">I own a car</label>
+
+                        <label v-if="!User.state.bookNow" class="btn btn-primary" :class="{active:user_type=='owner', focus:user_type=='owner'}" @click="user_type='owner'">I own a car</label>
                     </div>
                 </div>
 
@@ -162,6 +163,7 @@
     export default {
         data() {
             return {
+                User,
                 step: 'type',
                 oldstep: '',
                 terms: false,
