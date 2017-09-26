@@ -155,14 +155,21 @@
                     <p><label>Deposit</label><label>{{vehicle.deposit | currency}}</label></p>
                     <span>will be paid when placing the request</span>
                 </li>
-                <li>
-                    <p><label>Total</label> <label>{{ totalBooking | currency }}</label></p>
-                    <span v-if="!promo_code_reward">amount that will be paid by the end of the contract</span>
-                    <span v-else>total amount without discount</span>
-                </li>
+
+                
+               
                 <li v-if="promo_code_reward">
                     <p><label>Sub Total</label> <label>{{ subTotalBooking | currency }}</label></p>
+                    <span>Total amount without discount</span>
+                </li>
+                <li v-if="promo_code_reward">
+                    <p><label>Discount</label><label> - {{promo_code_reward | currency}}</label></p>
+                    <span>Discount on the promocode</span>
+                </li>
+                 <li>
+                    <p><label>Total</label> <label>{{ totalBooking | currency }}</label></p>
                     <span>amount that will be paid by the end of the contract</span>
+                    
                 </li>
             </ul>
 
@@ -259,14 +266,14 @@
                 return this.vehicle.insurance * this.days;
             },
 
-            totalBooking() {
+            subTotalBooking() {
                 return (
                     this.totalRent +
                     this.totalInsurance +
                     this.vehicle.deposit
                 );
             },
-            subTotalBooking() {
+            totalBooking() {
                 return (
                     this.totalRent +
                     this.totalInsurance +
