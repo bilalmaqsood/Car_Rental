@@ -58,6 +58,7 @@
 
         methods: {
             viewProfileEvent(){
+                $(".menu-component-container").animate({scrollTop: 0});
                 this.$parent.$emit("viewPofile",{booking_id: this.notification.data.id});
             },
             approveEvent(){
