@@ -15,6 +15,7 @@ class AddBookingIdToInspectionsTable extends Migration
     {
         Schema::table('inspections', function (Blueprint $table) {
             $table->integer('booking_id')->nullable();
+            $table->integer('client_id')->nullable();
         });
     }
 
