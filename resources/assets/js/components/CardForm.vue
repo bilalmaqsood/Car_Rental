@@ -49,7 +49,7 @@
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#security_form_icon"></use>
                         </svg>
 </div>
-                        <input @blur="$v.card.cvc.$touch()" v-model.trim="card.cvc" type="password" class="form-control cc-cvc" placeholder="CVV2" name="cvc">
+                        <input maxlength="3" size="3" @blur="$v.card.cvc.$touch()" v-model.trim="card.cvc" type="password" class="form-control cc-cvc" placeholder="CVV2" name="cvc">
                         <span class="help-block text-sm" v-if="$v.card.cvc.$error">Enter valid CVV2</span>
 </div>
                     </div>
