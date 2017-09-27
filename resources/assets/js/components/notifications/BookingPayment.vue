@@ -5,7 +5,7 @@
                 <h3>{{notification.data.title}}</h3>
                 <p>Deposit <b>{{notification.data.amount | currency}}</b> For vehicle <b> {{notification.data.vehicle}} </b></p>
                 <p>You can now check and sign the contract . A deposit of <b> {{ notification.data.amount | currency }}</b> have been taken
-                from your card ending in <b>notification.data.card_ending</b></p>
+                from your card ending in <b>{{notification.data.card_ending}}</b></p>
             </div>
         </div>
     </div>
