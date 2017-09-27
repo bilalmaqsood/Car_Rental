@@ -221,7 +221,7 @@
 
             },
             canSign() {
-                if(this.booking.status >= 4 || this.booking.status <= 1)
+                if(this.booking.status >= 4 || this.booking.status < 1)
                     return false; 
 
                 if(!this.booking.signatures)
