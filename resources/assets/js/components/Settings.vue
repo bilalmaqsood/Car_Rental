@@ -193,6 +193,9 @@
                 clone: JSON.stringify(User.state.auth)
             };
         },
+        created: function() {
+            this.$on("modelHiding",this.hideModal);
+        },
 
         computed: {
             verifyAuth() {
