@@ -21,6 +21,8 @@
 
 
             <div v-for="notif in notifications">
+            <inspection-code :notification="notif"></inspection-code>
+            <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
 
             <booking-unsuccessfull :notification="notif" v-if="notif.data.status === CONSTANTS.BOOKING_UNSUCCESSFULL"></booking-unsuccessfull>
 
@@ -250,7 +252,7 @@
                         .then(()=>{
                             if([0].includes(notification.data.status))
                             setTimeout(()=>{
-                             this.markRead(notification); 
+                             this.markRead(notification);
                          }, 2000);
                             
                         });
@@ -288,13 +290,13 @@
 
             approveRequest(response) {
                 if (response.data.success.booking_log[0] !== undefined) {
-                    
+
                     let data = response.data.success.booking_log[0];
                     let booking_id = response.data.success.booking_log[0].booking_id;
                     let status = response.data.success.booking_log[0].requested_data.status;
                     let log_id = response.data.success.booking_log[0].id;
                     let params = {log_id: response.data.success.booking_log[0].id, status: ""};
-                    
+
                     if (status === CONSTANTS.BOOKING_ACCEPTED)
                         params.status = CONSTANTS.BOOKING_ACCEPTED;
 
@@ -328,11 +330,11 @@
                     
                         if([1].includes(params.status)){
                            $('#sideLoader').show();
-                                setTimeout(()=>{ 
+                                setTimeout(()=>{
                                  this.viewContract(this.in_action);
                                  $('#sideLoader').hide();
                              }, 5000);
-                        } 
+                        }
 
                         if (response.status==200)
                             new Noty({type: 'success', text: response.data.success}).show();

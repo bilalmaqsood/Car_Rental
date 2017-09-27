@@ -6,6 +6,352 @@
                 <div class="spinner-bar"></div>
             </div>
         </div>
+<div class="inspection-digits-confirmation">
+    <span>Please input the code provided to you by the driver to confirm the vehicle inspection. This confirmation represents the acceptance of both parties that the vehicle inspection has been completes and the contract will start immediately.</span>
+    <ul>
+        <li>
+            <div class="input-group">
+                <input type="text" class="form-control">
+            </div>
+        </li>
+        <li>
+            <div class="input-group">
+                <input type="text" class="form-control">
+            </div>
+        </li>
+        <li>
+            <div class="input-group">
+                <input type="text" class="form-control">
+            </div>
+        </li>
+        <li>
+            <div class="input-group">
+                <input type="text" class="form-control">
+            </div>
+        </li>
+    </ul>
+    <button class="btn">Confirm vehicle inspection</button>
+</div>
+<div class="agreement-form-wrap">
+    <p>Contract</p>
+    <p>Please check the information below for accuracy and make the necessary amendments.</p>
+    <div class="uploader-box">
+        <ul>
+            <li class="vehicle-details-row1">
+                <div class="form-group">
+                    <input type="text" placeholder="Business name" class="form-control">
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <input type="text" placeholder="Business registration number" class="form-control">
+                </div>
+            </li>
+        </ul>
+        <div class="file-uploader-wrap">
+            <div class="form-group">
+                <div class="fileUpload">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98.328 98.329" class="svg-icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#images-upload"></use>
+                    </svg>
+                    <span>Business logo</span>
+                    <input type="file" class="upload">
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul>
+        <li class="vehicle-details-row1">
+            <div class="form-group">
+                <input type="text" placeholder="Business address" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Business e-mail" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Business phone number" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Vehicle registration number" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Vehicle colour" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Vehicle make" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Vehicle model" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row1">
+            <div class="form-group">
+                <input type="text" placeholder="Client name" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row1">
+            <div class="form-group">
+                <input type="text" placeholder="Client address" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Driving license number" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Driving license expiration date" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="PCO license number" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="PCO license expiration date" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Refundable deposit value" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Deposit paid date" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Agreement start date" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Agreement end date / time" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row1">
+            <div class="form-group">
+                <input type="text" placeholder="Insurance company name" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Insurance policy number" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Insurance expiry date" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Weekly rent cost" class="form-control">
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <input type="text" placeholder="Insurance excess cost" class="form-control">
+            </div>
+        </li>
+    </ul>
+    <div class="inlain-black-btn2">
+        <ul>
+            <li><a href="javascript:void(0)" class="btn">Preview contract</a></li> 
+            <li><a href="javascript:void(0)" class="btn">Confirm contract</a></li>
+        </ul>
+    </div>
+</div>
+<div class="agreement-form-wrap agreement-form-wrap-2">
+    <p>Contract</p>
+    <p>Please check the information below for accuracy and make the necessary amendments.</p>
+    <div class="uploader-box">
+        <ul>
+            <li class="vehicle-details-row1">
+                <div class="form-group">
+                    <p>Business name</p>
+                    <b>John Doe ltd.</b>
+                </div>
+            </li>
+            <li>
+                <div class="form-group">
+                    <p>Business registration number</p>
+                    <b>1234567</b>
+                </div>
+            </li>
+        </ul>
+        <div class="file-uploader-wrap">
+            <div class="form-group">
+                <div class="fileUpload">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98.328 98.329" class="svg-icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#images-upload"></use>
+                    </svg>
+                    <span>Business logo</span>
+                    <input type="file" class="upload">
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul>
+        <li class="vehicle-details-row1">
+            <div class="form-group">
+                <p>Business address</p>
+                <b>1 Fore Street, London, EC2Y 9DT, United Kingdom</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Business e-mail</p>
+                <b>Office@johndeo.co.uk</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Business phone number</p>
+                <b>020 1234 5678</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Vehicle registration number</p>
+                <b>1234567890123</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Vehicle colour</p>
+                <b>Blue</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Vehicle make</p>
+                <b>Ford</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Vehicle mode</p>
+                <b>Galaxy</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row1">
+            <div class="form-group">
+                <p>Client name</p>
+                <b>Michael Myers</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row1">
+            <div class="form-group">
+                <p>Client address</p>
+                <b>45 King William Street, London, EC4r 9AN, United Kingdom</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Driving license number</p>
+                <b>STANE803108A99RV</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Driving license expiration date</p>
+                <b>13.08.2025</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>PCO license number</p>
+                <b>234567</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>PCO license expiration date</p>
+                <b>10.10.2020</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Refundable deposit value</p>
+                <b>£ 1,234.00</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Deposit paid date</p>
+                <b>01.09.2017</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Agreement start date</p>
+                <b>08.09.2017</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Agreement end date</p>
+                <b>25.10.2017</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row1">
+            <div class="form-group">
+                <p>Insurance company name</p>
+                <b>Briliant Insurance ltd.</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Insurance policy number</p>
+                <b>BRIL-123456</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Insurance expiry date</p>
+                <b>13.06.2018</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Weekly rent cost</p>
+                <b>£ 550.00</b>
+            </div>
+        </li>
+        <li class="vehicle-details-row2">
+            <div class="form-group">
+                <p>Insurance excess cost</p>
+                <b>£ 850.00</b>
+            </div>
+        </li>
+    </ul>
+    <div class="inlain-black-btn2">
+        <ul>
+            <li><a href="javascript:void(0)" class="btn">Preview contract</a></li> 
+            <li><a href="javascript:void(0)" class="btn">Confirm contract</a></li>
+        </ul>
+    </div>
+</div>
+
+
         <ul class="nav nav-tabs">
             <li :class="{'active': menuView=='front'}">
             <a @click="changeMenu('front')" href="javascript:void(0)">Front</a></li>
@@ -198,10 +544,12 @@
                     <div v-if="User.state.auth.type=='owner'" class="add_description_icon">
 <div class="input-group login-input">
                         <input type="text" class="form-control" placeholder="add description" v-model="description">
-                        <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
+                        <div class="input-group-addon">
+                        <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
                      <i v-if="dispute_status" class="fa fa-check "></i>
                       {{ dispute_status==true?'Disputed':'Dispute'}}
                     </button>
+                    </div>
 <div class="input-group-addon">
                         <span>
 									<svg  @click="saveSpots('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -225,9 +573,26 @@
                         </span>
 </div>
                     </div> </div>
-                    <p>{{content}}</p>
+
+                        <div class="inlain-black-btn2">
+                            <ul>
+                                <li>
+                                    <a class="btn" href="javascript:void(0)">Send inspection to driver</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-span" href="javascript:void(0)">Confirm vehicle inspection
+                                    <span>using the 4-digits code provided by driver</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div v-if="spot_image || content " class="inspection2">
+                           <p>{{content}}</p>
                             <img :src="spot_image"  />
+                        </div>
+
 </div>
+
                 </div>
             </div>
 
