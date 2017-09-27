@@ -21,6 +21,7 @@
 
 
             <div v-for="notif in notifications">
+            <inspection-code :notification="notif"></inspection-code>
             <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
 
             <booking-signature-owner :notification="notif" v-else-if="notif.data.status===2"></booking-signature-owner>

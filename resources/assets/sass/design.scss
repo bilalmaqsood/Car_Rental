@@ -3574,22 +3574,28 @@ button:disabled {
     max-height: 360px;
 }
 .noty_danger{
-    border-left: 5px solid #db202f;
+    border-left: 5px solid #db202f !important;
 }
 .noty_warning{
-    border-left: 5px solid #f5a623;
+    border-left: 5px solid #f5a623 !important;
 }
 .noty_info{
-    border-left: 5px solid #3108b6;
+    border-left: 5px solid #3108b6 !important;
 }
 .noty_danger h3{
-    color: #db202f;
+    color: #db202f !important;
 }
 .noty_warning h3{
-    color: #f5a623;
+    color: #f5a623 !important;
 }
 .noty_info h3{
-    color: #3108b6;
+    color: #3108b6 !important;
+}
+.noty_unsuccessfull{
+    border-left: 5px solid #87af1e;
+}
+.noty_unsuccessfull h3{
+   color: #87af1e !important;
 }
 .detail_img{
     height: 220px;
@@ -3857,23 +3863,19 @@ button:disabled {
 }
 .booking-request-actions-2 .noty_danger{
     border-right: 5px solid #d0021b;
-    border-left: none;
+    border-left: none !important;
 }
 .booking-request-actions-2 .noty_warning{
     border-right: 5px solid #f5a623;
-    border-left: none;
+    border-left: none !important;
 }
 .booking-request-actions-2 .noty_info{
     border-right: 5px solid #3108b6;
-    border-left: none;
-}
-.booking-request-actions-2 .noty_unsuccessfull{
-    border-right: 5px solid #4a4a4a;
-    border-left: none;
+    border-left: none !important;
 }
 .booking-request-actions-2 .noty_successfull{
     border-right: 5px solid #87af1e;
-    border-left: none;
+    border-left: none !important;
 }
 .booking-request-img-box{
     min-height: 180px;
@@ -4188,4 +4190,257 @@ span.twitter-typeahead {
 
 .bootstrap-datetimepicker-widget table td.disabled, .bootstrap-datetimepicker-widget table td.disabled:hover {
     color: orange !important;
+}
+.inlain-black-btn2{
+    float: left;
+    width: 100%;
+    display: block;
+    text-align: center;
+    background: #fff;
+}
+.inlain-black-btn2 ul{
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #444343;
+}
+.inlain-black-btn2 ul li {
+    list-style: none;
+    width: 50%;
+    display: inline-block;
+    border-left: 2px solid #444343;
+    float: left;
+}
+.inlain-black-btn2 ul li:first-child{
+    border-left: none;
+}
+.inlain-black-btn2 ul li .btn{
+    text-decoration: none;
+    color: #87af1e;
+    background: #525252;
+    padding: 19px 15px 20px;
+    display: block;
+    text-align: center;
+    border-radius: 0;
+    font-size: 18px;
+}
+.inlain-black-btn2 ul li .btn-span{
+    padding: 10px 15px;
+}
+.inlain-black-btn2 ul li .btn span{
+    display: block;
+    font-size: 12px;
+}
+.add_description_icon{
+    margin-bottom: 0px;
+}
+.inspection2{
+    float: left;
+    width: 100%;
+    padding-top: 20px;
+    text-align: center;
+    background: #fff;
+}
+.inspection-digits-confirmation {
+    float: left;
+    width: 100%;
+    text-align: center;
+    background: rgba(121, 121, 121, 0.56);
+    padding: 50px;
+    position: absolute;
+    z-index: 30;
+    height: 100vh;
+}
+.inspection-digits-confirmation span{
+    color: #fff;
+    margin-bottom: 30px;
+}
+.inspection-digits-confirmation ul{
+    padding: 0;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    width: 80%;
+}
+.inspection-digits-confirmation ul li{
+    list-style: none;
+    padding: 10px;
+    float: left;
+    width: 25%;
+}
+.inspection-digits-confirmation ul li .form-control{
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #fff;
+    background-color: inherit;
+    height: 80px;
+    border: 2px solid #fff;
+    width: 100%;
+}
+.inspection-digits-confirmation .btn{
+    text-decoration: none;
+    color: #87af1e;
+    background: #525252;
+    padding: 19px 15px 20px;
+    display: block;
+    text-align: center;
+    border-radius: 0;
+    font-size: 18px;
+    margin-top: 40px;
+}
+.inspection-digits-confirmation .btn {
+    text-decoration: none;
+    color: #87af1e;
+    background: #525252;
+    padding: 20px 30px;
+    text-align: center;
+    border-radius: 0;
+    font-size: 18px;
+    margin-top: 40px;
+    display: inline-block;
+}
+.inlain-black-btn2 ul li .btn:hover, .inlain-black-btn2 ul li .btn:focus, .inspection-digits-confirmation .btn:hover, .inspection-digits-confirmation .btn:focus{
+    background: #000;
+}
+.confirmation-code-no p span{
+    float: right;
+    display: inline-block;
+}
+.confirmation-code-no p span label{
+    display: inline-block;
+    margin-left: 5px;
+}
+.confirmation-code-no{
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+}
+.fileUpload {
+    -webkit-box-shadow: 4px 4px 4px rgba(91, 91, 91, 0.5);
+    box-shadow: 4px 4px 4px rgba(91, 91, 91, 0.5);
+    margin: 0 auto;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 10px;
+    position: relative;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.74);
+}
+.fileUpload svg {
+    display: block;
+    margin: 0 auto 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    min-height: 138px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.fileUpload .svg-icon {
+    width: 30px;
+    fill: #333;
+    height: 30px;
+}
+.file-uploader-wrap{
+    width: 20%;
+    float: right;
+}
+.agreement-form-wrap{
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+}
+.uploader-box ul{
+    padding: 0;
+    margin: 0;
+    width: 80%;
+    float: left;
+}
+.agreement-form-wrap ul{
+    padding: 0;
+    margin: 0;
+}
+.agreement-form-wrap ul li{
+padding: 0 12px;
+border-bottom: 1px solid #f1f1f1;
+float: left;
+width: 100%;
+-webkit-box-shadow: 1px 1px 3px #000;
+box-shadow: 1px 1px 3px #000;
+list-style: none;
+background: #fff;
+}
+.agreement-form-wrap ul li .form-control {
+    background: #fff;
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    height: 50px;
+    border-radius: 0px;
+    padding: 0;
+}
+.agreement-form-wrap ul li .form-group {
+    margin: 0;
+    float: left;
+    width: 100%;
+}
+.uploader-box{
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+}
+.agreement-form-wrap .vehicle-details-row1{
+    width: 100% !important;
+    float: left;
+    border: none !important;
+}
+.agreement-form-wrap .vehicle-details-row2{
+    width: 50% !important;
+    float: left;
+}
+.agreement-form-wrap .vehicle-details-row3{
+    width: 33.3% !important;
+    float: left;
+}
+.file-uploader-wrap .form-group {
+    margin-bottom: 0 !important;
+}
+.agreement-form-wrap .inlain-black-btn2 ul li {
+    width: 50%;
+}
+.agreement-form-wrap .inlain-black-btn2 ul li {
+    border-left: 2px solid #ffffff;
+    padding: 0;
+}
+.agreement-form-wrap .inlain-black-btn2 ul li:first-child {
+    border-left: none;
+}
+.agreement-form-wrap p {
+    margin: 0 ;
+}
+.agreement-form-wrap-2 ul li {
+    padding: 4px 12px;
+}
+.agreement-form-wrap-2 ul li b{
+    font-family: arial;
+    font-size: 12px;
+}
+.dispute-btn {
+    background: #87af1e none repeat scroll 0 0;
+    margin: 0;
+    padding: 15px;
+    width: auto;
+}
+@media screen and (max-width: 767px) {
+.agreement-form-wrap .vehicle-details-row2{
+    width: 100% !important;
+}
+.agreement-form-wrap .vehicle-details-row3{
+    width: 100% !important;
+}
 }
