@@ -36,7 +36,7 @@
                                 </svg>
                             </div>
                             
-                            <input id="slider-range" type="text" class="span2" value="" data-slider-min="0" data-slider-max="1000" data-slider-step="5" data-slider-value="[0,1000]"/>
+                            <input id="slider-range" type="text" class="span2" value="" data-slider-min="1" data-slider-max="1000" data-slider-step="5" data-slider-value="[1,1000]"/>
                             <span>{{price_min}}</span>-
                             <span>{{price_max}}</span>
                         </div>
@@ -182,7 +182,7 @@
                         });
                 }
 
-                if (this.price_min && this.price_max) {
+                if (this.price_min || this.price_max) {
                     params.price_min = this.price_min;
                     params.price_max = this.price_max;
 
