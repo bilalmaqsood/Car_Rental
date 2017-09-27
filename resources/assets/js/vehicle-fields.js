@@ -30,9 +30,8 @@ export default {
     no_fault_accident: '',
     fault_accident: '',
     discounts:[],
-    documents: [    {},   
+    documents: [      
                     {title: 'PCO Certificate', name:'',path: '',type: '', doc: 'pco_certificate', status: '' },
-                    {title: 'optional', name:'',doc: 'optional',path: '',type: '', status: '' },
                     {title: 'Car Log Book/V5', name:'',path: '',type: '', doc: 'car_log_book', status: '' },
                     {title: 'Insurance Documents', name:'',path: '',type: '', doc: 'incourence_document', status: '' },
                     {title: 'Permission Letter', name:'',path: '',type: '', doc: 'permission_letter', status: '' },
