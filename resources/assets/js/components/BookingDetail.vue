@@ -137,7 +137,7 @@
                                 </a>
                             </li>
                         </transition>
-                        <li v-else-if="booking.status >= 1 && booking.status<=4">
+                        <li v-if="booking.status >= 1 && booking.status<=4">
                             <a @click="loadSideView('documents')" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 20" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#contract_view_icon"></use>
