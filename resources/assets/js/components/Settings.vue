@@ -283,8 +283,8 @@
             },
             upload(obj){
                 let $this = this;
-                $(".hiddenUpload").click();
-                    $(".hiddenUpload").change(function () {
+                
+                    $(".hiddenUpload").unbind().trigger("click").change(function () {
                         $.map(this.files, function (val) {
                            $('#sideLoader').show();
                             obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
@@ -314,7 +314,8 @@
                 } 
             },
             hideModal(){
-               this.doc = null;
+                console.log("hiding model");
+               this.doc = false;
               
              },            
              edit(doc){
