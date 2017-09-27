@@ -90,7 +90,7 @@
                 start_date: '',
                 end_date: '',
                 price: "",
-                price_min: 0,
+                price_min: 1,
                 price_max: 1000,
                 advanceSearch: false,
             };

@@ -73,7 +73,7 @@
                 available: '',
                 start_date: '',
                 end_date: '',
-                price_min: 0,
+                price_min: 1,
                 price_max: 1000,
             };
         },
