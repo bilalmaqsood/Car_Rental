@@ -47,7 +47,7 @@
 
             <div key="card_detail" v-else>
                 <div class="fill_card">
-                <h2>My Cards</h2>
+                <h3>My Cards</h3>
                     <div class="list-group">
                         <transition-group name="list" tag="div">
                             <a href="javascript:" @click="fillCard(c, $event)" class="list-group-item" v-for="c in credit_cards" :key="c.id" :class="{active: c.id == card.id}">
