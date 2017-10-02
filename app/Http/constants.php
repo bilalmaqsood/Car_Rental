@@ -25,5 +25,9 @@
 	define('BOOKING_UNSUCCESSFULL',400);
 	define('BOOKING_UNRESPONSIVE',401);
 	define('BOOKING_PENDING',402);
+	define('BOOKING_AMENDED',416);
+	define('INSPECTION_COMPLETED',201);
+	define('INSPECTION_CODE_GENERATED',202);
+	
 
 ////////////Booking Status////////////////////////////////////////

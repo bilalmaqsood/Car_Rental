@@ -312,7 +312,8 @@ trait BookingOperations
                     'client' => $booking->signatures && $booking->signatures->has('client')
                 ]
             ]));
-        else if ($request->user()->isClient())
+        else if ($request->user()->isClient()){
+            $this->inspectionNotifyDriver($booking);
             $booking->vehicle->owner->user->notify(new BookingNotify([
                 'id' => $booking->id,
                 'type' => 'Booking',
@@ -332,6 +333,7 @@ trait BookingOperations
                     'client' => $booking->signatures && $booking->signatures->has('client')
                 ]
             ]));
+        }
 
         \PDF::loadView('pdf.contract', $pdfData)->save(storage_path('app/public' . $fileName));
     }
@@ -532,5 +534,34 @@ trait BookingOperations
                 return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
             $result = event(new BookingUnsuccessfull($booking));
             
+    }
+
+    protected function inspectionNotifyDriver($booking){
+
+        $code = $booking->code();
+        if(!$code){
+            $code = mt_rand(1000, 9999);
+            $booking->code()->create([
+                'confirm_code' => $code,
+                 'status' => 0
+            ]);
+        }
+            
+
+        $booking->user->notify(new BookingNotify([
+            'id' => $booking->id,
+            'type' => 'Booking',
+            'status' =>  INSPECTION_CODE_GENERATED,
+            'inspection_code'  => $code,
+            'old_status' => $booking->status,
+            'vehicle_id' => $booking->vehicle->id,
+            'image' => $booking->vehicle->images->first(),
+            'title' => 'Owner completed vehicle inspection',
+            'user' => request()->user()->name,
+            'vehicle' => $booking->vehicle->vehicle_name,
+            'contract_start' => $booking->start_date,
+            'contract_end' => $booking->end_date,
+        ]));
+
     }
 }

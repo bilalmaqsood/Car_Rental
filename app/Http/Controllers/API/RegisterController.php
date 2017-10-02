@@ -133,6 +133,7 @@ class RegisterController extends Controller
     {
         $user->notify(new UserNotify([
             'title' => 'Welcome to Qwikkar',
+             'status' => 200
         ]));
     }
 }

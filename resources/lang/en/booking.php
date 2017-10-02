@@ -44,4 +44,10 @@ return [
 
     'request-decline' => 'Booking request decline',
 
+    'ammendment-approve' => 'Requested spot is approved as vehicle inspection',
+
+    'inspection_confirmed' => 'Booking is marked as active',
+
+    'inspection_code_notfound' => "Invalid inspection confirmation code"
+
 ];

@@ -2,14 +2,16 @@
 
 namespace Qwikkar\Http\Controllers\API;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Qwikkar\Models\Vehicle;
+use Qwikkar\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Qwikkar\Models\Inspection;
 use Qwikkar\Concerns\Disputable;
 use Qwikkar\Http\Controllers\Controller;
-use Qwikkar\Models\Booking;
-use Qwikkar\Models\Inspection;
-use Qwikkar\Models\Vehicle;
+use Qwikkar\Notifications\BookingNotify;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 class InspectionController extends Controller
 {
@@ -20,9 +22,9 @@ class InspectionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('owner')->except(['index','lastInspection']);
+        $this->middleware('owner')->except(['index','lastInspection','amendedInspection','notifyAmendedInspection']);
 
-        $this->middleware('not-admin')->only(['index','lastInspection']);
+        $this->middleware('not-admin')->only(['index','lastInspection','confirmInspection']);
     }
 
     /**
@@ -200,5 +202,130 @@ class InspectionController extends Controller
         if (!$inspection) throw new ModelNotFoundException();
 
         return api_response($inspection);  
+    }
+
+    public function notifyDriver( Request $request, $booking_id)
+    {
+        $booking = Booking::findOrFail($booking_id);
+
+        // if(!$booking->code())
+        //     $booking->code()->create([
+        //         'confirm_code' => mt_rand(1000, 9999),
+        //          'status' => 0
+        //         ]);
+
+        $booking->user->notify(new BookingNotify([
+            'id' => $booking->id,
+            'type' => 'Booking',
+            'status' => INSPECTION_COMPLETED,
+            'old_status' => $booking->status,
+            'vehicle_id' => $booking->vehicle->id,
+            'image' => $booking->vehicle->images->first(),
+            'title' => 'Owner updated vehicle inspection',
+            'user' => $request->user()->name,
+            'vehicle' => $booking->vehicle->vehicle_name,
+            'contract_start' => $booking->start_date,
+            'contract_end' => $booking->end_date,
+        ]));
+
+        
+       
+    }
+
+    public function notifyAmendedInspection( Request $request, $booking_id)
+    {
+
+        $booking = Booking::findOrFail($booking_id);
+
+        if($booking)
+        $booking->vehicle->owner->user->notify(new BookingNotify([
+            'id' => $booking->id,
+            'type' => 'Booking',
+            'status' => BOOKING_AMENDED,
+            'old_status' => BOOKING_AMENDED,
+            'vehicle_id' => $booking->vehicle->id,
+            'image' => $booking->vehicle->images->first(),
+            'title' => 'Inspection needs ammendment',
+            'user' => $request->user()->name,
+            'vehicle' => $booking->vehicle->vehicle_name,
+            'contract_start' => $booking->start_date,
+            'contract_end' => $booking->end_date,
+        ]));
+
+    }
+
+    public function amendedInspection(Request $request, $booking_id){
+
+          $this->validate($request, [
+            'data' => 'required|array|min:1',
+            'data.*.type' => 'required|in:front,rear,driver_side,off_side,notes',
+            'data.*.status' => 'in:0,1,'.BOOKING_AMENDED,
+            'data.*.is_return' => 'boolean',
+            // 'data.*.x_axis' => 'numeric',
+            // 'data.*.y_axis' => 'numeric',
+            'data.*.path' => 'string',
+            'data.*.note' => 'string',
+        ]);
+
+        $data = collect($request->data)->first();
+        
+        $booking = Booking::findOrFail($booking_id);
+
+        if ($booking->status >= 4 )
+            return api_response('Cannot do amended inspection at the moment', Response::HTTP_CONFLICT);
+
+        $spots = collect($request->data)
+            ->map(function ($spot) use ($request, $booking) {
+
+                $inspection = Inspection::firstOrNew(collect($spot)->only('x_axis', 'y_axis', 'path')->all());
+
+                if (!$inspection->exists) {
+                    $inspection->fill($spot);
+                    $inspection->vehicle()->associate($booking->vehicle);
+                    $inspection->booking()->associate($booking);
+                    $inspection->status = BOOKING_AMENDED;
+                    
+                    $inspection->save();
+
+                    return $inspection;
+                }
+            })
+            ->reject(function ($spot) {
+                return $spot == null;
+            })
+            ->values();
+
+        return api_response(trans('booking.inspection_added', ['count' => $spots->count()]));
+    }
+
+    public function confirmInspection(Request $request,$booking_id)
+    { 
+        $this->validate($request, [
+            'inspection_code' => 'required|numeric',
+            
+        ]);
+
+        $booking = Booking::findOrFail($booking_id);
+
+        $result =  $booking->code()->where("confirm_code",$request->inspection_code);
+
+        if($result->count()){
+             $booking->update(["status" => BOOKING_ACTIVE]);
+            return api_response(trans('booking.inspection_confirmed'));
+        }
+
+        return api_response(trans('booking.inspection_code_notfound'),404);
+
+    }
+
+    public function approveInspection($booking_id,$spot_id)
+    {
+
+        $booking = Booking::findOrFail($booking_id);
+
+        $spot =  $booking->inspections()->whereId($spot_id);
+        $spot->update(["status"=>0]);
+        
+        return api_response($spot->first());
     }
 }

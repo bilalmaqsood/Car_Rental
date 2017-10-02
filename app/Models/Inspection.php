@@ -19,6 +19,7 @@ class Inspection extends Model
         'y_axis',
         'path',
         'note',
+        'booking_id'
     ];
 
     /**

@@ -7,32 +7,32 @@
             </div>
         </div>
 
-<!-- <div class="inspection-digits-confirmation">
-    <span>Please input the code provided to you by the driver to confirm the vehicle inspection. This confirmation represents the acceptance of both parties that the vehicle inspection has been completes and the contract will start immediately.</span>
-    <ul>
-        <li>
-            <div class="input-group">
-                <input type="text" class="form-control">
-            </div>
-        </li>
-        <li>
-            <div class="input-group">
-                <input type="text" class="form-control">
-            </div>
-        </li>
-        <li>
-            <div class="input-group">
-                <input type="text" class="form-control">
-            </div>
-        </li>
-        <li>
-            <div class="input-group">
-                <input type="text" class="form-control">
-            </div>
-        </li>
-    </ul>
-    <button class="btn">Confirm vehicle inspection</button>
-</div> -->
+    <div v-if="confirm_inspection" class="inspection-digits-confirmation">
+        <span>Please input the code provided to you by the driver to confirm the vehicle inspection. This confirmation represents the acceptance of both parties that the vehicle inspection has been completes and the contract will start immediately.</span>
+        <ul>
+            <li>
+                <div class="input-group">
+                    <input type="text" class="form-control digit" maxlength="1">
+                </div>
+            </li>
+            <li>
+                <div class="input-group">
+                    <input type="text" class="form-control digit" maxlength="1">
+                </div>
+            </li>
+            <li>
+                <div class="input-group">
+                    <input type="text" class="form-control digit" maxlength="1">
+                </div>
+            </li>
+            <li>
+                <div class="input-group">
+                    <input type="text" class="form-control digit" maxlength="1">
+                </div>
+            </li>
+        </ul>
+        <button class="btn" @click="confirmInspection">Confirm vehicle inspection</button>
+    </div>
 
 <!-- <div class="agreement-form-wrap">
     <p>Contract</p>
@@ -373,8 +373,12 @@
             <div id="car_front" class="tab-pane fade in active" v-if="menuView=='front'">
                 <div class="dummy_car carcondition-img" id="front">
 
-                     <div  data-toggle="tooltip" :title="inspection.is_return==1?'Return inspection.':'Handover inspection'" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" :class="{'return_point': inspection.is_return==1, 'handover_point': inspection.is_return==0, mydraggable: true}">
+                     <div  data-toggle="tooltip" :title="spotTitle(inspection)" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" 
+                     :class="soptColor(inspection)">
                         <div id="mydragcontrols">
+                            <span v-if="User.state.auth.type=='owner' && inspection.status===CONSTANTS.BOOKING_AMENDED"  id="mydeldrag" style="color: red" @click="approveSpot(inspection)">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            </span>
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
                             </span>
@@ -387,11 +391,11 @@
                     <img src="/images/front.png" alt="" style="margin: 0px;">
                 </div>
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
+                    <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
 
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
-                    <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
+                    <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
                      <i v-if="dispute_status" class="fa fa-check "></i>
                       {{ dispute_status==true?'Disputed':'Dispute'}}
                     </button>
@@ -421,15 +425,49 @@
 
 
                     </div>
+
+                     <div class="inlain-black-btn2" v-if="User.state.auth.type=='owner' && booking.status < 4">
+                            <ul>
+                                <li>
+                                    <a class="btn" href="javascript:void(0)" @click="sendInspection">Send inspection to driver</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-span" href="javascript:void(0)" @click="confirm_inspection = ! confirm_inspection">Confirm vehicle inspection
+                                    <span>using the 4-digits code provided by driver</span>
+                                    </a>
+                                </li>   
+                            </ul>
+                      </div>
+                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3].includes(booking.status)">
+                            <ul>
+                                <li v-if="!ammending">
+                                    <a class="btn" href="javascript:void(0)" @click="ammending=!ammending">Inspection needs ammending</a>
+                                </li>
+                                <li v-if="ammending">
+                                    <a class="btn" href="javascript:void(0)" @click="sendInspection">Send inspection to owner</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-span" href="javascript:void(0)" @click="confirm_inspection = ! confirm_inspection">Confirm vehicle inspection
+                                    <span>using the 4-digits code provided by driver</span>
+                                    </a>
+                                </li>   
+                            </ul>
+                      </div>
+                      <div v-if="spot_image || content " class="inspection2">
                             <p>{{content}}</p>
                             <img :src="spot_image" />
+                      </div>    
                 </div>
             </div>
 
             <div id="car_rear" class="tab-pane fade in active" v-if="menuView=='rear'">
                 <div class="dummy_car carcondition-img" id="rear">
-                    <div  data-toggle="tooltip" :title="inspection.is_return==1?'Return inspection.':'Handover inspection'" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" :class="{'return_point': inspection.is_return==1, 'handover_point': inspection.is_return==0, mydraggable: true}">
+                    <div  data-toggle="tooltip" :title="spotTitle(inspection)" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" 
+                     :class="soptColor(inspection)">
                         <div id="mydragcontrols">
+                            <span v-if="User.state.auth.type=='owner' && inspection.status===CONSTANTS.BOOKING_AMENDED"  id="mydeldrag" style="color: red" @click="approveSpot(inspection)">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            </span>
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
                             </span>
@@ -441,8 +479,8 @@
                     <img src="/images/rear.png" alt="">
                 </div>
                 <div class="front_back_size" >
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
-                    <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
+                    <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
+                    <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
                      <i v-if="dispute_status" class="fa fa-check "></i>
                       {{ dispute_status==true?'Disputed':'Dispute'}}
                     </button>
@@ -472,16 +510,51 @@
 </div>
                     </div>
 </div>
-                <p>{{content}}</p>
-                            <img :src="spot_image"  />
 
+
+
+                      <div class="inlain-black-btn2" v-if="User.state.auth.type=='owner' && booking.status < 4">
+                            <ul>
+                                <li>
+                                    <a class="btn" href="javascript:void(0)" @click="sendInspection">Send inspection to driver</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-span" href="javascript:void(0)" @click="confirm_inspection = ! confirm_inspection">Confirm vehicle inspection
+                                    <span>using the 4-digits code provided by driver</span>
+                                    </a>
+                                </li>   
+                            </ul>
+                      </div>
+                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3].includes(booking.status)">
+                            <ul>
+                                <li v-if="!ammending">
+                                    <a class="btn" href="javascript:void(0)" @click="ammending=!ammending">Inspection needs ammending</a>
+                                </li>
+                                <li v-if="ammending">
+                                    <a class="btn" href="javascript:void(0)" @click="sendInspection">Send inspection to owner</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-span" href="javascript:void(0)" @click="confirm_inspection = ! confirm_inspection">Confirm vehicle inspection
+                                    <span>using the 4-digits code provided by driver</span>
+                                    </a>
+                                </li>   
+                            </ul>
+                      </div>
+                      <div v-if="spot_image || content " class="inspection2">
+                            <p>{{content}}</p>
+                            <img :src="spot_image" />
+                      </div> 
                 </div>
             </div>
 
             <div id="car_driver_side" class="tab-pane fade in active" v-if="menuView=='driver_side'">
                 <div class="dummy_car carcondition-img" id="driver_side">
-                    <div  data-toggle="tooltip" :title="inspection.is_return==1?'Return inspection.':'Handover inspection'" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" :class="{'return_point': inspection.is_return==1, 'handover_point': inspection.is_return==0, mydraggable: true}">
+                    <div  data-toggle="tooltip" :title="spotTitle(inspection)" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" 
+                     :class="soptColor(inspection)">
                         <div id="mydragcontrols">
+                            <span v-if="User.state.auth.type=='owner' && inspection.status===CONSTANTS.BOOKING_AMENDED"  id="mydeldrag" style="color: red" @click="approveSpot(inspection)">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            </span>
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
                             </span>
@@ -493,10 +566,10 @@
                     <img src="/images/driver_side.png" alt="">
                 </div>
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
+                    <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
-                        <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
+                        <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
                      <i v-if="dispute_status" class="fa fa-check "></i>
                       {{ dispute_status==true?'Disputed':'Dispute'}}
                     </button>
@@ -524,15 +597,49 @@
 </div>
                     </div>
                     </div>
-                    <p>{{content}}</p>
-                            <img :src="spot_image"  />
+
+                      <div class="inlain-black-btn2" v-if="User.state.auth.type=='owner' && booking.status < 4">
+                            <ul>
+                                <li>
+                                    <a class="btn" href="javascript:void(0)" @click="sendInspection">Send inspection to driver</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-span" href="javascript:void(0)" @click="confirm_inspection = ! confirm_inspection">Confirm vehicle inspection
+                                    <span>using the 4-digits code provided by driver</span>
+                                    </a>
+                                </li>   
+                            </ul>
+                      </div>
+                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3].includes(booking.status)">
+                            <ul>
+                                <li v-if="!ammending">
+                                    <a class="btn" href="javascript:void(0)" @click="ammending=!ammending">Inspection needs ammending</a>
+                                </li>
+                                <li v-if="ammending">
+                                    <a class="btn" href="javascript:void(0)" @click="sendInspection">Send inspection to owner</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-span" href="javascript:void(0)" @click="confirm_inspection = ! confirm_inspection">Confirm vehicle inspection
+                                    <span>using the 4-digits code provided by driver</span>
+                                    </a>
+                                </li>   
+                            </ul>
+                      </div>
+                      <div v-if="spot_image || content " class="inspection2">
+                            <p>{{content}}</p>
+                            <img :src="spot_image" />
+                      </div>     
                 </div>
             </div>
 
             <div id="car_off_side" class="tab-pane fade in active" v-if="menuView=='off_side'">
                 <div class="dummy_car carcondition-img" id="off_side">
-                    <div  data-toggle="tooltip" :title="inspection.is_return==1?'Return inspection.':'Handover inspection'" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" :class="{'return_point': inspection.is_return==1, 'handover_point': inspection.is_return==0, mydraggable: true}">
+                    <div  data-toggle="tooltip" :title="spotTitle(inspection)" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" 
+                     :class="soptColor(inspection)">
                         <div id="mydragcontrols">
+                            <span v-if="User.state.auth.type=='owner' && inspection.status===CONSTANTS.BOOKING_AMENDED"  id="mydeldrag" style="color: red" @click="approveSpot(inspection)">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            </span>
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
                             </span>
@@ -544,55 +651,71 @@
                     <img src="/images/off_side.png" alt="">
                 </div>
                 <div class="front_back_size">
-                    <div v-if="User.state.auth.type=='owner'" class="add_description_icon">
-<div class="input-group login-input">
-                        <input type="text" class="form-control" placeholder="add description" v-model="description">
-                        <div class="input-group-addon">
-                        <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
-                     <i v-if="dispute_status" class="fa fa-check "></i>
-                      {{ dispute_status==true?'Disputed':'Dispute'}}
-                    </button>
+                    <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
+                        <div class="input-group login-input">
+                                <input type="text" class="form-control" placeholder="add description" v-model="description">
+                                <div class="input-group-addon">
+                                    <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
+                                     <i v-if="dispute_status" class="fa fa-check "></i>
+                                      {{ dispute_status==true?'Disputed':'Dispute'}}
+                                    </button>
+                                </div>
+                                <div class="input-group-addon">
+                                    <span>
+            									<svg  @click="saveSpots('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
+            										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+            									</svg>
+                                    </span>
+                                </div>
+                                <div class="input-group-addon">
+                                    <span>
+            									<svg @click="uploadImage('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
+            										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
+            									</svg>
+                                                <input type="file" class="hidden" id="off_sideUploader" name="">
+                                    </span>
+                                </div>
+                                <div class="input-group-addon">
+                                        <span>
+                                					<svg :class="{'clickable': !sportPending}" @click="drawSpots('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" svg-icon">
+                                						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
+                                					</svg>
+                                        </span>
+                                </div>
+                        </div> 
                     </div>
-<div class="input-group-addon">
-                        <span>
-									<svg  @click="saveSpots('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
-									</svg>
-                        </span>
-</div>
-<div class="input-group-addon">
-                        <span>
-									<svg @click="uploadImage('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 21" class="clickable svg-icon">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#photo_camera"></use>
-									</svg>
-                                    <input type="file" class="hidden" id="off_sideUploader" name="">
-                        </span>
-</div>
-<div class="input-group-addon">
-                        <span>
-									<svg :class="{'clickable': !sportPending}" @click="drawSpots('off_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class=" svg-icon">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#paint_icon"></use>
-									</svg>
-                        </span>
-</div>
-                    </div> </div>
 
-                        <div class="inlain-black-btn2">
+                    <div class="inlain-black-btn2" v-if="User.state.auth.type=='owner' && booking.status < 4">
                             <ul>
                                 <li>
-                                    <a class="btn" href="javascript:void(0)">Send inspection to driver</a>
+                                    <a class="btn" href="javascript:void(0)" @click="sendInspection">Send inspection to driver</a>
                                 </li>
                                 <li>
-                                    <a class="btn btn-span" href="javascript:void(0)">Confirm vehicle inspection
+                                    <a class="btn btn-span" href="javascript:void(0)" @click="confirm_inspection = ! confirm_inspection">Confirm vehicle inspection
                                     <span>using the 4-digits code provided by driver</span>
                                     </a>
-                                </li>
+                                </li>   
                             </ul>
-                        </div>
-                        <div v-if="spot_image || content " class="inspection2">
-                           <p>{{content}}</p>
-                            <img :src="spot_image"  />
-                        </div>
+                      </div>
+                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3].includes(booking.status)">
+                            <ul>
+                                <li v-if="!ammending">
+                                    <a class="btn" href="javascript:void(0)" @click="ammending=!ammending">Inspection needs ammending</a>
+                                </li>
+                                <li v-if="ammending">
+                                    <a class="btn" href="javascript:void(0)" @click="sendInspection">Send inspection to owner</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-span" href="javascript:void(0)" @click="confirm_inspection = ! confirm_inspection">Confirm vehicle inspection
+                                    <span>using the 4-digits code provided by driver</span>
+                                    </a>
+                                </li>   
+                            </ul>
+                      </div>
+                      <div v-if="spot_image || content " class="inspection2">
+                            <p>{{content}}</p>
+                            <img :src="spot_image" />
+                      </div>
 
 </div>
 
@@ -613,7 +736,7 @@
 
                 
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
+                    <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
 <div class="input-group-addon">
@@ -635,8 +758,39 @@
 <div class="input-group-addon">
 </div></div>
                     </div>
+                     
+                     <div class="inlain-black-btn2" v-if="User.state.auth.type=='owner' && booking.status < 4">
+                            <ul>
+                                <li>
+                                    <a class="btn" href="javascript:void(0)" @click="sendInspection">Send inspection to driver</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-span" href="javascript:void(0)" @click="confirm_inspection = ! confirm_inspection">Confirm vehicle inspection
+                                    <span>using the 4-digits code provided by driver</span>
+                                    </a>
+                                </li>   
+                            </ul>
+                      </div>
+                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3].includes(booking.status)">
+                            <ul>
+                                <li v-if="!ammending">
+                                    <a class="btn" href="javascript:void(0)" @click="ammending=!ammending">Inspection needs ammending</a>
+                                </li>
+                                <li v-if="ammending">
+                                    <a class="btn" href="javascript:void(0)" @click="sendInspection">Send inspection to owner</a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-span" href="javascript:void(0)" @click="confirm_inspection = ! confirm_inspection">Confirm vehicle inspection
+                                    <span>using the 4-digits code provided by driver</span>
+                                    </a>
+                                </li>   
+                            </ul>
+                      </div>
+                      <div v-if="spot_image || content " class="inspection2">
                             <p>{{content}}</p>
-                            <img :src="spot_image"  />
+                            <img :src="spot_image" />
+                      </div>
+
                 </div>
             </div>
 
@@ -648,18 +802,21 @@
 
 <script>
     import User from '../user';
-
+    import CONSTANTS from '../constants';
 
     export default {
         props: ['profileHeight','booking'],
 
         data() {
             return {
+                CONSTANTS,
                 User: User,
                 menuView: 'front',
                 is_return: false,
                 dispute_status: false,
                 sportPending: false,
+                confirm_inspection: false,
+                ammending: false,
                 inspections: {
                     data: [],
                 },
@@ -824,9 +981,11 @@
                     note: this.description,
                 };
 
+                if(User.state.auth.type=='client')
+                    param.status = CONSTANTS.BOOKING_AMENDED;
 
                 $("#centerLoader").show();
-                
+                if(User.state.auth.type=='owner')
                 axios.post('/api/booking/'+this.booking.id+'/inspection',{data: [param]}).then(function(r){
                       $this.sportPending = false;
                       $("#remove").click();
@@ -845,6 +1004,27 @@
                                 }).show();
                             
                         });
+                else 
+
+                     axios.post('/api/booking/'+this.booking.id+'/amended-inspection',{data: [param]}).then(function(r){
+                      $this.sportPending = false;
+                      $("#remove").click();
+                    $this.inspections.data.push(param);
+                      new Noty({
+                            type: 'success',
+                            text: 'Inspection added success',
+                        }).show();  
+                        $this.clearSpot();
+                  })
+                .catch(r => {
+                    this.clearSpot();
+                                new Noty({
+                                    type: 'error',
+                                    text: r.response.data.error,
+                                }).show();
+                            
+                        });
+
                 $this.hideLoader(1000);
             },
             clearSpot(){
@@ -870,7 +1050,81 @@
                 return inspection.type==this.menuView;
 
             },
+            confirmInspection(){
 
+                var code = new Array();
+
+                $(".digit").each(function(val){
+                    code.push($(this).val());
+                });
+                code = code.join('');
+                $('#centerLoader').show();
+                 axios.post('/api/booking/'+this.booking.id+'/confirm-inspection',{inspection_code: code})
+                 .then(r=>{
+                    this.hideLoader(500);
+                    new Noty({
+                                    type: 'success',
+                                    text: r.data.success,
+                                }).show();
+                 }).catch(r=>{
+                    this.hideLoader(500);
+                    new Noty({
+                                    type: 'error',
+                                    text: r.response.data.error,
+                                }).show();
+                 });
+
+            },
+            sendInspection(){
+
+                let url;
+                if(User.state.auth.type=='client')
+                    url = '/api/booking/'+this.booking.id+'/notify-amendedInspection'
+                else if(User.state.auth.type=='owner')
+                    url = '/api/booking/'+this.booking.id+'/notify-driver'
+                $('#centerLoader').show();
+                axios.post(url).then(()=>{
+                    this.hideLoader(500);
+                 });
+
+
+            },
+            soptColor(inspection){  
+                if(inspection.status==CONSTANTS.BOOKING_AMENDED)                
+                    return 'inspection_ammended mydraggable';
+                else if(inspection.is_return==0)
+                    return 'handover_point mydraggable';
+                else if(inspection.is_return==1)
+                    return 'return_point mydraggable'
+            },
+
+            spotTitle(inspection){
+                if(inspection.status==CONSTANTS.BOOKING_AMENDED)                
+                    return 'Inspection ammended';
+                else if(inspection.is_return==0)
+                    return 'Handover inspection';
+                else if(inspection.is_return==1)
+                    return 'Return inspection';
+            },
+
+            spotControls(){
+
+                
+            },
+            approveSpot(inspection){
+                 let index = this.inspections.data.indexOf(inspection);
+                            $('#centerLoader').show();
+                axios.patch('/api/booking/'+this.booking.id+'/approve-inspection/'+ inspection.id)
+                 .then(r=>{
+                    new Noty({
+                            type: 'success',
+                            text: 'Ammended spot approved',
+                        }).show();
+                        this.inspections.data.splice(index,1);
+                        this.inspections.data.push(r.data.success);
+                        this.hideLoader(500);
+                 });
+            }
         }
     }
 </script>

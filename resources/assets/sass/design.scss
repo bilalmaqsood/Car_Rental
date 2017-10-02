@@ -3037,7 +3037,7 @@ button:disabled {
 
 .draggable,
 .mydraggable {
-    width: 60px;
+    width: auto;
     height: 25px;
     background: rgba(145, 4, 28, 0.6);
     z-index: 1;
@@ -4250,10 +4250,10 @@ span.twitter-typeahead {
     float: left;
     width: 100%;
     text-align: center;
-    background: rgba(121, 121, 121, 0.56);
+    background: rgba(121, 121, 121, 0.80);
     padding: 50px;
     position: absolute;
-    z-index: 30;
+    z-index: 9999;
     height: 100vh;
 }
 .inspection-digits-confirmation span{
@@ -4449,4 +4449,13 @@ background: #fff;
 .agreement-form-wrap .vehicle-details-row3{
     width: 100% !important;
 }
+}
+.inspection_ammended{
+    background: orange;
+}
+.inspection-code{
+    letter-spacing: 10px;
+    font-weight: bolder;
+    font-size: 14px;
+
 }

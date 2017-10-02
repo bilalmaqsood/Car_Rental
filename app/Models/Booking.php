@@ -85,6 +85,7 @@ class Booking extends Model
      */
     protected $appends = [
         'handover_inspection',
+        'booking_amended'
     ];
 
     /**
@@ -95,6 +96,14 @@ class Booking extends Model
     public function getHandoverInspectionAttribute(){
         return true;
         return  $this->start_date > Carbon::now() && $this->start_date->diffInHours(Carbon::now()) <= 24;
+    }
+    /**
+     * Open handover inspection before 24 hours of booking
+     * 
+     */
+
+    public function getBookingAmendedAttribute(){
+        return  $this->inspections()->where("status",BOOKING_AMENDED)->count() >= 1;
     }
 
 
@@ -180,6 +189,24 @@ class Booking extends Model
     public function reminders()
     {
        return  $this->hasMany(BookingReminder::class);
+    }
+
+    /**
+     * Get all the inspections on the bookings
+     *
+     */
+    public function inspections()
+    {
+       return  $this->hasMany(Inspection::class);
+    }
+
+    /**
+     * Get booking confirmation code
+     *
+     */
+    public function code()
+    {
+       return  $this->hasOne(InspectionConfirmation::class);
     }
 
 

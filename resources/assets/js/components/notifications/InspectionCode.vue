@@ -3,15 +3,12 @@
         <div class="btn-inlane-content noty_unsuccessfull">
             <div class="driver-profile-text">
             <h3>Your vehicle pickup number</h3>
-            <p>Hello <b>John Doe.</b> Please provide the code below to the vehicle owner when you pick-up your vehicle as confirmation of your approval to the vehicle inspection.</p>
+            <p>Hello <b>{{ notification.data.user }}</b> Please provide the code below to the vehicle owner when you pick-up your vehicle as confirmation of your approval to the vehicle inspection.</p>
             <div class="confirmation-code-no">
                 <p>
                     Your confirmation code is:
-                    <span>
-                        <label>0</label>
-                        <label>1</label>
-                        <label>2</label>
-                        <label>3</label>
+                    <span class="inspection-code">
+                        {{  notification.data.inspection_code }}
                     </span>
                 </p>
             </div>
@@ -27,7 +24,7 @@
         props: ["notification"],
         data() {
             return {
-
+                
             };
         },
 

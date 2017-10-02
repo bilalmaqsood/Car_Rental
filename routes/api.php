@@ -89,11 +89,22 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/upload/{type}', 'UploadController');
 
     Route::get('/earnings', 'FinancialController@incomeDetail')->middleware('owner');
+    
     Route::get('/current-balance', 'FinancialController@balanceDetails')->middleware('client');
 
     Route::get('/booking/{id}/payment-weekly', 'FinancialController@paymentDetailWeekly')->middleware('not-admin');
 
     Route::get('/vehicle/{vehicle_id}/inspection', 'InspectionController@lastInspection');
+
+    Route::patch('/booking/{booking_id}/approve-inspection/{spot_id}', 'InspectionController@approveInspection');
+
+    Route::post('/booking/{booking_id}/notify-driver', 'InspectionController@notifyDriver');
+
+    Route::post('/booking/{booking_id}/notify-amendedInspection', 'InspectionController@notifyAmendedInspection');
+
+    Route::post('/booking/{booking_id}/confirm-inspection', 'InspectionController@confirmInspection');
+
+    Route::post('/booking/{booking_id}/amended-inspection', 'InspectionController@amendedInspection');
     
     Route::resource('/booking/{booking_id}/inspection', 'InspectionController');
 
