@@ -571,7 +571,8 @@ trait BookingOperations
     {
 
         $booking = Booking::find($booking_id);
-        
+        if(!$booking)
+            return api_response(trans('booking.unauthenticated', ['name' => request()->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
         if($booking->contract->isEmpty()){
 
              $data['start_date'] = $booking->start_date;
