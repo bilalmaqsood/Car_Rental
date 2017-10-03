@@ -538,15 +538,16 @@ trait BookingOperations
 
     protected function inspectionNotifyDriver($booking){
 
-        $code = $booking->code();
+        $code = $booking->code()->first();
         if(!$code){
             $code = mt_rand(1000, 9999);
             $booking->code()->create([
                 'confirm_code' => $code,
                  'status' => 0
             ]);
+        } else{
+            $code = $code->confirm_code;
         }
-            
 
         $booking->user->notify(new BookingNotify([
             'id' => $booking->id,

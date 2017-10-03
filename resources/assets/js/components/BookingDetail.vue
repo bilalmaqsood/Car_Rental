@@ -112,14 +112,6 @@
                                     sign contract
                                 </a>
                             </li>
-                            <li v-if="canApprove && [2,3].includes(booking.status)">
-                                <a @click="approveBooking" href="javascript:">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
-                                    </svg>
-                                    accept booking
-                                </a>
-                            </li>
                             <li v-else-if="[5,7].includes(booking.status)">
                                 <a @click="approveBooking" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">

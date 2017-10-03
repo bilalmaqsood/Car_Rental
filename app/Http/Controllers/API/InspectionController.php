@@ -22,7 +22,7 @@ class InspectionController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('owner')->except(['index','lastInspection','amendedInspection','notifyAmendedInspection']);
+        $this->middleware('owner')->except(['index','lastInspection','confirmInspection','amendedInspection','notifyAmendedInspection']);
 
         $this->middleware('not-admin')->only(['index','lastInspection','confirmInspection']);
     }

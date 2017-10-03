@@ -7,7 +7,7 @@
             <div class="confirmation-code-no">
                 <p>
                     Your confirmation code is:
-                    <span class="inspection-code">
+                <span class="inspection-code">
                         {{  notification.data.inspection_code }}
                     </span>
                 </p>
