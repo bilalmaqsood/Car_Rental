@@ -59,7 +59,7 @@
     
         <div class="time-picker-signature">
             <b>I will pick up the vehicle at</b>
-            <div class="container">
+            <!--<div>
                 <div class="row">
                     <div class='col-sm-6'>
                         <div class="form-group clockpicker-box-2">
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
         <div class="submitting-your-signature">
             <p>By submitting your signature and selecting the pick-up time, you agree to allow Qwikkar to manage the weekly rent payments from your c ard ending in <b>1234</b> every week between <b>01.09.2017</b> until <b>22.09.2017</b></p>
