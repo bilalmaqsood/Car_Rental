@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Qwikkar\Models\BalanceLog;
 use Qwikkar\Models\BookingLog;
 use Qwikkar\Models\BookingPayment;
+use Qwikkar\Models\BookingContract;
 use Qwikkar\Events\BookingUnsuccessfull;
 use Qwikkar\Notifications\BookingNotify;
 use Qwikkar\Notifications\BookingPaymentNotify;
@@ -565,4 +566,34 @@ trait BookingOperations
         ]));
 
     }
+
+    public function getContractData($booking_id)
+    {
+
+        $booking = Booking::find($booking_id);
+        
+        if($booking->contract->isEmpty()){
+
+             $data['start_date'] = $booking->start_date;
+             $data['end_date'] = $booking->end_date;
+             $data['deposit_paid_date'] = $booking->payments->first()->created_at;
+             $data['deposit'] = $booking->deposit;
+             $data['vehicle_make'] =  $booking->vehicle->vehicle_make;
+             $data['vehicle_registration_number'] =  $booking->vehicle->registration_number;
+             $data['vehicle_model'] =  $booking->vehicle->vehicle_model;
+             $data['client_name'] =  $booking->user->name;
+             $data['driving'] =  $booking->user->client->driving;
+             $data['pco_number'] =  $booking->user->client->pco_number;
+             $data['pco_expiry_date'] =  $booking->user->client->pco_expiry_date;
+             $data['weekly_rent_cost'] =  $booking->vehicle->rent;
+
+            $contract = $booking->contract()->create($data);
+            
+        } 
+         else
+            return $booking->contract;
+
+        return $contract->fresh();
+    }
+
 }

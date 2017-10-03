@@ -114,4 +114,13 @@ class ContractController extends Controller
             'webView' => true
         ]);
     }
+
+
+    public function contractData($booking_id)
+    {
+        $data = $this->getContractData($booking_id);
+
+        return api_response($data);
+    }
+
 }

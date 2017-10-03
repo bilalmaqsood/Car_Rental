@@ -210,6 +210,14 @@ class Booking extends Model
     }
 
 
+    /**
+     * Get the contract template data on the booking
+     *
+     */
+    public function contract()
+    {
+       return  $this->hasMany(BookingContract::class);
+    }
 
 
     /**
