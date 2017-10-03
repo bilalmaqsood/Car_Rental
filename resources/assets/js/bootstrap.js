@@ -14,7 +14,7 @@ require('bootstrap-slider');
 
 window.$ = $.extend(require('jquery-ui-dist/jquery-ui.js'));
 
-require('clockpicker');
+// require('clockpicker');
 
 require('owl.carousel');
 

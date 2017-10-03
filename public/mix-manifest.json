@@ -1,9 +1,9 @@
 {
-    "/js/qwikkar.js": "/js/qwikkar.js",
-    "/css/qwikkar.css": "/css/qwikkar.css",
-    "/css/admin.css": "/css/admin.css",
-    "/js/admin.js": "/js/admin.js",
-    "/js/vendor.js": "/js/vendor.js",
-    "/js/manifest.js": "/js/manifest.js",
-    "/css/noty.css": "/css/noty.css"
+    "/js/qwikkar.js": "/js/qwikkar.js?id=82f720a687a7b13152e1",
+    "/css/qwikkar.css": "/css/qwikkar.css?id=ed93ee3cc5b67fb7d9bf",
+    "/css/admin.css": "/css/admin.css?id=145c28a635a76d0d8a0e",
+    "/js/admin.js": "/js/admin.js?id=0203b60a2347ca35be90",
+    "/js/vendor.js": "/js/vendor.js?id=52e82abb71edac114195",
+    "/js/manifest.js": "/js/manifest.js?id=24feb3f499f39e8a7202",
+    "/css/noty.css": "/css/noty.css?id=df73728759ccd33e7329"
 }
