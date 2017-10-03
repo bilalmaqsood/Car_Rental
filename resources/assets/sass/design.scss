@@ -4516,4 +4516,88 @@ background: #fff;
     font-size: 10px;
 }
 }
-
+.sign-contract-wrap{
+    float: left;
+    width: 100%;
+    display: block;
+    padding: 20px;
+}
+.contract-top-content{
+    float: left;
+    width: 100%;
+}
+.contract-top-content p span {
+    float: right;
+}
+.contract-top-content p span a {
+    display: inline-block;
+    margin-left: 10px;
+}
+.contract-top-content .svg-icon {
+    width: 20px;
+    height: 20px;
+}
+.signature-bottom{
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    min-height: 200px;
+    position: relative;
+}
+.signature-bottom span{
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+    color: #bdbdbd;
+    text-align: center;
+}
+.signature-date {
+    float: left;
+    width: 100%;
+    text-align: right;
+}
+.signature-date p{
+    margin-bottom: 0;
+}
+.signature-delete{
+    float: left;
+    width: 100%;
+}
+.signature-delete .btn{
+    background: inherit;
+    padding: 0;
+    margin-top: -15px;
+}
+.signature-delete .spg-icon{
+    margin-right: 10px;
+}
+.signature-delete span{
+    position: relative;
+    top: -10px;
+}
+.signature-submit {
+    float: left;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+.signature-submit .btn {
+    background: #525252;
+    color: #87af1e;
+    padding: 12px 20px;
+    font-size: 18px;
+    border: 1px solid #525252;
+    margin-top: 8px;
+    border-radius: 0;
+    width: auto;
+}
+.signature-submit .btn:hover {
+    background: #87af1e;
+    color: #525252;
+    border: 1px solid #87af1e;
+}
+.submitting-your-signature{
+    float: left;
+    width: 100%;
+    display: block;
+}
