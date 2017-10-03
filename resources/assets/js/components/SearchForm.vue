@@ -125,7 +125,7 @@
                     setTimeout(function () {
                         $this.initPriceRange();
                         $('.available').datetimepicker({
-                            inline: true,
+                            
                             sideBySide: false,
                             format: 'D-M-Y',
                             minDate: moment(new Date())

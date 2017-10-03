@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="pickup_loction">
+                <div class="pickup_loction pickup_loction_29sep">
                     <button class="secodery_btn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
@@ -64,7 +64,7 @@
 
                 </div>
 
-                <div class="pickup_loction_btn">
+                <div class="pickup_loction_btn pickup_loction_btn_3_sep">
                     <ul>
                         <li>
                             <button @click="doBooking" type="button" v-if="user.state.auth === null || user.state.auth.type === 'client'">

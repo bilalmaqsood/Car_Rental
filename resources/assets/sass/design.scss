@@ -409,7 +409,7 @@ h3 {
     display: inline-block;
     margin: .5%;
     text-align: left;
-    padding: 3px 20px;
+    padding: 0 0 3px;
 }
 
 .main_vehicles h3 {
@@ -3037,7 +3037,7 @@ button:disabled {
 
 .draggable,
 .mydraggable {
-    width: auto;
+    width: 60px;
     height: 25px;
     background: rgba(145, 4, 28, 0.6);
     z-index: 1;
@@ -4459,3 +4459,61 @@ background: #fff;
     font-size: 14px;
 
 }
+.filter_hied_btn .slider.slider-horizontal {
+    margin: 8px 0 8px 15px;
+}
+.search-result-listing-scroll{
+    height: 115vh;
+    overflow-y: scroll;
+}
+.pickup_loction_btn_3_sep ul li{
+    width: 33.3%;
+}
+.fill_card h3{
+    padding-left: 12px;
+}
+.top_location .slider.slider-horizontal {
+    margin-left: 15px !important;
+}
+.bootstrap-datetimepicker-widget{
+    font-size: 14px !important;
+}
+#by_location .clickable, #by_location .availablity_box, #by_location .main_vehicles ul {
+    padding: 0 15px;
+}
+#by_location .clickable{
+    min-height: 55px;
+}
+@media screen and (max-width: 1024px) {
+.top_location .slider.slider-horizontal {
+    width: 144px;
+}
+.pickup_loction_btn ul li button {
+    font-size: 13px;
+}
+}
+@media screen and (max-width: 767px) {
+.pickup_loction_29sep ul li {
+    min-height: 88px;
+}
+}
+@media screen and (max-width: 600px) {
+.pickup_loction_btn_3_sep ul li{
+    width: 100%;
+    margin-top: 1px;
+}
+.login_form .forgot-message {
+    font-size: 10px;
+}
+.top_location ul li {
+    width: 100%;
+    margin-bottom: 1px;
+}
+.top_location .slider.slider-horizontal {
+    width: 170px;
+}
+.booking_tab ul li a {
+    font-size: 10px;
+}
+}
+
