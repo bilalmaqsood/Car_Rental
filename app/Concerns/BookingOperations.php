@@ -592,7 +592,7 @@ trait BookingOperations
             
         } 
          else
-            return $booking->contract;
+            return $booking->contract->first();
 
         return $contract->fresh();
     }
