@@ -1,5 +1,5 @@
 <template>
-    <div class="signature-container">
+    <!--<div class="signature-container">
             <svg @click="closeContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use></svg>
         <pdf-document v-if="contract" :d="contract"></pdf-document>
 
@@ -13,7 +13,72 @@
             <button :disabled="status == false" data-loading-text="Signing Contract" class="primary-button m-0 pull-left" @click="showSignContainer" v-html="sign"></button>
             <button data-loading-text="Canceling Contract" v-if="storage.state.auth.type=='owner'" class="primary-button m-0 pull-right danger-button" @click="cancelContract">Cancel Request</button>
         </div>
-    </div>
+    </div>-->
+
+    <div>
+    <div class="sign-contract-wrap">
+        <div class="contract-top-content">
+            <p>Contract
+                <span>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20" class="pull-right svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download_icon"></use>
+                        </svg>
+                    </a>
+                </span>
+            </p>
+        </div>
+        <div class="signature-bottom">
+            <span>sign here</span>
+        </div>
+        <div class="signature-date">
+            <p>John Doe | 05.05.2017</p>
+        </div>
+        <div class="signature-delete">
+            <button class="btn">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#delete_icon"></use>
+                </svg>
+                <span>retry signature</span>
+            </button>
+        </div>
+        <div class="signature-submit">
+            <button class="btn">Submit signature</button>
+        </div>
+    </div><!--sign-contract-wrap-->
+
+    <div class="sign-contract-wrap">
+        <div class="contract-top-content">
+            <p>Contract
+                <span>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20" class="pull-right svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download_icon"></use>
+                        </svg>
+                    </a>
+                </span>
+            </p>
+        </div>
+    
+        <div class="time-picker-signature">
+            <b>I will pick up the vehicle at</b>
+            <!--<div>
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <div class="form-group clockpicker-box-2">
+                            <div class="input-group clockpicker clockpicker-box">
+                                <input type="text" class="form-control" value="09:00">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        <div class="submitting-your-signature">
+            <p>By submitting your signature and selecting the pick-up time, you agree to allow Qwikkar to manage the weekly rent payments from your c ard ending in <b>1234</b> every week between <b>01.09.2017</b> until <b>22.09.2017</b></p>
+        </div>
+        <div class="signature-submit">
+            <button class="btn">Submit signature</button>
+        </div>
+    </div><!--sign-contract-wrap-->
+</div>
 </template>
 
 <script>
@@ -42,6 +107,11 @@
 
         mounted() {
             this.prepareComponent();
+             $('.clockpicker').clockpicker({
+                            placement: 'top',
+                            align: 'left',
+                            donetext: 'Done',
+                        });
         },
 
         computed: {

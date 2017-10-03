@@ -14,6 +14,8 @@ require('bootstrap-slider');
 
 window.$ = $.extend(require('jquery-ui-dist/jquery-ui.js'));
 
+// require('clockpicker');
+
 require('owl.carousel');
 
 require('jquery.payment');
