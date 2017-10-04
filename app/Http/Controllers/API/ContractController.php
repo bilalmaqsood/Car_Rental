@@ -123,4 +123,16 @@ class ContractController extends Controller
         return api_response($data);
     }
 
+    public function updateContractData(Request $request,$booking_id)
+    {
+       $booking = Booking::find($booking_id);
+        if(!$booking)
+            return api_response(trans('booking.unauthenticated', ['name' => request()->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+        
+        $result = $booking->contract()->update($request->all());
+
+        if($result)
+            return api_response(trans('booking.contract-save'));
+    }
+
 }

@@ -60,6 +60,8 @@ Vue.component('update-documents', require('./components/UpdateDocuments.vue'));
 Vue.component('driver-profile', require('./components/DriverInfo.vue'));
 Vue.component('vehicles-listing', require('./components/VehicleListing.vue'));
 Vue.component('map-markers', require('./components/MapMarkers.vue'));
+Vue.component('contract-form', require('./components/ContractForm.vue'));
+Vue.component('process-contract-signatures', require('./components/DoContractSignatures.vue'));
 
 Vue.component('vehicle-input-form-copy', require('./components/VehiclesInputFormCopy.vue'));
 

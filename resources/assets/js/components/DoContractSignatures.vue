@@ -1,6 +1,6 @@
 <template>
 
-    <contract-form :booking="booking"></contract-form>
+    <!-- <contract-form :booking="booking"></contract-form> -->
 
 <!--     <div class="signature-container">
             <svg @click="closeContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use></svg>
@@ -18,7 +18,7 @@
         </div>
     </div> -->
 
-   <!--  <div>
+    <div>
         <div class="sign-contract-wrap">
             <div class="contract-top-content">
                 <p>Contract
@@ -31,6 +31,8 @@
                 </p>
             </div>
             <div class="signature-bottom">
+                        <div class="js-signature" data-width="540" data-height="320" data-line-color="#000" data-line-width="3"></div>
+
                 <span>sign here</span>
             </div>
             <div class="signature-date">
@@ -44,45 +46,10 @@
                 </button>
             </div>
             <div class="signature-submit">
-                <button class="btn">Submit signature</button>
+                <button class="btn" :disabled="status" @click="postSignatures">Submit signature</button>
             </div>
         </div>
-
-        <div class="sign-contract-wrap">
-            <div class="contract-top-content">
-                <p>Contract
-                    <span>
-                        <a href="#">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20" class="pull-right svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download_icon"></use>
-                            </svg>
-                        </a>
-                    </span>
-                </p>
-            </div>
-        
-            <div class="time-picker-signature">
-                <b>I will pick up the vehicle at</b>
-                <div>
-                    <div class="row">
-                        <div class='col-sm-6'>
-                            <div class="form-group clockpicker-box-2">
-                                <div class="input-group clockpicker clockpicker-box">
-                                    <input type="text" class="form-control" value="09:00">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="submitting-your-signature">
-                <p>By submitting your signature and selecting the pick-up time, you agree to allow Qwikkar to manage the weekly rent payments from your c ard ending in <b>1234</b> every week between <b>01.09.2017</b> until <b>22.09.2017</b></p>
-            </div>
-            <div class="signature-submit">
-                <button class="btn">Submit signature</button>
-            </div>
-        </div>
-    </div> -->
-    
+    </div>
 </template>
 
 <script>
@@ -110,7 +77,7 @@
         },
 
         mounted() {
-            // this.prepareComponent();
+            this.prepareComponent();
             //  $('.clockpicker').clockpicker({
             //                 placement: 'top',
             //                 align: 'left',
@@ -119,31 +86,23 @@
         },
 
         computed: {
-            contract() {
-                return this.booking ? this.booking.documents[0] : null;
-            },
-            canView(){
 
-                if(!this.booking.signatures)
-                    return true;
-
-                if(User.state.auth.type === "owner" && typeof this.booking.signatures.owner === 'undefined')
-                    return true;
-
-                if(User.state.auth.type === "client" && typeof this.booking.signatures.client === 'undefined')
-                return true;
-            return false;
-            }
         },
 
         methods: {
             prepareComponent() {
+                $('body').addClass('body-signature');
+                 let e = $('.js-signature').jqSignature();
+                    $(e).on("touchstart mousedown",e=> {
+                        this.status = false;
+                        
+                    });
             },
 
-            showSignContainer(e) {
+            postSignatures(e) {
                 let $btn = $(e.target).button('loading');
-                let container = $('.add-signature');
-                if (container.is(':visible')) {
+                
+                
                     this.signature = $('.js-signature').jqSignature('getDataURL');
 
                     $('body').removeClass('body-signature');
@@ -165,21 +124,7 @@
                                 this.sign = 'Sign Contract';
                             }, 200);
                         });
-                }
-                else {
-                    $btn.button('reset');
-                    let e = $('.js-signature').jqSignature();
-                    $(e).on("touchstart mousedown",e=> {
-                        this.status = true;
-                        
-                    });
-                    $('body').addClass('body-signature');
-                    setTimeout(() => {
-                        this.sign = 'Save Signature';
-                        this.status = false;
-                    }, 200);
-                }
-                container.slideToggle();
+                
             },
 
             dataURItoBlob(dataURI) {

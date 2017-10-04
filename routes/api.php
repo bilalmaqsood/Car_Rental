@@ -69,6 +69,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('vehicle/{id}/contract-template', 'ContractController@contractTemplate');
     Route::get('booking/{id}/contract', 'ContractController@contractBooking');
     Route::get('booking/{id}/contract-data', 'ContractController@contractData');
+    Route::patch('booking/{id}/contract-data', 'ContractController@updateContractData');
+    Route::patch('booking/{id}/preview-contract', 'ContractController@previewContract');
 
     Route::post('/time-slot', 'TimeSlotController@addSlots');
     Route::get('/vehicle/{id}/time-slot', 'TimeSlotController@getSlots');
