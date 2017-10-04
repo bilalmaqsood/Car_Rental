@@ -1,7 +1,7 @@
     <template>
     <div class="booking-request-actions notification-shadow">
     <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
-            <ul class="three-btn-inlane">
+            <ul class="two-btn-inlane">
                 <li>
                     <a href="javascript:void(0)">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>

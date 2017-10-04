@@ -1771,7 +1771,10 @@ padding-top: 10px;
     float: left;
     width: 100%;
 }
-
+.slider.slider-horizontal {
+    width: 100%;
+    height: 20px;
+}
 .tab_left_section {
     height: 100vh;
     background: rgba(255, 255, 255, 0.84);
@@ -3774,7 +3777,7 @@ button:disabled {
 }
 .inlane-btn-wrap ul li a {
     background: #525252;
-    padding: 28px 10px;
+    padding: 34px 5px;;
     border-radius: 0;
     color: #87af1e;
     text-align: center;
@@ -4166,7 +4169,8 @@ span.twitter-typeahead {
     background: #fff;
     float: right;
     right: 0;
-    top: 70px;
+    top: 0;
+    position: relative;
 }
 .slider-img{
     height: 300px;
@@ -4460,7 +4464,7 @@ background: #fff;
 
 }
 .filter_hied_btn .slider.slider-horizontal {
-    margin: 8px 0 8px 15px;
+    margin: 12px 0 0px 0;
 }
 .search-result-listing-scroll{
     height: 115vh;
@@ -4472,9 +4476,6 @@ background: #fff;
 .fill_card h3{
     padding-left: 12px;
 }
-.top_location .slider.slider-horizontal {
-    margin-left: 15px !important;
-}
 .bootstrap-datetimepicker-widget{
     font-size: 14px !important;
 }
@@ -4485,9 +4486,6 @@ background: #fff;
     min-height: 55px;
 }
 @media screen and (max-width: 1024px) {
-.top_location .slider.slider-horizontal {
-    width: 144px;
-}
 .pickup_loction_btn ul li button {
     font-size: 13px;
 }
@@ -4508,9 +4506,6 @@ background: #fff;
 .top_location ul li {
     width: 100%;
     margin-bottom: 1px;
-}
-.top_location .slider.slider-horizontal {
-    width: 170px;
 }
 .booking_tab ul li a {
     font-size: 10px;
@@ -4608,4 +4603,53 @@ background: #fff;
     display: block;
     text-align: center;
     min-height: 150px;
+}
+.price-range-oct4{
+    position: relative;
+}
+.price-range-label-oct4{
+    position: absolute;
+    top: 3px;
+    width: 94%;
+    text-align: center;
+}
+.price-range-oct4 .form-group{
+    margin-bottom: 0;
+    text-align: center;
+}
+.price-range-oct4 .login-input{
+    width: 100%;
+}
+.filter_hied_btn .price-range-oct4{
+    padding: 6px 15px;
+}
+.slider-handle {
+    background-color: #98b927;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#98b927), to(#98b927));
+    background-image: linear-gradient(to bottom, #98b927, #98b927);
+}
+#car_inspection{
+    background: #fff;
+    height: 100%;
+}
+.past-bookings-oct4 .search-btn-container {
+    position: initial;
+    width: 100%;
+}
+.past-bookings-oct4 .pickup_loction_btn ul {
+    min-height: inherit;
+}
+.past-bookings-oct4 .pickup_loction_btn ul li button {
+    font-size: 13px;
+}
+.car_detail_container, .car_detail_container_oct4{
+    width: 100%;
+}
+@media screen and (max-width: 1199px) {
+.top_location form {
+    width: 85%;
+}
+.car_detail_container_oct4{
+    position: static;
+}
 }
