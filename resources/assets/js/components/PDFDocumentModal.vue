@@ -242,14 +242,10 @@
                                         </svg>
                                       </span>
                             <textarea v-if="isEdit" class="contract-area" v-model="contractTemplate" ></textarea>
-
-                       
-
-                      
-
-                    <object v-if="type=='pdf'" type="application/pdf" style="height: 110vh;" width="100%" :data="path"></object>
-                    <img v-else :src="path" class="img-responsive" alt="">
-
+                            <div v-else>
+                          <object v-if="type=='pdf'" type="application/pdf" style="height: 110vh;" width="100%" :data="path"></object>
+                          <img v-else :src="path" class="img-responsive" alt="">
+                          </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" @click="closeModel">Close</button>
@@ -301,7 +297,15 @@
             },
 
            updateContract(){
-
+            let $this = this;
+              axios.post('/api/vehicle/'+this.booking.vehicle.id+'/contract-template',this.contractTemplate)
+                    .then(function (r) {
+                        new Noty({
+                            type: 'success',
+                            text: r.data.success,
+                        }).show();
+                        $this.isEdit = false;
+                    });   
            },
            editContract(){
             let $this = this;

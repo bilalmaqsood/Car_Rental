@@ -4,7 +4,7 @@
             <div class="driver-profile-text">
                 <h3>Extension request approved</h3>
                 <p>Your request for the contract for  <b>{{ notification.data.vehicle }} </b>  extend until
-                <b>{{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</b> has been approved.</p>
+                <b>{{notification.data.requested_data.end_date | date('format', 'DD.MM.YYYY') }}</b> has been approved.</p>
             </div>
         </div>
     </div>

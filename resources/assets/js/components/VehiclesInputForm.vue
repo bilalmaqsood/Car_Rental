@@ -650,7 +650,7 @@
                             };
                            }
                         });
-                        setTimeout(function() { $('#sideLoader').hide(); }, 500);
+                        setTimeout(function() { $('#sideLoader').hide(); }, 1000);
                     });
 
                 });
@@ -745,7 +745,7 @@
                             }
                         }
                     });
-                         setTimeout(function() { $('#sideLoader').hide(); }, 500);
+                         setTimeout(function() { $('#sideLoader').hide(); }, 1000);
 
                     });
 
