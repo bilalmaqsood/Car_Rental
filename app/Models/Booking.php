@@ -40,6 +40,9 @@ class Booking extends Model
         'location',
         'deposit',
         'status',
+        'pickup_time',
+        'owner_signature_date',
+        'client_signature_date'
     ];
 
     /**
@@ -50,6 +53,9 @@ class Booking extends Model
     protected $dates = [
         'start_date',
         'end_date',
+        'client_signature_date',
+        'owner_signature_date',
+        'pickup_time'
     ];
 
     /**

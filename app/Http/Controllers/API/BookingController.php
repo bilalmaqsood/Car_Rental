@@ -28,7 +28,7 @@ class BookingController extends Controller
 
         $this->middleware('owner')->only(['destroy', 'updateStatusFulfill']);
 
-        $this->middleware('client')->only(['store', 'update', 'updateStatusRequest']);
+        $this->middleware('client')->only(['store', 'update', 'updateStatusRequest','pickupTimeslot']);
     }
 
     /**
@@ -511,5 +511,19 @@ class BookingController extends Controller
     public function cancelRequest(Request $request, $id)
     {
         $this->cancelBookingRequest($request,$id);
+    }
+
+    public function pickupTimeslot(Request $request,$id)
+    {
+        $booking = Booking::findOrFail($id);
+        
+        if(!$booking)
+             return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+
+         $pickup_time = $request->pickup_time;
+
+         $booking->update(["pickup_time" => $pickup_time]);
+
+         return  api_response(trans('booking.pickup_time'));
     }
 }

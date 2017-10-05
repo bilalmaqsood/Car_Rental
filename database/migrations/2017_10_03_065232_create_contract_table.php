@@ -16,6 +16,7 @@ class CreateContractTable extends Migration
         Schema::create('contracts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("booking_id")->nullable();
+            $table->integer("agreement_no")->nullable();
             $table->string("business_logo")->nullable();
             $table->string("business_name")->nullable();
             $table->string("business_registration_number")->nullable();
