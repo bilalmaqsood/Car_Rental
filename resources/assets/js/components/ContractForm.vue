@@ -142,12 +142,13 @@
     </ul>
     <div class="inlain-black-btn2">
         <ul>
-            <li><a href="javascript:void(0)" class="btn">Preview contract</a></li> 
+            <li><a href="javascript:void(0)" class="btn" @click="PreviewContract">Preview contract</a></li> 
             <li><a href="javascript:void(0)" class="btn" @click="processContract">Confirm contract</a></li>
         </ul>
     </div>
 </div>
  <process-contract-signatures v-else :booking="booking"></process-contract-signatures>    
+ <preview-document v-if="contractPreview" :doc="doc" :booking="booking"></preview-document>
 </div>
 </template>
 
@@ -160,8 +161,10 @@
         data() {
             return {
                 signContract: false,
+                contractPreview: false,
+                doc: '',
                 form:{
-                     // business_logo  : false,
+                     business_logo  : false,
                      // business_name  : false,
                      // business_registration_number  : false,
                      // business_address  : false,
@@ -206,6 +209,7 @@
 
         methods: {
             prepareComponent(){
+                let $this = this;
                 $('#sideLoader').show();
                 axios.get('/api/booking/'+this.booking.id+'/contract-data')
                      .then(r=>{
@@ -217,6 +221,28 @@
                     format: 'YYYY-MM-DD',
                     }).on('dp.change',(e)=> {
                     // $(e.target).val();
+            });
+
+            $(".upload").on('change', function(event) {
+                event.preventDefault();
+                console.log(event);
+                 $('#sideLoader').show();
+                        $.map(this.files, function (val) {
+                            if($this.isUploadAble(val)){
+                            var reader = new FileReader();
+                            let name = val.name.substring(0, val.name.lastIndexOf('.'));
+                            let type = val.name.split('.').pop();
+                            reader.readAsDataURL(val);
+                            var fd = new window.FormData();
+                            fd.append('upload', val);
+                            reader.onload = function (e) {
+                                axios.post('/api/upload/document', fd).then((r) => {
+                                        $this.form.business_logo = r.data.success;
+                                });
+                            };
+                           }
+                        });
+                        setTimeout(function() { $('#sideLoader').hide(); }, 500);
             });
 
             },
@@ -233,7 +259,31 @@
                         }, 500);
                         
                      });   
-            }
+            },
+            PreviewContract(){
+                             $('#sideLoader').show();
+                axios.post('/api/booking/'+this.booking.id+'/preview-contract',this.form)
+                     .then(r=>{
+                        this.doc=r.data.success;
+                        setTimeout(()=>{ $('#sideLoader').hide(); 
+                            this.contractPreview=true;
+                        }, 1000);
+                        
+                     }); 
+            },
+            hideModal(){
+                this.contractPreview = false;
+            },
+            isUploadAble(file){
+                if(parseInt(file.size)/1024/1024 >5.00){
+                    new Noty({
+                                type: 'error',
+                                text: file.name+" Exceeds the Max Size! 5MB",
+                            }).show();
+                    return false;
+                }
+                return true;
+            },
         }
     }
 </script>

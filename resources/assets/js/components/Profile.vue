@@ -226,11 +226,7 @@
                         setTimeout(function() {
 
 
-                $('.ratting').starrr({
-                  change: function(e, value){
-                    $scope.rating = value;
-                        }
-                });
+                
 
                 }, 1500);
                     });

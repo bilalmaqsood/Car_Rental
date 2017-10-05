@@ -62,6 +62,7 @@ Vue.component('vehicles-listing', require('./components/VehicleListing.vue'));
 Vue.component('map-markers', require('./components/MapMarkers.vue'));
 Vue.component('contract-form', require('./components/ContractForm.vue'));
 Vue.component('process-contract-signatures', require('./components/DoContractSignatures.vue'));
+Vue.component('preview-document', require('./components/PDFDocumentModal.vue'));
 
 Vue.component('vehicle-input-form-copy', require('./components/VehiclesInputFormCopy.vue'));
 

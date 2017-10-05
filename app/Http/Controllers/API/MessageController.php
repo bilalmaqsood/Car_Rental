@@ -156,6 +156,20 @@ class MessageController extends Controller
                 'receiver' => $booking->vehicle->owner->user,
                 'message' => $message->message
             ]));
+        } else if($request->has('user_id')){
+
+            $receiver = User::find($request->user_id);
+
+            if($receiver){
+                $message->receiver()->associate($receiver);
+                $receiver->notify(new MessageNotify([
+                'id' => $message->id,
+                'type' => 'Message',
+                'sender' => $request->user(),
+                'receiver' => $receiver,
+                'message' => $message->message
+            ]));
+            }
         }
 
         return $message;

@@ -231,19 +231,41 @@ trait BookingOperations
     protected function compileTemplate(Booking $booking)
     {
         $compiledString = \Blade::compileString($booking->vehicle->contractTemplate->template);
+        $data = $booking->contract()->first()->toArray();
+        $data['start_date'] = format_date($data['start_date']);
+        $data['end_date'] = format_date($data['end_date']);
+
+        $signatures = $booking->signatures;
         
-        $dataPlaced = render($compiledString, [
-            'owner_company' => $booking->vehicle->owner->company ?: '',
-            'owner_name' => $booking->vehicle->owner->user->name ?: '',
-            'owner_email' => $booking->vehicle->owner->user->email ?: '',
-            'owner_contact_number' => $booking->vehicle->owner->user->phone ?: '',
-            'driver_name' => $booking->user->name ?: '',
-            'driver_email' => $booking->user->email ?: '',
-            'driver_contact_number' => $booking->user->phone ?: '',
-            'vehicle_registration' => $booking->vehicle->registration_number ?: '',
-            'contract_start_date' => $booking->start_date->format('l jS \\of F Y'),
-            'contract_end_date' => $booking->end_date->format('l jS \\of F Y'),
-        ]);
+        if($signatures){
+            $driver_signature = $signatures->get('client');
+            $owner_signature = $signatures->get('owner');
+        }
+
+
+        if(isset($driver_signature) && $driver_signature)
+        $driver_signature = asset('/storage/'.$driver_signature) ;
+         
+         if(isset($owner_signature) && $owner_signature)
+        $owner_signature = asset('/storage/'.$owner_signature) ;
+        // d($driver_signature); dd($owner_signature);
+        $data['driver_signature'] = isset($driver_signature)?$driver_signature:null;
+        $data['owner_signature'] =  isset($owner_signature)?$owner_signature:null;
+
+        
+        // [   old fields for contract
+        //     'owner_company' => $booking->vehicle->owner->company ?: '',
+        //     'owner_name' => $booking->vehicle->owner->user->name ?: '',
+        //     'owner_email' => $booking->vehicle->owner->user->email ?: '',
+        //     'owner_contact_number' => $booking->vehicle->owner->user->phone ?: '',
+        //     'driver_name' => $booking->user->name ?: '',
+        //     'driver_email' => $booking->user->email ?: '',
+        //     'driver_contact_number' => $booking->user->phone ?: '',
+        //     'vehicle_registration' => $booking->vehicle->registration_number ?: '',
+        //     'contract_start_date' => $booking->start_date->format('l jS \\of F Y'),
+        //     'contract_end_date' => $booking->end_date->format('l jS \\of F Y'),
+        // ]
+        $dataPlaced = render($compiledString,$data);
 
         $dataPlaced = trim($dataPlaced, "\"");
         $dataPlaced = trim($dataPlaced);
@@ -261,11 +283,11 @@ trait BookingOperations
      */
     protected function signContract(Request $request, Booking $booking)
     {
-        $dataPlaced = $this->compileTemplate($booking);
+        
 
         $fileName = '/document/' . md5($booking->vehicle->vehicle_name . '-' . $booking->id) . '.pdf';
 
-        $pdfData = ['content' => $dataPlaced];
+        
 
         $signatures = $booking->signatures;
 
@@ -276,16 +298,20 @@ trait BookingOperations
                 $request->user()->types->first()->name => $request->signature->store('images', 'public')
             ]);
 
+        $dataPlaced = $this->compileTemplate($booking);
+
+        $pdfData = ['content' => $dataPlaced];
+
         $oldStatus = $booking->status;
 
         if ($signatures->has('client')) {
             $booking->status = 2;
-            $pdfData['driver_signature'] = $signatures->get('client');
+            // $pdfData['driver_signature'] = $signatures->get('client');
         }
 
         if ($signatures->has('owner')) {
             $booking->status = 3;
-            $pdfData['owner_signature'] = $signatures->get('owner');
+            // $pdfData['owner_signature'] = $signatures->get('owner');
         }
 
 //        if ($signatures->has('owner') && $signatures->has('client')) $booking->status = 4;
@@ -520,6 +546,7 @@ trait BookingOperations
     }
 
     protected function updateContractTemplate($booking){
+
             $dataPlaced = $this->compileTemplate($booking);
 
             $fileName = '/document/' . md5($booking->vehicle->vehicle_name . '-' . $booking->id) . '.pdf';
@@ -527,6 +554,9 @@ trait BookingOperations
             $pdfData = ['content' => $dataPlaced];
 
             \PDF::loadView('pdf.contract', $pdfData)->save(storage_path('app/public' . $fileName));
+
+            return url('/storage' . $fileName);
+//            return asset('public' . $fileName);
     }
 
     protected function cancelBookingRequest($request,$booking_id){
@@ -575,6 +605,7 @@ trait BookingOperations
             return api_response(trans('booking.unauthenticated', ['name' => request()->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
         if($booking->contract->isEmpty()){
 
+             $data['agreement_no'] = mt_rand(1000, 9999);   
              $data['start_date'] = $booking->start_date;
              $data['end_date'] = $booking->end_date;
              $data['deposit_paid_date'] = $booking->payments->first()->created_at;

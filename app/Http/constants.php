@@ -1,6 +1,6 @@
 <?php
 
-	define('DATE_FORMAT', "d-m-Y h:i A");
+	define('DATE_FORMAT', "d.m.Y");
 
 	define('OWNER_REMINDER_INTERVAL', 5);
 	define('DRIVER_REMINDER_INTERVAL', 5);

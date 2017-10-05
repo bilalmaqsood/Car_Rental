@@ -1,19 +1,57 @@
-{{$owner_company}}
-{{$owner_name}}
-{{$owner_email}}
-{{$owner_contact_number}}
-
-
-
-Good Day Sir/Madam!
-
-I am {{$owner_name}}, This is the contract between {{$owner_name}} and the {{$driver_name}} for the rental of car with {{$vehicle_registration}}. Starting from {{$contract_start_date}} and ending on {{$contract_end_date}}.
-
-Thank you for the opportunity, I am hoping that you can give us the opportunity for this.
-
-
-
-Yours Truly,
-{{$driver_name}}
-{{$driver_email}}
-{{$driver_contact_number}}
+    <div class="agreement-pdf-form-wrap">
+        <div class="pdf-header">
+            <img src="{{$business_logo}}">
+            <div class="pdf-header-right">
+                <p><b>{{$business_name}}.</b></p>
+                <p>Registration number: {{$business_registration_number}}</p>
+                <p>{{$business_address}}</p>
+                <p>{{ $business_email }}</p>
+                <p>{{$business_phone}}</p>
+            </div> 
+        </div>
+        <div class="pdf-title">
+            <h3>Vehicle hire agreement no. {{$agreement_no}}</h3>
+        </div>
+        <div class="pdf-content">
+            <p>Between</p>
+            <p><b>{{$business_name}}.</b> (the Owner), business registration number <b>{{$business_registration_number}}</b>, with the registered office at <b>{{$business_address}}</b></p>
+            <p>and</p>
+            <p><b>{{$client_name}}</b> (the Driver) being Self-Employed with address <b>{{$client_address}},</b> </p>
+            <p>The Vehicle</p>
+            <p><b>{{$vehicle_make}} {{ $vehicle_model }}</b> colour <b>{{$vehicle_color}}</b> registered in the United Kingdom with the vehicle registration number: <b>{{ $vehicle_registration_number }}</b></p>
+            <p>The rented vehicle will be driven exclusively by the above designated driver.</p>
+            <ul class="driving-license-pdf">
+                <li>Driving license number<b>{{$driving}}</b></li>
+                <li>Expiration date<b>{{$driving_expire_date}}</b></li>
+                <li>PCO license number<b>{{$pco_number}}</b></li>
+                <li>Expiration date<b>{{$pco_expiry_date}}</b></li>
+            </ul>
+            <p>The driver hereby expressly agrees to all the Terms & Conditions of {{$business_name}}. who are authorized to act on behalf of the owner</p>
+            <p>Key financial terms of the hire: </p>
+            <ol class="financial-terms-pdf">
+                <li>The driver agrees to a refundable deposit of <b>£{{$deposit}}</b>, paid on <b>{{$deposit_paid_date}}</b></li>
+                <li>A weekly rental cost of <b>£{{$weekly_rent_cost}} incl. VAT</b> will be paid at the start of every week by Direct Debit set on the Qwikkar profile, or in cash.</li>
+                <li> This agreement (not exceeding 90 days), will be valid and in full effect from <b>{{$start_date}}</b> until <b>{{$end_date}}</b></li>
+                <li>Insurance arranged by <b>{{$business_name}}.</b> on behalf of the driver through <b>{{$insurance_company_name}}.</b> - Insurance policy number: <b>{{$insurance_policy_number}}</b> valid until <b>{{$insurance_expiry_date}}</b></li>
+                <li>The Driver must inform the Owner and bring the vehicle for the Service Check, if the Service Mileage is reached while this agreement is in effect.</li>
+                <li>The Driver must use the vehicle only on the territories covered by the insurance policy. However, if the Driver needs to use the verhicle outside the territory of England while this agreement is in effect, the Driver must inform the Owner in advance and obtain express consent (by e-mail) of the Owner permission accompanied by the written permission from the insurance company.</li>
+            </ol>
+            <p><b>It is further agreed that the Owner can, at it’s sole discretion:</b></p>
+            <ol class="financial-terms-pdf">
+                <li>Reclaim and/or reposess the vehicle immediately, if there is any breach or violation of any of the terms of this agreement.</li>
+                <li>Take any steps permitted by law to collect any monies owed to it and add any administration or legal costs incurred in doing so to the amounts outstanding.</li>
+            </ol>
+            <div class="pdf-signature">
+                <div class="pdf-signature-left">
+                   <img src="$owner_signature" alt="owner signature logo" style="float: right; height: 150px;">
+                    <span>Owner signature</span>
+                    <p>John Doe | <i>[date of signature]</i></p>
+                </div>
+                <div class="pdf-signature-right">
+                	<img src="$driver_signature" alt="owner signature logo" style="float: right; height: 150px;">
+                    <span>Driver signature</span>
+                    <p>Michael Myers | <i>[date of signature]</i></p>
+                </div>
+            </div>
+        </div>
+    </div><!--agreement-pdf-form-wrap-->

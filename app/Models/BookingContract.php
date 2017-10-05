@@ -20,6 +20,7 @@ class BookingContract extends Model
      * @var array
      */
     protected $fillable = [
+            'agreement_no',
             'business_logo',
             'business_name',
             'business_registration_number',
