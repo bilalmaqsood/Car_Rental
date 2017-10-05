@@ -148,7 +148,6 @@ class ContractController extends Controller
         
         $result = $booking->contract()->update($request->all());
 
-        if($result)
             $path = $this->updateContractTemplate($booking);
 
         return api_response(["path" => $path,"title" => "Rent Agreement","type" => "pdf"]);
