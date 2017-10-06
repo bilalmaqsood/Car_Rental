@@ -237,8 +237,8 @@ trait BookingOperations
          if(!$data)
             $data = $this->getContractData($booking->id);
         $data = $data->toArray();
-        $data['start_date'] = format_date($data['start_date']);
-        $data['end_date'] = format_date($data['end_date']);
+        $data['start_date'] = format_date($booking->start_date);
+        $data['end_date'] = format_date($booking->end_date);
 
         $signatures = $booking->signatures;
         
@@ -445,7 +445,7 @@ trait BookingOperations
         if ($log->requested_data['status'] == 1  && $request->status==1) {
             // User approved booking do payment here
            $this->deductDeposit($booking, $booking->user);//  deduct after booking accepted
-           
+
            $this->generateContract($booking); // generate after booking accepted
         }
 
