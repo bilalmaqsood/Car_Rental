@@ -14,7 +14,7 @@ class AddTimeslotsSignaturesTimeToBookingTable extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->date("pickup_time")->nullable();
+            $table->string("pickup_time")->nullable();
             $table->date("owner_signature_date")->nullable();
             $table->date("client_signature_date")->nullable();
         });

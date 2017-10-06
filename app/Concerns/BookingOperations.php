@@ -169,7 +169,7 @@ trait BookingOperations
         $booking->payments()->create([
             'title' => 'Week 1',
             'cost' => $rent,
-            'due_date' => $booking->start_date->addWeek()
+            'due_date' => $booking->start_date
         ]);
 
         // add log of balance of deposit deduction
@@ -249,10 +249,14 @@ trait BookingOperations
          if(isset($owner_signature) && $owner_signature)
         $owner_signature = asset('/storage/'.$owner_signature) ;
         // d($driver_signature); dd($owner_signature);
-        $data['driver_signature'] = isset($driver_signature)?$driver_signature:null;
-        $data['owner_signature'] =  isset($owner_signature)?$owner_signature:null;
+        $data['driver_signature'] = isset($driver_signature)?'<img src="'.$driver_signature.'" alt="owner signature logo" style=" height: 150px;">':null;
+        $data['owner_signature'] =  isset($owner_signature)?'<img src="'.$owner_signature.'" alt="owner signature logo" style=" height: 150px;">':null;;
 
-        
+        $data["owner_signature_date"] = format_date($booking->owner_signature_date);
+
+        $data["client_signature_date"] = format_date($booking->client_signature_date);
+
+
         // [   old fields for contract
         //     'owner_company' => $booking->vehicle->owner->company ?: '',
         //     'owner_name' => $booking->vehicle->owner->user->name ?: '',
@@ -265,14 +269,16 @@ trait BookingOperations
         //     'contract_start_date' => $booking->start_date->format('l jS \\of F Y'),
         //     'contract_end_date' => $booking->end_date->format('l jS \\of F Y'),
         // ]
+
         $dataPlaced = render($compiledString,$data);
 
         $dataPlaced = trim($dataPlaced, "\"");
-        $dataPlaced = trim($dataPlaced);
+        
+        return $dataPlaced = trim($dataPlaced);
 
-        $dataPlaced = str_replace('\n', '<br>', $dataPlaced);
+        // $dataPlaced = str_replace('\n', '<br>', $dataPlaced);
 
-        return str_replace("\n", '<br>', $dataPlaced);
+        // return str_replace("\n", '<br>', $dataPlaced);
     }
 
     /**
@@ -306,15 +312,16 @@ trait BookingOperations
 
         if ($signatures->has('client')) {
             $booking->status = 2;
+             $booking->client_signature_date = Carbon::now();
             // $pdfData['driver_signature'] = $signatures->get('client');
         }
 
         if ($signatures->has('owner')) {
             $booking->status = 3;
+            $booking->owner_signature_date = Carbon::now();
+
             // $pdfData['owner_signature'] = $signatures->get('owner');
         }
-
-//        if ($signatures->has('owner') && $signatures->has('client')) $booking->status = 4;
 
         $booking->signatures = $signatures;
         $booking->save();
