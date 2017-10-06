@@ -83,7 +83,7 @@
                             </button>
                         </li>
                         <li>
-                            <button type="button">
+                            <button type="button" @click="contactowner = ! contactowner">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
                                 </svg>
@@ -94,7 +94,7 @@
                 </div>
             </div>
 
-            <contact-owner :owner="user.state.vehicleData.owner.user"></contact-owner>
+            <contact-owner v-if="contactowner" :owner="user.state.vehicleData.owner.user"></contact-owner>
             <search-listing-booking key="booking" v-if="user.state.bookNow" :vehicle="user.state.vehicleData" :pickup_location="user.state.vehicleData.pickup_location"></search-listing-booking>
         </transition>
     </div>
@@ -111,6 +111,7 @@
         data() {
             return {
                 isBooking: false,
+                contactowner: false,
             };
         },
 
