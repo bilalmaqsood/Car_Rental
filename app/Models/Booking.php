@@ -55,7 +55,7 @@ class Booking extends Model
         'end_date',
         'client_signature_date',
         'owner_signature_date',
-        'pickup_time'
+        
     ];
 
     /**

@@ -12,6 +12,7 @@ use Qwikkar\Models\BalanceLog;
 use Qwikkar\Models\BookingLog;
 use Qwikkar\Models\BookingPayment;
 use Qwikkar\Models\BookingContract;
+use Illuminate\Support\Facades\File;
 use Qwikkar\Events\BookingUnsuccessfull;
 use Qwikkar\Notifications\BookingNotify;
 use Qwikkar\Notifications\BookingPaymentNotify;
@@ -230,8 +231,12 @@ trait BookingOperations
      */
     protected function compileTemplate(Booking $booking)
     {
+        $this->updateTemplateFromStub($booking->vehicle);
         $compiledString = \Blade::compileString($booking->vehicle->contractTemplate->template);
-        $data = $booking->contract()->first()->toArray();
+        $data = $booking->contract()->first();
+         if(!$data)
+            $data = $this->getContractData($booking->id);
+        $data = $data->toArray();
         $data['start_date'] = format_date($data['start_date']);
         $data['end_date'] = format_date($data['end_date']);
 
@@ -304,9 +309,7 @@ trait BookingOperations
                 $request->user()->types->first()->name => $request->signature->store('images', 'public')
             ]);
 
-        $dataPlaced = $this->compileTemplate($booking);
-
-        $pdfData = ['content' => $dataPlaced];
+        
 
         $oldStatus = $booking->status;
 
@@ -368,6 +371,10 @@ trait BookingOperations
                 ]
             ]));
         }
+
+        $dataPlaced = $this->compileTemplate($booking);
+
+        $pdfData = ['content' => $dataPlaced];
 
         \PDF::loadView('pdf.contract', $pdfData)->save(storage_path('app/public' . $fileName));
     }
@@ -633,6 +640,12 @@ trait BookingOperations
             return $booking->contract->first();
 
         return $contract->fresh();
+    }
+
+    public function updateTemplateFromStub($vehicle){
+        $vehicle->contractTemplate()->update([
+                'template' => File::get(resource_path('stubs/contract-template.stub'))
+            ]);
     }
 
 }

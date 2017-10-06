@@ -1,6 +1,6 @@
 <template>
-
-    <contract-form :booking="booking"></contract-form>
+ <div>
+    <contract-form :booking="booking" v-if="storage.state.auth.type=='owner'"></contract-form>
 
 <!--     <div class="signature-container">
             <svg @click="closeContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use></svg>
@@ -18,8 +18,9 @@
         </div>
     </div> -->
 
-   <!--  <div>
-        <div class="sign-contract-wrap">
+    <process-contract-signatures v-else-if="storage.state.auth.type=='client' && doSign "  :booking="booking" @signature="saveSignateues"></process-contract-signatures>  
+
+<!--         <div class="sign-contract-wrap" v-else>
             <div class="contract-top-content">
                 <p>Contract
                     <span>
@@ -47,12 +48,12 @@
                 <button class="btn">Submit signature</button>
             </div>
         </div>
-
-        <div class="sign-contract-wrap">
+ -->
+        <div class="sign-contract-wrap" v-show="storage.state.auth.type=='client' && !doSign ">
             <div class="contract-top-content">
                 <p>Contract
                     <span>
-                        <a href="#">
+                        <a :download="typeof booking.documents[0].title!== 'undefined'?booking.documents[0].title:booking.documents[0].name" :href="booking.documents[0].path">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20" class="pull-right svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download_icon"></use>
                             </svg>
                         </a>
@@ -67,7 +68,7 @@
                         <div class='col-sm-6'>
                             <div class="form-group clockpicker-box-2">
                                 <div class="input-group clockpicker clockpicker-box">
-                                    <input type="text" class="form-control" value="09:00">
+                                    <input type="text" class="form-control timepicker" value="09:00" v-model="pickup_time">
                                 </div>
                             </div>
                         </div>
@@ -75,13 +76,13 @@
                 </div>
             </div>
             <div class="submitting-your-signature">
-                <p>By submitting your signature and selecting the pick-up time, you agree to allow Qwikkar to manage the weekly rent payments from your c ard ending in <b>1234</b> every week between <b>01.09.2017</b> until <b>22.09.2017</b></p>
+                <p>By submitting your signature and selecting the pick-up time, you agree to allow Qwikkar to manage the weekly rent payments from your c ard ending in <b>1234</b> every week between <b>{{booking.start_date | date('format', 'DD.MM.YYYY') }}</b> until <b>{{booking.end_date | date('format', 'DD.MM.YYYY')}}</b></p>
             </div>
             <div class="signature-submit">
-                <button class="btn">Submit signature</button>
+                <button class="btn" @click="postSignatures">Submit signature</button>
             </div>
         </div>
-    </div> -->
+    </div>
     
 </template>
 
@@ -94,12 +95,10 @@
         data() {
             return {
                 storage: User,
-                sign: 'Sign Contract',
-                lastX: -1,
-                lastY: -1,
-                mousePressed: false,
-                status: true,
-                signature: ''
+                doSign: true,
+                formData: false,
+                pickup_time: '',
+         
             };
         },
 
@@ -110,12 +109,13 @@
         },
 
         mounted() {
+            console.log(this.booking);
             // this.prepareComponent();
-            //  $('.clockpicker').clockpicker({
-            //                 placement: 'top',
-            //                 align: 'left',
-            //                 donetext: 'Done',
-            //             });
+             $('.clockpicker').clockpicker({
+                            placement: 'top',
+                            align: 'left',
+                            donetext: 'Done',
+                        });
         },
 
         computed: {
@@ -137,22 +137,9 @@
         },
 
         methods: {
-            prepareComponent() {
-            },
-
-            showSignContainer(e) {
-                let $btn = $(e.target).button('loading');
-                let container = $('.add-signature');
-                if (container.is(':visible')) {
-                    this.signature = $('.js-signature').jqSignature('getDataURL');
-
-                    $('body').removeClass('body-signature');
-
-                    let fd = new FormData();
-                    fd.append('signature', this.dataURItoBlob(this.signature));
-
+            postSignatures(e) {
                     $('#sideLoader').show();
-                    axios.post('/api/booking/' + this.booking.id + '/signature', fd)
+                    axios.post('/api/booking/' + this.booking.id + '/signature', this.formData)
                         .then((r) => {
                             $('#sideLoader').hide();
                             new Noty({
@@ -160,64 +147,36 @@
                                 text: r.data.success
                             }).show();
                             this.$emit('closeContract', 'sign');
-                            $btn.button('reset');
+                            
                             setTimeout(() => {
                                 this.sign = 'Sign Contract';
+                                this.submitTime();
                             }, 200);
                         });
-                }
-                else {
-                    $btn.button('reset');
-                    let e = $('.js-signature').jqSignature();
-                    $(e).on("touchstart mousedown",e=> {
-                        this.status = true;
-                        
-                    });
-                    $('body').addClass('body-signature');
-                    setTimeout(() => {
-                        this.sign = 'Save Signature';
-                        this.status = false;
-                    }, 200);
-                }
-                container.slideToggle();
+                
             },
 
-            dataURItoBlob(dataURI) {
-                let byteString;
-
-                if (dataURI.split(',')[0].indexOf('base64') >= 0)
-                    byteString = atob(dataURI.split(',')[1]);
-                else
-                    byteString = unescape(dataURI.split(',')[1]);
-
-                let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-                let ia = new Uint8Array(byteString.length);
-                for (let i = 0; i < byteString.length; i++) {
-                    ia[i] = byteString.charCodeAt(i);
-                }
-
-                return new Blob([ia], {type: mimeString});
+            saveSignateues(data){
+                this.formData = data
+                this.doSign = false;
             },
             closeContract(){
                 this.$emit('closeContract');
             },
-            cancelContract(e) {
-                let $btn = $(e.target).button('loading');
-                $('#sideLoader').show();
-                axios.patch('/api/booking/' + this.booking.id + '/status', {
-                    status: 6,
-                    note: 'contract canceled by owner before signature.'
-                }).then((r) => {
-                    $('#sideLoader').hide();
-                    new Noty({
-                        type: 'warning',
-                        text: r.data.success
-                    }).show();
-                    this.$emit('closeContract');
-                    $btn.button('reset');
+
+            submitTime(){
+                
+                let pickup_time = $(".timepicker").val();
+                axios.post('/api/booking/'+ this.booking.id +'/pickup-timeslot',{
+                    pickup_time: pickup_time
+                }).then((r)=>{
+                     new Noty({
+                                type: 'success',
+                                text: r.data.success
+                            }).show();
                 });
             }
+
         }
     }
 </script>

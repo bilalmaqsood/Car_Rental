@@ -50,6 +50,8 @@ return [
 
     'inspection_code_notfound' => "Invalid inspection confirmation code",
 
-    'contract-save' => 'Contract is updated successfully'
+    'contract-save' => 'Contract is updated successfully',
+
+    'pickup_time' => 'Vehicle pickup time update'
 
 ];

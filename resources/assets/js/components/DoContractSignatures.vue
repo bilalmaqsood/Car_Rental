@@ -23,7 +23,7 @@
             <div class="contract-top-content">
                 <p>Contract
                     <span>
-                        <a href="#">
+                        <a :download="typeof booking.documents[0].title!== 'undefined'?booking.documents[0].title:booking.documents[0].name" :href="booking.documents[0].path">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20" class="pull-right svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download_icon"></use>
                             </svg>
                         </a>
@@ -36,7 +36,7 @@
                 <span>sign here</span>
             </div>
             <div class="signature-date">
-                <p>John Doe | 05.05.2017</p>
+                <p>{{storage.state.auth.name}} | {{ date | date('format', 'DD.MM.YYYY') }}</p>
             </div>
             <div class="signature-delete">
                 <button class="btn">
@@ -60,6 +60,7 @@
 
         data() {
             return {
+                date: moment(new Date()),
                 storage: User,
                 sign: 'Sign Contract',
                 lastX: -1,
@@ -77,12 +78,9 @@
         },
 
         mounted() {
+
             this.prepareComponent();
-            //  $('.clockpicker').clockpicker({
-            //                 placement: 'top',
-            //                 align: 'left',
-            //                 donetext: 'Done',
-            //             });
+            
         },
 
         computed: {
@@ -110,6 +108,12 @@
                     let fd = new FormData();
                     fd.append('signature', this.dataURItoBlob(this.signature));
 
+                    if(this.storage.state.auth.type=='client'){
+                        this.$emit('signature',fd);
+                        return false;
+                    }
+
+
                     $('#sideLoader').show();
                     axios.post('/api/booking/' + this.booking.id + '/signature', fd)
                         .then((r) => {
@@ -119,6 +123,7 @@
                                 text: r.data.success
                             }).show();
                             this.$emit('closeContract', 'sign');
+                            
                             $btn.button('reset');
                             setTimeout(() => {
                                 this.sign = 'Sign Contract';
