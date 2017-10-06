@@ -55,6 +55,15 @@ class BookingController extends Controller
                         $bookingList->push($v);
                     });
             });
+
+            if($bookingList){
+                //sort bookings by desc
+            $bookingList = $bookingList->toArray();
+            
+               usort($bookingList,function($a,$b){
+                    return $b['id'] - $a['id'];
+                });
+            }
         } else
             $bookingList = $request->user()->booking()->with(['vehicle' => function ($vWith) {
                 $vWith->select('id', 'make', 'model', 'variant', 'year', 'images', 'rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
