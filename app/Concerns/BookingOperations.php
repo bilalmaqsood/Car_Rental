@@ -450,7 +450,7 @@ trait BookingOperations
         }
 
         if ($log->requested_data['status'] == 8) {
-            $booking->status = 8;
+            $booking->status = 4;
             $booking->end_date = Carbon::parse($log->requested_data['end_date'])->format("Y-m-d");
 
             $this->extendBooking($booking,$log);
