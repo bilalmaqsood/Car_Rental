@@ -445,14 +445,14 @@ trait BookingOperations
         if ($log->requested_data['status'] == 1  && $request->status==1) {
             // User approved booking do payment here
            $this->deductDeposit($booking, $booking->user);//  deduct after booking accepted
-
+           
            $this->generateContract($booking); // generate after booking accepted
         }
 
         if ($log->requested_data['status'] == 8) {
             $booking->status = 4;
             $booking->end_date = Carbon::parse($log->requested_data['end_date'])->format("Y-m-d");
-
+            $booking->save();
             $this->extendBooking($booking,$log);
             $this->updateContractTemplate($booking);            
 
@@ -461,6 +461,7 @@ trait BookingOperations
             // Accept early cancelation and update booking end date
             $booking->status = 4;
             $booking->end_date = Carbon::parse($log->requested_data['end_date'])->format("Y-m-d");
+            $booking->save();
             $this->earlyCancleBooking($booking,$log);
             $this->updateContractTemplate($booking);
         } else {
