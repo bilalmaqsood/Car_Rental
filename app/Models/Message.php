@@ -58,4 +58,13 @@ class Message extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function scopeConversation($query,$current,$target){
+
+        $query->where(function ($q) use ($target,$current){
+            $q->where("sender_id",$target)->where("receiver_id",$current);
+        })->orWhere(function($q) use ($target,$current) {
+            $q->where("receiver_id",$target)->where("sender_id",$current);
+        });
+    }
 }

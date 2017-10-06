@@ -156,9 +156,9 @@ class MessageController extends Controller
                 'receiver' => $booking->vehicle->owner->user,
                 'message' => $message->message
             ]));
-        } else if($request->has('user_id')){
+        } else if($request->has('receiver_id')){
 
-            $receiver = User::find($request->user_id);
+            $receiver = User::find($request->receiver_id);
 
             if($receiver){
                 $message->receiver()->associate($receiver);
@@ -174,4 +174,21 @@ class MessageController extends Controller
 
         return $message;
     }
+
+
+    /**
+     * Get all messages of a booking
+     *
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function getUserMessages($user_id)
+    {
+        $target = User::find($user_id)->id;
+
+        $messages = Message::Conversation(request()->user()->id,$target)->orderBy('updated_at', 'desc')->with('receiver', 'sender')->paginate(10);
+
+        return api_response($messages);
+    }
+
 }

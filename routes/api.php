@@ -45,8 +45,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('message/{id}', 'MessageController@getMessages');
     Route::post('message/read', 'MessageController@markRead');
     Route::post('message/send', 'MessageController@sendMessage');
-    Route::post('message/{user_id}/send', 'MessageController@sendToUser');
-    Route::get('message/{user_id}/send', 'MessageController@receiveFromUser');
+    Route::get('message/{user_id}/get', 'MessageController@getUserMessages');
 
     Route::patch('faq/{id}', 'FaqController@update');
 
