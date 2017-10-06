@@ -78,7 +78,7 @@ class DeductWeeklyPayment extends Command
         $payment->save();
 
         $nextDue = $payment->due_date->addWeek();
-        $weekNo = $booking->start_date->diffInWeeks($nextDue);
+        $weekNo = $booking->start_date->diffInWeeks($nextDue) + 1;
         $currentWeek = $booking->start_date->diffInWeeks(Carbon::now());
             
          /**
