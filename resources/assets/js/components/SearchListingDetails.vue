@@ -94,6 +94,7 @@
                 </div>
             </div>
 
+            <contact-owner :owner="user.state.vehicleData.owner.user"></contact-owner>
             <search-listing-booking key="booking" v-if="user.state.bookNow" :vehicle="user.state.vehicleData" :pickup_location="user.state.vehicleData.pickup_location"></search-listing-booking>
         </transition>
     </div>

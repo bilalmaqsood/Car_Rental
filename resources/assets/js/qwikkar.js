@@ -63,6 +63,7 @@ Vue.component('map-markers', require('./components/MapMarkers.vue'));
 Vue.component('contract-form', require('./components/ContractForm.vue'));
 Vue.component('process-contract-signatures', require('./components/DoContractSignatures.vue'));
 Vue.component('preview-contract', require('./components/PDFDocumentModal.vue'));
+Vue.component('contact-owner', require('./components/ContactOwner.vue'));
 
 Vue.component('vehicle-input-form-copy', require('./components/VehiclesInputFormCopy.vue'));
 
