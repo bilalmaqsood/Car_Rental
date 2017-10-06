@@ -18,7 +18,7 @@ class Booking extends Model
         'Approved',
         'Signed by client',
         'Signed by owner',
-        'Accepted',
+        'Active',
         'Termination',
         'Terminated',
         'Extend',

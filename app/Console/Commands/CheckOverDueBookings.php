@@ -78,6 +78,43 @@ class CheckOverDueBookings extends Command
 
             }
         });
+
+           $this->sendContractEndingNotification();
+    }
+
+
+    public function sendContractEndingNotification(){
+
+                Booking::where('end_date',"<",Carbon::now()->addHours(24)->format("Y-m-d"))->
+                 whereIn("status",[4,5,7,8])->chunk(20, function ($bookings) {
+            foreach ($bookings as $booking) {
+
+                $notificationData = [
+                'id' => $booking->id,
+                'type' => 'Booking',
+                'status' => BOOKING_ENDING,
+                'old_status' => $booking->status,
+                'vehicle_id' => $booking->vehicle->id,
+                'image' => $booking->vehicle->images->first(),
+                'title' => 'Contract ending',
+                'user' => $booking->vehicle->owner->user->name,
+                'credit_card' => $booking->account?$booking->account->last_numbers:'',
+                'vehicle' => $booking->vehicle->vehicle_name,
+                'contract_start' => $booking->start_date,
+                'contract_end' => $booking->end_date,
+                'deposit' => $booking->deposit,
+                'signatures' => [
+                    'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                    'client' => $booking->signatures && $booking->signatures->has('client')
+                ]
+                ];
+
+
+                $booking->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
+
+            }
+        });
+
     }
 
 }
