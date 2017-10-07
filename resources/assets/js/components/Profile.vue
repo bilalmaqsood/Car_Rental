@@ -51,6 +51,8 @@
 
             <booking-extend :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_EXTEND_REQUESTED"></booking-extend>
 
+            <booking-ending :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_ENDING"></booking-extend>
+
             <booking-extended :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_EXTEND_APPROVED"></booking-extended>
 
             <booking-closed :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_CLOSED && notif.data.old_status === CONSTANTS.BOOKING_ACTIVE"></booking-closed>

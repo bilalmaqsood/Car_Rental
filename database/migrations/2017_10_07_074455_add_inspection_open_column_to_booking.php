@@ -15,6 +15,7 @@ class AddInspectionOpenColumnToBooking extends Migration
     {
         Schema::table('bookings', function (Blueprint $table) {
             $table->date("inspection_open")->nullable();
+            $table->date("end_reminder")->nullable();
         });
     }
 
@@ -26,7 +27,8 @@ class AddInspectionOpenColumnToBooking extends Migration
     public function down()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            //
+            $table->dropColumn('inspection_open');
+            $table->dropColumn('end_reminder');
         });
     }
 }

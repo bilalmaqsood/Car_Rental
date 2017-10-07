@@ -92,6 +92,7 @@ Vue.component('booking-signature-owner', require('./components/notifications/Boo
 Vue.component('booking-deposit', require('./components/notifications/BookingDeposit.vue'));
 Vue.component('booking-deposit-return', require('./components/notifications/BookingDepositReturn.vue'));
 Vue.component('booking-payment-made', require('./components/notifications/BookingPayment.vue'));
+Vue.component('booking-ending', require('./components/notifications/BookingEnding.vue'));
 Vue.component('inspection-code', require('./components/notifications/InspectionCode.vue'));
 Vue.component('inspection-complete', require('./components/notifications/InspectionCompleted.vue'));
 Vue.component('inspection-amending', require('./components/notifications/InspectionAmending.vue'));

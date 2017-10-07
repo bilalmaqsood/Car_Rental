@@ -43,7 +43,8 @@ class Booking extends Model
         'pickup_time',
         'owner_signature_date',
         'client_signature_date',
-        'inspection_open'
+        'inspection_open',
+        'end_reminder'
     ];
 
     /**

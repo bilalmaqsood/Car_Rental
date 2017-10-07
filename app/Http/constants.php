@@ -5,6 +5,7 @@
 	define('OWNER_REMINDER_INTERVAL', 5);
 	define('DRIVER_REMINDER_INTERVAL', 5);
 	define('BOOKING_REMINDER_ATTEMPTS_LIMIT', 4);
+	define('BOOKING_ENDING_REMINDER_INTERVAL', 24); //Enter booking ending reminder time interval in hours
 
 
 //////////////Bookings Status////////////////////////////////////////

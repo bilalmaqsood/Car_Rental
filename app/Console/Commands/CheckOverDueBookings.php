@@ -85,8 +85,12 @@ class CheckOverDueBookings extends Command
 
     public function sendContractEndingNotification(){
 
-                Booking::where('end_date',"<",Carbon::now()->addHours(24)->format("Y-m-d"))->
-                 whereIn("status",[4,5,7,8])->chunk(20, function ($bookings) {
+                $target = Carbon::now()->addHours(BOOKING_ENDING_REMINDER_INTERVAL)->format("Y-m-d");
+                Booking::where('end_date',"<=",$target)
+                         ->whereIn("status",[4,5,7,8])
+                         ->whereNull("end_reminder")
+                         ->chunk(20, function ($bookings) {
+                            
             foreach ($bookings as $booking) {
 
                 $notificationData = [
@@ -109,9 +113,13 @@ class CheckOverDueBookings extends Command
                 ]
                 ];
 
+               
 
                 $booking->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
 
+                $booking->end_reminder = Carbon::now();
+
+                $booking->save();
             }
         });
 
