@@ -42,7 +42,8 @@ class Booking extends Model
         'status',
         'pickup_time',
         'owner_signature_date',
-        'client_signature_date'
+        'client_signature_date',
+        'inspection_open'
     ];
 
     /**

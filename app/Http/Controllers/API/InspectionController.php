@@ -311,6 +311,33 @@ class InspectionController extends Controller
 
         if($result->count()){
              $booking->update(["status" => BOOKING_ACTIVE]);
+
+             //Send notifications
+             $receiver = $request->user()->id == $booking->user->id ? $booking->vehicle->owner->user : $booking->user;
+              $notificationData = [
+                'id' => $booking->id,
+                'type' => 'Booking',
+                'status' => INSPECTION_CONFIRMED,
+                'old_status' => $booking->status,
+                'vehicle_id' => $booking->vehicle->id,
+                'image' => $booking->vehicle->images->first(),
+                'title' => 'Inspection Confirmed',
+                'user' => $request->user()->name,
+                'credit_card' => $booking->account?$booking->account->last_numbers:'',
+                'vehicle' => $booking->vehicle->vehicle_name,
+                'contract_start' => $booking->start_date,
+                'contract_end' => $booking->end_date,
+                'deposit' => $booking->deposit,
+                'signatures' => [
+                    'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                    'client' => $booking->signatures && $booking->signatures->has('client')
+                ]
+            ];
+
+            $receiver->notify((new BookingNotify($notificationData))->delay(\Carbon\Carbon::now()->addMinute()));
+
+
+
             return api_response(trans('booking.inspection_confirmed'));
         }
 

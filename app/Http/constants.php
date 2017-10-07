@@ -29,6 +29,8 @@
 	define('BOOKING_ENDING',417);
 	define('INSPECTION_COMPLETED',201);
 	define('INSPECTION_CODE_GENERATED',202);
+	define('INSPECTION_OPEN',203);
+	define('INSPECTION_CONFIRMED',204);
 	
 
 ////////////Booking Status////////////////////////////////////////

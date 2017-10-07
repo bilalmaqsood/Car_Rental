@@ -25,6 +25,8 @@
 
             <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
 
+            <booking-accepted :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_ACCEPTED && notif.data.old_status === CONSTANTS.BOOKING_REQUESTED" ></booking-accepted>    
+
             <booking-unsuccessfull :notification="notif" v-if="notif.data.status === CONSTANTS.BOOKING_UNSUCCESSFULL"></booking-unsuccessfull>
 
             <booking-request-pending-driver :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_PENDING && vuex.state.auth.type === 'client'"></booking-request-pending-driver>
@@ -64,6 +66,10 @@
             <inspection-amending :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_AMENDED && notif.data.old_status ===CONSTANTS.BOOKING_AMENDED "></inspection-amending>
 
             <inspection-complete :notification="notif" v-else-if="notif.data.status=== CONSTANTS.INSPECTION_COMPLETED"></inspection-complete>
+
+            <inspection-open :notification="notif" v-else-if="notif.data.status=== CONSTANTS.INSPECTION_OPEN"></inspection-open>
+            
+            <inspection-confirmed :notification="notif" v-else-if="notif.data.status=== CONSTANTS.INSPECTION_CONFIRMED"></inspection-confirmed>
             
             </div>
 
@@ -109,7 +115,7 @@
         </div>
 
         <transition name="slide-fade" mode="in-out">
-            <sign-contract v-if="booking" :booking="booking" @closeContract="cleanViewContract"></sign-contract>
+            <sign-contract class="contract-on-profile" v-if="booking" :booking="booking" @closeContract="cleanViewContract"></sign-contract>
         </transition>
 
         <transition name="slide-fade" mode="in-out">
@@ -221,14 +227,10 @@
                 $('#sideLoader').show();
                 axios.get('/api/notifications')
                     .then(response => {
-                        $('#sideLoader').hide();
+                        
                         this.notifications = response.data.success;
-                        setTimeout(function() {
-
-
-                
-
-                }, 1500);
+                        console.log(response.data.success);
+                        setTimeout(function() {$('#sideLoader').hide();}, 500);
                     });
 
 

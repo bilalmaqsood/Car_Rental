@@ -77,6 +77,7 @@ Vue.component('booking-request-pending', require('./components/notifications/Boo
 Vue.component('booking-request-pending-driver', require('./components/notifications/BookingRequestPendingDriver.vue'));
 Vue.component('booking-unsuccessfull', require('./components/notifications/BookingUnsuccessfull.vue'));
 Vue.component('booking-approved', require('./components/notifications/BookingApproved.vue'));
+Vue.component('booking-accepted', require('./components/notifications/BookingAccepted.vue'));
 Vue.component('booking-decline', require('./components/notifications/BookingDecline.vue'));
 Vue.component('booking-closed', require('./components/notifications/BookingClosed.vue'));
 Vue.component('booking-closing', require('./components/notifications/BookingClosing.vue'));
@@ -94,6 +95,8 @@ Vue.component('booking-payment-made', require('./components/notifications/Bookin
 Vue.component('inspection-code', require('./components/notifications/InspectionCode.vue'));
 Vue.component('inspection-complete', require('./components/notifications/InspectionCompleted.vue'));
 Vue.component('inspection-amending', require('./components/notifications/InspectionAmending.vue'));
+Vue.component('inspection-open', require('./components/notifications/InspectionOpen.vue'));
+Vue.component('inspection-confirmed', require('./components/notifications/InspectionConfirmed.vue'));
 
 
 
