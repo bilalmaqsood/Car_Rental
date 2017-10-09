@@ -1038,7 +1038,7 @@
                  .then(r=>{
                     new Noty({
                             type: 'success',
-                            text: r.data.success,
+                            text: 'Spot is marked as resolve',
                         }).show();
 
 
