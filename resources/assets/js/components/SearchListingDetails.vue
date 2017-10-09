@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div @click="closeWindow"><i class="past-book-close close-btn glyphicon glyphicon-remove"></i></div>
         <transition name="slide-fade" mode="out-in">
             <div key="detail" v-if="!user.state.bookNow" class="car_detail_container car_detail_container_oct4">
 
@@ -164,6 +165,9 @@
             },
         openLastInspection(){
             this.$parent.$emit("lastinspection");
+        },
+        closeWindow(){
+            this.$emit("closeWindow");
         }
     }
 }

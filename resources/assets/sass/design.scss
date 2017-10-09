@@ -4661,5 +4661,42 @@ background: #fff;
 }
 .car_detail_container_oct4{
     position: static;
+    }
 }
+.past-book-close.close-btn{
+    display: none;
+    font-size: 20px;
+}
+.book-now-past .close-btn{
+    display: block !important;
+    cursor: pointer;
+    font-size: 30px;
+    color: #000;
+    float: left;
+    z-index: 999;
+}
+.close-btn{
+    display: block;
+    cursor: pointer;
+    font-size: 30px;
+    color: #000;
+    float: left;
+    z-index: 999;
+}
+.book-now-past .car_detail_container {
+    width: 100% !important;
+}
+.book-now-past .car_detail_container{
+    position: static;
+}
+.book-now-past#car_inspection {
+    background: #fff;
+    height: 100%;
+    float: left;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+.book-now-past#car_inspection .img-responsive {
+    display: inline-block;
 }
