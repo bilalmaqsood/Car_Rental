@@ -17,7 +17,7 @@
             <button data-loading-text="Canceling Contract" v-if="storage.state.auth.type=='owner'" class="primary-button m-0 pull-right danger-button" @click="cancelContract">Cancel Request</button>
         </div>
     </div> -->
-
+    <pdf-document v-else-if="canView && contract" :d="contract"></pdf-document>
     <process-contract-signatures v-else-if="storage.state.auth.type=='client' && doSign "  :booking="booking" @signature="saveSignateues"></process-contract-signatures>  
 
 <!--         <div class="sign-contract-wrap" v-else>
@@ -125,12 +125,12 @@
             canView(){
 
                 if(!this.booking.signatures)
-                    return true;
+                    return false;
 
-                if(User.state.auth.type === "owner" && typeof this.booking.signatures.owner === 'undefined')
-                    return true;
+                // if(User.state.auth.type === "owner" && typeof this.booking.signatures.owner !== 'undefined')
+                //     return true;
 
-                if(User.state.auth.type === "client" && typeof this.booking.signatures.client === 'undefined')
+                if(User.state.auth.type === "client" && typeof this.booking.signatures.client !== 'undefined')
                 return true;
             return false;
             }
