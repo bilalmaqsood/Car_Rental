@@ -26,17 +26,18 @@
                             </div>
                         </div>
                     </li>
-                    <li>
+                    <li class="price-range-oct4">
+                        <span class="price-range-label-oct4">Price range</span>
                         <div class="form-group">
                         <div class="input-group login-input">
-                            <div class="input-group-addon">      
+                            <!--<div class="input-group-addon">      
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 21" class="svg-icon">
                                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#card_form"></use>
                                 </svg>
-                            </div>
+                            </div>-->
                             
                             <input id="slider-range" type="text" class="span2" value="" data-slider-min="1" data-slider-max="1000" data-slider-step="5" data-slider-value="[1,1000]"/>
-                            <span>{{price_min}}</span>-
+                            <span style="margin-left: 20px;">£{{price_min}}</span>-
                             <span>{{price_max}}</span>
                         </div>
                         </div>

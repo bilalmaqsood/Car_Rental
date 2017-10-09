@@ -2,12 +2,13 @@
 
 namespace Qwikkar\Http\Controllers\API;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Qwikkar\Models\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Qwikkar\Models\ContractTemplate;
 use Qwikkar\Concerns\BookingOperations;
 use Qwikkar\Http\Controllers\Controller;
-use Qwikkar\Models\Booking;
-use Qwikkar\Models\ContractTemplate;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ContractController extends Controller
 {
@@ -39,6 +40,10 @@ class ContractController extends Controller
         $vehicle = $request->user()->owner->vehicles()->where('id', $id)->first();
 
         if (!$vehicle) throw new ModelNotFoundException();
+
+        $vehicle->contractTemplate()->update([
+                'template' => File::get(resource_path('stubs/contract-template.stub'))
+            ]);
 
         return response($vehicle->contractTemplate ? $vehicle->contractTemplate->template : '')->header('Content-Type', 'text/plain');
     }
@@ -114,4 +119,39 @@ class ContractController extends Controller
             'webView' => true
         ]);
     }
+
+
+    public function contractData($booking_id)
+    {
+        $data = $this->getContractData($booking_id);
+
+        return api_response($data);
+    }
+
+    public function updateContractData(Request $request,$booking_id)
+    {
+       $booking = Booking::find($booking_id);
+        if(!$booking)
+            return api_response(trans('booking.unauthenticated', ['name' => request()->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+        
+        $result = $booking->contract()->update($request->all());
+
+        if($result)
+            return api_response(trans('booking.contract-save'));
+    }
+
+    public function previewContract(Request $request, $booking_id){
+
+     $booking = Booking::find($booking_id);
+        if(!$booking)
+            return api_response(trans('booking.unauthenticated', ['name' => request()->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+        
+        $result = $booking->contract()->update($request->all());
+
+            $path = $this->updateContractTemplate($booking);
+
+        return api_response(["path" => $path,"title" => "Rent Agreement","type" => "pdf"]);
+
+    }
+
 }

@@ -34,153 +34,7 @@
         <button class="btn" @click="confirmInspection">Confirm vehicle inspection</button>
     </div>
 
-<!-- <div class="agreement-form-wrap">
-    <p>Contract</p>
-    <p>Please check the information below for accuracy and make the necessary amendments.</p>
-    <div class="uploader-box">
-        <ul>
-            <li class="vehicle-details-row1">
-                <div class="form-group">
-                    <input type="text" placeholder="Business name" class="form-control">
-                </div>
-            </li>
-            <li>
-                <div class="form-group">
-                    <input type="text" placeholder="Business registration number" class="form-control">
-                </div>
-            </li>
-        </ul>
-        <div class="file-uploader-wrap">
-            <div class="form-group">
-                <div class="fileUpload">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98.328 98.329" class="svg-icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#images-upload"></use>
-                    </svg>
-                    <span>Business logo</span>
-                    <input type="file" class="upload">
-                </div>
-            </div>
-        </div>
-    </div>
-    <ul>
-        <li class="vehicle-details-row1">
-            <div class="form-group">
-                <input type="text" placeholder="Business address" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Business e-mail" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Business phone number" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Vehicle registration number" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Vehicle colour" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Vehicle make" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Vehicle model" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row1">
-            <div class="form-group">
-                <input type="text" placeholder="Client name" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row1">
-            <div class="form-group">
-                <input type="text" placeholder="Client address" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Driving license number" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Driving license expiration date" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="PCO license number" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="PCO license expiration date" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Refundable deposit value" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Deposit paid date" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Agreement start date" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Agreement end date / time" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row1">
-            <div class="form-group">
-                <input type="text" placeholder="Insurance company name" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Insurance policy number" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Insurance expiry date" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Weekly rent cost" class="form-control">
-            </div>
-        </li>
-        <li class="vehicle-details-row2">
-            <div class="form-group">
-                <input type="text" placeholder="Insurance excess cost" class="form-control">
-            </div>
-        </li>
-    </ul>
-    <div class="inlain-black-btn2">
-        <ul>
-            <li><a href="javascript:void(0)" class="btn">Preview contract</a></li> 
-            <li><a href="javascript:void(0)" class="btn">Confirm contract</a></li>
-        </ul>
-    </div>
-</div> -->
+
 
     <!-- <div class="agreement-form-wrap agreement-form-wrap-2">
         <p>Contract</p>
@@ -395,10 +249,21 @@
 
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
-                    <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
-                     <i v-if="dispute_status" class="fa fa-check "></i>
-                      {{ dispute_status==true?'Disputed':'Dispute'}}
-                    </button>
+
+                        <div class="input-group-addon">
+                            <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
+                             <i v-if="dispute_status" class="fa fa-check "></i>
+                              {{ dispute_status==true?'Disputed':'Dispute'}}
+                            </button>
+                            
+                        </div>
+                        <div class="input-group-addon">
+                             <button :disabled="!is_disputed" @click="resolveSpot" v-if="is_return && User.state.auth.type=='owner'" class="primary-button dispute-btn">
+                             
+                              Resolve
+                            </button>
+                        </div>
+
 <div class="input-group-addon">
 <span>
 									<svg  @click="saveSpots('front')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -479,13 +344,25 @@
                     <img src="/images/rear.png" alt="">
                 </div>
                 <div class="front_back_size" >
+
                     <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
-                    <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
-                     <i v-if="dispute_status" class="fa fa-check "></i>
-                      {{ dispute_status==true?'Disputed':'Dispute'}}
-                    </button>
+                    
 <div class="input-group login-input">
+
                         <input type="text" class="form-control" placeholder="add description" v-model="description">
+                        <div class="input-group-addon">
+                            <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
+                             <i v-if="dispute_status" class="fa fa-check "></i>
+                              {{ dispute_status==true?'Disputed':'Dispute'}}
+                            </button>
+                            
+                        </div>
+                        <div class="input-group-addon">
+                             <button :disabled="!is_disputed" @click="resolveSpot" v-if="is_return && User.state.auth.type=='owner'" class="primary-button dispute-btn">
+                             
+                              Resolve
+                            </button>
+                        </div>
 <div class="input-group-addon">
 <span>
 									<svg  @click="saveSpots('rear')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -569,10 +446,19 @@
                     <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
-                        <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
-                     <i v-if="dispute_status" class="fa fa-check "></i>
-                      {{ dispute_status==true?'Disputed':'Dispute'}}
-                    </button>
+                        <div class="input-group-addon">
+                            <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
+                             <i v-if="dispute_status" class="fa fa-check "></i>
+                              {{ dispute_status==true?'Disputed':'Dispute'}}
+                            </button>
+                            
+                        </div>
+                        <div class="input-group-addon">
+                             <button :disabled="!is_disputed" @click="resolveSpot" v-if="is_return && User.state.auth.type=='owner'" class="primary-button dispute-btn">
+                             
+                              Resolve
+                            </button>
+                        </div>
 <div class="input-group-addon">
                         <span>
 									<svg  @click="saveSpots('driver_side')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -654,10 +540,17 @@
                     <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
                         <div class="input-group login-input">
                                 <input type="text" class="form-control" placeholder="add description" v-model="description">
+                                    <div class="input-group-addon">
+                                        <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
+                                         <i v-if="dispute_status" class="fa fa-check "></i>
+                                          {{ dispute_status==true?'Disputed':'Dispute'}}
+                                        </button>
+                            
+                                 </div>
                                 <div class="input-group-addon">
-                                    <button v-if="is_return && User.state.auth.type=='owner'" @click="dispute_status=!dispute_status" class="primary-button dispute-btn">
-                                     <i v-if="dispute_status" class="fa fa-check "></i>
-                                      {{ dispute_status==true?'Disputed':'Dispute'}}
+                                     <button :disabled="!is_disputed" @click="resolveSpot" v-if="is_return && User.state.auth.type=='owner'" class="primary-button dispute-btn">
+                                     
+                                      Resolve
                                     </button>
                                 </div>
                                 <div class="input-group-addon">
@@ -717,7 +610,7 @@
                             <img :src="spot_image" />
                       </div>
 
-</div>
+                </div>
 
                 </div>
             </div>
@@ -828,6 +721,9 @@
                 X_Axis: '',
                 Y_Axis: '',
                 spot_image: '',
+                spot_id: '',
+                is_disputed: false,
+                inAction: false,
             };
         },
 
@@ -1040,6 +936,8 @@
                 this.spot_image = inspection.path;
                 this.content = inspection.note;
                 this.dispute_status = inspection.status===1?true:false;
+                this.is_disputed = inspection.status===1?true:false;
+                this.inAction = inspection;
             },
             hideLoader(time){
                 setTimeout(function () {
@@ -1094,6 +992,8 @@
                     return 'inspection_ammended mydraggable';
                 else if(inspection.is_return==0)
                     return 'handover_point mydraggable';
+                else if(inspection.is_return==1 && inspection.status==1)
+                    return 'disputed_point mydraggable';
                 else if(inspection.is_return==1)
                     return 'return_point mydraggable'
             },
@@ -1103,6 +1003,8 @@
                     return 'Inspection ammended';
                 else if(inspection.is_return==0)
                     return 'Handover inspection';
+                else if(inspection.is_return==1 && inspection.status==1)
+                    return 'Disputed inspection';
                 else if(inspection.is_return==1)
                     return 'Return inspection';
             },
@@ -1122,6 +1024,23 @@
                         }).show();
                         this.inspections.data.splice(index,1);
                         this.inspections.data.push(r.data.success);
+                        this.hideLoader(500);
+                 });
+            },
+            resolveSpot(){
+                $('#centerLoader').show();
+                axios.patch('/api/booking/'+this.booking.id+'/resolve-inspection/'+ this.inAction.id)
+                 .then(r=>{
+                    new Noty({
+                            type: 'success',
+                            text: r.data.success,
+                        }).show();
+
+
+                        let index = this.inspections.data.indexOf(this.inAction);
+                                    this.inspections.data.splice(index,1);
+                                    this.inspections.data.push(r.data.success);
+
                         this.hideLoader(500);
                  });
             }

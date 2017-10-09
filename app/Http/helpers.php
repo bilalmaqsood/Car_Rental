@@ -62,7 +62,9 @@ function render($__php, $__data)
 
 function format_date($date){
     
-    if(get_class($date)==Carbon\Carbon::class){
-        return $date->format("d M Y H:m A");
+    if( is_object($date) && get_class($date)==\Carbon\Carbon::class){
+        return $date->format(DATE_FORMAT);
+    } else{
+       return \Carbon\Carbon::parse($date)->format(DATE_FORMAT);
     }
 }

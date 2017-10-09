@@ -1,10 +1,11 @@
 <?php
 
-	define('DATE_FORMAT', "d-m-Y h:i A");
+	define('DATE_FORMAT', "d.m.Y");
 
 	define('OWNER_REMINDER_INTERVAL', 5);
 	define('DRIVER_REMINDER_INTERVAL', 5);
 	define('BOOKING_REMINDER_ATTEMPTS_LIMIT', 4);
+	define('BOOKING_ENDING_REMINDER_INTERVAL', 24); //Enter booking ending reminder time interval in hours
 
 
 //////////////Bookings Status////////////////////////////////////////
@@ -26,8 +27,12 @@
 	define('BOOKING_UNRESPONSIVE',401);
 	define('BOOKING_PENDING',402);
 	define('BOOKING_AMENDED',416);
+	define('BOOKING_ENDING',417);
 	define('INSPECTION_COMPLETED',201);
 	define('INSPECTION_CODE_GENERATED',202);
+	define('INSPECTION_OPEN',203);
+	define('INSPECTION_CONFIRMED',204);
+	define('DISPUTED_RESOLVED',205);
 	
 
 ////////////Booking Status////////////////////////////////////////

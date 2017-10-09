@@ -52,6 +52,16 @@ Route::get('/weekly-deposit', function()
     $exitCode = Artisan::call('weekly:deduction'); 
 });
 
+Route::get('/booking-reminder', function()
+{
+    $exitCode = Artisan::call('booking:reminder'); 
+});
+
+Route::get('/overdue-check', function()
+{
+    $exitCode = Artisan::call('overdue:check'); 
+});
+
 
 
 Route::get('/test/{id}', function ($id) {

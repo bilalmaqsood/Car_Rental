@@ -63,6 +63,12 @@
                     infowindow.setContent(content);
                     infowindow.open($t.SearchMap, this);
                     User.commit('highlight',item.id);
+                    $("#"+item.id).scrollintoview({
+                        duration: 1000,
+                        direction: "vertical",
+                        viewPadding: { y: 10 },
+                    });
+
                 });
 
                 google.maps.event.addListener(marker, 'mouseout', function() {

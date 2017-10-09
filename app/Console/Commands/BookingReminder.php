@@ -46,6 +46,7 @@ class BookingReminder extends Command
 
         $this->remindeDriver($bookings);
         $this->remindeOwner($bookings);
+        $this->inspectionReminder();
     }
 
     /**
@@ -132,5 +133,41 @@ class BookingReminder extends Command
 
             }
         }
+    }
+
+    public function inspectionReminder($value='')
+    {
+
+        Booking::where('start_date',"<",Carbon::now()->addHours(24)->format("Y-m-d"))->
+                 whereIn("status",[2,3])->whereNull("inspection_open")->chunk(20, function ($bookings) {
+            foreach ($bookings as $booking) {
+
+                $notificationData = [
+                'id' => $booking->id,
+                'type' => 'Booking',
+                'status' => INSPECTION_OPEN,
+                'old_status' => $booking->status,
+                'vehicle_id' => $booking->vehicle->id,
+                'image' => $booking->vehicle->images->first(),
+                'title' => 'Handerover Inspection is available',
+                'user' => $booking->vehicle->owner->user->name,
+                'credit_card' => $booking->account?$booking->account->last_numbers:'',
+                'vehicle' => $booking->vehicle->vehicle_name,
+                'contract_start' => $booking->start_date,
+                'contract_end' => $booking->end_date,
+                'deposit' => $booking->deposit,
+                'signatures' => [
+                    'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                    'client' => $booking->signatures && $booking->signatures->has('client')
+                ]
+                ];
+
+
+                $booking->vehicle->owner->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
+                $booking->inspection_open = Carbon::now();
+                $booking->save();
+            }
+        });
+
     }
 }

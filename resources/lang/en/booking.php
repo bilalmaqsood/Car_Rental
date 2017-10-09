@@ -48,6 +48,10 @@ return [
 
     'inspection_confirmed' => 'Booking is marked as active',
 
-    'inspection_code_notfound' => "Invalid inspection confirmation code"
+    'inspection_code_notfound' => "Invalid inspection confirmation code",
+
+    'contract-save' => 'Contract is updated successfully',
+
+    'pickup_time' => 'Vehicle pickup time update'
 
 ];

@@ -11,6 +11,8 @@ use Illuminate\Http\Response;
 use Qwikkar\Models\BalanceLog;
 use Qwikkar\Models\BookingLog;
 use Qwikkar\Models\BookingPayment;
+use Qwikkar\Models\BookingContract;
+use Illuminate\Support\Facades\File;
 use Qwikkar\Events\BookingUnsuccessfull;
 use Qwikkar\Notifications\BookingNotify;
 use Qwikkar\Notifications\BookingPaymentNotify;
@@ -168,7 +170,7 @@ trait BookingOperations
         $booking->payments()->create([
             'title' => 'Week 1',
             'cost' => $rent,
-            'due_date' => $booking->start_date->addWeek()
+            'due_date' => $booking->start_date
         ]);
 
         // add log of balance of deposit deduction
@@ -229,27 +231,59 @@ trait BookingOperations
      */
     protected function compileTemplate(Booking $booking)
     {
+        $this->updateTemplateFromStub($booking->vehicle);
         $compiledString = \Blade::compileString($booking->vehicle->contractTemplate->template);
+        $data = $booking->contract()->first();
+         if(!$data)
+            $data = $this->getContractData($booking->id);
+        $data = $data->toArray();
+        $data['start_date'] = format_date($booking->start_date);
+        $data['end_date'] = format_date($booking->end_date);
+
+        $signatures = $booking->signatures;
         
-        $dataPlaced = render($compiledString, [
-            'owner_company' => $booking->vehicle->owner->company ?: '',
-            'owner_name' => $booking->vehicle->owner->user->name ?: '',
-            'owner_email' => $booking->vehicle->owner->user->email ?: '',
-            'owner_contact_number' => $booking->vehicle->owner->user->phone ?: '',
-            'driver_name' => $booking->user->name ?: '',
-            'driver_email' => $booking->user->email ?: '',
-            'driver_contact_number' => $booking->user->phone ?: '',
-            'vehicle_registration' => $booking->vehicle->registration_number ?: '',
-            'contract_start_date' => $booking->start_date->format('l jS \\of F Y'),
-            'contract_end_date' => $booking->end_date->format('l jS \\of F Y'),
-        ]);
+        if($signatures){
+            $driver_signature = $signatures->get('client');
+            $owner_signature = $signatures->get('owner');
+        }
+
+
+        if(isset($driver_signature) && $driver_signature)
+        $driver_signature = asset('/storage/'.$driver_signature) ;
+         
+         if(isset($owner_signature) && $owner_signature)
+        $owner_signature = asset('/storage/'.$owner_signature) ;
+        // d($driver_signature); dd($owner_signature);
+        $data['driver_signature'] = isset($driver_signature)?'<img src="'.$driver_signature.'" alt="owner signature logo" style=" height: 150px;">':null;
+        $data['owner_signature'] =  isset($owner_signature)?'<img src="'.$owner_signature.'" alt="owner signature logo" style=" height: 150px;">':null;;
+
+        $data["owner_signature_date"] = format_date($booking->owner_signature_date);
+
+        $data["client_signature_date"] = format_date($booking->client_signature_date);
+
+
+        // [   old fields for contract
+        //     'owner_company' => $booking->vehicle->owner->company ?: '',
+        //     'owner_name' => $booking->vehicle->owner->user->name ?: '',
+        //     'owner_email' => $booking->vehicle->owner->user->email ?: '',
+        //     'owner_contact_number' => $booking->vehicle->owner->user->phone ?: '',
+        //     'driver_name' => $booking->user->name ?: '',
+        //     'driver_email' => $booking->user->email ?: '',
+        //     'driver_contact_number' => $booking->user->phone ?: '',
+        //     'vehicle_registration' => $booking->vehicle->registration_number ?: '',
+        //     'contract_start_date' => $booking->start_date->format('l jS \\of F Y'),
+        //     'contract_end_date' => $booking->end_date->format('l jS \\of F Y'),
+        // ]
+
+        $dataPlaced = render($compiledString,$data);
 
         $dataPlaced = trim($dataPlaced, "\"");
-        $dataPlaced = trim($dataPlaced);
+        
+        return $dataPlaced = trim($dataPlaced);
 
-        $dataPlaced = str_replace('\n', '<br>', $dataPlaced);
+        // $dataPlaced = str_replace('\n', '<br>', $dataPlaced);
 
-        return str_replace("\n", '<br>', $dataPlaced);
+        // return str_replace("\n", '<br>', $dataPlaced);
     }
 
     /**
@@ -260,11 +294,11 @@ trait BookingOperations
      */
     protected function signContract(Request $request, Booking $booking)
     {
-        $dataPlaced = $this->compileTemplate($booking);
+        
 
         $fileName = '/document/' . md5($booking->vehicle->vehicle_name . '-' . $booking->id) . '.pdf';
 
-        $pdfData = ['content' => $dataPlaced];
+        
 
         $signatures = $booking->signatures;
 
@@ -275,19 +309,22 @@ trait BookingOperations
                 $request->user()->types->first()->name => $request->signature->store('images', 'public')
             ]);
 
+        
+
         $oldStatus = $booking->status;
 
         if ($signatures->has('client')) {
             $booking->status = 2;
-            $pdfData['driver_signature'] = $signatures->get('client');
+             $booking->client_signature_date = Carbon::now();
+            // $pdfData['driver_signature'] = $signatures->get('client');
         }
 
         if ($signatures->has('owner')) {
             $booking->status = 3;
-            $pdfData['owner_signature'] = $signatures->get('owner');
-        }
+            $booking->owner_signature_date = Carbon::now();
 
-//        if ($signatures->has('owner') && $signatures->has('client')) $booking->status = 4;
+            // $pdfData['owner_signature'] = $signatures->get('owner');
+        }
 
         $booking->signatures = $signatures;
         $booking->save();
@@ -334,6 +371,10 @@ trait BookingOperations
                 ]
             ]));
         }
+
+        $dataPlaced = $this->compileTemplate($booking);
+
+        $pdfData = ['content' => $dataPlaced];
 
         \PDF::loadView('pdf.contract', $pdfData)->save(storage_path('app/public' . $fileName));
     }
@@ -409,9 +450,9 @@ trait BookingOperations
         }
 
         if ($log->requested_data['status'] == 8) {
-            $booking->status = 8;
+            $booking->status = 4;
             $booking->end_date = Carbon::parse($log->requested_data['end_date'])->format("Y-m-d");
-
+            $booking->save();
             $this->extendBooking($booking,$log);
             $this->updateContractTemplate($booking);            
 
@@ -420,6 +461,7 @@ trait BookingOperations
             // Accept early cancelation and update booking end date
             $booking->status = 4;
             $booking->end_date = Carbon::parse($log->requested_data['end_date'])->format("Y-m-d");
+            $booking->save();
             $this->earlyCancleBooking($booking,$log);
             $this->updateContractTemplate($booking);
         } else {
@@ -519,6 +561,7 @@ trait BookingOperations
     }
 
     protected function updateContractTemplate($booking){
+
             $dataPlaced = $this->compileTemplate($booking);
 
             $fileName = '/document/' . md5($booking->vehicle->vehicle_name . '-' . $booking->id) . '.pdf';
@@ -526,6 +569,9 @@ trait BookingOperations
             $pdfData = ['content' => $dataPlaced];
 
             \PDF::loadView('pdf.contract', $pdfData)->save(storage_path('app/public' . $fileName));
+
+            return url('/storage' . $fileName);
+//            return asset('public' . $fileName);
     }
 
     protected function cancelBookingRequest($request,$booking_id){
@@ -565,4 +611,42 @@ trait BookingOperations
         ]));
 
     }
+
+    public function getContractData($booking_id)
+    {
+
+        $booking = Booking::find($booking_id);
+        if(!$booking)
+            return api_response(trans('booking.unauthenticated', ['name' => request()->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
+        if($booking->contract->isEmpty()){
+
+             $data['agreement_no'] = mt_rand(1000, 9999);   
+             $data['start_date'] = $booking->start_date;
+             $data['end_date'] = $booking->end_date;
+             $data['deposit_paid_date'] = $booking->payments->first()->created_at;
+             $data['deposit'] = $booking->deposit;
+             $data['vehicle_make'] =  $booking->vehicle->vehicle_make;
+             $data['vehicle_registration_number'] =  $booking->vehicle->registration_number;
+             $data['vehicle_model'] =  $booking->vehicle->vehicle_model;
+             $data['client_name'] =  $booking->user->name;
+             $data['driving'] =  $booking->user->client->driving;
+             $data['pco_number'] =  $booking->user->client->pco_number;
+             $data['pco_expiry_date'] =  $booking->user->client->pco_expiry_date;
+             $data['weekly_rent_cost'] =  $booking->vehicle->rent;
+
+            $contract = $booking->contract()->create($data);
+            
+        } 
+         else
+            return $booking->contract->first();
+
+        return $contract->fresh();
+    }
+
+    public function updateTemplateFromStub($vehicle){
+        $vehicle->contractTemplate()->update([
+                'template' => File::get(resource_path('stubs/contract-template.stub'))
+            ]);
+    }
+
 }

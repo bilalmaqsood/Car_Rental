@@ -5,9 +5,9 @@
             <transition-group name="list" tag="div">
             <advance-form v-if="user.state.showAdvance && user.state.menuView=='advance'" key="advance"></advance-form>
 
-            <div class="search-result-listing-scroll" key="998789">
-                <div  @mouseover="hover_vehicle=i" class="search_car" v-for="i in user.state.searchResults.data" :key="i.id">
-                    <div   :class="{'highlighted-vehicle': user.state.highlighted==i.id}" class="search_car_content" :style="{width: user.state.detailsDisplay ? '0' : '', height: user.state.detailsDisplay ? '0px' : ''}">
+            <div :class="{'search-result-listing-scroll': user.state.detailsDisplay}" key="998789">
+                <div :id="i.id"  @mouseover="hover_vehicle=i" class="search_car" v-for="i in user.state.searchResults.data" :key="i.id">
+                    <div  :class="{'highlighted-vehicle': user.state.highlighted==i.id}" class="search_car_content" :style="{width: user.state.detailsDisplay ? '0' : '', height: user.state.detailsDisplay ? '0px' : ''}">
                         <h3><a href="javascript:void(0)" @click="itemDetails(i)">{{i.make}} {{i.model}} {{i.variant}}</a></h3>
                         <ul>
                             <li>

@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('message/{id}', 'MessageController@getMessages');
     Route::post('message/read', 'MessageController@markRead');
     Route::post('message/send', 'MessageController@sendMessage');
+    Route::get('message/{user_id}/get', 'MessageController@getUserMessages');
 
     Route::patch('faq/{id}', 'FaqController@update');
 
@@ -68,12 +69,16 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('vehicle/{id}/contract-signature', 'ContractController@contractSignature');
     Route::post('vehicle/{id}/contract-template', 'ContractController@contractTemplate');
     Route::get('booking/{id}/contract', 'ContractController@contractBooking');
+    Route::get('booking/{id}/contract-data', 'ContractController@contractData');
+    Route::patch('booking/{id}/contract-data', 'ContractController@updateContractData');
+    Route::post('booking/{id}/preview-contract', 'ContractController@previewContract');
 
     Route::post('/time-slot', 'TimeSlotController@addSlots');
     Route::get('/vehicle/{id}/time-slot', 'TimeSlotController@getSlots');
     Route::get('/booking/{id}/time-slots', 'TimeSlotController@getBookedSlots');
 
     Route::resource('booking', 'BookingController', ['except' => ['create', 'edit']]);
+    Route::post('booking/{id}/pickup-timeslot', 'BookingController@pickupTimeslot');
     Route::post('booking/{id}/status', 'BookingController@updateStatusRequest');
     Route::delete('booking/{id}/cancel-request', 'BookingController@cancelRequest');
     Route::patch('booking/{id}/status', 'BookingController@updateStatusFulfill');
@@ -97,6 +102,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/vehicle/{vehicle_id}/inspection', 'InspectionController@lastInspection');
 
     Route::patch('/booking/{booking_id}/approve-inspection/{spot_id}', 'InspectionController@approveInspection');
+
+    Route::patch('/booking/{booking_id}/resolve-inspection/{spot_id}', 'InspectionController@resolveDisputedSpot');
 
     Route::post('/booking/{booking_id}/notify-driver', 'InspectionController@notifyDriver');
 

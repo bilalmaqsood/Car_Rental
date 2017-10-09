@@ -1,7 +1,8 @@
 <template>
     <div>
+        <div @click="closeWindow"><i class="past-book-close close-btn glyphicon glyphicon-remove"></i></div>
         <transition name="slide-fade" mode="out-in">
-            <div key="detail" v-if="!user.state.bookNow" class="car_detail_container">
+            <div key="detail" v-if="!user.state.bookNow" class="car_detail_container car_detail_container_oct4">
 
                 <div class="detail_img">
                     <img :src="user.state.vehicleData.images[0]" alt="">
@@ -74,14 +75,6 @@
                                 <span>Book now</span>
                             </button>
                         </li>
-                        <li>
-                            <button type="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
-                                </svg>
-                                <span>Contact owner</span>
-                            </button>
-                        </li>
                         <li v-if="user.state.auth">
                             <button type="button" @click="openLastInspection">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
@@ -90,10 +83,19 @@
                                 <span>Last Inspection</span>
                             </button>
                         </li>
+                        <li>
+                            <button type="button" @click="contactowner = ! contactowner">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
+                                </svg>
+                                <span>Contact owner</span>
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
 
+            <contact-owner v-if="contactowner" :owner="user.state.vehicleData.owner.user"></contact-owner>
             <search-listing-booking key="booking" v-if="user.state.bookNow" :vehicle="user.state.vehicleData" :pickup_location="user.state.vehicleData.pickup_location"></search-listing-booking>
         </transition>
     </div>
@@ -110,6 +112,7 @@
         data() {
             return {
                 isBooking: false,
+                contactowner: false,
             };
         },
 
@@ -162,6 +165,9 @@
             },
         openLastInspection(){
             this.$parent.$emit("lastinspection");
+        },
+        closeWindow(){
+            this.$emit("closeWindow");
         }
     }
 }

@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('reset:deposit')
                  ->daily();
         $schedule->command('weekly:deduction')
-                 ->daily();
+                 ->hourly();
         $schedule->command('overdue:check')
                  ->daily();
         $schedule->command('booking:reminder')

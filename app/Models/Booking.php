@@ -18,7 +18,7 @@ class Booking extends Model
         'Approved',
         'Signed by client',
         'Signed by owner',
-        'Accepted',
+        'Active',
         'Termination',
         'Terminated',
         'Extend',
@@ -40,6 +40,11 @@ class Booking extends Model
         'location',
         'deposit',
         'status',
+        'pickup_time',
+        'owner_signature_date',
+        'client_signature_date',
+        'inspection_open',
+        'end_reminder'
     ];
 
     /**
@@ -50,6 +55,9 @@ class Booking extends Model
     protected $dates = [
         'start_date',
         'end_date',
+        'client_signature_date',
+        'owner_signature_date',
+        
     ];
 
     /**
@@ -94,7 +102,7 @@ class Booking extends Model
      */
 
     public function getHandoverInspectionAttribute(){
-        return true;
+        // return true;
         return  $this->start_date > Carbon::now() && $this->start_date->diffInHours(Carbon::now()) <= 24;
     }
     /**
@@ -210,6 +218,14 @@ class Booking extends Model
     }
 
 
+    /**
+     * Get the contract template data on the booking
+     *
+     */
+    public function contract()
+    {
+       return  $this->hasMany(BookingContract::class);
+    }
 
 
     /**

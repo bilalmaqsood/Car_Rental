@@ -2,15 +2,11 @@
     <div class="booking-request-actions notification-shadow">
         <div class="btn-inlane-content noty_successfull">
             <div class="driver-profile-text">
-                <h3>Rate to user</h3>
-                <p><b>{{notification.data.user}}</b> requested to book <b>{{ notification.data.vehicle }}</b></p>
-                <p><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </p>
-                <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</p>
-                
-                <div class="form-group">
-                    <input type="text" placeholder="Business e-mail" class="form-control" >
-                </div>
-            <button class="add-new-vehile-btn">Done</button>
+                <h3>Inspection Confirmed</h3>
+                <p>Handover inspection is confirmed by <b>{{ notification.data.user }}</b> for the vehicle 
+                <b>{{ notification.data.vehicle }}</b>
+                </p>
+                <p>Booking is now avtive (On Going)</p>
             </div>
         </div>
     </div>
@@ -34,13 +30,7 @@
         },
 
         mounted() {
-            let $this = this;
 
-          $('.ratting').starrr({
-                  change: function(e, value){
-                    $this.rating = value;
-                        }
-                });  
         },
 
         methods: {
