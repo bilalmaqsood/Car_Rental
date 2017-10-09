@@ -45,7 +45,7 @@ class VehicleController extends Controller
             'variant' => $request->variant,
             'year' => $request->year
         ]);
-
+        logger($request->all());
         if (!$vehicle->exists) {
             $vehicle->fill($request->except(['available_from', 'available_to', 'vlc']));
 
