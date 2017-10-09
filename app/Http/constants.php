@@ -32,6 +32,7 @@
 	define('INSPECTION_CODE_GENERATED',202);
 	define('INSPECTION_OPEN',203);
 	define('INSPECTION_CONFIRMED',204);
+	define('DISPUTED_RESOLVED',205);
 	
 
 ////////////Booking Status////////////////////////////////////////

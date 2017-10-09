@@ -3040,7 +3040,7 @@ button:disabled {
 
 .draggable,
 .mydraggable {
-    width: 60px;
+    width: auto;
     height: 25px;
     background: rgba(145, 4, 28, 0.6);
     z-index: 1;
@@ -3073,8 +3073,11 @@ button:disabled {
 .return_point{
     background: #f7c888 !important;
 }
+.disputed_point{
+    background: rgba(143, 66, 244, 0.68) !important;
+}
 .handover_point {
-    background: #857bf2 !important;
+    background: rgba(66, 244, 96, 0.65) !important;
 }
 .last-point{
     background: #a7a6b3 !important;

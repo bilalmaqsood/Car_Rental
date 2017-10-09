@@ -103,6 +103,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::patch('/booking/{booking_id}/approve-inspection/{spot_id}', 'InspectionController@approveInspection');
 
+    Route::patch('/booking/{booking_id}/resolve-inspection/{spot_id}', 'InspectionController@resolveDisputedSpot');
+
     Route::post('/booking/{booking_id}/notify-driver', 'InspectionController@notifyDriver');
 
     Route::post('/booking/{booking_id}/notify-amendedInspection', 'InspectionController@notifyAmendedInspection');

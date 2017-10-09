@@ -355,4 +355,55 @@ class InspectionController extends Controller
         
         return api_response($spot->first());
     }
+
+    public function resolveDisputedSpot($booking_id,$spot_id)
+    {
+        $booking = Booking::findOrFail($booking_id);
+         
+        $total_disputed_points =  $booking->inspections()->where("status",1)->count();
+
+        if($total_disputed_points)
+        {
+          $spot =  $booking->inspections()->whereId($spot_id);
+          $spot->update(["status"=>0]); 
+
+          if($total_disputed_points-1==0){
+           $this->disputionResolveNotification($booking); 
+            $booking->update(["status"=>BOOKING_DISPUTE_RESOLVED]);
+            $booking->user->client->update(['status' => 0]);
+          }
+
+        }
+
+        return api_response($spot->first()->fresh());
+         
+    }
+
+    public function disputionResolveNotification($booking)
+    {
+        $receiver = $booking->user;
+
+             $notificationData = [
+                'id' => $booking->id,
+                'type' => 'Booking',
+                'status' => DISPUTED_RESOLVED,
+                'old_status' => $booking->status,
+                'vehicle_id' => $booking->vehicle->id,
+                'image' => $booking->vehicle->images->first(),
+                'title' => 'Vehicle disputed resolved',
+                'user' => request()->user()->name,
+                'credit_card' => $booking->account?$booking->account->last_numbers:'',
+                'vehicle' => $booking->vehicle->vehicle_name,
+                'contract_start' => $booking->start_date,
+                'contract_end' => $booking->end_date,
+                'deposit' => $booking->deposit,
+                'signatures' => [
+                    'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                    'client' => $booking->signatures && $booking->signatures->has('client')
+                ]
+            ];
+
+            $receiver->notify((new BookingNotify($notificationData))->delay(\Carbon\Carbon::now()->addMinute()));
+
+    }
 }

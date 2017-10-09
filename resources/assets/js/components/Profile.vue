@@ -73,6 +73,9 @@
             
             <inspection-confirmed :notification="notif" v-else-if="notif.data.status=== CONSTANTS.INSPECTION_CONFIRMED"></inspection-confirmed>
             
+            <inspection-resolved :notification="notif" v-else-if="notif.data.status=== CONSTANTS.DISPUTED_RESOLVED"></inspection-resolved>
+            
+
             </div>
 
 
