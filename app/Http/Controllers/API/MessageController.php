@@ -191,4 +191,14 @@ class MessageController extends Controller
         return api_response($messages);
     }
 
+
+    public function getNewMessages($user_id)
+    {
+        $target = User::find($user_id)->id;
+
+        $messages = Message::Conversation(request()->user()->id,$target)->where('read',0)->orderBy('updated_at', 'desc')->get();
+
+        return api_response($messages);
+
+    }
 }
