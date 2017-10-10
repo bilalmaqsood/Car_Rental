@@ -632,6 +632,11 @@
                     <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
+                        <div class="input-group-addon">
+                                     <button @click="deleteSpot(inAction)" v-if="inAction && User.state.auth.type=='owner'" class="primary-button dispute-btn">
+                                      <i class="glyphicon glyphicon-trash" style="font-size: 20px;"></i>
+                                    </button>
+                        </div>
 <div class="input-group-addon">
     <span>
 									<svg  @click="saveSpots('notes')" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
@@ -1033,7 +1038,7 @@
                  .then(r=>{
                     new Noty({
                             type: 'success',
-                            text: r.data.success,
+                            text: 'Spot is marked as resolve',
                         }).show();
 
 
