@@ -245,7 +245,7 @@
                     <img src="/images/front.png" alt="" style="margin: 0px;">
                 </div>
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
+                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && booking.status<4) || ammending">
 
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
@@ -303,7 +303,7 @@
                                 </li>   
                             </ul>
                       </div>
-                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3].includes(booking.status)">
+                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [2,3].includes(booking.status)">
                             <ul>
                                 <li v-if="!ammending">
                                     <a class="btn" href="javascript:void(0)" @click="ammending=!ammending">Inspection needs ammending</a>
@@ -345,7 +345,7 @@
                 </div>
                 <div class="front_back_size" >
 
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
+                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && booking.status<4) || ammending">
                     
 <div class="input-group login-input">
 
@@ -402,7 +402,7 @@
                                 </li>   
                             </ul>
                       </div>
-                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3].includes(booking.status)">
+                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [2,3].includes(booking.status)">
                             <ul>
                                 <li v-if="!ammending">
                                     <a class="btn" href="javascript:void(0)" @click="ammending=!ammending">Inspection needs ammending</a>
@@ -443,7 +443,7 @@
                     <img src="/images/driver_side.png" alt="">
                 </div>
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
+                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && booking.status<4) || ammending">
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
                         <div class="input-group-addon">
@@ -496,7 +496,7 @@
                                 </li>   
                             </ul>
                       </div>
-                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3].includes(booking.status)">
+                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [2,3].includes(booking.status)">
                             <ul>
                                 <li v-if="!ammending">
                                     <a class="btn" href="javascript:void(0)" @click="ammending=!ammending">Inspection needs ammending</a>
@@ -537,7 +537,7 @@
                     <img src="/images/off_side.png" alt="">
                 </div>
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
+                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && booking.status<4) || ammending">
                         <div class="input-group login-input">
                                 <input type="text" class="form-control" placeholder="add description" v-model="description">
                                     <div class="input-group-addon">
@@ -590,7 +590,7 @@
                                 </li>   
                             </ul>
                       </div>
-                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3].includes(booking.status)">
+                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3,2].includes(booking.status)">
                             <ul>
                                 <li v-if="!ammending">
                                     <a class="btn" href="javascript:void(0)" @click="ammending=!ammending">Inspection needs ammending</a>
@@ -629,7 +629,7 @@
 
                 
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner' || ammending">
+                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && booking.status<4) || ammending">
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
                         <div class="input-group-addon">
@@ -669,7 +669,7 @@
                                 </li>   
                             </ul>
                       </div>
-                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [3].includes(booking.status)">
+                      <div class="inlain-black-btn2" v-else-if="User.state.auth.type=='client' && [2,3].includes(booking.status)">
                             <ul>
                                 <li v-if="!ammending">
                                     <a class="btn" href="javascript:void(0)" @click="ammending=!ammending">Inspection needs ammending</a>

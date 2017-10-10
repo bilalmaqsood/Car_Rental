@@ -76,7 +76,7 @@
                 </div>
             </div>
             <div class="submitting-your-signature">
-                <p>By submitting your signature and selecting the pick-up time, you agree to allow Qwikkar to manage the weekly rent payments from your c ard ending in <b>1234</b> every week between <b>{{booking.start_date | date('format', 'DD.MM.YYYY') }}</b> until <b>{{booking.end_date | date('format', 'DD.MM.YYYY')}}</b></p>
+                <p>By submitting your signature and selecting the pick-up time, you agree to allow Qwikkar to manage the weekly rent payments from your c ard ending in <b>{{CardLastDigits}}</b> every week between <b>{{booking.start_date | date('format', 'DD.MM.YYYY') }}</b> until <b>{{booking.end_date | date('format', 'DD.MM.YYYY')}}</b></p>
             </div>
             <div class="signature-submit">
                 <button class="btn" @click="postSignatures">Submit signature</button>
@@ -121,6 +121,14 @@
         computed: {
             contract() {
                 return this.booking ? this.booking.documents[0] : null;
+            },
+            CardLastDigits(){
+                let digit;
+                User.state.auth.credit_cards.filter(function(item) {
+                    if(item.default==1)
+                        digit = item.number.slice(-4);
+                });
+                return digit;
             },
             canView(){
 

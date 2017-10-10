@@ -254,9 +254,9 @@ trait BookingOperations
         $data['driver_signature'] = isset($driver_signature)?'<img src="'.$driver_signature.'" alt="owner signature logo" style=" height: 150px;">':null;
         $data['owner_signature'] =  isset($owner_signature)?'<img src="'.$owner_signature.'" alt="owner signature logo" style=" height: 150px;">':null;;
 
-        $data["owner_signature_date"] = format_date($booking->owner_signature_date);
+        $data["owner_signature_date"] = $booking->owner_signature_date?format_date($booking->owner_signature_date):'';
 
-        $data["client_signature_date"] = format_date($booking->client_signature_date);
+        $data["client_signature_date"] = $booking->client_signature_date?format_date($booking->client_signature_date):'';
 
 
         // [   old fields for contract

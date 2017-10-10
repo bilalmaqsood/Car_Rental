@@ -75,7 +75,7 @@
                             </a>
                         </li>
                         
-                         <li v-else-if="booking.handover_inspection"> <!-- 24 hours before booking start -->
+                         <li v-else-if="booking.handover_inspection || booking.status ==4"> <!-- 24 hours before booking start -->
                             <a @click="loadSideView('inspection')" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
@@ -127,7 +127,7 @@
                                 </a>
                             </li>
                             <li v-else-if="[4,6,8].includes(booking.status)">
-                                <a @click="approveBooking" href="javascript:">
+                                <a @click="cancleBooking" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                     </svg>
@@ -143,12 +143,12 @@
                                 documents
                             </a>
                         </li>
-                        <li v-if="User.state.auth.type == 'owner' && booking.status < 4 ">
-                            <a @click="cancleBooking" href="javascript:">
+                        <li v-if="User.state.auth.type == 'owner' && booking.status < 1 ">
+                            <a @click="cancle_action(booking)" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                 </svg>
-                                cancel Request
+                                Cancel Request
                             </a>
                         </li>
                         <li>

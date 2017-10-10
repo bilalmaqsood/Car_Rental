@@ -78,7 +78,8 @@
         computed: {
             documents() {
                 let docs = [];
-
+                   
+                if(this.booking.signatures)
                 _.each(this.booking.documents, d => {
                     docs.push(d);
                 });

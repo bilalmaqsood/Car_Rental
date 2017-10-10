@@ -38,7 +38,7 @@
                     <img class="img-responsive" src="/images/front.png" alt="" style="margin: 0px;">
                 </div>
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
+                    <!-- <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
 
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
@@ -71,7 +71,7 @@
 </div>
 
 
-                    </div>
+                    </div> -->
                             <p>{{content}}</p>
                             <img class="img-responsive" :src="spot_image" />
                 </div>
@@ -92,7 +92,7 @@
                     <img class="img-responsive" src="/images/rear.png" alt="">
                 </div>
                 <div class="front_back_size" >
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
+                    <!-- <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
                     <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
                      <i v-if="dispute_status" class="fa fa-check "></i>
                       {{ dispute_status==true?'Disputed':'Dispute'}}
@@ -122,7 +122,7 @@
                         </span>
 </div>
                     </div>
-</div>
+</div> -->
                 <p>{{content}}</p>
                             <img class="img-responsive" :src="spot_image"  />
 
@@ -144,7 +144,7 @@
                     <img class="img-responsive" src="/images/driver_side.png" alt="">
                 </div>
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
+                    <!-- <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
                         <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
@@ -174,7 +174,7 @@
                         </span>
 </div>
                     </div>
-                    </div>
+                    </div> -->
                     <p>{{content}}</p>
                             <img class="img-responsive" :src="spot_image"  />
                 </div>
@@ -195,7 +195,7 @@
                     <img class="img-responsive" src="/images/off_side.png" alt="">
                 </div>
                 <div class="front_back_size">
-                    <div v-if="User.state.auth.type=='owner'" class="add_description_icon">
+                    <!-- <div v-if="User.state.auth.type=='owner'" class="add_description_icon">
 <div class="input-group login-input">
                         <input type="text" class="form-control" placeholder="add description" v-model="description">
                         <button v-if="is_return" @click="dispute_status=!dispute_status" class="primary-button">
@@ -224,7 +224,7 @@
                                     </svg>
                         </span>
 </div>
-                    </div> </div>
+                    </div> </div> -->
                     <p>{{content}}</p>
                             <img class="img-responsive" :src="spot_image"  />
 </div>
@@ -245,7 +245,7 @@
 
                 
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
+                    <!-- <div class="add_description_icon" v-if="User.state.auth.type=='owner'">
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
 <div class="input-group-addon">
@@ -266,7 +266,7 @@
 
 <div class="input-group-addon">
 </div></div>
-                    </div>
+                    </div> -->
                             <p>{{content}}</p>
                             <img class="img-responsive" :src="spot_image"  />
                 </div>
