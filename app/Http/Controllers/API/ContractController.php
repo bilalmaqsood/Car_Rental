@@ -146,7 +146,7 @@ class ContractController extends Controller
         if(!$booking)
             return api_response(trans('booking.unauthenticated', ['name' => request()->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
         
-        $result = $booking->contract()->update($request->all());
+        $result = $booking->contract()->update($request->except('id'));
 
             $path = $this->updateContractTemplate($booking);
 
