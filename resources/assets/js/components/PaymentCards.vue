@@ -183,7 +183,7 @@
               if(User.state.oldView)
                  setTimeout(function() {
                      $this.$parent.$emit("oldMenuView",User.state.oldView);
-                }, 500);
+                }, 800);
                this.addCard = !this.addCard;
             },
             removeCard(c){

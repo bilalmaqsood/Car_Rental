@@ -411,7 +411,7 @@
                 }
             },
             payOverDue(){
-
+                let $this = this;
                let booking_id = this.booking.id;
                         if(!User.state.auth.credit_cards.length){
                             User.commit('oldView', 'booking');
@@ -435,7 +435,7 @@
                       n.close();
                       $('#sideLoader').show();
                 axios.post('/api/booking/' + booking_id+'/pay-overdue').then(r=>{
-                    
+                    $this.prepareComponent();
                 setTimeout(function() { 
                     $('#sideLoader').hide();
                          new Noty({
@@ -477,6 +477,7 @@
                       n.close();
                       $('#sideLoader').show();
                             $this.cancleBooking(); 
+                            $this.prepareComponent(); 
                     
                     }, {id: 'button1', 'data-status': 'ok'}),
 
