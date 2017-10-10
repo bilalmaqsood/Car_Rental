@@ -353,7 +353,7 @@ class InspectionController extends Controller
         $spot =  $booking->inspections()->whereId($spot_id);
         $spot->update(["status"=>0]);
         
-        return api_response($spot->first());
+        return api_response($spot->first()->fresh());
     }
 
     public function resolveDisputedSpot($booking_id,$spot_id)

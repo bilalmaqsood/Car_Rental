@@ -68,3 +68,16 @@ function format_date($date){
        return \Carbon\Carbon::parse($date)->format(DATE_FORMAT);
     }
 }
+
+function Discount($booking){
+    $vehicle = $booking->vehicle;
+
+    $total_weeks = $booking->start_date->diffInWeeks($booking->end_date);
+    d($booking->vehicle->discounts);
+    if (count($booking->vehicle->discounts))
+        foreach ($booking->vehicle->discounts as $discount) {
+
+                $rent = (100 + $discount['percent']) / 100;
+        }
+
+}

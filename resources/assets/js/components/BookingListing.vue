@@ -97,6 +97,7 @@
 
         methods: {
             prepareComponent() {
+                let logged_booking = localStorage.getItem('overdue_item');
                 User.commit('updateCurrentBook', null);
                 $('#sideLoader').show();
                 axios.get('/api/booking').then(r => {
@@ -111,7 +112,10 @@
                             });
                             setTimeout(() => {
                                 if (this.bookings.length) {
-                                    User.commit('updateCurrentBook', this.bookings[0].id);
+                                    if(logged_booking)
+                                        User.commit('updateCurrentBook', JSON.parse(logged_booking).id);
+                                    else
+                                        User.commit('updateCurrentBook', this.bookings[0].id);
                                     this.loadBookingDetail();
                                 }
                             }, 500);

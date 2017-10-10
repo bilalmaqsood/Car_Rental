@@ -32,6 +32,7 @@ class BookingPayment extends Model
         'due_date' => 'datetime',
     ];
 
+    protected $appends = ['overdue'];
     /**
      * Get user of the booking
      */
@@ -46,6 +47,11 @@ class BookingPayment extends Model
     public function balanceLogs()
     {
         return $this->morphMany(BalanceLog::class, 'loggable');
+    }
+
+    public function getOverdueAttribute($value)
+    {
+        return $this->paid==false && $this->due_date < \Carbon\Carbon::now();
     }
 
     /**

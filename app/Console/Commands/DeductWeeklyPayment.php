@@ -70,38 +70,4 @@ class DeductWeeklyPayment extends Command
             }
         });
     }
-
-    protected function updateBalancedue($payment,$booking){
-
-
-        $payment->paid = 1;
-        $payment->save();
-
-        $nextDue = $payment->due_date->addWeek();
-        $weekNo = $booking->start_date->diffInWeeks($nextDue) + 1;
-        $currentWeek = $booking->start_date->diffInWeeks(Carbon::now());
-            
-         /**
-         * Calculate discount of the week
-         **/ 
-        $rent = $booking->vehicle->rent;
-        if (count($booking->vehicle->discounts))
-            foreach ($booking->vehicle->discounts as $discount) {
-                if ($discount['week'] == $currentWeek)
-                    $rent -= (100 + $discount['percent']) / 100;
-            }
-
-        if($nextDue <= $booking->end_date)
-            $booking->payments()->create([
-                "title" => 'Week '. $weekNo,
-                "cost"  => $rent,
-                "due_date" => $nextDue,
-                "paid" => 0,
-
-
-                ]);
-
-
-    }
-
 }

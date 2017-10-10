@@ -3,11 +3,13 @@
 namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Qwikkar\Concerns\Balanceable;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
 
 class FinancialController extends Controller
 {
+    use Balanceable;
     /**
      * All payments of a booking per weekly
      *
@@ -57,4 +59,31 @@ class FinancialController extends Controller
     {
         return api_response($request->user()->balance->current);
     }
+
+    public function payOverdueAmount($booking_id)
+    {
+        $status = false;
+
+        $booking = Booking::find($booking_id);
+
+        $payment = $booking->payments()->DuePayment()->first();
+
+        $account = $booking->user->creditCard()->where('default', 1)->first();
+
+        $user = $booking->user;
+
+        if($account)
+        $result = $user->addBalance($payment->cost,$account);
+
+        if($result)
+            $status = $this->updateBalancedue($payment,$booking);
+
+        if($status)
+        return api_response("weekly amount is deducted from account ending ".$account->last_numbers);
+
+        return api_response("Unable to charge payment",400);
+
+    }
+
+
 }

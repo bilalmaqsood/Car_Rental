@@ -99,6 +99,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::get('/booking/{id}/payment-weekly', 'FinancialController@paymentDetailWeekly')->middleware('not-admin');
 
+    Route::post('/booking/{id}/pay-overdue','FinancialController@payOverdueAmount');
+
     Route::get('/vehicle/{vehicle_id}/inspection', 'InspectionController@lastInspection');
 
     Route::patch('/booking/{booking_id}/approve-inspection/{spot_id}', 'InspectionController@approveInspection');

@@ -53,7 +53,10 @@
                         <h3>Rent book</h3>
                         <ul>
                             <li><span>Week no.</span><span>Cost</span><span>Due date</span><span>Status</span></li>
-                            <li v-for="p in payments"><span>{{p.title}}</span><span>{{p.cost | currency}}</span><span>{{p.due_date | date('format', 'DD.MM.YYYY')}}</span><span v-if="p.paid"><b class="label label-success">Paid</b></span><span v-else><b class="label label-danger">Pending</b></span></li>
+                            <li v-for="p in payments"><span>{{p.title}}</span><span>{{p.cost | currency}}</span><span>{{p.due_date | date('format', 'DD.MM.YYYY')}}</span>
+                            <span v-if="p.paid"><b class="label label-success">Paid</b></span>
+                            <span v-else-if="!p.overdue"><b class="label label-danger">Pending</b></span>
+                            <span  v-else-if="p.overdue" class="clickable" @click="payOverDue" @mouseleave="hover=''" @mouseover="hover='overdue'"><b class="label" :class="{'label-danger': hover!='overdue','label-success': hover=='overdue'}">{{ hover=='overdue'?'Pay Now':'Overdue' }}</b></span></li>
                         </ul>
                     </div>
                 </transition>
@@ -176,7 +179,8 @@
                 User: User,
                 booking: this.Booking,
                 isSignDone: this.signature,
-                payments: []
+                payments: [],
+                hover: '',
             };
         },
         watch: {
@@ -403,6 +407,36 @@
 
                 }
             },
+            payOverDue(){
+
+               
+                        if(!User.state.auth.credit_cards.length){
+                            User.commit('oldView', 'booking');
+                            User.commit('menuView', 'payment');
+
+                            new Noty({
+                                    type: 'warning',
+                                    text: 'Add credit card to process payment!'
+                                }).show();
+                            localStorage.setItem('overdue_item', JSON.stringify(this.booking));
+                            return false;
+                            // data.view='';
+                            // $this.sideView = '';
+                        } else{ this.processPayment(); }
+                    
+                // $(e.target).find('b').text("pay now");
+
+            },
+
+            processPayment(){
+                // console.log(User);
+                // console.log(User.state);
+                // console.log(User.state.auth.credit_cards);
+                
+                axios.post('/api/booking/' + this.booking.id+'/pay-overdue').then(r=>{
+                    alert("here you bro");
+                }); 
+            }
         }
     }
 </script>

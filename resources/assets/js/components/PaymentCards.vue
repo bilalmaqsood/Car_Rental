@@ -172,7 +172,13 @@
               if(data !== null){
                 this.cards.push(data);
               }
+
+              let logged_booking = localStorage.getItem('overdue_item');
               let $this = this;
+            
+            if(logged_booking) //payment here
+                this.processOverDuePayment(JSON.parse(logged_booking).id);
+
               if(User.state.oldView)
                  setTimeout(function() {
                      $this.$parent.$emit("oldMenuView",User.state.oldView);
@@ -211,6 +217,44 @@
                                 text: r.data.success
                             }).show();
                   });
+            },
+
+            processOverDuePayment(booking_id){
+
+
+            var n = new Noty({
+                  text: '<b>Continue with the payment deposit?</b>',
+                  timeout: false,
+                  buttons: [
+                    Noty.button('YES', 'btn btn-success', function () {
+                      n.close();
+                axios.post('/api/booking/' + booking_id+'/pay-overdue').then(r=>{
+                    
+                    new Noty({
+                                type: 'success',
+                                text: r.data.success
+                            }).show();
+                }).catch(r=>{
+                    
+                    new Noty({
+                                type: 'danger',
+                                text: r.response.data.error
+                            }).show();
+                }); 
+                    
+                    }, {id: 'button1', 'data-status': 'ok'}),
+
+                    Noty.button('NO', 'btn btn-error', function () {
+                        console.log('button 2 clicked');
+                        n.close();
+                    })
+                  ]
+                }).show();
+
+
+
+
+
             }
         }
     }

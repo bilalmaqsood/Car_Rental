@@ -231,7 +231,7 @@ trait BookingOperations
      */
     protected function compileTemplate(Booking $booking)
     {
-        $this->updateTemplateFromStub($booking->vehicle);
+        
         $compiledString = \Blade::compileString($booking->vehicle->contractTemplate->template);
         $data = $booking->contract()->first();
          if(!$data)
@@ -445,7 +445,7 @@ trait BookingOperations
         if ($log->requested_data['status'] == 1  && $request->status==1) {
             // User approved booking do payment here
            $this->deductDeposit($booking, $booking->user);//  deduct after booking accepted
-
+           $this->updateTemplateFromStub($booking->vehicle);
            $this->generateContract($booking); // generate after booking accepted
         }
 
