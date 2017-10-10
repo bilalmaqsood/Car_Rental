@@ -141,6 +141,7 @@ trait BookingOperations
             'cost' => $booking->deposit,
             'due_date' => $booking->start_date,
             'paid' => 1,
+            "discount" => 0.00,
         ]);
         $booking->payments()->save($payment);
 
@@ -162,15 +163,11 @@ trait BookingOperations
 
         // add first week rent
         $rent = $booking->vehicle->rent;
-        if (count($booking->vehicle->discounts))
-            foreach ($booking->vehicle->discounts as $discount) {
-                if ($discount['week'] == 1)
-                    $rent -= (100 + $discount['percent']) / 100;
-            }
         $booking->payments()->create([
             'title' => 'Week 1',
             'cost' => $rent,
-            'due_date' => $booking->start_date
+            'due_date' => $booking->start_date,
+            "discount" => $rent * (Discount($booking)/100),
         ]);
 
         // add log of balance of deposit deduction

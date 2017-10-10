@@ -72,8 +72,12 @@ class FinancialController extends Controller
 
         $user = $booking->user;
 
+        $amount = $payment->cost;
+        if (count($booking->vehicle->discounts))
+            $amount -=  $amount * (Discount($booking)/100);
+
         if($account)
-        $result = $user->addBalance($payment->cost,$account);
+        $result = $user->addBalance($amount,$account);
 
         if($result)
             $status = $this->updateBalancedue($payment,$booking);

@@ -70,14 +70,23 @@ function format_date($date){
 }
 
 function Discount($booking){
+    $discount=0;
+
     $vehicle = $booking->vehicle;
 
     $total_weeks = $booking->start_date->diffInWeeks($booking->end_date);
-    d($booking->vehicle->discounts);
-    if (count($booking->vehicle->discounts))
+
+    $total_discounts = count($booking->vehicle->discounts);
+
+    if($total_discounts > $total_weeks)
         foreach ($booking->vehicle->discounts as $discount) {
-
-                $rent = (100 + $discount['percent']) / 100;
+                if($discount['week']==$total_weeks);
+                    $discount = $discount['percent'];
         }
-
+    else
+    {
+        $discount = collect($booking->vehicle->discounts)->last();
+        $discount = isset($discount["percent"])?$discount["percent"]:0;
+    }
+    return $discount;
 }

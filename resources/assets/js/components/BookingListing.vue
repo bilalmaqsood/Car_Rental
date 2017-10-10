@@ -98,6 +98,7 @@
         methods: {
             prepareComponent() {
                 let logged_booking = localStorage.getItem('overdue_item');
+                                     localStorage.removeItem("overdue_item");
                 User.commit('updateCurrentBook', null);
                 $('#sideLoader').show();
                 axios.get('/api/booking').then(r => {

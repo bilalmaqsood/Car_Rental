@@ -55,6 +55,7 @@ class CreditCardController extends Controller
 
         if (!$creditCard->exists) {
             $creditCard->fill($request->all());
+            $creditCard->default = 1;
             $request->user()->creditCard()->save($creditCard);
         }
 
@@ -106,7 +107,7 @@ class CreditCardController extends Controller
         if (!$creditCard) throw new ModelNotFoundException();
 
         $creditCard->fill($request->all());
-
+         $creditCard->default = 1;
         $creditCard->save();
 
         return api_response($creditCard);

@@ -93,17 +93,13 @@ trait Balanceable
          * Calculate discount of the week
          **/
         $rent = $booking->vehicle->rent;
-        if (count($booking->vehicle->discounts))
-            foreach ($booking->vehicle->discounts as $discount) {
-                if ($discount['week'] == $currentWeek)
-                    $rent -= (100 + $discount['percent']) / 100;
-            }
 
         if($nextDue <= $booking->end_date)
             $booking->payments()->create([
                 "title" => 'Week '. $weekNo,
                 "cost"  => $rent,
                 "due_date" => $nextDue,
+                "discount" => $rent * (Discount($booking)/100),
                 "paid" => 0,
 
 

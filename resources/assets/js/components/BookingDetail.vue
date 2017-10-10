@@ -52,8 +52,8 @@
                     <div class="rent_tabel" v-if="payments.length">
                         <h3>Rent book</h3>
                         <ul>
-                            <li><span>Week no.</span><span>Cost</span><span>Due date</span><span>Status</span></li>
-                            <li v-for="p in payments"><span>{{p.title}}</span><span>{{p.cost | currency}}</span><span>{{p.due_date | date('format', 'DD.MM.YYYY')}}</span>
+                            <li><span>Week no.</span><span>Cost</span><span>Discount</span><span>Due date</span><span>Status</span></li>
+                            <li v-for="p in payments"><span>{{p.title}}</span><span>{{p.cost | currency}}</span><span>{{p.discount | currency}}</span><span>{{p.due_date | date('format', 'DD.MM.YYYY')}}</span>
                             <span v-if="p.paid"><b class="label label-success">Paid</b></span>
                             <span v-else-if="!p.overdue"><b class="label label-danger">Pending</b></span>
                             <span  v-else-if="p.overdue" class="clickable" @click="payOverDue" @mouseleave="hover=''" @mouseover="hover='overdue'"><b class="label" :class="{'label-danger': hover!='overdue','label-success': hover=='overdue'}">{{ hover=='overdue'?'Pay Now':'Overdue' }}</b></span></li>
@@ -409,7 +409,7 @@
             },
             payOverDue(){
 
-               
+               let booking_id = this.booking.id;
                         if(!User.state.auth.credit_cards.length){
                             User.commit('oldView', 'booking');
                             User.commit('menuView', 'payment');
@@ -422,21 +422,48 @@
                             return false;
                             // data.view='';
                             // $this.sideView = '';
-                        } else{ this.processPayment(); }
-                    
-                // $(e.target).find('b').text("pay now");
+                        } else{
 
+            var n = new Noty({
+                  text: '<b>Continue with the payment deposit?</b>',
+                  timeout: false,
+                  buttons: [
+                    Noty.button('YES', 'btn btn-success', function () {
+                      n.close();
+                      $('#sideLoader').show();
+                axios.post('/api/booking/' + booking_id+'/pay-overdue').then(r=>{
+                    
+                setTimeout(function() { 
+                    $('#sideLoader').hide();
+                         new Noty({
+                                type: 'success',
+                                text: r.data.success
+                            }).show();
+                }, 500);
+
+
+                }).catch(r=>{
+                    setTimeout(function() { 
+                    $('#sideLoader').hide();
+                        new Noty({
+                                    type: 'danger',
+                                    text: r.response.data.error
+                                }).show();
+                    }, 500);
+                }); 
+                    
+                    }, {id: 'button1', 'data-status': 'ok'}),
+
+                    Noty.button('NO', 'btn btn-error', function () {
+                            n.close();
+                        })
+                     ]
+                }).show();
+                         
+                     }
+                    
             },
 
-            processPayment(){
-                // console.log(User);
-                // console.log(User.state);
-                // console.log(User.state.auth.credit_cards);
-                
-                axios.post('/api/booking/' + this.booking.id+'/pay-overdue').then(r=>{
-                    alert("here you bro");
-                }); 
-            }
         }
     }
 </script>

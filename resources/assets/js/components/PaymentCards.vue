@@ -118,9 +118,10 @@
             saveAccount(e) {
                 $('#sideLoader').show();
                 let $btn = $(e.target).button('loading');
-
+                let account = _.merge(this.account, {'default': 1});
+                console.log(account);
                 axios[this.editMenu ? 'patch' : 'post']
-                ('/api/account' + (this.editMenu ? '/' + this.account.id : ''), _.merge(this.account, {'default': 1}))
+                ('/api/account' + (this.editMenu ? '/' + this.account.id : ''), account)
                     .then(this.processAccount)
                     .then(function () {
                         $btn.button('reset');

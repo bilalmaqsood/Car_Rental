@@ -17,6 +17,7 @@ class BookingPayment extends Model
         'paid',
         'title',
         'due_date',
+        'discount'
     ];
 
     /**
