@@ -55,8 +55,11 @@
                             <li><span>Week no.</span><span>Cost</span><span>Discount</span><span>Due date</span><span>Status</span></li>
                             <li v-for="p in payments"><span>{{p.title}}</span><span>{{p.cost | currency}}</span><span>{{p.discount | currency}}</span><span>{{p.due_date | date('format', 'DD.MM.YYYY')}}</span>
                             <span v-if="p.paid"><b class="label label-success">Paid</b></span>
-                            <span v-else-if="!p.overdue"><b class="label label-danger">Pending</b></span>
-                            <span  v-else-if="p.overdue" class="clickable" @click="payOverDue" @mouseleave="hover=''" @mouseover="hover='overdue'"><b class="label" :class="{'label-danger': hover!='overdue','label-success': hover=='overdue'}">{{ hover=='overdue'?'Pay Now':'Overdue' }}</b></span></li>
+                            <span v-else-if="!p.overdue"><b class="label label-warning">Pending</b></span>
+                            <span  v-else-if="p.overdue && User.state.auth.type=='client'" class="clickable" @click="payOverDue" @mouseleave="hover=''" @mouseover="hover='overdue'"><b class="label" :class="{'label-warning': hover!='overdue','label-success': hover=='overdue'}">{{ hover=='overdue'?'Pay Now':'Overdue' }}</b></span>
+                            <span  v-else-if="p.overdue && User.state.auth.type=='owner' && booking.status<6" class="clickable" @click="closeContract" @mouseleave="hover=''" @mouseover="hover='overdue'"><b class="label" :class="{'label-warning': hover!='overdue','label-success': hover=='overdue'}">{{ hover=='overdue'?'Close contract':'Overdue' }}</b></span>
+                            <span v-else-if="booking.status==6"> <b class="label label-danger">Terminated</b></span>
+                            </li>
                         </ul>
                     </div>
                 </transition>
@@ -320,7 +323,7 @@
                 let params = {};
 
                params.status = 6;
-               params.note = 'booking request canceled .';
+               params.note = 'Owner close contract of overdue payment.';
 
                 $('#sideLoader').show();
                 axios.patch('/api/booking/' + this.booking.id + '/status', params)
@@ -463,6 +466,28 @@
                      }
                     
             },
+
+        closeContract(){
+            let $this = this;
+            var n = new Noty({
+                  text: '<b>Continue with the contract close?</b>',
+                  timeout: false,
+                  buttons: [
+                    Noty.button('YES', 'btn btn-success', function () {
+                      n.close();
+                      $('#sideLoader').show();
+                            $this.cancleBooking(); 
+                    
+                    }, {id: 'button1', 'data-status': 'ok'}),
+
+                    Noty.button('NO', 'btn btn-error', function () {
+                            n.close();
+                        })
+                     ]
+                }).show();
+                         
+
+        }
 
         }
     }
