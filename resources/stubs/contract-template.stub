@@ -70,6 +70,7 @@
                 <li>A weekly rental cost of <b>£{{$weekly_rent_cost}} incl. VAT</b> will be paid at the start of every week by Direct Debit set on the Qwikkar profile, or in cash.</li>
                 <li> This agreement (not exceeding 90 days), will be valid and in full effect from <b>{{$start_date}}</b> until <b>{{$end_date}}</b></li>
                 <li>Insurance arranged by <b>{{$business_name}}.</b> on behalf of the driver through <b>{{$insurance_company_name}}</b> - Insurance policy number: <b> {{$insurance_policy_number}} </b> valid until <b> {{$insurance_expiry_date}} </b></li>
+                <li>Insurance excess payable by the Driver: £ <b> {{$Insurance_excess_cost}} </b></li>
                 <li>The Driver must inform the Owner and bring the vehicle for the Service Check, if the Service Mileage is reached while this agreement is in effect.</li>
                 <li>The Driver must use the vehicle only on the territories covered by the insurance policy. However, if the Driver needs to use the verhicle outside the territory of England while this agreement is in effect, the Driver must inform the Owner in advance and obtain express consent (by e-mail) of the Owner permission accompanied by the written permission from the insurance company.</li>
             </ol>

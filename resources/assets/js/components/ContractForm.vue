@@ -81,7 +81,14 @@
             </li>
             <li class="vehicle-details-row2">
                 <div class="form-group">
-                    <input type="text" placeholder="Driving license expiration date" class="form-control dates" v-model="form.driving_expire_date">
+                    <flat-pickr
+                            v-model="form.driving_expire_date"
+                            placeholder="Driving license expiration date"
+                            :config="config"
+                            :required="true"
+                            input-class="form-control"
+                            name="driving_expire_date">
+                    </flat-pickr>
                 </div>
             </li>
             <li class="vehicle-details-row2">
@@ -91,7 +98,14 @@
             </li>
             <li class="vehicle-details-row2">
                 <div class="form-group">
-                    <input type="text" placeholder="PCO license expiration date" class="form-control dates" v-model="form.pco_expiry_date">
+                    <flat-pickr
+                            v-model="form.pco_expiry_date"
+                            placeholder="PCO license expiration date"
+                            :config="config"
+                            :required="true"
+                            input-class="form-control"
+                            name="pco_expiry_date">
+                    </flat-pickr>
                 </div>
             </li>
             <li class="vehicle-details-row2">
@@ -101,17 +115,38 @@
             </li>
             <li class="vehicle-details-row2">
                 <div class="form-group">
-                    <input type="text" placeholder="Deposit paid date" class="form-control dates" v-model="form.deposit_paid_date">
+                    <flat-pickr
+                            v-model="form.deposit_paid_date"
+                            placeholder="Deposit paid date"
+                            :config="config"
+                            :required="true"
+                            input-class="form-control"
+                            name="deposit_paid_date">
+                    </flat-pickr>
                 </div>
             </li>
             <li class="vehicle-details-row2">
                 <div class="form-group">
-                    <input type="text" placeholder="Agreement start date" class="form-control dates" v-model="form.start_date">
+                    <flat-pickr
+                            v-model="form.start_date"
+                            placeholder="Agreement start date"
+                            :config="config"
+                            :required="true"
+                            input-class="form-control"
+                            name="start_date">
+                    </flat-pickr>
                 </div>
             </li>
             <li class="vehicle-details-row2">
                 <div class="form-group">
-                    <input type="text" placeholder="Agreement end date / time" class="form-control dates" v-model="form.end_date">
+                    <flat-pickr
+                            v-model="form.end_date"
+                            placeholder="Agreement end date"
+                            :config="config"
+                            :required="true"
+                            input-class="form-control"
+                            name="end_date">
+                    </flat-pickr>
                 </div>
             </li>
             <li class="vehicle-details-row1">
@@ -126,7 +161,14 @@
             </li>
             <li class="vehicle-details-row2">
                 <div class="form-group">
-                    <input type="text" placeholder="Insurance expiry date" class="form-control dates" v-model="form.insurance_expiry_date">
+                    <flat-pickr
+                            v-model="form.insurance_expiry_date"
+                            placeholder="Insurance expiry date"
+                            :config="config"
+                            :required="true"
+                            input-class="form-control"
+                            name="insurance_expiry_date">
+                    </flat-pickr>
                 </div>
             </li>
             <li class="vehicle-details-row2">
@@ -155,16 +197,27 @@
 <script>
     import User from '../user';
 
+    import flatPickr from 'vue-flatpickr-component';
+    import 'flatpickr/dist/flatpickr.css';
+
     export default {
         props: ['booking'],
 
         data() {
             return {
+                date: new Date(),
+                // Get more form https://chmln.github.io/flatpickr/options/
+                config: {
+                    wrap: true, // set wrap to true when using 'input-group'
+                    altFormat: 'M	j, Y',
+                    altInput: true,
+                    dateFormat: "Y-m-d",
+                },
                 signContract: false,
                 contractPreview: false,
                 doc: '',
                 form:{
-                     business_logo  : false,
+                     // business_logo  : false,
                      // business_name  : false,
                      // business_registration_number  : false,
                      // business_address  : false,
@@ -202,7 +255,9 @@
         mounted() {
             this.prepareComponent();
         },
-
+        components: {
+            flatPickr
+        },
         computed: {
 
         },
@@ -216,12 +271,6 @@
                         setTimeout(function() { $('#sideLoader').hide(); }, 500);
                         this.form = r.data.success;
                      });
-
-            $(".dates").datetimepicker({
-                    format: 'YYYY-MM-DD',
-                    }).on('dp.change',(e)=> {
-                    // $(e.target).val();
-            });
 
             $(".upload").on('change', function(event) {
                 event.preventDefault();
