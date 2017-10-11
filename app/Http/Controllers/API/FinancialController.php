@@ -66,7 +66,7 @@ class FinancialController extends Controller
 
         $booking = Booking::find($booking_id);
 
-        $payment = $booking->payments()->DuePayment()->first();
+        $payment = $booking->payments()->where("paid",0)->first();
 
         $account = $booking->user->creditCard()->where('default', 1)->first();
 

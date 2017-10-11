@@ -63,26 +63,31 @@ Route::get('/overdue-check', function()
 });
 
 
+use Qwikkar\Notifications\RatingNotify;
+use Carbon\Carbon;
 
 Route::get('/test/{id}', function ($id) {
-    Discount(\Qwikkar\Models\Booking::first());
-//   $booking = \Qwikkar\Models\Booking::whereId($id)->first();
-//   $owner = $booking->vehicle->owner->user->name;
-//   $driver = $booking->user->name;
-//
-//
-//   $booking->vehicle->owner->user->notify(new \Qwikkar\Notifications\RatingNotify([
-//    'id' => $booking->id,
-//   	"title" => "Rate to ".$driver,
-//   	"booking_id" => $id,
-//   	"status" => 12,
-//   	"old_status" => 12,
-//   	]));
-//   $booking->user->notify(new \Qwikkar\Notifications\RatingNotify([
-//    'id' => $booking->id,
-//   	"title" => "Rate to ".$owner,
-//   	"booking_id" => $id,
-//   	"status" => 12,
-//   	"old_status" => 12,
-//   	]));
+	
+	    $booking = \Qwikkar\Models\Booking::whereId($id)->first();
+
+        $owner = $booking->vehicle->owner->user->name;
+        $driver = $booking->user->name;
+
+ 
+       $booking->vehicle->owner->user->notify((new RatingNotify([
+            "title" => "Rate to ".$driver,
+            'id' => $booking->id,
+            "booking_id" => $booking->id,
+            "status" => 12,
+            "old_status" => 12,
+        ]))->delay(Carbon::now()->addMinute()));
+
+       $booking->user->notify((new RatingNotify([
+            "title" => "Rate to ".$owner,
+            'id' => $booking->id,
+            "booking_id" => $booking->id,
+            "status" => 12,
+            "old_status" => 12,
+        ]))->delay(Carbon::now()->addMinute()));
+
 });

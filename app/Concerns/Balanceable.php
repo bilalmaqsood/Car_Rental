@@ -104,6 +104,17 @@ trait Balanceable
 
 
             ]);
+        else
+            $booking->payments()->create([
+                "title" => 'Week '. $weekNo,
+                "cost"  => $rent,
+                "due_date" => $booking->end_date,
+                "discount" => $rent * (Discount($booking)/100),
+                "paid" => 0,
+
+
+            ]);
+            
         return true;
     }
 }

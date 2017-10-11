@@ -2,15 +2,15 @@
     <div class="booking-request-actions notification-shadow">
         <div class="btn-inlane-content noty_successfull">
             <div class="driver-profile-text">
-                <h3>Rate to user</h3>
-                <p><b>{{notification.data.user}}</b> requested to book <b>{{ notification.data.vehicle }}</b></p>
-                <p><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </p>
-                <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</p>
+                <h3>{{notification.data.title}}</h3>
+
+                <p>Your rating</p>
                 
+                <div class="ratting"></div>
                 <div class="form-group">
-                    <input type="text" placeholder="Business e-mail" class="form-control" >
+                    <input type="text" :placeholder="user.state.auth.type=='owner'?'Tell us a bit about the driver':'Tell us a bit about the owner'" class="form-control" v-model="note">
                 </div>
-            <button class="add-new-vehile-btn">Done</button>
+            <button class="add-new-vehile-btn" @click="processRating">Done</button>
             </div>
         </div>
     </div>
@@ -23,7 +23,9 @@
         props: ['notification'],
         data() {
             return {
-
+                user: User,
+                note: '',
+                rating: '',
             };
         },
 
@@ -59,6 +61,27 @@
                 this.$parent.$emit("contract",this.notification);
 
             },
+
+            processRating(){
+                let $this = this;
+                let param ={rating: $this.rating, note: $this.note};
+                $('#sideLoader').show();
+                 axios.post('/api/booking/'+this.notification.data.booking_id+'/feedback', param)
+                        .then((r) => {
+                            $this.note=null;
+
+                            setTimeout(function() {
+                                $('#sideLoader').hide();
+                                new Noty({
+                                    type: 'success',
+                                    text: 'Rating saved successfully.',
+
+                                }).show();
+                                 $this.$parent.$emit("markread",$this.notification);
+                             }, 1000);
+                        });
+            },
+
 
         }
     }

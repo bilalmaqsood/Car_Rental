@@ -21,6 +21,8 @@
 
 
             <div v-for="notif in notifications">
+
+            <transition name="slide-fade" mode="in-out">
             <inspection-code :notification="notif" v-if="notif.data.status===CONSTANTS.INSPECTION_CODE_GENERATED"></inspection-code>
 
             <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
@@ -74,7 +76,7 @@
             <inspection-confirmed :notification="notif" v-else-if="notif.data.status=== CONSTANTS.INSPECTION_CONFIRMED"></inspection-confirmed>
             
             <inspection-resolved :notification="notif" v-else-if="notif.data.status=== CONSTANTS.DISPUTED_RESOLVED"></inspection-resolved>
-            
+            </transition>
 
             </div>
 
@@ -83,40 +85,7 @@
 
 
 
-            <!-- <transition-group name="slide-fade" tag="div">
-                <div v-for="notif in notifications" :class="NotyClass(notif)" v-bind:key="notif.id" class="pofile_content_wrapper">
-                    <div v-if="propExist(notif.data,'image')" class="img_box" v-bind:style="{ 'background-image': 'url(' + notif.data.image + ')' }">
-                        <img :src="notif.data.image" alt="">
-                    </div>
-
-                    <div class="profile_content">
-                        <h3 :class="{clickable: notif.data.vehicle}" v-if="notif.data.title" >{{notif.data.title}}</h3>
-                        <div v-if="notif.data.status===12">
-                            <p>You booking is successfully closed</p>
-                            <div class="ratting"></div>
-                            <input type="text" v-model="note">
-                            <button class="primary-button" @click="processRating(notif)">
-                                Rate now
-                            </button>
-                        </div>
-                        <p v-if="[1].includes(notif.data.status)"><span>{{notif.data.user}}</span> sent you booking request</p>
-                        <p v-if="propExist(notif.data,'vehicle')">{{notif.data.vehicle}}</p>
-                        <p v-if="propExist(notif.data,'contract_start')"><b>Contract start:</b> {{ date_format(notif.data.contract_start) }} </p>
-                        <p v-if="propExist(notif.data,'contract_end')"><b>Contract end:</b> {{ date_format(notif.data.contract_end) }}</p>
-                        <p v-if="[1].includes(notif.data.status)" class="m-t-1">You can now check and sign the contract and set your <span>Direct Debit.</span> A deposit of <span>{{ notif.data.deposit | currency }}</span> have been taken from your default card.</p>
-
-                        <div class="btn-group" v-if="showActionButtons(notif)">
-                          <button type="button" class="btn btn-success" @click="approve_action(notif)">Approve</button>
-                          <button type="button" class="btn btn-danger" @click="cancle_action(notif)">Decline</button>
-                        </div>
-
-                        <p class="m-t-1">
-                            <a href="javascript:" class="primary-button" v-if="isActionable(notif)" @click="viewContract(notif)">view contract</a>
-                            <a href="javascript:" class="primary-button" @click="markRead(notif)">mark read</a>
-                        </p>
-                    </div>
-                </div>
-            </transition-group> -->
+            
         </div>
 
         <transition name="slide-fade" mode="in-out">
@@ -401,25 +370,6 @@
                             console.log(r);
                             User.state.auth.avatar = param.avatar;
                             User.commit('update', User.state.auth);
-                        });
-            },
-            processRating(notification){
-                let $this = this;
-                let param ={rating: $this.rating, note: $this.note};
-                $('#sideLoader').show();
-                 axios.post('/api/booking/'+notification.data.booking_id+'/feedback', param)
-                        .then((r) => {
-                            $this.note=null;
-
-                            setTimeout(function() {
-                                $('#sideLoader').hide();
-                                new Noty({
-                                    type: 'success',
-                                    text: 'Rating saved successfully.',
-
-                                }).show();
-                                 $this.markRead(notification);
-                             }, 1000);
                         });
             },
              NotyClass(notif){

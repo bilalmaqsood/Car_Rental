@@ -55,8 +55,12 @@
                             <li><span>Week no.</span><span>Cost</span><span>Discount</span><span>Due date</span><span>Status</span></li>
                             <li v-for="p in payments"><span>{{p.title}}</span><span>{{p.cost | currency}}</span><span>{{p.discount | currency}}</span><span>{{p.due_date | date('format', 'DD.MM.YYYY')}}</span>
                             <span v-if="p.paid"><b class="label label-success">Paid</b></span>
-                            <span v-else-if="!p.overdue"><b class="label label-warning">Pending</b></span>
-                            <span  v-else-if="p.overdue && User.state.auth.type=='client'" class="clickable" @click="payOverDue" @mouseleave="hover=''" @mouseover="hover='overdue'"><b class="label" :class="{'label-warning': hover!='overdue','label-success': hover=='overdue'}">{{ hover=='overdue'?'Pay Now':'Overdue' }}</b></span>
+                            <span v-else-if="!p.overdue && User.state.auth.type=='owner'"><b class="label label-warning">Pending</b></span>
+                            <span  v-else-if="User.state.auth.type=='client'" class="clickable" @click="payOverDue" @mouseleave="hover=''" @mouseover="hover='overdue'">
+                            <b class="label" :class="{'label-warning': hover!='overdue','label-success': hover=='overdue'}">
+                            {{ hover=='overdue'?'Pay Now': status(p) }}
+                            </b>
+                            </span>
                             <span  v-else-if="p.overdue && User.state.auth.type=='owner' && booking.status<6" class="clickable" @click="closeContract" @mouseleave="hover=''" @mouseover="hover='overdue'"><b class="label" :class="{'label-warning': hover!='overdue','label-success': hover=='overdue'}">{{ hover=='overdue'?'Close contract':'Overdue' }}</b></span>
                             <span v-else-if="booking.status==6"> <b class="label label-danger">Terminated</b></span>
                             </li>
@@ -338,6 +342,9 @@
                             text: r.data.success
                         }).show();
                     });
+            },
+            status(p){
+                return p.overdue==true?'Overdue':'Pending';
             },
             updateStatus(params){
                 
