@@ -74,6 +74,7 @@ class BookingReminder extends Command
                         'type' => 'Booking',
                         'status' => BOOKING_PENDING,
                         'old_status' => BOOKING_PENDING,
+                        'interval' => DRIVER_REMINDER_INTERVAL,
                         'vehicle_id' => $booking->vehicle->id,
                         'image' => $booking->vehicle->images->first(),
                         'title' => 'Booking request pending',

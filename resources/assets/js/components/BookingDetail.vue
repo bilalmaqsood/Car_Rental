@@ -144,7 +144,7 @@
                             </a>
                         </li>
                         <li v-if="User.state.auth.type == 'owner' && booking.status < 1 ">
-                            <a @click="cancle_action(booking)" href="javascript:">
+                            <a @click="cancle_action(booking.id)" href="javascript:">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                 </svg>
