@@ -9,7 +9,7 @@
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                             </svg>
                         </div>
-                        <input type="text" class="form-control typeahead" placeholder="vehicle" v-model="vehicle">
+                        <input v-on:keydown.enter="searchVehicles" type="text" class="form-control typeahead" placeholder="vehicle" v-model="vehicle">
                     </div>
                 </div>
             </li>
@@ -21,7 +21,7 @@
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                             </svg>
                         </div>
-                        <input type="text" class="form-control" id="gmap_geocoding_address" placeholder="location" v-model="location">
+                        <input v-on:keydown.enter="searchVehicles" type="text" class="form-control" id="gmap_geocoding_address" placeholder="location" v-model="location">
                     </div>
                 </div>
             </li>
