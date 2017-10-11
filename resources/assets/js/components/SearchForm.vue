@@ -55,7 +55,14 @@
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
                                 </svg>
                             </div>
-                            <input type="text" class="form-control available" placeholder="available from">
+                            <flat-pickr
+                                v-model="available"
+                                placeholder="available from"
+                                :config="config"
+                                :required="true"
+                                input-class="form-control"
+                                name="insurance_expiry_date">
+                            </flat-pickr>
                         </div>
                     </div>
                 </li>
@@ -82,19 +89,32 @@
 <script>
     import User from '../user';
 
+    import flatPickr from 'vue-flatpickr-component';
+    import 'flatpickr/dist/flatpickr.css';
+
     export default {
         data() {
             return {
+                date: new Date(),
+                // Get more form https://chmln.github.io/flatpickr/options/
+                config: {
+                    wrap: true, // set wrap to true when using 'input-group'
+                    altFormat: 'M   j, Y',
+                    altInput: true,
+                    dateFormat: "Y-m-d",
+                    mode: 'range',
+                },
                 vehicle: "",
                 location: "",
                 available: "",
-                start_date: '',
-                end_date: '',
                 price: "",
                 price_min: 1,
                 price_max: 1000,
                 advanceSearch: false,
             };
+        },
+        components: {
+            flatPickr
         },
         mounted(){
 
@@ -122,31 +142,8 @@
                 var $this = this;
                 this.advanceSearch = !this.advanceSearch;
 
-                if (this.advanceSearch)
-                    setTimeout(function () {
-                        $this.initPriceRange();
-                        $('.available').datetimepicker({
-                            
-                            sideBySide: false,
-                            format: 'D-M-Y',
-                            minDate: moment(new Date())
-                        }).on('dp.change', $this.calenderChange);
-                
-                    }, 450);
-            },
-            calenderChange(e) {
-                    
-                if (!this.start_date)
-                    this.start_date = e.date.utc().startOf('day');
-                else if (!this.end_date) {
-                    this.end_date = e.date.utc().endOf('day');
-                    this.highlightDays(true);
-                } else {
-                    
-                    this.start_date = null;
-                    this.end_date = null;
-                }
-
+                if(this.advanceSearch)
+                    $this.initPriceRange();
             },
             fetchVehicles(e) {
                 let $t = this;
@@ -189,9 +186,10 @@
 
                 }
 
-                if (this.start_date  && this.end_date ) {
-                    params.booking_start = this.start_date.format("D-M-Y");
-                    params.booking_end = this.end_date.format("D-M-Y");;
+                if (this.available) {
+                    let dates = this.available.split("to");
+                    params.booking_start = dates[0].trim();
+                    params.booking_end = dates[1].trim();
                 }
 
                 if (!$.isEmptyObject(params)) {
@@ -199,53 +197,6 @@
                 }
 
                 return "";
-            },
-             highlightDays(bool) {
-                let $t = this;
-                let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
-
-                if (bool) {
-                    if (this.start_date.format('X') < this.end_date.format('X')) {
-                        let StartDate = this.start_date;
-                        let EndDate = this.end_date;
-                        $e.find('td').each(function (i, e) {
-                            let $elem = $(e);
-                            let eDate = moment.utc($elem.data('day') + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true);
-                            if (eDate.isValid() && StartDate.format('X') <= eDate.format('X') && EndDate.format('X') >= eDate.format('X')) $elem.addClass('highlight-day');
-                        });
-                        
-                        
-                            new Noty({
-                                type: 'success',
-                                text: '<div><p><b>Selected Start Date:</b> ' + $t.start_date.format('M/D/Y') + '</p><p class="m-0"><b>Selected End Date:</b> ' + $t.end_date.format('M/D/Y') + '</p></div>',
-                            }).show();
-
-                            $(".available").val($t.start_date.format("D-M-Y") + " - " + $t.end_date.format("D-M-Y"));
-
-                    } else {
-                        new Noty({
-                            type: 'warning',
-                            text: '<div><p>Start date should greater than end date.</p><p>Please select dates again.</p></div>',
-                        }).show();
-                        this.start_date = null;
-                        this.end_date = null;
-                        
-                        
-                    }
-                } else {
-                    $e.find('td').each(function (i, e) {
-                            let $elem = $(e);       
-                            $elem.removeClass('active');
-                        });
-                    $(".available").val('');
-                        this.start_date=null;
-                        this.end_date=null;
-                    new Noty({
-                        type: 'success',
-                        text: 'Dates are reset.',
-                        timeout: 600
-                    }).show();
-                }
             },
             initPriceRange(){
                 let $this = this;
