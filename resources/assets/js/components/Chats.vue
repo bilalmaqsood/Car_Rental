@@ -70,8 +70,7 @@
         methods: {
             prepareComponent() {
                 axios.get('/api/user').then(r => {
-                    User.commit('update', r.data);
-
+                    // User.commit('update', r.data);
                     window.Echo
                         .join(`user-${r.data.id}`)
                         .here(this.initSocketAd)

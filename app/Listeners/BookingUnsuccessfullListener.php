@@ -57,9 +57,12 @@ class BookingUnsuccessfullListener
         
         $booking->timeslots()->update(["status" => 1, "booking_id" => null]);
 
-        $booking->delete();
+        $booking_id = $booking->id;
 
-        return ture;
+        $booking->delete();
+        \DB::table('notifications')->whereRaw('DATA->"$.id"',$booking_id)->delete();
+
+        return true;
     }
 
 }

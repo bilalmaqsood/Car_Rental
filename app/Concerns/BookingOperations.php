@@ -236,6 +236,8 @@ trait BookingOperations
         $data = $data->toArray();
         $data['start_date'] = format_date($booking->start_date);
         $data['end_date'] = format_date($booking->end_date);
+        // $data['insurance_expiry_date'] = format_date($data['insurance_expiry_date']);
+        // $data['pco_expiry_date'] = format_date($data['pco_expiry_date']);
 
         $signatures = $booking->signatures;
         
