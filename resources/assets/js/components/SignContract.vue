@@ -1,6 +1,6 @@
 <template>
  <div>
-    <contract-form :booking="booking" v-if="storage.state.auth.type=='owner'"></contract-form>
+    <contract-form @closeContract="closeContract" :booking="booking" v-if="storage.state.auth.type=='owner' && [1,2].includes(booking.status)"></contract-form>
 
 <!--     <div class="signature-container">
             <svg @click="closeContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use></svg>
@@ -101,7 +101,11 @@
          
             };
         },
-
+        created: function(){
+                 this.$on("closeContract",()=>{
+                        this.closeContract(); 
+                 });
+             },
         watch: {
             booking: function(booking) {
                 this.booking = booking;      
@@ -135,8 +139,8 @@
                 if(!this.booking.signatures)
                     return false;
 
-                // if(User.state.auth.type === "owner" && typeof this.booking.signatures.owner !== 'undefined')
-                //     return true;
+                if(User.state.auth.type === "owner" && typeof this.booking.signatures.client !== 'undefined')
+                    return true;
 
                 if(User.state.auth.type === "client" && typeof this.booking.signatures.client !== 'undefined')
                 return true;

@@ -310,14 +310,14 @@ trait BookingOperations
 
         $oldStatus = $booking->status;
 
-        if ($signatures->has('client')) {
-            $booking->status = 2;
+        if ($request->user()->isClient()) {
+            $booking->status = 3;
              $booking->client_signature_date = Carbon::now();
             // $pdfData['driver_signature'] = $signatures->get('client');
         }
 
-        if ($signatures->has('owner')) {
-            $booking->status = 3;
+        if ($request->user()->isOwner()) {
+            $booking->status = 2;
             $booking->owner_signature_date = Carbon::now();
 
             // $pdfData['owner_signature'] = $signatures->get('owner');

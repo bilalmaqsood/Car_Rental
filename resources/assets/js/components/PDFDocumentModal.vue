@@ -233,10 +233,12 @@
                     <svg v-if="!isEdit" @click="editContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
                     </svg>
-                                        
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20" class="svg-icon">
+                      
+                      <a :download="title" :href="path">                 
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download_icon"></use>
-                                </svg>
+                       </svg>
+                       </a>
                                 <svg v-if="isEdit" @click="updateContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
                                         </svg>

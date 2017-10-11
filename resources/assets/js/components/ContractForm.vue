@@ -147,7 +147,7 @@
             </ul>
         </div>
     </div>
- <process-contract-signatures v-else-if="!contractPreview && signContract"  :booking="booking"></process-contract-signatures>    
+ <process-contract-signatures @closeContract="closeContract" v-else-if="!contractPreview && signContract"  :booking="booking"></process-contract-signatures>    
  <preview-contract v-if="contractPreview" :doc="doc" @modelHiding="closeModel" :booking="booking"></preview-contract>
 </div>
 </template>
@@ -288,6 +288,9 @@
             closeModel(){
                 this.contractPreview=false;
                 
+            },
+             closeContract(){
+                this.$emit('closeContract');
             },
         }
     }

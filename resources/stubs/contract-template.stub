@@ -11,7 +11,7 @@
       <tbody>
         
         <tr>
-          <td><img style="max-width: 100%;" src="{{$business_logo}}"></td>
+          <td><img style="width: 100px;" src="{{$business_logo}}"></td>
           <td colspan="3" style="text-align: right;">
             <p style="margin: 0; font-size: 14px;"><b>{{$business_name}}.</b></p>
             <p style="margin: 0; font-size: 14px;">Registration number: {{$business_registration_number}}</p>
@@ -95,12 +95,12 @@
           <td colspan="2" style="text-align: center; padding-right: 50px;">
 
             <span style="display: block; border-bottom: 1px solid #ccc; color: #bdbdbd;">{!! $owner_signature !!}</span>
-            <p style="margin: 0; font-size: 14px;">John Doe | <i style="color: #bdbdbd; font-style: inherit;">{{$owner_signature_date}}</i></p>
+            <p style="margin: 0; font-size: 14px;">{{$business_name}} | <i style="color: #bdbdbd; font-style: inherit;">{{$owner_signature_date}}</i></p>
           </td>
           <td colspan="2" style="text-align: center; padding-left: 50px;">
 
             <span style="display: block; border-bottom: 1px solid #ccc; color: #bdbdbd;">{!! $driver_signature !!}</span>
-            <p style="margin: 0; font-size: 14px;">Michael Myers | <i style="color: #bdbdbd; font-style: inherit;">{{$client_signature_date}}</i></p>
+            <p style="margin: 0; font-size: 14px;"> {{$client_name}} | <i style="color: #bdbdbd; font-style: inherit;">{{$client_signature_date}}</i></p>
           </td>
         </tr>
 

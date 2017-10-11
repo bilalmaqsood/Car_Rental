@@ -223,9 +223,11 @@
                 if(this.booking.status >= 4 || this.booking.status < 1)
                     return false; 
 
-                if(!this.booking.signatures)
+                if(!this.booking.signatures && this.User.state.auth.type==='owner')
                     return true;
-                else if(this.User.state.auth.type==='owner' && (typeof this.booking.signatures.owner === 'undefined'))
+                else if(!this.booking.signatures && this.User.state.auth.type==='client')
+                    return  false;
+                else if(this.User.state.auth.type==='owner' && (typeof this.booking.signatures.client === 'undefined'))
                     return  true;
                 else if(this.User.state.auth.type==='client' && (typeof this.booking.signatures.client === 'undefined'))
                     return  true;

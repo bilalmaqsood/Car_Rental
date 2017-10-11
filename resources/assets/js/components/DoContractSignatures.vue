@@ -127,7 +127,7 @@
                                 type: 'success',
                                 text: r.data.success
                             }).show();
-                            this.$emit('closeContract', 'sign');
+                            this.$emit('closeContract');
                             
                             $btn.button('reset');
                             setTimeout(() => {
