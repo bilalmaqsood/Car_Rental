@@ -4703,3 +4703,89 @@ background: #fff;
 .book-now-past#car_inspection .img-responsive {
     display: inline-block;
 }
+.car_inspection_oct12{
+    height: 600px;
+    overflow-y: scroll;
+}
+.car_inspection_oct12_img{
+    height: 250px;
+    overflow: hidden; 
+}
+.car_inspection_oct12_img img{
+    max-width: 100%;
+}
+.clockpicker-box-2 {
+    margin: 0 auto;
+    width: 180px;
+    text-align: center;
+    border: none;
+}
+.clockpicker-box-2 .form-control{
+    text-align: center;
+    padding: 0px;
+    height: 40px;
+    font-size: 40px;
+    font-weight: bold;
+    color: #505050;
+    border: none;
+    box-shadow: none;
+    margin-top: 20px;
+}
+.driver-profile-img12{
+    display: block;
+}
+.driver-profile-img12 img{
+    max-width: 100%;
+}
+.inlane-btn-wrap-btn2-oct12 {
+    width: 45%;
+}
+.btn-inlane-content-btn12oct{
+    padding: 0;
+}
+.inlane-btn-wrap-btn1-oct12{
+    width: 25%;
+}
+.inlane-btn-wrap-btn1-oct12 .two-btn-inlane li{
+    width: 100%;
+}
+.driver-profile-text-ratting .driver-profile-text{
+    text-align: center;
+}
+.processrating-input-oct12{
+    float: left;
+    width: 100%;
+}
+.processrating-input-oct12 .form-group {
+    margin-bottom: 0;
+    padding-bottom: 20px;
+    background: #fff;
+}
+.processrating-input-oct12 .form-group .form-control{
+    border: none;
+    border-radius: 0;
+    min-height: 65px;
+    vertical-align: text-top;
+    margin-bottom: 0;
+}
+.driver-profile-text-ratting{
+    width: 75%;
+    display: inline-block;
+    text-align: center;
+    min-height: 120px;
+}
+.driver-profile-text-ratting .driver-profile-text .ratting{
+    float: none;
+}
+.driver-profile-text-ratting .driver-profile-text .ratting a {
+    width: 40px;
+    text-align: center;
+    color: #525252;
+    text-decoration: none;
+    font-size: 30px;
+}
+.driver-profile-text-ratting .driver-profile-text p{
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 20px;
+}

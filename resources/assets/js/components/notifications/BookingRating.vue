@@ -1,4 +1,55 @@
 <template>
+    <div>
+        
+        <div class="booking-request-actions notification-shadow">
+            <div class="inlane-btn-wrap inlane-btn-wrap-btn2 inlane-btn-wrap-btn2-oct12">
+                <ul class="two-btn-inlane">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
+                            rate driver
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use></svg>
+                            vehicle inspection
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-inlane-content btn-inlane-content-btn2 btn-inlane-content-btn12oct noty_successfull">
+                <div class="driver-profile-img12">
+                    <img class="img-responsive" src="https://preska.wideinfo.org/wp-content/uploads/2017/09/pexels-photo-170811-310x165.jpeg" />
+                </div>
+            </div>
+        </div>
+
+        <div class="booking-request-actions notification-shadow">
+            <div class="inlane-btn-wrap inlane-btn-wrap-btn2 inlane-btn-wrap-btn1-oct12">
+                <ul class="two-btn-inlane">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
+                            rate driver
+                        </a>
+                    </li> 
+                </ul>
+            </div>
+            <div class="btn-inlane-content btn-inlane-content-btn2 driver-profile-text-ratting noty_successfull">
+                <div class="driver-profile-text">
+                    <p>rate driveryour rating</p>
+                    <div class="ratting"></div>
+                </div>
+            </div>
+        </div>
+        <div class="processrating-input-oct12">
+            <div class="form-group">
+                <input type="text" :placeholder="user.state.auth.type=='owner'?'Tell us a bit about the driver':'Tell us a bit about the owner'" class="form-control" v-model="note">
+            </div>
+            <button class="add-new-vehile-btn" @click="processRating">Done</button>
+        </div>
+    
     <div class="booking-request-actions notification-shadow">
         <div class="btn-inlane-content noty_successfull">
             <div class="driver-profile-text">
@@ -14,6 +65,9 @@
             </div>
         </div>
     </div>
+
+
+</div>
 </template>
 
 <script>
