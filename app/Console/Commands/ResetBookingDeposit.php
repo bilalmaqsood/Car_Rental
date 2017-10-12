@@ -102,6 +102,7 @@ class ResetBookingDeposit extends Command
        $booking->vehicle->owner->user->notify((new RatingNotify([
             "title" => "Rate to ".$driver,
             'id' => $booking->id,
+            'image' => $booking->vehicle->images->first(),
             "booking_id" => $booking->id,
             "status" => 12,
             "old_status" => 12,
@@ -111,6 +112,7 @@ class ResetBookingDeposit extends Command
             "title" => "Rate to ".$owner,
             'id' => $booking->id,
             "booking_id" => $booking->id,
+            'image' => $booking->vehicle->images->first(),
             "status" => 12,
             "old_status" => 12,
         ]))->delay(Carbon::now()->addMinute()));

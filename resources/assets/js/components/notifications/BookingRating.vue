@@ -20,7 +20,7 @@
             </div>
             <div class="btn-inlane-content btn-inlane-content-btn2 btn-inlane-content-btn12oct noty_successfull">
                 <div class="driver-profile-img12">
-                    <img class="img-responsive" src="https://preska.wideinfo.org/wp-content/uploads/2017/09/pexels-photo-170811-310x165.jpeg" />
+                    <img class="img-responsive" :src="notification.data.image" />
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
             <button class="add-new-vehile-btn" @click="processRating">Done</button>
         </div>
     
-    <div class="booking-request-actions notification-shadow">
+<!--     <div class="booking-request-actions notification-shadow">
         <div class="btn-inlane-content noty_successfull">
             <div class="driver-profile-text">
                 <h3>{{notification.data.title}}</h3>
@@ -64,7 +64,7 @@
             <button class="add-new-vehile-btn" @click="processRating">Done</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
 </div>

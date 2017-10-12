@@ -328,7 +328,7 @@
             cancleBooking() {
                 let params = {};
 
-               params.status = 6;
+               params.status = 9;
                params.note = 'Owner close contract of overdue payment.';
 
                 $('#sideLoader').show();
