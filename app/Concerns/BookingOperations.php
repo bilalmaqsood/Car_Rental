@@ -263,8 +263,10 @@ trait BookingOperations
         $data["pco_expiry_date"] = !empty($data['pco_expiry_date'])?format_date($data['pco_expiry_date']):'';
 
         $data["driving_expire_date"] = !empty($data['driving_expire_date'])?format_date($data['driving_expire_date']):'';
-        
+
         $data["insurance_expiry_date"] = !empty($data['insurance_expiry_date'])?format_date($data['insurance_expiry_date']):'';
+        
+        $data["deposit_paid_date"] = !empty($data['deposit_paid_date'])?format_date($data['deposit_paid_date']):'';
 
 
         // [   old fields for contract
@@ -626,6 +628,7 @@ trait BookingOperations
         if($booking->contract->isEmpty()){
 
              $data['agreement_no'] = mt_rand(1000, 9999);   
+             $data['business_name'] = $booking->vehicle->owner->user->name; 
              $data['business_address'] = $booking->vehicle->owner->address; 
              $data['business_email'] = $booking->vehicle->owner->user->email; 
              $data['business_phone'] = $booking->vehicle->owner->user->phone; 
