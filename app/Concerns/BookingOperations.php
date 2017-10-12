@@ -260,6 +260,12 @@ trait BookingOperations
 
         $data["client_signature_date"] = $booking->client_signature_date?format_date($booking->client_signature_date):'';
 
+        $data["pco_expiry_date"] = !empty($data['pco_expiry_date'])?format_date($data['pco_expiry_date']):'';
+
+        $data["driving_expire_date"] = !empty($data['driving_expire_date'])?format_date($data['driving_expire_date']):'';
+        
+        $data["insurance_expiry_date"] = !empty($data['insurance_expiry_date'])?format_date($data['insurance_expiry_date']):'';
+
 
         // [   old fields for contract
         //     'owner_company' => $booking->vehicle->owner->company ?: '',
@@ -620,13 +626,16 @@ trait BookingOperations
         if($booking->contract->isEmpty()){
 
              $data['agreement_no'] = mt_rand(1000, 9999);   
+             $data['business_address'] = $booking->vehicle->owner->address; 
+             $data['business_email'] = $booking->vehicle->owner->user->email; 
+             $data['business_phone'] = $booking->vehicle->owner->user->phone; 
              $data['start_date'] = $booking->start_date;
              $data['end_date'] = $booking->end_date;
              $data['deposit_paid_date'] = $booking->payments->first()->created_at;
              $data['deposit'] = $booking->deposit;
-             $data['vehicle_make'] =  $booking->vehicle->vehicle_make;
+             $data['vehicle_make'] =  $booking->vehicle->make;
              $data['vehicle_registration_number'] =  $booking->vehicle->registration_number;
-             $data['vehicle_model'] =  $booking->vehicle->vehicle_model;
+             $data['vehicle_model'] =  $booking->vehicle->model;
              $data['client_name'] =  $booking->user->name;
              $data['driving'] =  $booking->user->client->driving;
              $data['pco_number'] =  $booking->user->client->pco_number;

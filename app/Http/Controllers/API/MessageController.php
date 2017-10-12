@@ -4,6 +4,7 @@ namespace Qwikkar\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use Qwikkar\Events\MessagePosted;
+use Qwikkar\Events\MessageReceived;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
 use Qwikkar\Models\Message;
@@ -206,7 +207,7 @@ class MessageController extends Controller
         $messages->update(["read" => 1]);
 
 
-        return api_response($data);
+        return api_response(["data" => $data]);
 
     }
 
@@ -225,7 +226,7 @@ class MessageController extends Controller
         $messages->update(["read" => 1]);
 
 
-        return api_response($data);
+        return api_response(["data" => $data]);
 
     }
 
