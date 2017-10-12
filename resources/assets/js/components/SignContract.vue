@@ -65,11 +65,16 @@
                 <b>I will pick up the vehicle at</b>
                 <div>
                     <div class="row">
-                        <div class='col-sm-6'>
+                        <div class='col-sm-12'>
                             <div class="form-group clockpicker-box-2">
-                                <div class="input-group clockpicker clockpicker-box">
-                                    <input type="text" class="form-control timepicker" value="09:00" v-model="pickup_time">
+                               
+                                <div class="form-group clockpicker-box-2">
+                                    <div class="input-group clockpicker clockpicker-box">
+                                        <input type="text" class="form-control" value="04:30">
+                                    </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -116,7 +121,7 @@
             console.log(this.booking);
             // this.prepareComponent();
              $('.clockpicker').clockpicker({
-                            placement: 'top',
+                            placement: 'bottom',
                             align: 'left',
                             donetext: 'Done',
                         });

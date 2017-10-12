@@ -1,5 +1,5 @@
 <template>
-    <div id="car_inspection" class="tab-pane fade active in">
+    <div id="car_inspection" class="car_inspection_oct12 tab-pane fade active in">
         <div class="spinner-container center-loader" id="centerLoader">
             <div class="spinner-frame">
                 <div class="spinner-cover"></div>
@@ -73,7 +73,10 @@
 
                     </div> -->
                             <p>{{content}}</p>
-                            <img class="img-responsive" :src="spot_image" />
+
+                            <div class="car_inspection_oct12_img">
+                                <img class="img-responsive" :src="spot_image" />
+                            </div> 
                 </div>
             </div>
 
@@ -226,7 +229,9 @@
 </div>
                     </div> </div> -->
                     <p>{{content}}</p>
-                            <img class="img-responsive" :src="spot_image"  />
+                            <div class="car_inspection_oct12_img">
+                                <img class="img-responsive" :src="spot_image" />
+                            </div> 
 </div>
                 </div>
             </div>
