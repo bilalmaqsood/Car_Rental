@@ -360,7 +360,7 @@ class InspectionController extends Controller
     {
         $booking = Booking::findOrFail($booking_id);
          
-        $total_disputed_points =  $booking->inspections()->where("status",1)->count();
+        $total_disputed_points =  $booking->inspections()->where("status",1)->where("type","!=","notes")->count();
 
         if($total_disputed_points)
         {
