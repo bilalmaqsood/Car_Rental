@@ -26,7 +26,7 @@
 <body>
     <div id="app">
         <app-header></app-header>
-
+        <chats ref="chats"></chats>
         @yield('content')
     </div>
 

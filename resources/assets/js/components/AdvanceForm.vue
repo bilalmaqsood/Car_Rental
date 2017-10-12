@@ -22,7 +22,7 @@
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
                                     </svg>
                                 </div>
-                                <input type="text" v-on:keydown.enter="searchVehicles" id="gmap_geocoding_address2" v-on:keydown.enter="searchVehicles" class="form-control" placeholder="location" v-model.trim="location">
+                                <input type="text" id="gmap_geocoding_address2" v-on:keydown.enter="searchVehicles" class="form-control" placeholder="location" v-model.trim="location">
                             </div>
                         </div>
                     </li>

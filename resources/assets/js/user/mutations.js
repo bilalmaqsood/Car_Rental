@@ -55,5 +55,20 @@ export default {
     },
     highlight (state, data) {
         state.highlighted = data;
-    }
+    },
+    cleanChatMessage (state, index) {
+        state.chatUsers[index].messages = [];
+    },
+
+    addChatMessage (state, data) {
+        state.chatUsers[data.chatIndex].messages.push(data.message);
+    },
+
+    addChatUser (state, user) {
+        state.chatUsers.push(user);
+    },
+
+    delChatUser (state, index) {
+        state.chatUsers.splice(index, 1);
+    },
 }

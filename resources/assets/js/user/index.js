@@ -17,6 +17,7 @@ const state = {
     bookingData: {},
     currentBook: null,
     highlighted: null,
+    chatUsers: []
 };
 
 export default new Vuex.Store({

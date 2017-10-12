@@ -84,7 +84,7 @@
                             </button>
                         </li>
                         <li>
-                            <button type="button" @click="contactowner = ! contactowner">
+                            <button type="button" @click="openChat(user.state.vehicleData.owner.user)">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
                                 </svg>
@@ -95,9 +95,10 @@
                 </div>
             </div>
 
-            <contact-owner v-if="contactowner" :owner="user.state.vehicleData.owner.user"></contact-owner>
+            <!--<contact-owner v-if="contactowner" :owner="user.state.vehicleData.owner.user"></contact-owner>-->
             <search-listing-booking key="booking" v-if="user.state.bookNow" :vehicle="user.state.vehicleData" :pickup_location="user.state.vehicleData.pickup_location"></search-listing-booking>
         </transition>
+        <chat-window v-if="contactowner" ref="chatWindowRef" :chat="chatView" :index="indexView" :utility="true" @closeChat="resetChat"></chat-window>
     </div>
 
 </template>
@@ -113,11 +114,14 @@
             return {
                 isBooking: false,
                 contactowner: false,
+                chatView: null,
+                indexView: null,
+
             };
         },
 
         mounted() {
-            
+            User.commit('addChatUser', {user: this.user.state.vehicleData.owner.user, messages: []});
             this.prepareComponent();
             this.inilizeRating();
         },
@@ -168,7 +172,53 @@
         },
         closeWindow(){
             this.$emit("closeWindow");
-        }
+        },
+            resetChat() {
+                this.indexView = null;
+                setTimeout(() => {
+                    this.chatView = null;
+                }, 300);
+            },
+            loadChat(chat, index) {
+                if (this.indexView === index)
+                    this.resetChat();
+                else {
+                    this.indexView = null;
+                    setTimeout(() => {
+                        this.chatView = chat;
+                        this.indexView = index;
+                        this.menu = true;
+                    }, 300);
+                }
+            },
+
+            addUserChat(user) {
+                let index = -1;
+                $.each(User.state.chatUsers, function (k, v) {
+                    if (v.user.id === user.id) index = k;
+                });
+                if (index === -1)
+                    axios.get('/api/user/' + user.id).then(r => {
+                        User.commit('addChatUser', {user: r.data.success, messages: []});
+                        this.menu = true;
+                        let index = User.state.chatUsers.length - 1;
+                        this.loadChat(User.state.chatUsers[index], index);
+                    });
+                else if (this.indexView === null || this.indexView !== index) this.loadChat(User.state.chatUsers[index], index);
+                else new Noty({
+                        type: 'warning',
+                        text: '<div><p class="m-0">You already chatting with <b>' + user.name + '</b>.</p></div>',
+                        timeout: 800
+                    }).show();
+            },
+
+            openChat(user){
+                setTimeout(() => {
+                    this.contactowner = !this.contactowner;
+                }, 500);
+
+                this.addUserChat(user);
+            }
     }
 }
 </script>

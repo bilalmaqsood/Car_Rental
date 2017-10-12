@@ -72,7 +72,7 @@
                 axios.get('/api/user').then(r => {
                     // User.commit('update', r.data);
                     window.Echo
-                        .join(`user-${r.data.id}`)
+                        .join(`user-${r.data.success.id}`)
                         .here(this.initSocketAd)
                         .listen('MessagePosted', this.updateMessagePosted);
 
@@ -168,8 +168,8 @@
                     if (v.user.id === user.id) index = k;
                 });
                 if (index === -1)
-                    axios.get('/api/user/info/' + user.id).then(r => {
-                        User.commit('addChatUser', {user: r.data, messages: []});
+                    axios.get('/api/user/' + user.id).then(r => {
+                        User.commit('addChatUser', {user: r.data.success, messages: []});
                         this.menu = true;
                         let index = User.state.chatUsers.length - 1;
                         this.loadChat(User.state.chatUsers[index], index);
@@ -198,7 +198,7 @@
             sendMessage(e) {
                 let $btn = $(e.target).button('loading');
                 axios.post('/api/message/send', {
-                    user_id: User.state.auth.id === 2 ? 4 : 2,
+                    receiver_id: User.state.auth.id === 2 ? 4 : 2,
                     message: 'sample message'
                 }).then(r => {
                     $btn.button('reset');

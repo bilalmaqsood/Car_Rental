@@ -43,7 +43,7 @@
 
 <script>
     import User from '../user';
-    import ls from 'local-storage';
+    import ls from '../local';
 
     export default {
         props: ['chat', 'index', 'utility'],
@@ -66,7 +66,7 @@
             },
 
             username() {
-                return this.chat.user.first_name + ' ' + this.chat.user.last_name;
+                return this.chat.user.name;
             },
         },
 
@@ -117,7 +117,7 @@
             loadMoreMessages() {
                 this.spinner = true;
 
-                axios.get('/api/user/messages/' + this.chat.user.id + (this.currentPage !== null ? '?page=' + (this.currentPage + 1) : '')).then(r => {
+                axios.get('/api/message/' + this.chat.user.id + (this.currentPage !== null ? '?page=' + (this.currentPage + 1) : '')).then(r => {
                     let messages = [];
 
                     if (this.currentPage === null) {
@@ -160,7 +160,7 @@
             sendMessage() {
                 if (this.message) {
                     axios.post('/api/message/send', {
-                        user_id: this.chat.user.id,
+                        receiver_id: this.chat.user.id,
                         message: this.message
                     }).then(r => {
                         this.message = '';

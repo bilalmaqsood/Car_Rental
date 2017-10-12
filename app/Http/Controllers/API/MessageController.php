@@ -86,6 +86,9 @@ class MessageController extends Controller
 
         $message->save();
 
+        if($request->has("receiver_id"))
+        broadcast(new MessageReceived($message, $message->receiver, $message->sender))->toOthers();
+        else
         broadcast(new MessagePosted($message, $message->receiver, $message->sender))->toOthers();
 
         return api_response($message);
@@ -196,9 +199,53 @@ class MessageController extends Controller
     {
         $target = User::find($user_id)->id;
 
-        $messages = Message::Conversation(request()->user()->id,$target)->where('read',0)->orderBy('updated_at', 'desc')->get();
+        $messages = Message::where("sender_id",$user_id)->where("receiver_id",request()->user()->id)->where('read',0)->orderBy('updated_at', 'desc');
 
-        return api_response($messages);
+        $data = $messages->with('receiver', 'sender')->get();
 
+        $messages->update(["read" => 1]);
+
+
+        return api_response($data);
+
+    }
+
+    /**
+     * Get all recent of a booking
+     *
+     * @param $id
+     * @return array|\Illuminate\Http\JsonResponse
+     */
+    public function getBookingNewMessages($id)
+    {
+        $messages = Booking::findOrFail($id)->messages()->where('read',0)->orderBy('updated_at', 'desc');
+
+        $data = $messages->with('receiver', 'sender')->get();
+
+        $messages->update(["read" => 1]);
+
+
+        return api_response($data);
+
+    }
+
+
+    /**
+     * Update user for new socket id
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function setSocket(Request $request)
+    {
+        $this->validate($request, [
+            'socket' => 'required|string',
+        ]);
+
+        \Auth::user()->update([
+            'socket' => $request->socket
+        ]);
+
+        return response()->json(true);
     }
 }

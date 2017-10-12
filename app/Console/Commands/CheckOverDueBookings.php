@@ -53,7 +53,7 @@ class CheckOverDueBookings extends Command
                 'old_status' => 4,
                 'vehicle_id' => $booking->vehicle->id,
                 'image' => $booking->vehicle->images->first(),
-                'title' => 'Booking compeleted successfuly.',
+                'title' => 'Booking ended successfuly.',
                 'user' => $booking->vehicle->owner->user->name,
                 'credit_card' => $booking->account?$booking->account->last_numbers:'',
                 'vehicle' => $booking->vehicle->vehicle_name,

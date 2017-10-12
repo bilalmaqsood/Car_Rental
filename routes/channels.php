@@ -22,3 +22,6 @@ Broadcast::channel('chatroom', function ($user) {
 Broadcast::channel('booking.{id}', function ($user, $id) {
     return $user;
 });
+Broadcast::channel('user-{id}', function ($user, $id) {
+    return (int)$user->id === (int)$id ? $user : null;
+});

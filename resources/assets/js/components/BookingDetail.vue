@@ -130,7 +130,7 @@
                                     Approve {{booking.status | bookingStatus}}
                                 </a>
                             </li>
-                            <li v-else-if="[4,6,8].includes(booking.status)">
+                            <li v-else-if="[4,5,7].includes(booking.status)">
                                 <a @click="cancleBooking" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>

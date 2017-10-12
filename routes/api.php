@@ -41,12 +41,28 @@ Route::post('/promo-code/verify', 'PromoCodeController@verify');
 
 Route::group(['middleware' => 'auth:api'], function () {
 
+    /***
+     * Chat message routes
+     *
+     **/
+
     Route::get('message', 'MessageController@allMessages');
     Route::get('message/{id}', 'MessageController@getMessages');
     Route::post('message/read', 'MessageController@markRead');
     Route::post('message/send', 'MessageController@sendMessage');
     Route::get('message/{user_id}/get', 'MessageController@getUserMessages');
+    Route::get('/user/messages/{user_id}', 'MessageController@getUserMessages');
     Route::get('message/{user_id}/recent', 'MessageController@getNewMessages');
+    Route::get('message/booking/{booking_id}/recent', 'MessageController@getBookingNewMessages');
+    Route::post('message/socket', 'MessageController@setSocket');
+
+    Route::get('/user/online/{id}', function ($id) {
+        return \Qwikkar\Models\Socket::all()->filter(function ($socket) use ($id) {
+            return $socket->value->first()['user_id'] == $id;
+        })->count() == 1 ? 'success' : 'danger';
+    });
+
+
 
     Route::patch('faq/{id}', 'FaqController@update');
 
@@ -128,6 +144,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('contract/{id}/pdf', function ($id) {
         return PDF::loadView('pdf.contract', ['id' => $id, 'sign' => '', 'name' => 'oknasir'])->download("contract-{$id}.pdf");
     })->middleware('not-admin');
+
 
     Route::post('contract/{id}/sign', function ($id, Request $request) {
         return PDF::loadView('pdf.contract', [
