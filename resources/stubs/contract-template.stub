@@ -40,19 +40,19 @@
 
         <tr>
           <td colspan="2">
-            <p style="margin: 0; font-size: 14px;">Driving license number<b>{{$driving}}</b></p>
+            <p style="margin: 0; font-size: 14px;">Driving license number <b> {{$driving}}</b></p>
           </td>
           <td colspan="2" style="text-align: right;">
-            <p style="margin: 0; font-size: 14px;">Expiration date<b>{{$driving_expire_date}}</b></p>
+            <p style="margin: 0; font-size: 14px;">Expiration date <b> {{$driving_expire_date}}</b></p>
           </td>
         </tr>
 
         <tr>
           <td colspan="2">
-            <p style="margin: 0; font-size: 14px;">PCO license number<b>{{$pco_number}}</b></p>
+            <p style="margin: 0; font-size: 14px;">PCO license number <b> {{$pco_number}}</b></p>
           </td>
           <td colspan="2" style="text-align: right;">
-            <p style="margin: 0; font-size: 14px;">Expiration date<b>{{$pco_expiry_date}}</b></p>
+            <p style="margin: 0; font-size: 14px;">Expiration date <b> {{$pco_expiry_date}}</b></p>
           </td>
         </tr>
 
