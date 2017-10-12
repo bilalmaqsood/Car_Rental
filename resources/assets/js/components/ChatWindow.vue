@@ -117,7 +117,7 @@
             loadMoreMessages() {
                 this.spinner = true;
 
-                axios.get('/api/message/' + this.chat.user.id + (this.currentPage !== null ? '?page=' + (this.currentPage + 1) : '')).then(r => {
+                axios.get('/api/user/messages/' + this.chat.user.id + (this.currentPage !== null ? '?page=' + (this.currentPage + 1) : '')).then(r => {
                     let messages = [];
 
                     if (this.currentPage === null) {

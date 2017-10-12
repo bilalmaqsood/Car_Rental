@@ -265,7 +265,7 @@ trait BookingOperations
         $data["driving_expire_date"] = !empty($data['driving_expire_date'])?format_date($data['driving_expire_date']):'';
 
         $data["insurance_expiry_date"] = !empty($data['insurance_expiry_date'])?format_date($data['insurance_expiry_date']):'';
-        
+
         $data["deposit_paid_date"] = !empty($data['deposit_paid_date'])?format_date($data['deposit_paid_date']):'';
 
 
@@ -640,6 +640,7 @@ trait BookingOperations
              $data['vehicle_registration_number'] =  $booking->vehicle->registration_number;
              $data['vehicle_model'] =  $booking->vehicle->model;
              $data['client_name'] =  $booking->user->name;
+             $data['client_address'] =  $booking->user->client->postcode;
              $data['driving'] =  $booking->user->client->driving;
              $data['pco_number'] =  $booking->user->client->pco_number;
              $data['pco_expiry_date'] =  $booking->user->client->pco_expiry_date;

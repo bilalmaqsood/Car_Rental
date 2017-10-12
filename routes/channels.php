@@ -23,5 +23,7 @@ Broadcast::channel('booking.{id}', function ($user, $id) {
     return $user;
 });
 Broadcast::channel('user-{id}', function ($user, $id) {
+	logger(">>>>>>".$user);
+	logger(">>>>>>".$id);
     return (int)$user->id === (int)$id ? $user : null;
 });

@@ -245,7 +245,7 @@
                     <img src="/images/front.png" alt="" style="margin: 0px;">
                 </div>
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && booking.status<4) || ammending">
+                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && [3,6,9,10].includes(booking.status)) || ammending">
 
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
@@ -345,7 +345,7 @@
                 </div>
                 <div class="front_back_size" >
 
-                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && booking.status<4) || ammending">
+                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && [3,6,9,10].includes(booking.status)) || ammending">
                     
 <div class="input-group login-input">
 
@@ -443,7 +443,7 @@
                     <img src="/images/driver_side.png" alt="">
                 </div>
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && booking.status<4) || ammending">
+                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && [3,6,9,10].includes(booking.status)) || ammending">
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
                         <div class="input-group-addon">
@@ -537,7 +537,7 @@
                     <img src="/images/off_side.png" alt="">
                 </div>
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && booking.status<4) || ammending">
+                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && [3,6,9,10].includes(booking.status)) || ammending">
                         <div class="input-group login-input">
                                 <input type="text" class="form-control" placeholder="add description" v-model="description">
                                     <div class="input-group-addon">
@@ -629,7 +629,7 @@
 
                 
                 <div class="front_back_size">
-                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && booking.status<4) || ammending">
+                    <div class="add_description_icon" v-if="(User.state.auth.type=='owner' && [3,6,9,10].includes(booking.status)) || ammending">
 <div class="input-group login-input">
                         <input type="text" placeholder="add description" v-model="description" class="form-control">
                         <div class="input-group-addon">
