@@ -122,7 +122,7 @@
                                     sign contract
                                 </a>
                             </li>
-                            <li v-else-if="[5,7].includes(booking.status)">
+                            <li v-else-if="[0,5,7].includes(booking.status)">
                                 <a @click="approveBooking" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
@@ -297,7 +297,7 @@
             approveBooking() {
                 var params = {};
 
-                if ([2,3].includes(this.booking.status)) {
+                if (this.booking.status==0) {
                     
                       axios.get('api/booking/'+this.booking.id+'/inspection').then(r=>{
                         if(!r.data.success.length){
@@ -308,8 +308,8 @@
                             this.loadSideView("inspection");
                             return false;
                          } else{
-                          params.status = 4;
-                          params.note = 'booking approved after signatures.';
+                          params.status = 1;
+                          params.note = 'Booking request is accepted.';
                           this.updateStatus(params);
                       }
                     });  
