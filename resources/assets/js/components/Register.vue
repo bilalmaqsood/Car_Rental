@@ -112,7 +112,15 @@
                             <span class="input-group-addon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon"> <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use> </svg>
                             </span>
-                            <input type="text" class="form-control certificate-expiration" placeholder="PCO certificate expiration date" @blur="updateCertificateExpiration">
+                                <flat-pickr
+                                    v-model="driver_info.pco_expiry_date"
+                                    placeholder="PCO certificate expiration date"
+                                    :config="config"
+                                    :required="true"
+                                    input-class="form-control"
+                                    name="pco_expiry_date">
+                                </flat-pickr>
+                            <!-- <input type="text" class="form-control certificate-expiration" placeholder="PCO certificate expiration date" @blur="updateCertificateExpiration"> -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -157,12 +165,22 @@
 
 <script>
     import User from '../user';
+    import flatPickr from 'vue-flatpickr-component';
+    import 'flatpickr/dist/flatpickr.css';
     import {DateValidator, AlphaSpaceValidator} from '../validators';
     import {required, email, minLength, sameAs} from 'vuelidate/lib/validators';
 
     export default {
         data() {
             return {
+                date: new Date(),
+                // Get more form https://chmln.github.io/flatpickr/options/
+                config: {
+                    wrap: true, // set wrap to true when using 'input-group'
+                    altFormat: 'M   j, Y',
+                    altInput: true,
+                    dateFormat: "Y-m-d",
+                },
                 User,
                 step: 'type',
                 oldstep: '',
@@ -216,7 +234,9 @@
                 pco_expiry_date: {}
             }
         },
-
+        components: {
+            flatPickr
+        },
         mounted() {
             this.prepareComponent();
         },
@@ -308,7 +328,7 @@
                 let cleaned = {};
 
                 _.each(data, function (v, k) {
-                    if (v && (k === 'dob' || k === 'pco_expiry_date'))
+                    if (v && (k === 'dob'))
                         v = moment.utc(v, 'MM/DD/YYYY', true).format('YYYY-MM-DD');
                     if (v)
                         cleaned[k] = v;
