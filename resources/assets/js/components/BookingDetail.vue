@@ -298,21 +298,9 @@
                 var params = {};
 
                 if (this.booking.status==0) {
-                    
-                      axios.get('api/booking/'+this.booking.id+'/inspection').then(r=>{
-                        if(!r.data.success.length){
-                            new Noty({
-                                type: 'warning',
-                                text: 'Add inspection before accepting booking!'
-                            }).show();
-                            this.loadSideView("inspection");
-                            return false;
-                         } else{
-                          params.status = 1;
+                      params.status = 1;
                           params.note = 'Booking request is accepted.';
-                          this.updateStatus(params);
-                      }
-                    });  
+                          this.updateStatus(params); 
                     
                 } else if (this.booking.status===5) {
                     this.approve_action(this.booking.id);

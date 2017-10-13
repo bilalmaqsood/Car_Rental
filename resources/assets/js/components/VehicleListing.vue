@@ -51,7 +51,7 @@
     
     </div>
     <transition name="slide-fade" mode="in-out">
-        <vehicle-input-form :vehicle="null" :isEdit="false" v-if="addVehicle"></vehicle-input-form>
+        <vehicle-input-form class="add_new_vehicles_1" :vehicle="null" :isEdit="false" v-if="addVehicle"></vehicle-input-form>
     </transition>
 </div>
 </template>
