@@ -1,11 +1,12 @@
 <template>
     <div>
         
-        <div class="booking-request-actions notification-shadow">
+        <transition name="slide-fade" mode="out-in">
+        <div class="booking-request-actions notification-shadow" v-if="!rate">
             <div class="inlane-btn-wrap inlane-btn-wrap-btn2 inlane-btn-wrap-btn2-oct12">
                 <ul class="two-btn-inlane">
                     <li>
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)" @click="doRating">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
                             rate driver
                         </a>
@@ -25,6 +26,9 @@
             </div>
         </div>
 
+        </transition>
+        <transition name="slide-fade" mode="out-in">
+        <div v-if="rate">
         <div class="booking-request-actions notification-shadow">
             <div class="inlane-btn-wrap inlane-btn-wrap-btn2 inlane-btn-wrap-btn1-oct12">
                 <ul class="two-btn-inlane">
@@ -38,35 +42,19 @@
             </div>
             <div class="btn-inlane-content btn-inlane-content-btn2 driver-profile-text-ratting noty_successfull">
                 <div class="driver-profile-text">
-                    <p>rate driveryour rating</p>
+                    <p>Your rating</p>
                     <div class="ratting"></div>
                 </div>
             </div>
         </div>
         <div class="processrating-input-oct12">
             <div class="form-group">
-                <input type="text" :placeholder="user.state.auth.type=='owner'?'Tell us a bit about the driver':'Tell us a bit about the owner'" class="form-control" v-model="note">
+                <input type="text" :placeholder="user.state.auth.type=='owner'?'Tell us a bit about the driver':'Tell us a bit about the owner'" class="form-control" v-model="note" required>
             </div>
             <button class="add-new-vehile-btn" @click="processRating">Done</button>
         </div>
-    
-<!--     <div class="booking-request-actions notification-shadow">
-        <div class="btn-inlane-content noty_successfull">
-            <div class="driver-profile-text">
-                <h3>{{notification.data.title}}</h3>
-
-                <p>Your rating</p>
-                
-                <div class="ratting"></div>
-                <div class="form-group">
-                    <input type="text" :placeholder="user.state.auth.type=='owner'?'Tell us a bit about the driver':'Tell us a bit about the owner'" class="form-control" v-model="note">
-                </div>
-            <button class="add-new-vehile-btn" @click="processRating">Done</button>
-            </div>
         </div>
-    </div> -->
-
-
+    </transition>
 </div>
 </template>
 
@@ -80,6 +68,7 @@
                 user: User,
                 note: '',
                 rating: '',
+                rate: false,
             };
         },
 
@@ -115,7 +104,17 @@
                 this.$parent.$emit("contract",this.notification);
 
             },
+            doRating(){
+                this.rate = ! this.rate;
 
+                setTimeout(function() {
+                $('.ratting').starrr({
+                  change: function(e, value){
+                    $this.rating = value;
+                        }
+                }); 
+            }, 100);
+            },
             processRating(){
                 let $this = this;
                 let param ={rating: $this.rating, note: $this.note};

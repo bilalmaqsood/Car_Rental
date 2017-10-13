@@ -78,6 +78,7 @@ Route::get('/test/{id}', function ($id) {
             "title" => "Rate to ".$driver,
             'id' => $booking->id,
             "booking_id" => $booking->id,
+            'image' => $booking->vehicle->images->first(),
             "status" => 12,
             "old_status" => 12,
         ]))->delay(Carbon::now()->addMinute()));
@@ -86,6 +87,7 @@ Route::get('/test/{id}', function ($id) {
             "title" => "Rate to ".$owner,
             'id' => $booking->id,
             "booking_id" => $booking->id,
+            'image' => $booking->vehicle->images->first(),
             "status" => 12,
             "old_status" => 12,
         ]))->delay(Carbon::now()->addMinute()));

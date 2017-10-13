@@ -423,6 +423,11 @@ class BookingController extends Controller
     {
         $booking = Booking::findOrFail($id);
 
+        $this->validate($request,[
+            "rating" => "required|number",
+             "note" => "required"
+        ]);
+
         if ($this->validateBooking($booking, $request))
             return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
