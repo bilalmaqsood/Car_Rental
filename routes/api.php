@@ -83,8 +83,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('account', 'AccountController', ['except' => ['create', 'edit']]);
     Route::resource('vehicle', 'VehicleController', ['except' => ['create', 'edit']]);
     Route::get('vehicle/{id}/contract-template', 'ContractController@getContractTemplate');
-    Route::post('vehicle/{id}/contract-signature', 'ContractController@contractSignature');
     Route::post('vehicle/{id}/contract-template', 'ContractController@contractTemplate');
+    Route::post('vehicle/{id}/contract-signature', 'ContractController@contractSignature');
     Route::get('booking/{id}/contract', 'ContractController@contractBooking');
     Route::get('booking/{id}/contract-data', 'ContractController@contractData');
     Route::patch('booking/{id}/contract-data', 'ContractController@updateContractData');

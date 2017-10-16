@@ -41,6 +41,7 @@ class ContractController extends Controller
 
         if (!$vehicle) throw new ModelNotFoundException();
 
+        if(!$vehicle->contractTemplate)
         $vehicle->contractTemplate()->update([
                 'template' => File::get(resource_path('stubs/contract-template.stub'))
             ]);

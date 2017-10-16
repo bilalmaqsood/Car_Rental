@@ -15,6 +15,10 @@ require('./design');
 
 require('jq-signature');
 
+import VueHtml5Editor from 'vue-html5-editor';
+
+Vue.use(VueHtml5Editor);
+
 require('./FetchLocationName');
 
 /**

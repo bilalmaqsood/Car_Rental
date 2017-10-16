@@ -72,7 +72,7 @@
                 <li>Insurance arranged by <b>{{$business_name}}.</b> on behalf of the driver through <b>{{$insurance_company_name}}</b> - Insurance policy number: <b> {{$insurance_policy_number}} </b> valid until <b> {{$insurance_expiry_date}} </b></li>
                 <li>Insurance excess payable by the Driver: £ <b> {{$Insurance_excess_cost}} </b></li>
                 <li>The Driver must inform the Owner and bring the vehicle for the Service Check, if the Service Mileage is reached while this agreement is in effect.</li>
-                <li>The Driver must use the vehicle only on the territories covered by the insurance policy. However, if the Driver needs to use the verhicle outside the territory of England while this agreement is in effect, the Driver must inform the Owner in advance and obtain express consent (by e-mail) of the Owner permission accompanied by the written permission from the insurance company.</li>
+                <li>The Driver must use the vehicle only on the territories covered by the insurance policy. However, if the Driver needs to use the vehicle outside the territory of England while this agreement is in effect, the Driver must inform the Owner in advance and obtain express consent (by e-mail) of the Owner permission accompanied by the written permission from the insurance company.</li>
             </ol>
           </td>
         </tr>
@@ -86,7 +86,7 @@
         <tr>
           <td colspan="4">
             <ol style="padding: 0 0 0 15px; font-size: 14px;">
-                <li>Reclaim and/or reposess the vehicle immediately, if there is any breach or violation of any of the terms of this agreement.</li>
+                <li>Reclaim and/or repossess the vehicle immediately, if there is any breach or violation of any of the terms of this agreement.</li>
                 <li>Take any steps permitted by law to collect any monies owed to it and add any administration or legal costs incurred in doing so to the amounts outstanding.</li>
             </ol>
           </td>

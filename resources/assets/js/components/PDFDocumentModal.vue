@@ -224,26 +224,28 @@
   <div class="modal-dialog modal-lg">
      <div class="modal-content">
         <div class="modal-header">
-                    <button @click="closeModel" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+             <span class="pull-right">
+                    <svg v-if="!isEdit" @click="editContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
+                    </svg>
+
+                      <a :download="title" :href="path">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20" class="svg-icon">
+                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download_icon"></use>
+                       </svg>
+                       </a>
+                         <svg v-if="isEdit" @click="updateContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
+                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                         </svg>
+             </span>
+                    <!--<button @click="closeModel" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
                     <h4 class="modal-title"> {{title}} </h4>
                 </div>
                 <div class="modal-body">
 
-                    <span>
-                    <svg v-if="!isEdit" @click="editContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
-                    </svg>
-                      
-                      <a :download="title" :href="path">                 
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 20" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download_icon"></use>
-                       </svg>
-                       </a>
-                                <svg v-if="isEdit" @click="updateContract" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="clickable svg-icon">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
-                                        </svg>
-                                      </span>
-                            <textarea v-if="isEdit" class="contract-area" v-model="contractTemplate" ></textarea>
+
+                            <vue-html5-editor v-if="isEdit" :content="contractTemplate" :height="500" @change="updateData" ref="editor"></vue-html5-editor>
+                            <!--<textarea v-if="isEdit" class="contract-area" v-model="contractTemplate" ></textarea>-->
                             <div v-else>
                           <object v-if="type=='pdf'" type="application/pdf" style="height: 110vh;" width="100%" :data="path"></object>
                           <img v-else :src="path" class="img-responsive" alt="">
@@ -297,7 +299,9 @@
                 this.$emit("modelHiding");
                 
             },
-
+            updateData: function (data) {
+                this.contractTemplate = data;
+            },
            updateContract(){
             let $this = this;
               axios.post('/api/vehicle/'+this.booking.vehicle.id+'/contract-template',this.contractTemplate)
