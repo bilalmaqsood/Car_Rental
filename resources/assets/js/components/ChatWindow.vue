@@ -22,7 +22,7 @@
                         <img class="avatar" alt="" :src="'/'+(m.is_sender ? user.state.auth.avatar : chat.user.avatar)">
                         <div class="message">
                             <span class="arrow"></span>
-                            <span class="name" v-html="m.is_sender ? user.state.auth : chat.user.name"></span>
+                            <span class="name" v-html="m.is_sender ? storage.state.auth.name : chat.user.name"></span>
                             <span class="datetime">{{m.updated_at | date('fromNow')}}</span>
                             <span class="body" v-html="m.message"></span>
                         </div>
@@ -56,6 +56,7 @@
                 messages: null,
                 currentPage: null,
                 lastPage: null,
+                storage: User,
                 ids: [],
             };
         },
@@ -72,6 +73,7 @@
 
         mounted() {
             this.prepareComponent();
+
         },
 
         methods: {
@@ -167,10 +169,11 @@
                         message: this.message
                     }).then(r => {
                         this.message = '';
-                        delete r.data.receiver;
-                        delete r.data.sender;
-                        r.data.is_sender = true;
-                        this.messages.push(r.data);
+                        delete r.data.success.receiver;
+                        delete r.data.success.sender;
+                        r.data.success.is_sender = true;
+                        this.messages.push(r.data.success);
+
                     });
                 }
             },
