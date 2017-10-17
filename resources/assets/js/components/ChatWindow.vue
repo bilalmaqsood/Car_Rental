@@ -138,7 +138,7 @@
                                 this.messages.push(m);
                             }
                         });
-
+                    if(this.ids.length)
                     this.updateReadMessages();
 
                     if (this.currentPage === null)

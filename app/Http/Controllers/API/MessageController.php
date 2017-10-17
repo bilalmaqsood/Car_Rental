@@ -48,13 +48,13 @@ class MessageController extends Controller
             'ids' => 'required|array',
             'ids.*' => 'numeric',
         ]);
+//        dd($request->ids);
+        $message = $request->user()->messages()->whereIn('id', $request->ids)->update(["read"=>true]);
 
-        $message = $request->user()->messages()->whereIn('id', $request->ids)->get();
-
-        $message->each(function ($m) {
-            $m->read = true;
-            $m->save();
-        });
+//        $message->each(function ($m) {
+//            $m->read = true;
+//            $m->save();
+//        });
 
         return api_response(trans('messages.marked'));
     }
