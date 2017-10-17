@@ -54,6 +54,10 @@
                     User.state.chatUsers.filter(function (chat) {
                         if (chat.messages.length) {
                             check = true;
+                            new Noty({
+                                type: 'success',
+                                text: 'You have new Message'
+                            }).show();
                         }
                     });
 
