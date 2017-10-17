@@ -120,6 +120,7 @@
 
             updateMessagePosted(posted) {
                 console.log("message posted");
+                alert("posted");
                 posted.message.is_sender = false;
 
                 let index = null;
