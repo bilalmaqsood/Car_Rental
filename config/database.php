@@ -38,7 +38,11 @@ return [
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
         ],
-
+        'echo-server' => [
+            'driver' => 'sqlite',
+            'database' => env('ECHO_SERVER_DATABASE', database_path('laravel-echo-server.sqlite')),
+            'prefix' => '',
+        ],
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),

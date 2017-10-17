@@ -16,7 +16,7 @@
                             <transition-group name="list" tag="div">
                                 <a href="javascript:" :class="{ active: ( indexView !== null && indexView === i ) }" @click="loadChat(chat, i)" class="list-group-item" v-for="(chat, i) in storage.state.chatUsers" :key="chat.user.id">
                                     <span class="badge" v-if="chat.messages.length">{{ chat.messages.length }}</span>
-                                    {{ chat.user.first_name + ' ' + chat.user.last_name }}
+                                    {{ chat.user.name }}
                                 </a>
                             </transition-group>
                         </div>
@@ -77,18 +77,18 @@
                         .listen('MessagePosted', this.updateMessagePosted);
 
                     this.showChat = true;
-
+                    alert(window.Echo.socketId());
                     this.loadLatestChat();
                 });
             },
 
             loadLatestChat() {
-                axios.get('/api/messages').then((r) => {
+                axios.get('/api/message').then((r) => {
                     let newMessages = [];
-                    $.each(r.data, function (i, m) {
+                    $.each(r.data.success, function (i, m) {
                         let message = m;
 
-                        m.sender.image = m.sender.image.image;
+                        m.sender.avatar = m.sender.avatar;
                         let user = m.sender;
 
                         delete message.sender;
@@ -108,7 +108,6 @@
                         else
                             newMessages[index].messages.push(message);
                     });
-
                     newMessages.filter(function (chat) {
                         User.commit('addChatUser', chat);
                     });
@@ -120,6 +119,7 @@
             },
 
             updateMessagePosted(posted) {
+                console.log("message posted");
                 posted.message.is_sender = false;
 
                 let index = null;

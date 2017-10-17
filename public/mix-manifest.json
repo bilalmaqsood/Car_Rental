@@ -1,9 +1,9 @@
 {
-    "/js/qwikkar.js": "/js/qwikkar.js?id=b0e9844f7967b5b7d4ba",
-    "/css/qwikkar.css": "/css/qwikkar.css?id=503cb4a688c1ca7c6f75",
-    "/css/admin.css": "/css/admin.css?id=145c28a635a76d0d8a0e",
-    "/js/admin.js": "/js/admin.js?id=41af43a6df43a03846fe",
-    "/js/vendor.js": "/js/vendor.js?id=d9ebea01a7bfa99d3248",
-    "/js/manifest.js": "/js/manifest.js?id=24feb3f499f39e8a7202",
-    "/css/noty.css": "/css/noty.css?id=df73728759ccd33e7329"
+    "/js/qwikkar.js": "/js/qwikkar.js",
+    "/css/qwikkar.css": "/css/qwikkar.css",
+    "/css/admin.css": "/css/admin.css",
+    "/js/admin.js": "/js/admin.js",
+    "/js/vendor.js": "/js/vendor.js",
+    "/js/manifest.js": "/js/manifest.js",
+    "/css/noty.css": "/css/noty.css"
 }

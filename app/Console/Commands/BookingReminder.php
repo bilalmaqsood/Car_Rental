@@ -163,10 +163,12 @@ class BookingReminder extends Command
                 ]
                 ];
 
-
-                $booking->vehicle->owner->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
                 $booking->inspection_open = Carbon::now();
                 $booking->save();
+
+                $booking->vehicle->owner->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
+
+
             }
         });
 

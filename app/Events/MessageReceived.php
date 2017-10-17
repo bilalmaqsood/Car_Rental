@@ -24,18 +24,18 @@ class MessageReceived implements ShouldBroadcast
     public $message;
 
     /**
-     * Message sender user
+     * User
      *
-     * @var array
+     * @var User
      */
     public $sender;
 
     /**
-     * Channel to broadcast
+     * User
      *
-     * @var integer
+     * @var User
      */
-    protected $id;
+    public $receiver;
 
     /**
      * Create a new event instance.
@@ -44,11 +44,11 @@ class MessageReceived implements ShouldBroadcast
      * @param array $sender
      * @param integer $id
      */
-    public function __construct(Message $message, array $sender, $id)
+    public function __construct(Message $message, User $receiver, User $sender)
     {
-        $this->id = $id;
-        $this->sender = $sender;
+        $this->receiver = $receiver;
         $this->message = $message;
+        $this->sender = $sender;
     }
 
     /**
@@ -58,6 +58,6 @@ class MessageReceived implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('user-' . $this->id);
+        return new PresenceChannel('user-' . $this->receiver->id);
     }
 }

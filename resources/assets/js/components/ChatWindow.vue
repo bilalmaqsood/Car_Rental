@@ -19,10 +19,10 @@
                 </transition>
                 <transition-group name="list" tag="div">
                     <div class="post" :class="m.is_sender ? 'out' : 'in'" v-for="m in messages" :key="m.id">
-                        <img class="avatar" alt="" :src="'/'+(m.is_sender ? user.state.auth.image : chat.user.image)">
+                        <img class="avatar" alt="" :src="'/'+(m.is_sender ? user.state.auth.avatar : chat.user.avatar)">
                         <div class="message">
                             <span class="arrow"></span>
-                            <span class="name" v-html="m.is_sender ? getName(user.state.auth) : getName(chat.user)"></span>
+                            <span class="name" v-html="m.is_sender ? user.state.auth : chat.user.name"></span>
                             <span class="datetime">{{m.updated_at | date('fromNow')}}</span>
                             <span class="body" v-html="m.message"></span>
                         </div>
@@ -80,10 +80,11 @@
 
                 if (this.chat.messages.length) {
                     this.chat.messages.filter((m) => {
-                        this.ids.push(m.id);
+                        if(!m.read)
+                            this.ids.push(m.id);
                         messages.push(m);
                     });
-
+                    console.log(this.ids);
                     User.commit('cleanChatMessage', this.index);
                 }
 
@@ -121,14 +122,16 @@
                     let messages = [];
 
                     if (this.currentPage === null) {
-                        this.ids = [];
-                        $.each(r.data.data, (i, m) => {
+//                        this.ids = [];
+                        $.each(r.data.success.data, (i, m) => {
                             messages.push(m);
+                            if(!m.read)
                             this.ids.push(m.id);
                         });
                     } else
-                        $.each(r.data.data, (i, m) => {
+                        $.each(r.data.success.data, (i, m) => {
                             if (this.ids.indexOf(m.id) === -1) {
+                                if(!m.read)
                                 this.ids.push(m.id);
                                 this.messages.push(m);
                             }
@@ -146,8 +149,8 @@
                         });
 
                     this.spinner = false;
-                    this.currentPage = r.data.current_page;
-                    this.lastPage = r.data.last_page;
+                    this.currentPage = r.data.success.current_page;
+                    this.lastPage = r.data.success.last_page;
                 });
             },
 

@@ -4794,3 +4794,12 @@ background: #fff;
 .add_new_vehicles_1{
     width: 50%;
 }
+.chat-window {
+    float: left;
+    position: fixed;
+    right: 0%;
+    bottom: 0px;
+    z-index: 99999999999;
+    display: block;
+    width: 25%;
+}
