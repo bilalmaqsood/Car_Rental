@@ -4,17 +4,19 @@
             <ul class="two-btn-inlane">
 
                  <li>
-                    <a  href="javascript:void(0)"  >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                    <a  href="javascript:void(0)"  @click="inspectionEvent">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                         </svg>
                         view inspection 
                     </a>
                 </li>
                 <li>
-                    <a  href="javascript:void(0)" >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use></svg>
-                        decline
+                    <a href="javascript:void(0)" @click="chatEvent">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
+                        </svg>
+                        chat
                     </a>
                 </li>
             </ul>
@@ -68,7 +70,12 @@
                 this.$parent.$emit("contract",this.notification);
 
             },
-
+            chatEvent(){
+                this.$parent.$emit("chat",this.notification);
+            },
+            inspectionEvent(){
+                this.$parent.$emit("inspection",this.notification);
+            },
         }
     }
 </script>

@@ -100,6 +100,12 @@
             <driver-profile v-if="driver_info" :booking_id="driver_info"></driver-profile>
         </transition>
 
+        <transition name="slide-fade" mode="in-out">
+            <car-inspection v-if="menuView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
+        </transition>
+
+
+
     </div>
 </template>
 
@@ -140,6 +146,13 @@
 
             this.$on("decline",(noti)=>{
                 this.cancle_action(noti);
+            });
+
+            this.$on("inspection",(noti)=>{
+                if(this.menuView == "inspection"){
+                    this.menuView = ""; return false;
+                }
+                this.showInspection(noti);
             });
 
             this.$on("contract",(noti)=>{
@@ -450,6 +463,19 @@
                 }, 500);
 
                 this.addUserChat(user);
+            },
+            showInspection(notification){
+                $('#sideLoader').show();
+                this.booking=null;
+                axios.get('/api/booking/' + notification.data.id)
+                    .then((r) => {
+                        $('#sideLoader').hide();
+                        this.booking = r.data.success;
+                        this.menuView = "inspection";
+                        setTimeout(function() {
+                            $(".menu-component-container").animate({scrollTop: 0});
+                        }, 500);
+                    });
             }
         },
     }
