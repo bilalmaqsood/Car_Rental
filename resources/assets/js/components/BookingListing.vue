@@ -75,7 +75,7 @@
                  });
 
                  this.$on("changeView",(view)=>{
-                        this.sideView==view;
+                        this.sideView=view;
                  });
 
              },

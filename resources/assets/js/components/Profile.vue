@@ -148,7 +148,7 @@
                 this.cancle_action(noti);
             });
             this.$on("changeView",(view)=>{
-                this.menuView==view;
+                this.menuView=view;
             });
             this.$on("inspection",(noti)=>{
                 if(this.menuView == "inspection"){
