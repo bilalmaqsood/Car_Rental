@@ -79,13 +79,8 @@
         },
 
         mounted() {
-            let $this = this;
 
-          $('.ratting').starrr({
-                  change: function(e, value){
-                    $this.rating = value;
-                        }
-                });  
+
         },
 
         methods: {
@@ -105,15 +100,16 @@
 
             },
             doRating(){
+                let $this= this;
                 this.rate = ! this.rate;
-
                 setTimeout(function() {
-                $('.ratting').starrr({
-                  change: function(e, value){
-                    $this.rating = value;
-                        }
-                }); 
-            }, 100);
+                    $('.ratting').starrr({
+                        max: 5,
+                      change: function(e, value){
+                        $this.rating = value;
+                            }
+                    });
+                }, 100);
             },
             processRating(){
                 let $this = this;

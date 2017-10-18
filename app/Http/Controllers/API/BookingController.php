@@ -424,7 +424,7 @@ class BookingController extends Controller
         $booking = Booking::findOrFail($id);
 
         $this->validate($request,[
-            "rating" => "required|number",
+            "rating" => "required|numeric",
              "note" => "required"
         ]);
 

@@ -81,7 +81,6 @@
                         .listen('MessageReceived', this.updateMessagePosted);
 
                     this.showChat = true;
-                    alert(window.Echo.socketId());
                     this.loadLatestChat();
                 });
             },
@@ -123,8 +122,6 @@
             },
 
             updateMessagePosted(posted) {
-                console.log("message posted");
-                alert("posted");
                 posted.message.is_sender = false;
 
                 let index = null;
