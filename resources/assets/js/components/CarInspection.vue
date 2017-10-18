@@ -965,6 +965,7 @@
                  axios.post('/api/booking/'+this.booking.id+'/confirm-inspection',{inspection_code: code})
                  .then(r=>{
                     this.hideLoader(500);
+                    this.$emit("changeView","");
                     new Noty({
                                     type: 'success',
                                     text: r.data.success,

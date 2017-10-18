@@ -72,8 +72,12 @@
          created: function(){
                  this.$on("lastinspection",()=>{
                         this.sideView=='last_inspection'?this.sideView="":this.sideView='last_inspection';
-                     // this.sideView = 'last_inspection';   
                  });
+
+                 this.$on("changeView",(view)=>{
+                        this.sideView==view;
+                 });
+
              },
         computed: {
             documents() {
