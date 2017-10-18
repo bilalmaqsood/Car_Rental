@@ -101,7 +101,7 @@
         </transition>
 
         <transition name="slide-fade" mode="in-out">
-            <car-inspection v-if="menuView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
+            <car-inspection class="left-window" v-if="menuView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
         </transition>
 
 

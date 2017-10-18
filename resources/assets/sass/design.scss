@@ -4803,3 +4803,10 @@ background: #fff;
     display: block;
     width: 25%;
 }
+.left-window {
+    float: left;
+    width: 50%;
+    background: #fff;
+    -webkit-box-shadow: 2px 0 4px #505050;
+    box-shadow: 2px 0 4px #505050;
+}
