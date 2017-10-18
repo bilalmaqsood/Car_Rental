@@ -7,7 +7,7 @@
             <p><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </p>
             <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</p>
             You can now check and sign the contract and set your Direct Debit. A
-            deposit of <b>{{notification.data.amount | currency}}</b> have been taken from your card ending in <b>{{notification.data.card_ending}}</b></p>
+            deposit of <b>{{notification.data.deposit | currency}}</b> have been taken from your card ending in <b>{{notification.data.card_ending}}</b></p>
         </div>
     </div>
 </div>

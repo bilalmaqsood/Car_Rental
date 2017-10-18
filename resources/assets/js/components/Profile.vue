@@ -89,7 +89,11 @@
         </div>
 
         <transition name="slide-fade" mode="in-out">
-            <sign-contract class="contract-on-profile" v-if="booking" :booking="booking" @closeContract="cleanViewContract"></sign-contract>
+            <sign-contract class="contract-on-profile" v-if="menuView=='contract'" :booking="booking" @closeContract="cleanViewContract"></sign-contract>
+        </transition>
+
+        <transition name="slide-fade" mode="in-out">
+            <chat-window v-if="menuView=='chat'" ref="chatWindowRef" :chat="chatView" :index="indexView" :utility="true" @closeChat="resetChat"></chat-window>
         </transition>
 
         <transition name="slide-fade" mode="in-out">
@@ -116,6 +120,9 @@
                 notify: null,
                 rating: null,
                 note: null,
+                chatView: null,
+                indexView: null,
+                menuView: "",
             };
         },
         created: function(){
@@ -136,11 +143,20 @@
             });
 
             this.$on("contract",(noti)=>{
+                if(this.menuView == "contract"){
+                    this.menuView = ""; return false;
+                }
                 this.viewContract(noti);
             });
 
             this.$on("chat",(noti)=>{
-                this.viewContract(noti);
+                if(this.menuView == "chat"){
+                    this.menuView = ""; return false;
+                }
+                axios.get('/api/vehicle/'+noti.data.vehicle_id).then(r=>{
+                    User.commit('addChatUser', {user: r.data.success.owner.user, messages: []});
+                    this.openChat(r.data.success.owner.user);
+                });
             });
             this.$on("markread",(noti)=>{
                 this.markRead(noti);
@@ -346,6 +362,7 @@
                     .then((r) => {
                         $('#sideLoader').hide();
                         this.booking = r.data.success;
+                        this.menuView = "contract";
                         setTimeout(function() {
                            $(".menu-component-container").animate({scrollTop: 0});
                         }, 500);
@@ -380,6 +397,53 @@
                 else if([12,0].includes(notif.data.status))
                     return "noty_info";
 
+            }
+            ,
+            resetChat() {
+                this.indexView = null;
+                setTimeout(() => {
+                    this.chatView = null;
+                }, 300);
+            },
+            loadChat(chat, index) {
+                if (this.indexView === index)
+                    this.resetChat();
+                else {
+                    this.indexView = null;
+                    setTimeout(() => {
+                        this.chatView = chat;
+                        this.indexView = index;
+                        this.menu = true;
+                    }, 300);
+                }
+            },
+
+            addUserChat(user) {
+                let index = -1;
+                $.each(User.state.chatUsers, function (k, v) {
+                    if (v.user.id === user.id) index = k;
+                });
+                if (index === -1)
+                    axios.get('/api/user/' + user.id).then(r => {
+                        User.commit('addChatUser', {user: r.data.success, messages: []});
+                        this.menu = true;
+                        let index = User.state.chatUsers.length - 1;
+                        this.loadChat(User.state.chatUsers[index], index);
+                    });
+                else if (this.indexView === null || this.indexView !== index) this.loadChat(User.state.chatUsers[index], index);
+                else new Noty({
+                        type: 'warning',
+                        text: '<div><p class="m-0">You already chatting with <b>' + user.name + '</b>.</p></div>',
+                        timeout: 800
+                    }).show();
+            },
+
+            openChat(user){
+                setTimeout(() => {
+                        this.menuView = "chat";
+                }, 500);
+
+                this.addUserChat(user);
             }
         },
     }
