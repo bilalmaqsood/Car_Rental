@@ -23,7 +23,7 @@ trait Balanceable
         $this->notify(new CreditCardNotify([
             'id' => $creditCard->id,
             'type' => 'Payment',
-            'title' => 'Payment made',
+            'title' => 'Deposit amount deducted',
             'card_ending' => $creditCard->last_numbers,
             'amount' => $amount,
              'status' => 101,
