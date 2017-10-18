@@ -161,7 +161,7 @@
                 else
                     axios.get('/api/booking/'+noti.data.id).then(r=>{
                         User.commit('addChatUser', {user: r.data.success.user, messages: []});
-                        this.openChat(r.data.success.owner.user);
+                        this.openChat(r.data.success.user);
                     });
             });
             this.$on("markread",(noti)=>{
