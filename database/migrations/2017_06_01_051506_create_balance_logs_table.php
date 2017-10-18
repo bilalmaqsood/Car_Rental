@@ -21,6 +21,9 @@ class CreateBalanceLogsTable extends Migration
             $table->morphs('loggable');
 
             $table->decimal('amount');
+
+            $table->integer("booking_id")->nullable();
+
             $table->text('comment')->nullable();
 
             $table->text('payment_response')->nullable();

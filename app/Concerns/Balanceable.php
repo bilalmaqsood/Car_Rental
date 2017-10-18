@@ -14,7 +14,7 @@ trait Balanceable
      *
      * @param $amount
      */
-    public function addBalance($amount)
+    public function addBalance($amount,$booking_id)
     {
         $creditCard = $this->creditCard()->where('default', 1)->first();
 
@@ -31,6 +31,7 @@ trait Balanceable
 
         $balanceLog = new BalanceLog([
             'amount' => $amount,
+            'booking_id' => $booking_id,
             'payment_response' => \GuzzleHttp\json_encode($pay_rsp),
             'comment' => 'add payment from card',
         ]);

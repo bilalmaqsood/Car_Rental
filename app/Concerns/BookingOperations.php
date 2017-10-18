@@ -127,7 +127,7 @@ trait BookingOperations
     protected function deductDeposit(Booking $booking, User $user)
     {
         if ($user->current_balance < $booking->deposit)
-            $account = $this->makePaymentFromCard($user, $booking->deposit);
+            $account = $this->makePaymentFromCard($user, $booking);
         else
             $account = $user->creditCard()->where('default', 1)->first();
 
@@ -392,14 +392,14 @@ trait BookingOperations
      * @param User $user
      * @param float $amount
      */
-    protected function makePaymentFromCard(User $user, $amount)
+    protected function makePaymentFromCard(User $user, $booking)
     {
         if (!$user->balance) {
             $user->balance()->create(['current' => 0]);
             $user->load('balance');
         }
 
-        return $user->addBalance($amount);
+        return $user->addBalance($booking->deposit,$booking->id);
     }
 
     /**

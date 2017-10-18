@@ -226,6 +226,14 @@ class Booking extends Model
        return  $this->hasMany(BookingContract::class);
     }
 
+    /**
+     * Get the contract template data on the booking
+     *
+     */
+
+    public function balanceLogs(){
+        return $this->hasMany(BalanceLog::class);
+    }
 
     /**
      * Get all of the booking  for the datatable listing.

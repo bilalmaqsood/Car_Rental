@@ -62,7 +62,7 @@ class DeductWeeklyPayment extends Command
                 
                 $user = $booking->user;
 
-                $result = $user->addBalance($payment->cost,$account);
+                $result = $user->addBalance($payment->cost,$booking->id);
 
                 if($result)
                     $this->updateBalancedue($payment,$booking);

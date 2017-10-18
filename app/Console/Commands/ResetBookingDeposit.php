@@ -45,7 +45,7 @@ class ResetBookingDeposit extends Command
                     'comment' => 'Deposit returned from booking after completion.',
                 ]);
 
-                   $sriptResponse = json_decode($booking->user->balanceLogs()->first()->payment_response);
+                   $sriptResponse = json_decode($booking->balanceLogs()->first()->payment_response);
 
                 $balanceLog->balance()->associate($booking->user->balance);
 
