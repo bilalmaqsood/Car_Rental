@@ -219,7 +219,7 @@ class MessageController extends Controller
      */
     public function getBookingNewMessages($id)
     {
-        $messages = Booking::findOrFail($id)->messages()->where('read',0)->orderBy('updated_at', 'desc');
+        $messages = Booking::findOrFail($id)->messages()->where("receiver_id",request()->user()->id)->where('read',0)->orderBy('updated_at', 'desc');
 
         $data = $messages->with('receiver', 'sender')->get();
 
