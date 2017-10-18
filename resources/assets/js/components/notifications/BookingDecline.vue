@@ -5,10 +5,11 @@
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_danger">
             <div class="driver-profile-text">
-                <h3>{{notification.data.title}}</h3>
-                <p>{{ notification.data.vehicle }}</p>
+                <h3>Early termination request approved</h3>
+                <p>Your request for the contract for <b>{{ notification.data.vehicle }}</b> extend until <b>{{notification.data.requested_data.end_date | date('format', 'DD.MM.YYYY') }}</b> has been approved.</p>
                 <p><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </p>
                 <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</p>
+                <p>please return vehicle on <b>{{notification.data.requested_data.end_date | date('format', 'DD.MM.YYYY') }}</b></p>
             </div>
         </div>
     </div>
