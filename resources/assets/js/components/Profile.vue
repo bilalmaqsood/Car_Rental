@@ -248,13 +248,6 @@
 
 
             },
-
-
-
-            propExist(obj, prop) {
-                return obj.hasOwnProperty(prop);
-            },
-
             date_format(date) {
                 return moment.utc(date.date).format("D.M.Y");
             },
@@ -266,7 +259,7 @@
                     axios.get('/api/booking/' + notification.data.id + '/logs')
                         .then(this.approveRequest)
                         .then(()=>{
-                            if([0].includes(notification.data.status))
+                            if([0,5,7].includes(notification.data.status))
                             setTimeout(()=>{
                              this.markRead(notification);
                          }, 2000);
@@ -286,7 +279,7 @@
                     axios.get('/api/booking/' + notification.data.id + '/logs')
                         .then(this.cancelRequest)
                         .then(()=>{
-                            if([0].includes(notification.data.status))
+                            if([0,5,7].includes(notification.data.status))
                            setTimeout(()=>{ this.markRead(notification); }, 2000);
 
                         });
