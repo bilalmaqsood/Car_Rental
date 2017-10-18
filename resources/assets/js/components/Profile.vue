@@ -153,10 +153,16 @@
                 if(this.menuView == "chat"){
                     this.menuView = ""; return false;
                 }
+                if(User.state.auth.type=='client')
                 axios.get('/api/vehicle/'+noti.data.vehicle_id).then(r=>{
                     User.commit('addChatUser', {user: r.data.success.owner.user, messages: []});
                     this.openChat(r.data.success.owner.user);
                 });
+                else
+                    axios.get('/api/booking/'+noti.data.id).then(r=>{
+                        User.commit('addChatUser', {user: r.data.success.user, messages: []});
+                        this.openChat(r.data.success.owner.user);
+                    });
             });
             this.$on("markread",(noti)=>{
                 this.markRead(noti);
