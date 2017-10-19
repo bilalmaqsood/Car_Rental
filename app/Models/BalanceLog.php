@@ -14,7 +14,8 @@ class BalanceLog extends Model
     protected $fillable = [
         'amount',
         'comment',
-        'payment_response'
+        'payment_response',
+        'booking_id'
     ];
 
     /**
