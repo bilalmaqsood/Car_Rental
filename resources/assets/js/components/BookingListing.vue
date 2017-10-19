@@ -39,6 +39,7 @@
                 <sign-contract v-if="sideView=='sign' || storage.state.menuView=='sign'" key="sign-contract" @closeContract="clearSideView" :booking="booking"></sign-contract>
                 <car-inspection v-if="sideView=='return_inspection' || sideView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
                 <extend-cancel-booking v-if="sideView=='extend'" key="booking-extend" :user="storage" @clearSideView="clearSideView"></extend-cancel-booking>
+                <!--<extend-cancel-booking-copy v-if="sideView=='extend'" class="fullwidth-flatpickr" key="booking-extend" :user="storage" @clearSideView="clearSideView"></extend-cancel-booking-copy>-->
                 <booking-documents v-if="sideView=='documents'" key="booking-documents" :documents="documents"></booking-documents>
                 <chat-booking v-if="sideView=='chat'" key="booking-chat" :viewHeight="viewHeight" :user="storage" :bookingId="inProcess.id"></chat-booking>
                 </transition>

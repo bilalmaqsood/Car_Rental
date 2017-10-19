@@ -73,7 +73,8 @@ Vue.component('chat-window', require('./components/ChatWindow.vue'));
 
 Vue.component('vehicle-input-form-copy', require('./components/VehiclesInputFormCopy.vue'));
 
-
+Vue.component('extend-cancel-booking-copy', require('./components/ExtendCancelCopy.vue'));
+Vue.component('early-cancel-booking-copy', require('./components/EarlyCancelationCopy.vue'));
 
 /**
  * seprate components for notifications
