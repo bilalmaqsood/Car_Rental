@@ -110,3 +110,10 @@ try {
 String.prototype.toCapitalizeCase = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 };
+
+moment.fn.fromNow = function (a) {
+    if (Math.abs(moment().diff(this)) < 43200000) { // 1000 milliseconds
+        return 'just now';
+    }
+    return this.fromNow(a);
+}
