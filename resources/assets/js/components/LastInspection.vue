@@ -24,7 +24,7 @@
             <div id="car_front" class="tab-pane fade in active" v-if="menuView=='front'">
                 <div class="dummy_car carcondition-img" id="front">
 
-                     <div  data-toggle="tooltip" :title="inspection.is_return==1?'Return inspection.':'Handover inspection'" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="last-point" :class="{ mydraggable: true}">
+                     <div  data-toggle="tooltip" title="Last Inspection" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="last-point" :class="{ mydraggable: true}">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -76,13 +76,13 @@
 
                             <div class="car_inspection_oct12_img">
                                 <img class="img-responsive" :src="spot_image" />
-                            </div> 
+                            </div>
                 </div>
             </div>
 
             <div id="car_rear" class="tab-pane fade in active" v-if="menuView=='rear'">
                 <div class="dummy_car carcondition-img" id="rear">
-                    <div  data-toggle="tooltip" :title="inspection.is_return==1?'Return inspection.':'Handover inspection'" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="last-point" :class="{ mydraggable: true}">
+                    <div  data-toggle="tooltip" title="Last Inspection" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="last-point" :class="{ mydraggable: true}">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -134,7 +134,7 @@
 
             <div id="car_driver_side" class="tab-pane fade in active" v-if="menuView=='driver_side'">
                 <div class="dummy_car carcondition-img" id="driver_side">
-                    <div  data-toggle="tooltip" :title="inspection.is_return==1?'Return inspection.':'Handover inspection'" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="last-point" :class="{ mydraggable: true}">
+                    <div  data-toggle="tooltip" title="Last Inspection" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="last-point" :class="{ mydraggable: true}">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -185,7 +185,7 @@
 
             <div id="car_off_side" class="tab-pane fade in active" v-if="menuView=='off_side'">
                 <div class="dummy_car carcondition-img" id="off_side">
-                    <div  data-toggle="tooltip" :title="inspection.is_return==1?'Return inspection.':'Handover inspection'" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="last-point" :class="{ mydraggable: true}">
+                    <div  data-toggle="tooltip" title="Last Inspection" v-if="isShowable(inspection)" v-for="inspection in inspections.data"   :style="{'top': inspection.x_axis+'%', 'left': inspection.y_axis+'%', 'z-index': 99}" class="last-point" :class="{ mydraggable: true}">
                         <div id="mydragcontrols">
                             <span v-if="User.state.auth.type=='owner'" id="mydeldrag" style="color: red" @click="deleteSpot(inspection)">
                             <i class="fa fa-times" aria-hidden="true"></i>
@@ -231,14 +231,14 @@
                     <p>{{content}}</p>
                             <div class="car_inspection_oct12_img">
                                 <img class="img-responsive" :src="spot_image" />
-                            </div> 
+                            </div>
 </div>
                 </div>
             </div>
 
             <div id="car_notes" class="tab-pane fade in active" v-if="menuView=='notes'">
                     <div class="chat_contrnt">
-                            <div  data-toggle="tooltip" :title="inspection.is_return==1?'Return inspection.':'Handover inspection'" v-if="isShowable(inspection)" v-for="inspection in inspections.data">
+                            <div  data-toggle="tooltip" title="Last Inspection" v-if="isShowable(inspection)" v-for="inspection in inspections.data">
                                 <div class="bs-callout bs-callout-danger" id="callout-glyphicons-dont-mix">
                                    <div @click="spotAction(inspection)" class="clickable send_box">
                                       <p>{{ inspection.note}}</p>
