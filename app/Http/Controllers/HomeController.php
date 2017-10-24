@@ -14,7 +14,8 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   $tot_vehicles=null;
+        if(auth()->check())
         $tot_vehicles = request()->user()->isOwner()?request()->user()->owner->vehicles->count():null;
         return view('welcome',compact("tot_vehicles"));
     }
