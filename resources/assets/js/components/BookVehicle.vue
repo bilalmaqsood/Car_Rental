@@ -318,7 +318,8 @@
                 let $scope = this;
                  $('#booking_range_calender').datetimepicker({
                     inline: true,
-                    sideBySide: false,
+                     useCurrent: false,
+                     sideBySide: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
                   .on('dp.update', function(){ $scope.highlightOldDays($scope.available_slots) });
@@ -580,7 +581,10 @@
 
                   $e.find('td').each(function (i, e) {
                             let $elem = $(e);
-                            if (_.indexOf($dates,$elem.data('day'))<0) 
+                      $elem.removeClass('active');
+                      $elem.removeClass('today');
+
+                      if (_.indexOf($dates,$elem.data('day'))<0)
                                 $elem.addClass('old disabled');
 
                         });
