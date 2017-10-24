@@ -488,11 +488,16 @@
             },
 
             goHome() {
-                if (User.state.home)
+                console.log(User.state.home);
+                if (User.state.home && !User.state.detailsDisplay && !User.state.searchView)
                     $("html, body").animate({scrollTop: 0}, 1000);
                 else {
-                    User.commit('home', true);
-                    User.commit('view', false);
+                    window.location.href ='/';
+//                    User.commit('home', true);
+//                    User.commit('view', false);
+//                    User.commit('view', false);
+//                    User.commit('listing', false);
+
                 }
             },
             handleMenuView(view){
