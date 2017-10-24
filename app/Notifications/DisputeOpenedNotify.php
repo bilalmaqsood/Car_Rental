@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Qwikkar\Channels\PushNotificationAndroid;
 
 class DisputeOpenedNotify extends Notification
 {
@@ -36,7 +37,7 @@ class DisputeOpenedNotify extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail','database',PushNotificationAndroid::class];
     }
 
     /**
@@ -52,5 +53,26 @@ class DisputeOpenedNotify extends Notification
             ->line('Booking Started At: ' . $this->options->booking->start_date->toFormattedDateString())
             ->line('Booking Ended At: ' . $this->options->booking->end_date->toFormattedDateString())
             ->line('Thank you for using our application!');
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed $notifiable
+     * @return array
+     */
+    public function toAndroid($notifiable)
+    {
+        return $this->options->data;
+    }
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return (array) $this->options->data;
     }
 }

@@ -66,7 +66,9 @@
             <booking-deposit :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_DEPOSIT_MADE"></booking-deposit>
 
             <booking-payment-made :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_PAYMENT_MADE"></booking-payment-made>
-            
+
+                <booking-disputed :notification="notif" v-else-if="notif.data.status=== CONSTANTS.VEHICLE_DISPUTED"></booking-disputed>
+
             <inspection-amending :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_AMENDED && notif.data.old_status ===CONSTANTS.BOOKING_AMENDED "></inspection-amending>
 
             <inspection-complete :notification="notif" v-else-if="notif.data.status=== CONSTANTS.INSPECTION_COMPLETED"></inspection-complete>

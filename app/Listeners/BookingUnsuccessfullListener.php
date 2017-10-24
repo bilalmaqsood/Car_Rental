@@ -60,7 +60,7 @@ class BookingUnsuccessfullListener
         $booking_id = $booking->id;
 
         $booking->delete();
-        \DB::table('notifications')->whereRaw('DATA->"$.id"',$booking_id)->delete();
+//        \DB::table('notifications')->whereRaw('DATA->"$.id"',$booking_id)->delete();
 
         return true;
     }
