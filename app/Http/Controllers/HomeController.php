@@ -15,7 +15,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $tot_vehicles = request()->user()->isOwner()?request()->user()->owner->vehicles->count():null;
+        return view('welcome',compact("tot_vehicles"));
     }
 
     /**

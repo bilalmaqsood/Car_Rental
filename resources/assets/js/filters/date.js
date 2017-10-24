@@ -1,5 +1,4 @@
 module.exports = function (value, type, format) {
-    console.log(moment().diff(value));
     if(typeof type !== 'undefined' && moment().diff(value) < 86400000  &&  moment().diff(value)>0) //39651088
         return 'just now';
         else

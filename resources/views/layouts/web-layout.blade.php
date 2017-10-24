@@ -25,7 +25,7 @@
 </head>
 <body>
     <div id="app">
-        <app-header></app-header>
+        <app-header tot_vehicles='{{$tot_vehicles}}'></app-header>
         <chats ref="chats"></chats>
         @yield('content')
     </div>

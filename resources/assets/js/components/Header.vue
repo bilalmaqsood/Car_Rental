@@ -242,7 +242,7 @@
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
                                     </svg>
                                     vehicles
-                                    <span v-if="storage.state.menuView=='vehicles'" class="quantity-span">25</span> 
+                                    <span v-if="storage.state.menuView=='vehicles'" class="quantity-span">{{tot_vehicles}}</span>
                                 </a>
                             </li>
 
@@ -290,6 +290,7 @@
     import {required, email, minLength, sameAs} from 'vuelidate/lib/validators';
 
     export default {
+        props: ['tot_vehicles'],
         data() {
             return {
                 storage: User,

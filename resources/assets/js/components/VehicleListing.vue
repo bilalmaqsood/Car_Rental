@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="availablity_price">
-                <label class="quantity-label">10</label>
+                <label class="quantity-label">{{ vehicle.tot_booking}}</label>
                 <div class="availabe_item_price">
                      <h3>{{vehicle.rent | currency}}</h3>
                         <span>/week</span>
