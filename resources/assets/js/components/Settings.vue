@@ -286,6 +286,7 @@
                 
                     $(".hiddenUpload").unbind().trigger("click").change(function () {
                         $.map(this.files, function (val) {
+                            if($this.isUploadAble(val)){
                            $('#sideLoader').show();
                             obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
                             obj.type = val.name.split('.').pop();
@@ -301,7 +302,13 @@
                                     setTimeout(function() { $('#sideLoader').hide(); }, 500);
                                     // User.state.auth.documents.push(obj);
                                 });
-                            };
+                            }
+                            } else {
+                                val=null;
+                                $(".hiddenUpload").val(null);
+
+
+                            }
                         });
                     });
             },
@@ -339,6 +346,16 @@
                         User.commit('menuView', false);
                         }, 500);
                 }
+            },
+            isUploadAble(file){
+                if(parseInt(file.size)/1024/1024 >5.00){
+                    new Noty({
+                        type: 'error',
+                        text: file.name+" Exceeds the Max Size! 5MB",
+                    }).show();
+                    return false;
+                }
+                return true;
             },
             
         }

@@ -667,7 +667,11 @@
                             reader.onload = function (e) {
                                 axios.post('/api/upload/image', fd).then($scope.imagesResponse);
                             };
-                    }
+                    } else {
+                                val=null;
+                                $(".hiddenUpload").val(null);
+
+                            }
                         });
                         this.files=null;
 
@@ -743,7 +747,11 @@
                                     $(".docUploader").val("");
                                 });
                             }
-                        }
+                        } else {
+                               val=null;
+                               $(".docUploader").val(null);
+
+                           }
                     });
                          setTimeout(function() { $('#sideLoader').hide(); }, 1000);
 
@@ -839,7 +847,12 @@
                                     $this.name=null;
                                 });
                             }
-                        }
+                        } else {
+                               val=null;
+                               $(".docUploader").val(null);
+                               $(".document_name").val(null);
+
+                           }
                     });
                          setTimeout(function() { $('#sideLoader').hide(); }, 1000);
 
