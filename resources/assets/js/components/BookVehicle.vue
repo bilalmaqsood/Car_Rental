@@ -296,8 +296,10 @@
         methods: {
             prepareComponent() {
                 this.initializeJquery();
-                let bookingData = Local.get('bookingData');
+                let bookingData = localStorage.bookingData;
+                
                 if (bookingData) {
+                    bookingData = JSON.parse(localStorage.bookingData);
                     setTimeout(() => {
                         this.calenderChange({date: moment(bookingData.start_date + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true)});
                         this.calenderChange({date: moment(bookingData.end_date + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true)});
@@ -534,6 +536,7 @@
                 axios.post('/api/booking', data).then((r) => {
                     $btn.button('reset');
                     User.commit('details', false);
+                    this.emptyLogs();
                     new Noty({
                         type: 'success',
                         text: 'Booking created successfully for ' + User.state.auth.name,
@@ -544,13 +547,17 @@
             },
 
             saveBookingToStorage() {
-                User.commit('saveBooking', {
+                let data = {
                     start_date: this.start_date.format('MM/DD/YYYY'),
                     end_date: this.end_date.format('MM/DD/YYYY'),
                     promo_code: this.promo_code,
                     promo_code_reward: this.promo_code_reward,
-                    location: this.location
-                });
+                    location: this.location,
+                    vehicle: this.vehicle
+                };
+                localStorage.setItem("bookingData",JSON.stringify(data));
+                localStorage.setItem('vehicleData',JSON.stringify(this.vehicle));
+
             },
             fetchAddress(arg){
 
@@ -569,6 +576,11 @@
                 });
 
                 return location;
+            },
+            emptyLogs(){
+                localStorage.removeItem('vehicleData');
+                localStorage.removeItem('bookingData');
+
             },
              highlightOldDays(response){
                 let $t = this;

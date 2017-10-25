@@ -49,18 +49,20 @@
         mounted() {
             axios.get('/all-vehicles').then(r=>{
                 localStorage.allVehicles = JSON.stringify(r.data.success);
+                this.prepareComponent();
             });
         },
 
         methods: {
             prepareComponent() {
-                console.log('home page componenet');
-                let searchResults = Local.get('searchResults');
-                if (searchResults && searchResults.length) {
-                    User.commit('listing', searchResults);
-                    this.switchToListing();
-                } else
-                    localStorage.removeItem('reloadData');
+              let localData = localStorage.bookingData;
+                if (localData) {
+                    localData = JSON.parse(localData);
+                        User.commit('view', true);
+                        User.commit('listing', {data: [localData.vehicle]});
+                        this.switchToListing();
+                    
+                }
             },
 
             switchToListing() {

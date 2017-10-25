@@ -90,12 +90,12 @@
             prepareComponent(){
                 let $t = this;
                 setTimeout(function () {
-                    let vehicleData = Local.get('vehicleData');
+                    let vehicleData = localStorage.vehicleData;
                     if (vehicleData) {
                         setTimeout(function () {
                             User.commit('details', true);
                         }, 500);
-                        User.commit('vehicle', vehicleData);
+                        User.commit('vehicle', JSON.parse(vehicleData));
                     }
                 }, 500);
             },

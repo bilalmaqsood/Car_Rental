@@ -386,7 +386,7 @@
             },
 
             cleanViewContract() {
-                this.booking = null;
+                this.menuView = null;
             },
             processAvatar(r){
                 let param = {avatar: r.data.success};

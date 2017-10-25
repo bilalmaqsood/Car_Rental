@@ -129,7 +129,7 @@
         methods: {
             prepareComponent() {
                 let $t = this;
-                let bookingData = Local.get('bookingData');
+                let bookingData = localStorage.bookingData;
 
                 if (bookingData && this.user.state.auth.type === 'client') {
                     setTimeout(function () {
