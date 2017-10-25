@@ -18,6 +18,12 @@ return [
 
     'extendrequest' => 'Booking extention request sent!',
 
+    'extendApproved' => 'Booking extention request approved',
+
+    'earlyterminationDecline' => 'Booking early cancelation request decline',
+
+    'earlyterminationApproved' => 'Booking early cancelation request approved',
+
     'earlyrequest' => 'Booking early cancelation request sent!',
 
     'fulfilled' => 'Owner (:user) has updated the booking as :status.',
