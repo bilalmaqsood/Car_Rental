@@ -535,7 +535,8 @@ trait BookingOperations
     }
 
     protected function extendBooking($booking,$log){
-        $booking->vehicle->timeslots()->where("day","<=",Carbon::parse($log->requested_data['end_date'])->format("Y-m-d"))
+        $start_date = $booking->start_date;
+        $booking->vehicle->timeslots()->where("day",">=",$start_date)->where("day","<=",Carbon::parse($log->requested_data['end_date'])->format("Y-m-d"))
                              ->update(["status" => 2, "booking_id" => $booking->id]);
 
 
