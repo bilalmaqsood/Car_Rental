@@ -75,13 +75,13 @@
             prepareComponent() {
                 axios.get('/api/user').then(r => {
                     // User.commit('update', r.data);
-                    
                     window.Echo
-                        .join('user-'+r.data.success.id)
+                        .join(`user-${r.data.success.id}`)
                         .here(this.initSocketAd)
                         .listen('MessageReceived', this.updateMessagePosted);
 
                     this.showChat = true;
+                    alert(window.Echo.socketId());
                     this.loadLatestChat();
                 });
             },
@@ -124,6 +124,8 @@
             },
 
             updateMessagePosted(posted) {
+                console.log("message posted");
+                alert("posted");
                 posted.message.is_sender = false;
 
                 let index = null;
