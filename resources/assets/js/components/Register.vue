@@ -408,9 +408,27 @@
                 }
             },
             skipStep(){
-                if(confirm("Are you sure to skip this step")){
-                    this.changeStep();
-                }
+            let $this = this;
+            var n = new Noty({
+                  text: '<b>Are you sure to skip this step?</b>',
+                  timeout: false,
+                  buttons: [
+                    Noty.button('YES', 'btn btn-success', function () {
+                      n.close();
+                      $('#sideLoader').show();
+                        $this.changeStep();
+                        setTimeout(function() { $('#sideLoader').hide(); }, 100);
+                    }, {id: 'button1', 'data-status': 'ok'}),
+
+                    Noty.button('NO', 'btn btn-error', function () {
+                            n.close();
+                        })
+                     ]
+                }).show();
+
+                // if(confirm("Are you sure to skip this step")){
+                    // this.changeStep();
+                // }
             }
         }
     }

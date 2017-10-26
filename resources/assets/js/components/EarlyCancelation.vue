@@ -40,14 +40,16 @@ import User from '../user';
 
         mounted() {
             let $this = this; 
-            this.fetchBookedSlots();
+            
             $('#CancelDate').datetimepicker({
                     inline: true,
                     sideBySide: false,
+                    useCurrent: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
                   .on('dp.update', function(){ $this.highlightOldDays($this.booked_slots) });
                 $('[data-toggle="tooltip"]').tooltip();
+                this.fetchBookedSlots();
 
         },
 
@@ -132,7 +134,7 @@ import User from '../user';
                     this.total_slots = r.data.success.totalSlots;
                     this.booked_slots = r.data.success.bookedSlots;
                     this.start_date = moment(r.data.success.firstDay);;
-                    this.highlightOldDays(r.data.success.booked_slots);
+                    this.highlightOldDays(r.data.success.bookedSlots);
                 });
             },
             highlightDays(bool) {

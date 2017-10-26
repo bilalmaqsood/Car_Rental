@@ -509,7 +509,7 @@ trait BookingOperations
      */
     protected function getFulfillNotifyString(BookingLog $log)
     {
-        $booking = $log->booking;
+        $booking = $log->booking;       
 
 
         if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===5 && request()->status===4)
@@ -522,11 +522,11 @@ trait BookingOperations
             'status' => strtolower($booking->statusTypes[$log->requested_data['old_status']])
         ]);
 
-        if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===5)
-            return trans('booking.fulfilled', [
-            'user' => $log->fulfilled->name,
-            'status' => strtolower($booking->statusTypes[6])
-        ]);
+        if(isset($log->requested_data['old_status']) && $log->requested_data['status']===6)
+            return trans('booking.earlyterminationApproved');
+
+        if(isset($log->requested_data['old_status']) && $log->requested_data['status']===8)
+            return trans('booking.extendApproved');
 
         return trans('booking.fulfilled', [
             'user' => $log->fulfilled->name,
@@ -535,7 +535,8 @@ trait BookingOperations
     }
 
     protected function extendBooking($booking,$log){
-        $booking->vehicle->timeslots()->where("day","<=",Carbon::parse($log->requested_data['end_date'])->format("Y-m-d"))
+        $start_date = $booking->start_date;
+        $booking->vehicle->timeslots()->where("day",">=",$start_date)->where("day","<=",Carbon::parse($log->requested_data['end_date'])->format("Y-m-d"))
                              ->update(["status" => 2, "booking_id" => $booking->id]);
 
 

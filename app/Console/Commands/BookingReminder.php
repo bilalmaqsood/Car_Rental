@@ -142,6 +142,8 @@ class BookingReminder extends Command
         Booking::where('start_date',"<=",Carbon::now()->addDay(1)->format("Y-m-d"))->
                  whereIn("status",[2,3])->whereNull("inspection_open")->chunk(20, function ($bookings) {
             foreach ($bookings as $booking) {
+                $booking->inspection_open = Carbon::now();
+                $booking->save();
 
                 $notificationData = [
                 'id' => $booking->id,
@@ -163,8 +165,7 @@ class BookingReminder extends Command
                 ]
                 ];
 
-                $booking->inspection_open = Carbon::now();
-                $booking->save();
+
 
                 $booking->vehicle->owner->user->notify((new BookingNotify($notificationData))->delay(Carbon::now()->addMinute()));
 

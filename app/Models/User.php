@@ -26,6 +26,7 @@ class User extends Authenticatable
         'postcode',
         'device_id',
         'avatar',
+        'socket'
     ];
 
     /**

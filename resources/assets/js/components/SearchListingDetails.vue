@@ -84,7 +84,7 @@
                             </button>
                         </li>
                         <li>
-                            <button type="button" @click="openChat(user.state.vehicleData.owner.user)">
+                            <button v-if="user.state.auth && user.state.auth.type === 'client'" type="button" @click="openChat(user.state.vehicleData.owner.user)">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
                                 </svg>
@@ -129,7 +129,7 @@
         methods: {
             prepareComponent() {
                 let $t = this;
-                let bookingData = Local.get('bookingData');
+                let bookingData = localStorage.bookingData;
 
                 if (bookingData && this.user.state.auth.type === 'client') {
                     setTimeout(function () {
@@ -174,10 +174,11 @@
             this.$emit("closeWindow");
         },
             resetChat() {
+                this.contactowner = false;
                 this.indexView = null;
-                setTimeout(() => {
+                
                     this.chatView = null;
-                }, 300);
+                
             },
             loadChat(chat, index) {
                 if (this.indexView === index)

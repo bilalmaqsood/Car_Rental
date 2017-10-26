@@ -14,8 +14,10 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('welcome');
+    {   $tot_vehicles=null;
+        if(auth()->check())
+        $tot_vehicles = request()->user()->isOwner()?request()->user()->owner->vehicles->count():null;
+        return view('welcome',compact("tot_vehicles"));
     }
 
     /**
@@ -55,17 +57,17 @@ class HomeController extends Controller
             }
              else
 
-            $vehicles = Vehicle::orderBy($key, $value)->paginate(6);
+            $vehicles = Vehicle::where('vlc', 1)->orderBy($key, $value)->paginate(6);
             $vehicles->appends(request()->except('page'))->links();
             return api_response($vehicles);
         }
 
-        return api_response(Vehicle::paginate(6));
+        return api_response(Vehicle::where('vlc', 1)->paginate(6));
     }
 
     public function allVehicles()
     {
-       return api_response(Vehicle::all());
+       return api_response(Vehicle::where('vlc', 1)->get());
     }
 
     public function TermsConditions()

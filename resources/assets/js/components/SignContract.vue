@@ -70,7 +70,7 @@
                                
                                 <div class="form-group clockpicker-box-2">
                                     <div class="input-group clockpicker clockpicker-box">
-                                        <input type="text" class="form-control" value="04:30">
+                                        <input type="text" class="form-control timepicker" value="04:30">
                                     </div>
                                 </div>
 

@@ -106,6 +106,7 @@ Vue.component('inspection-amending', require('./components/notifications/Inspect
 Vue.component('inspection-open', require('./components/notifications/InspectionOpen.vue'));
 Vue.component('inspection-confirmed', require('./components/notifications/InspectionConfirmed.vue'));
 Vue.component('inspection-resolved', require('./components/notifications/InspectionDisputedResolved.vue'));
+Vue.component('booking-disputed', require('./components/notifications/BookingDisputed.vue'));
 
 
 

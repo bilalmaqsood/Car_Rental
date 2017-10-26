@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="availablity_price">
-                <label class="quantity-label">10</label>
+                <label class="quantity-label">{{ vehicle.tot_booking}}</label>
                 <div class="availabe_item_price">
                      <h3>{{vehicle.rent | currency}}</h3>
                         <span>/week</span>
@@ -66,7 +66,7 @@
             return {
                 storage: User,
                 addVehicle: false,
-                vehicles: '',
+                vehicles: [],
                 vehicle: false,
             };
         },
@@ -78,7 +78,7 @@
                     type: 'success',
                     text: value.make+" "+value.model+" "+value.make + " Added!",
                 }).show();
-                this.vehicle.push(value);
+                $this.vehicles.push(value);
             });
 
             this.$on('vehicleUpdate', function(value){

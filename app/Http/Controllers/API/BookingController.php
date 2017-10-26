@@ -235,7 +235,8 @@ class BookingController extends Controller
     public function updateStatusRequest(Request $request, $id, BookingLog $log)
     {
         $this->validate($request, [
-            'start_date' => 'date|after_or_equal:today',
+            // 'start_date' => 'date|after_or_equal:today',
+            'start_date' => 'date',
             'end_date' => 'date|after_or_equal:today',
             'location' => 'string',
             'note' => 'string',

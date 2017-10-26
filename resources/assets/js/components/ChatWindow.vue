@@ -19,7 +19,7 @@
                 </transition>
                 <transition-group name="list" tag="div">
                     <div class="post" :class="m.is_sender ? 'out' : 'in'" v-for="m in messages" :key="m.id">
-                        <img class="avatar" alt="" :src="'/'+(m.is_sender ? user.state.auth.avatar : chat.user.avatar)">
+                        <img class="avatar" alt="" :src="'/'+(m.is_sender ? storage.state.auth.avatar : chat.user.avatar)">
                         <div class="message">
                             <span class="arrow"></span>
                             <span class="name" v-html="m.is_sender ? storage.state.auth.name : chat.user.name"></span>

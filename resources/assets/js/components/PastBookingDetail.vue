@@ -33,7 +33,7 @@
                     </div>
                 </div>
 
-                <div class="pickup_loction_btn pickup_loction_btn_3_sep">
+                <div class="pickup_loction_btn pickup_loction_btn_2_sep">
                     <ul>
                         <li>
                             <button @click="loadSideView('bookNow')">
@@ -41,14 +41,6 @@
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#issue"></use>
                                 </svg>
                                 <span>book now</span>
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
-                                </svg>
-                                <span>Last Inspection</span>
                             </button>
                         </li>
                         <li>

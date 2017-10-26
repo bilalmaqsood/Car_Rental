@@ -116,7 +116,8 @@ class Vehicle extends Model
      */
     protected $appends = [
         'is_booked',
-        'can_book'
+        'can_book',
+        'tot_booking'
     ];
 
 
@@ -194,7 +195,16 @@ class Vehicle extends Model
 
 
 
+    /**
 
+     * Get total bookings on the vehicle.
+     *
+     * @return boolean if any booking exists for this vehicle
+     */
+    public function getTotBookingAttribute()
+    {
+        return $this->booking()->where("status","<",9)->get()->count();
+    }
 
 
     /**
