@@ -324,7 +324,7 @@
                      sideBySide: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
-                  .on('dp.update', function(){ $scope.highlightOldDays($scope.available_slots) });
+                  .on('dp.update', function(){  $scope.highlightOldDays($scope.available_slots); $scope.highlightDays(true); });
                 $('[data-toggle="tooltip"]').tooltip();
             },
 

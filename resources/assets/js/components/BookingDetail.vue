@@ -324,6 +324,7 @@
                     .then((r) => {
                         $('#sideLoader').hide();
                         this.booking.status = params.status;
+                        this.$emit('bookingUpdated',this.booking);
                         this.isSignDone = false;
                         new Noty({
                             type: 'success',
