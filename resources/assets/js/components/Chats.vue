@@ -78,6 +78,7 @@
                     window.Echo
                         .join(`user-${r.data.success.id}`)
                         .here(this.initSocketAd)
+                        .joining(this.initSocketAd)
                         .listen('MessageReceived', this.updateMessagePosted);
 
                     this.showChat = true;
