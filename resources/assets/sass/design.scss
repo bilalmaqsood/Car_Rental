@@ -3589,7 +3589,10 @@ button:disabled {
     border-left: 5px solid #f5a623;
 }
 .noty_successfull{
-    border-left: 5px solid green;
+    border-left: 5px solid #87af1e;
+}
+.noty_successfull h3{
+    color: #87af1e;
 }
 .noty_info{
     border-left: 5px solid #3108b6;
@@ -4839,4 +4842,15 @@ background: #fff;
 .fullwidth-flatpickr .flatpickr-day{
     width: 100%;
     max-width: 100%;
+}
+ul.contract_start_end li{
+    display: inline-block;
+    
+}
+ul.contract_start_end {
+       padding-left: 0px;
+
+}
+ul.contract_start_end li:last-child{
+    margin-left: 10px;
 }

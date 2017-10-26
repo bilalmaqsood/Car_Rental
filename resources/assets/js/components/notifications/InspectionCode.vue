@@ -1,6 +1,6 @@
 <template>
     <div class="booking-request-actions notification-shadow">
-        <div class="btn-inlane-content noty_unsuccessfull">
+        <div class="btn-inlane-content noty_successfull">
             <div class="driver-profile-text">
             <h3>Your vehicle pickup number</h3>
             <p>Hello <b>{{ notification.data.user }}</b> Please provide the code below to the vehicle owner when you pick-up your vehicle as confirmation of your approval to the vehicle inspection.</p>

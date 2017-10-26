@@ -25,7 +25,7 @@
             <h3>Booking approved</h3>
             <p>{{ notification.data.user}} approved your request to book <b> {{notification.data.vehicle}} </b>
 
-            <ul>
+            <ul class="contract_start_end">
                 <li><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </li>
                 <li><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</li>
             </ul>

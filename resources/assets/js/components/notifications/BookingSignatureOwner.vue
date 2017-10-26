@@ -23,10 +23,14 @@
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
             <div class="driver-profile-text">
                 <h3>Contract signed</h3>
-                 <p><b>{{notification.data.user}} </b>has signed the contract for the booking of {{ notification.data.vehicle }}
+                 <p><b>{{notification.data.user}} </b>has signed the contract for the booking of <b>{{ notification.data.vehicle }}</b>
                  </p>
-                 <p><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </p>
-                <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</p> <br>
+                 
+                 <ul class="contract_start_end">
+                    <li><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </li>
+                    <li><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</li>
+                </ul>
+             
                 <p>
                 You can now check and sign the contract and set your <b>Direct Debit</b>.</p>
             </div>
