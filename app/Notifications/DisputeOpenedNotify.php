@@ -37,7 +37,8 @@ class DisputeOpenedNotify extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail','database',PushNotificationAndroid::class];
+        // return ['mail','database',PushNotificationAndroid::class];
+        return ['database',PushNotificationAndroid::class];
     }
 
     /**
