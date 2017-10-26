@@ -75,7 +75,7 @@
             prepareComponent() {
                 axios.get('/api/user').then(r => {
                     // User.commit('update', r.data);
-                    alert("Join socket:" +window.Echo.socketId());
+
                     window.Echo
                         .join(`user-${r.data.success.id}`)
                         .here(this.initSocketAd)
@@ -119,6 +119,7 @@
             },
 
             initSocketAd() {
+                alert("Join socket:" +window.Echo.socketId());
                 axios.post('/api/message/socket', {socket: window.Echo.socketId()});
             },
 
