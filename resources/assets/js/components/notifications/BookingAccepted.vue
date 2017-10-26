@@ -22,7 +22,7 @@
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
             <div class="driver-profile-text">
-            <h3>Booking request accepted</h3>
+            <h3>Booking approved</h3>
             <p>{{ notification.data.user}} approved your request to book <b> {{notification.data.vehicle}} </b>
 
             <ul>
