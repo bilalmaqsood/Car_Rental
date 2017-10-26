@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('device_id')->nullable();
             $table->string('avatar')->nullable();
             $table->string('postcode')->nullable();
+            $table->string('socket')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
