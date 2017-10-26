@@ -270,7 +270,7 @@
 
 
                                 <div class="input-group login-input">
-                                    <input type="text" class="form-control" placeholder="percent" v-model="percent">
+                                    <input type="text" class="form-control" placeholder="Discount" v-model="percent">
 
                                     <div class="input-group-addon">
                                         <span @click="push()" class="add-icon-plus">
@@ -372,6 +372,7 @@
                 percent: '',
                 doc: false,
                 form: JSON.parse(JSON.stringify(Form)),
+                doc_uploaded: true,
             };
         },
 
@@ -562,11 +563,17 @@
                 }).trigger('refresh');
             },
             processForm() {
+                this.form.documents.filter((index)=>{
+                    if(!index.path || index.path== null)
+                    {this.doc_uploaded = false;}
+                    
+                });
                 $scope.postForm();
             },
             postForm() {
+                
                 if (this.isEdit) {
-                    console.log(this.form);
+                    
                     axios.patch('/api/vehicle/' + this.vehicle_id, this.prepareForm())
                         .then(this.responseHandler);
                 } else {
@@ -575,11 +582,14 @@
                 }
             },
             responseHandler(response) {
-                this.form = JSON.parse(JSON.stringify(Form));
+                 this.form = JSON.parse(JSON.stringify(Form));
+                if(this.doc_uploaded == false)
+                    this.documentsReminder();
                 if (this.isEdit)
                     this.$parent.$emit('vehicleUpdate', response.data.success);
                 else
                     this.$parent.$emit('vehicleAdded', response.data.success);
+
             },
             prepareForm() {
                 let input = this.form;
@@ -613,7 +623,12 @@
                 setTimeout(()=>{  this.initSlider(); },50);
                 this.form.images.push(r.data.success);
             },
-
+            documentsReminder(){
+                new Noty({
+                                type: 'warning',
+                                text: 'You have not uploaded vehicle documents.<br><b>Vehicle will not show in listing</b>'
+                            }).show();
+            },
             prepareComponent() {
                 let $this = this;
 
@@ -781,7 +796,6 @@
             },
             hideModal(){
                this.doc = false;
-               console.log("calling thisss");
                $('#updateModel').modal('hide');
 
             },
@@ -797,7 +811,7 @@
             },
             checkSeriveDoc(e){
                    let $this = this;
-                    let doc = {title: ' MOT certificate', name:'',path: '',type: '', doc: ' mot_certificate', status: '' };
+                    let doc = {title: ' MOT certificate', name:'',path: null,type: '', doc: ' mot_certificate', status: '' };
                     let input = $(e.target).val();
                 if(input.length==4){
                     let currentYear = new Date().getFullYear();

@@ -31,10 +31,10 @@ export default {
     fault_accident: '',
     discounts:[],
     documents: [      
-                    {title: 'PCO Certificate', name:'',path: '',type: '', doc: 'pco_certificate', status: '' },
-                    {title: 'Car Log Book/V5', name:'',path: '',type: '', doc: 'car_log_book', status: '' },
-                    {title: 'Insurance Documents', name:'',path: '',type: '', doc: 'incourence_document', status: '' },
-                    {title: 'Permission Letter', name:'',path: '',type: '', doc: 'permission_letter', status: '' },
+                    {title: 'PCO Certificate', name:'',path: null,type: '', doc: 'pco_certificate', status: '' },
+                    {title: 'Car Log Book/V5', name:'',path: null,type: '', doc: 'car_log_book', status: '' },
+                    {title: 'Insurance Documents', name:'',path: null,type: '', doc: 'incourence_document', status: '' },
+                    {title: 'Permission Letter', name:'',path: null,type: '', doc: 'permission_letter', status: '' },
                     
     ],
     extension: '',

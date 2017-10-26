@@ -66,7 +66,7 @@
             return {
                 storage: User,
                 addVehicle: false,
-                vehicles: '',
+                vehicles: [],
                 vehicle: false,
             };
         },
@@ -78,7 +78,7 @@
                     type: 'success',
                     text: value.make+" "+value.model+" "+value.make + " Added!",
                 }).show();
-                this.vehicle.push(value);
+                $this.vehicles.push(value);
             });
 
             this.$on('vehicleUpdate', function(value){
