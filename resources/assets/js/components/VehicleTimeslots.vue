@@ -71,6 +71,7 @@
                 var $picker = $('#timeslots_picker').datetimepicker({
                     inline: true,
                     sideBySide: false,
+                    useCurrent: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
                   .on('dp.update', function(){ $scope.highlightOldDays($scope.old_slots) });
@@ -216,6 +217,10 @@
                     }
                   $e.find('td').each(function (i, e) {
                             let $elem = $(e);
+
+                      $elem.removeClass('active');
+                      $elem.removeClass('today');
+
                             if(active)
                             $elem.removeClass('active');
                             if (_.indexOf($dates,$elem.data('day'))>0) 

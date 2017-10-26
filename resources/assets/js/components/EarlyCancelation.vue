@@ -44,6 +44,7 @@ import User from '../user';
             $('#CancelDate').datetimepicker({
                     inline: true,
                     sideBySide: false,
+                    useCurrent: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
                   .on('dp.update', function(){ $this.highlightOldDays($this.booked_slots) });
