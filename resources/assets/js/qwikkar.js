@@ -118,3 +118,14 @@ Vue.filter('bookingStatus', require('./filters/booking-status'));
 const app = new Vue({
     el: '#app'
 });
+
+
+window.qwikkarChat = {
+   addUserChat(id) {
+       app.$refs.chats.addUserChat(id);
+   },
+
+   removeUserChat(id) {
+       app.$refs.chats.removeUserChat(id);
+   }
+};
