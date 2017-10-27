@@ -90,7 +90,7 @@ class MessageController extends Controller
         if($request->has("receiver_id"))
         broadcast(new MessageReceived($message, $message->receiver, $message->sender))->toOthers();
         else
-        broadcast(new MessagePosted($message, $message->receiver, $message->sender))->toOthers();
+        broadcast(new MessagePosted($message, $message->receiver, $message->sender,$request->booking_id))->toOthers();
 
         return api_response($message);
     }

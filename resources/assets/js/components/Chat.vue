@@ -46,6 +46,7 @@
 
         methods: {
             prepareComponent() {
+                let booking_id = this.bookingId;
                 $('#sideLoader').show();
                 axios.get('/api/message/' + this.bookingId).then(r => {
                     this.messages = r.data.success;
@@ -54,7 +55,7 @@
                 });
 
                 window.Echo
-                    .join('chatroom')
+                    .join('chatroom-'+booking_id)
                     .listen('MessagePosted', (e) => {
                         e.message.sender = e.sender;
                         e.message.receiver = e.receiver;
