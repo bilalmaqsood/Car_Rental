@@ -180,45 +180,13 @@
                     this.chatView = null;
                 
             },
-            loadChat(chat, index) {
-                if (this.indexView === index)
-                    this.resetChat();
-                else {
-                    this.indexView = null;
-                    setTimeout(() => {
-                        this.chatView = chat;
-                        this.indexView = index;
-                        this.menu = true;
-                    }, 300);
-                }
-            },
-
-            addUserChat(user) {
-                let index = -1;
-                $.each(User.state.chatUsers, function (k, v) {
-                    if (v.user.id === user.id) index = k;
-                });
-                if (index === -1)
-                    axios.get('/api/user/' + user.id).then(r => {
-                        User.commit('addChatUser', {user: r.data.success, messages: []});
-                        this.menu = true;
-                        let index = User.state.chatUsers.length - 1;
-                        this.loadChat(User.state.chatUsers[index], index);
-                    });
-                else if (this.indexView === null || this.indexView !== index) this.loadChat(User.state.chatUsers[index], index);
-                else new Noty({
-                        type: 'warning',
-                        text: '<div><p class="m-0">You already chatting with <b>' + user.name + '</b>.</p></div>',
-                        timeout: 800
-                    }).show();
-            },
 
             openChat(user){
-                setTimeout(() => {
-                    this.contactowner = !this.contactowner;
-                }, 500);
+                window.qwikkarChat.addUserChat({
+                    id: user.id,
+                    name: user.name
+                });
 
-                this.addUserChat(user);
             }
     }
 }
