@@ -1,6 +1,6 @@
 <template>
     <div class="booking-request-actions notification-shadow">
-        <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
+        <div v-if="show" class="fadeInLeft inlane-btn-wrap inlane-btn-wrap-btn2">
             <ul class="two-btn-inlane">
                 <li>
                 <a  href="javascript:void(0)"  @click="contractEvent">
@@ -21,7 +21,7 @@
             </ul>
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
-            <div class="driver-profile-text">
+            <div @click="show = !show" class="clickable driver-profile-text">
                 <h3>Contract signed</h3>
                  <p><b>{{notification.data.user}} </b>has signed the contract for the booking of <b>{{ notification.data.vehicle }}</b>
                  </p>
@@ -45,7 +45,7 @@
         props: ['notification'],
         data() {
             return {
-
+                show: false,
             };
         },
 

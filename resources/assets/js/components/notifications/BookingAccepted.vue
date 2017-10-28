@@ -1,7 +1,7 @@
 <template>
     <div class="booking-request-actions notification-shadow">
             <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
-            <ul class="two-btn-inlane">
+            <ul v-if="show"  class="fadeInLeft two-btn-inlane">
                 <li>
                 <a  href="javascript:void(0)"  @click="contractEvent">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
@@ -21,8 +21,8 @@
             </ul>
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
-            <div class="driver-profile-text">
-            <h3>Booking approved</h3>
+            <div @click="show = !show" class="clickable driver-profile-text">
+            <h3 >Booking approved</h3>
             <p>{{ notification.data.user}} approved your request to book <b> {{notification.data.vehicle}} </b>
 
             <ul class="contract_start_end">
@@ -43,7 +43,7 @@
         props: ["notification"],
         data() {
             return {
-
+                show: false,
             };
         },
 

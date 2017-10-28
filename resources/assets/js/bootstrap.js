@@ -26,6 +26,8 @@ require('./starrr.js');
 
 require('bootstrap-sass');
 
+require('vue-animate/dist/vue-animate.min.css');
+
 require('eonasdan-bootstrap-datetimepicker');
 
 window.Inputmask = require('inputmask');

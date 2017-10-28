@@ -1,6 +1,6 @@
 <template>
     <div class="booking-request-actions notification-shadow">
-        <div class="inlane-btn-wrap inlane-btn-wrap-btn3">
+        <div v-if="show" class="inlane-btn-wrap inlane-btn-wrap-btn3">
             <ul class="three-btn-inlane">
                 <li>
                     <a href="#">
@@ -25,7 +25,7 @@
             </ul>
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
-            <div class="driver-profile-text">
+            <div  @click="show = !show" class="clickable driver-profile-text">
                 <h3>Booking terminated</h3>
                 <p>TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016 TOYOTA PRIUS ACTIVE VVT-I CVT GLI 2016</p>
                 <p><b>Contract start:</b> 20.8.2017 </p>
@@ -41,7 +41,7 @@
     export default {
         data() {
             return {
-
+                show: false,
             };
         },
 

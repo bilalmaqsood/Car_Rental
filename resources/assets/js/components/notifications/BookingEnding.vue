@@ -1,6 +1,6 @@
 <template>
     <div class="booking-request-actions notification-shadow">
-        <div class="inlane-btn-wrap inlane-btn-wrap-btn2 noty_danger">
+        <div v-if="show" class="inlane-btn-wrap inlane-btn-wrap-btn2 noty_danger">
             <ul class="two-btn-inlane">
 
                  <li>
@@ -20,7 +20,7 @@
             </ul>
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_warning">
-            <div class="driver-profile-text">
+            <div @click="show = !show" class="clickable driver-profile-text">
                 <h3>Booking Ending soon</h3>
                 <p>Contract for the vehicle <b>{{ notification.data.vehicle }}</b> ending on <b>{{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</b>
                 </p>
@@ -37,7 +37,7 @@
         props: ['notification'],
         data() {
             return {
-
+                show: false,
             };
         },
 

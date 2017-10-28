@@ -3,7 +3,7 @@
     <div class="approved-actions-img">
         <img :src="notification.data.image" alt="">
     </div>
-        <div class="inlane-btn-wrap inlane-btn-wrap-btn2 ">
+        <div v-if="show" class="inlane-btn-wrap inlane-btn-wrap-btn2 ">
             <ul class="two-btn-inlane">
 
                  <li>
@@ -23,7 +23,7 @@
             </ul>
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_warning">
-            <div class="driver-profile-text">
+            <div @click="show = !show" class="clickable driver-profile-text">
                 <h3>Extension requested</h3>
                 <p><b>{{notification.data.user}}</b> has requested to extend the contract for  {{ notification.data.vehicle }}
                 </p>
@@ -40,7 +40,7 @@
         props: ['notification'],
         data() {
             return {
-
+                show: false,
             };
         },
 
