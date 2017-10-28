@@ -3,7 +3,7 @@
     <div v-if="show"  class="inlane-btn-wrap inlane-btn-wrap-btn2">
             <ul class="two-btn-inlane">
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="javascript:void(0)" @click="markRead">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
                         wait {{notification.data.interval}} min
                     </a>
@@ -64,6 +64,9 @@
                          this.$parent.$emit("markread",this.notification);
                         console.log(r);
                     });
+            },
+            markRead(){
+                this.$parent.$emit("markread",this.notification);
             }
     }
 }
