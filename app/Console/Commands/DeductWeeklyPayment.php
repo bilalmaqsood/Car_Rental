@@ -46,7 +46,7 @@ class DeductWeeklyPayment extends Command
     public function handle()
     {
         
-        Booking::where("status","<",9)
+        Booking::whereIn("status",[4,5,7,8])
                 ->with("account")
                 ->whereHas("payments" , function($query){
             $query->DuePayment();
