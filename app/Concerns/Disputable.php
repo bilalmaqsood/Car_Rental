@@ -52,7 +52,7 @@ trait Disputable
             'old_status' => $booking->status,
             'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
-            'title' => $ticket->title,
+            'title' => "Booking disputed",
             'user' => request()->user()->name,
             'vehicle' => $booking->vehicle->vehicle_name,
             'contract_start' => $booking->start_date,
