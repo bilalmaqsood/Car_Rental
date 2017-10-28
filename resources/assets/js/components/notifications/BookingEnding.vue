@@ -4,7 +4,7 @@
             <ul class="two-btn-inlane">
 
                  <li>
-                    <a  href="javascript:void(0)"  >
+                    <a  href="javascript:void(0)" @click="extendEvent" >
                         <i style="font-size: 35px;" class="fa fa-clock-o" aria-hidden="true"></i>
                         extend/renew
                     </a>
@@ -69,6 +69,10 @@
             },
             chatEvent(){
                 this.$parent.$emit("chat",this.notification);
+            },
+            extendEvent(){
+                User.commit('updateCurrentBook', this.notification.data.id);
+                this.$parent.$emit("changeView",'extend');
             }
         }
     }
