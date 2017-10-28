@@ -102,7 +102,7 @@ class Booking extends Model
      */
 
     public function getHandoverInspectionAttribute(){
-        return  $this->start_date > Carbon::now() && $this->start_date->diffInHours(Carbon::now()) <= 24;
+        return  $this->start_date >= Carbon::now() && $this->start_date->diffInHours(Carbon::now()) <= 24;
     }
     /**
      * Open handover inspection before 24 hours of booking
