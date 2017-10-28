@@ -12,7 +12,7 @@
                         </a>
                     </li> 
                     <li>
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)"  @click="inspectionEvent">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use></svg>
                             vehicle inspection
                         </a>
@@ -20,8 +20,14 @@
                 </ul>
             </div>
             <div class="btn-inlane-content btn-inlane-content-btn2 btn-inlane-content-btn12oct noty_successfull">
-                <div class="driver-profile-img12">
-                    <img class="img-responsive" :src="notification.data.image" />
+               
+                <div class="driver-profile-text">
+                <h3>Booking ended</h3>
+
+
+                <p>{{ user.state.auth.type=='owner'?notification.data.user:'Your'}} Booking for  <b> {{notification.data.vehicle}} </b> has ended on
+                </p><br>
+                <p>Please make the vehicle checks and rate the <b>{{user.state.auth.type=='owner'?'Owner':'Driver'}}</b>. </p>
                 </div>
             </div>
         </div>
@@ -80,7 +86,7 @@
 
         mounted() {
 
-
+            console.log(this.notification);
         },
 
         methods: {
@@ -98,6 +104,9 @@
             contractEvent(){
                 this.$parent.$emit("contract",this.notification);
 
+            },
+            inspectionEvent(){
+                this.$parent.$emit("inspection",this.notification);
             },
             doRating(){
                 let $this= this;

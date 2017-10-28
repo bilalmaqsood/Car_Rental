@@ -246,7 +246,7 @@
                     .then(response => {
                         
                         this.notifications = response.data.success;
-                        console.log(response.data.success);
+                        
                         setTimeout(function() {$('#sideLoader').hide();}, 500);
                     });
 
