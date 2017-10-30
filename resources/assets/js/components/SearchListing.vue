@@ -91,7 +91,7 @@
                 let $t = this;
                 setTimeout(function () {
                     let vehicleData = localStorage.vehicleData;
-                    if (vehicleData) {
+                    if (vehicleData && vehicleData.length) {
                         setTimeout(function () {
                             User.commit('details', true);
                         }, 500);
