@@ -142,6 +142,7 @@
             },
 
             doBooking() {
+                this.$parent.$emit("clearLastInspection");
                 if(User.state.auth){
                     if(!User.state.auth.dlc){
                         User.commit('menuView', 'settings');

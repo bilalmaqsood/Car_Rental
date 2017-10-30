@@ -85,6 +85,9 @@
             this.$on("lastinspection",()=>{
                  this.last_inspection = !this.last_inspection;   
             });
+            this.$on('clearLastInspection',()=>{
+                this.last_inspection = false;
+            });
         },
         methods: {
             prepareComponent(){
