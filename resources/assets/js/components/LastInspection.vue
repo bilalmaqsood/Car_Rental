@@ -486,6 +486,7 @@
                     this.X_Axis = '';
                     this.Y_Axis = '';
                     this.spot_image = '';
+                    this.content='';
                     $("#remove").click();
             },
 
