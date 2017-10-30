@@ -85,7 +85,7 @@ class ResetBookingDeposit extends Command
 
                 if($booking->vehicle)
                 $this->generateRatingNotification($booking);
-
+                $booking->inspections()->where("status","=",0)->update(["is_return"=>0]);
                 $booking->status = 12;
                 $booking->save();
 
