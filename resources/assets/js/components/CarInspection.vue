@@ -1017,18 +1017,30 @@
             sendInspection(){
 
                 let url;
-                if(User.state.auth.type=='client')
-                    url = '/api/booking/'+this.booking.id+'/notify-amendedInspection'
-                else if(User.state.auth.type=='owner')
-                    url = '/api/booking/'+this.booking.id+'/notify-driver'
+                let title;
+                if(User.state.auth.type=='client'){
+                    url = '/api/booking/'+this.booking.id+'/notify-amendedInspection';
+                    title = "Inspection amendment notification sent to owner";
+                }
+
+                else if(User.state.auth.type=='owner'){
+                    url = '/api/booking/'+this.booking.id+'/notify-driver';
+                    title = "Inspection amendment notification sent to driver";
+                }
+
                 $('#centerLoader').show();
                 axios.post(url).then(()=>{
                     this.hideLoader(500);
+                    new Noty({
+                        type: 'success',
+                        text: title,
+                    }).show();
+
                  });
 
 
             },
-            soptColor(inspection){  
+            soptColor(inspection){
                 if(inspection.status==CONSTANTS.BOOKING_AMENDED)                
                     return 'inspection_ammended mydraggable';
                 else if(inspection.is_return==0)
