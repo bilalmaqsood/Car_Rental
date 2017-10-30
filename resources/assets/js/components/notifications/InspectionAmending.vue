@@ -26,7 +26,8 @@
                 <h3>Inspection amended request</h3>
                 <p><b>{{notification.data.user}}</b>  has requested for the inspection amended.
                 </p>
-                
+                <br>
+                <p>You can click the inspection button to approve the amendment</p>
                 
             </div>
         </div>
