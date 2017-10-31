@@ -359,7 +359,7 @@
         <transition name="slide-fade" mode="in-out">
         <update-documents v-if="doc" :doc="doc" :title="'Update vehicle documents'" @modelHiding="hideModal" @docUpdate="docUpdated"></update-documents>
         </transition>
-        <location-coordinates-picker :location="location"
+        <location-coordinates-picker v-if="openLocation" :location="location"
                                      @locationEvent="saveLocationCoordinates" ></location-coordinates-picker>
     </div>
 </template>
@@ -378,6 +378,7 @@
         data() {
             return {
                 name: false,
+                openLocation: false,
                 User: User,
                 location: '',
                 selectedLocation: '',
@@ -723,7 +724,7 @@
             showLocationPicker(obj) {
                 this.selectedLocation = obj;
                 this.location = this.form[obj];
-                $('#myModal').appendTo("body").modal('show');
+                this.openLocation = true;
             },
             saveLocationCoordinates(response) {
                 var $this = this;
@@ -731,6 +732,7 @@
                     $("#" + $this.selectedLocation).val(result);
                 });
                 this.form[this.selectedLocation] = response;
+                this.openLocation = false;
             },
             verifyByAVLA() {
                 let param = {registration_number: this.form.registration_number}
@@ -818,7 +820,7 @@
             },
             hideModal(){
                this.doc = false;
-               $('#updateModel').modal('hide');
+               this.openLocation = false;
 
             },
             isUploadAble(file){
