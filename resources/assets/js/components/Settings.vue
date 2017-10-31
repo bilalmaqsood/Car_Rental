@@ -187,7 +187,7 @@
                     {title: 'PCO License (badge)', name:'',path: '',type: '', doc: 'pco_licence_badge', status: '' },
                     {title: 'DBS certificate', name:'',path: '',type: '', doc: 'dbs_certificate', status: '' },
                     {title: 'Proof of address', name:'',path: '',type: '', doc: 'proof_of_address', status: '' },
-                    {title: 'Passport and Visa Copy', name:'',path: '',type: '', doc: '', status: '' },
+                    {title: 'Passport and Visa Copy', name:'',path: '',type: '', doc: 'visa_doc', status: '' },
                    
                 ],
                 clone: JSON.stringify(User.state.auth)
