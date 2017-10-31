@@ -21,8 +21,7 @@ class CreateBookingsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('location')->nullable();
-            $table->string('starting_mileage')->nullable();
-            $table->string('service_mileage')->nullable();
+            
             
             $table->decimal('deposit');
             $table->json('documents')->nullable()->comment('documents or contracts of booking');
