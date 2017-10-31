@@ -1,6 +1,6 @@
 <template>
     <div class="search_map ">
-        <map-markers :hover="hover_vehicle"></map-markers>
+        <map-markers ref='marker' :hover="hover_vehicle"></map-markers>
         <div class="search_container search_container_width">
             <transition-group name="list" tag="div">
             <advance-form v-if="user.state.showAdvance && user.state.menuView=='advance'" key="advance"></advance-form>
@@ -108,21 +108,8 @@
             },
 
             searchVehicles() {
+                alert("called");
                 this.fetchVehicles();
-            },
-
-            drawMarker() {
-                let $t = this;
-                _.map($t.items, function (v) {
-                    let lat = parseFloat(v.location.split(",")[0]);
-                    let lng = parseFloat(v.location.split(",")[1]);
-                    console.log(lat + "-" + lng);
-                    new google.maps.Marker({
-                        position: {lat: lat, lng: lng},
-                        map: $t.SearchMap,
-                        title: v.make + " " + v.model + " " + v.variant + " " + v.year,
-                    });
-                });
             },
 
             searchFilters() {
@@ -195,11 +182,14 @@
             },
             loadMore(){
                $('#sideLoader').show();
-               
+                let $this = this;
                axios.get(User.state.searchResults.next_page_url).then(response=>{
                    User.state.searchResults.data = User.state.searchResults.data.concat(response.data.success.data);
                    this.next_page_url = response.data.success.next_page_url;
-                   setTimeout(function() { $('#sideLoader').hide(); }, 500); 
+//                   User.commit('home', true);
+//                   User.commit('home', false);
+//                   User.commit('listing', User.state.searchResults);
+                   setTimeout(function() { $('#sideLoader').hide(); $this.$refs.marker.prepareComponent(); }, 100);
                });
                 
             },

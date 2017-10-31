@@ -123,7 +123,7 @@ class SearchController extends Controller
         else
         $vehicles->orderBy('created_at', 'desc');
 
-        $vehiclesList = $vehicles->where('vlc', 1)->paginate(30);
+        $vehiclesList = $vehicles->where('vlc', 1)->paginate(10);
 
 
             // $vehiclesList = $this->filterListRadius(
