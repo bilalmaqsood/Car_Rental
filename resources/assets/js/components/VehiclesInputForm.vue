@@ -97,6 +97,20 @@
                             </div>
                         </li>
                         <li class="vehicle-details-row1 vehicle-details-row3">
+                        <div class="form-group" :class="{'has-error': $v.form.starting_mileage.$error}">
+                                <input type="text" class="form-control" placeholder="vehicle Starting mileage"
+                                       v-model="form.starting_mileage" @blur="$v.form.starting_mileage.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.starting_mileage.$error">Enter vehicle starting mileage</p>
+                            </div>
+                        </li>
+                        <li class="vehicle-details-row1 vehicle-details-row3">
+                        <div class="form-group" :class="{'has-error': $v.form.service_mileage.$error}">
+                                <input type="text" class="form-control" placeholder="vehicle service mileage"
+                                       v-model="form.service_mileage" @blur="$v.form.service_mileage.$touch()">
+                                <p class=" help-block text-sm" v-if="$v.form.service_mileage.$error">Enter vehicle service mileage</p>
+                            </div>
+                        </li>
+                        <li class="vehicle-details-row1 vehicle-details-row3">
                             <div class="form-group">
                                 <div class="input-group login-input">
                                     <input type="text" class="form-control registration_year"
@@ -396,6 +410,14 @@
                     minLength: minLength(1)
                 },
                 mileage: {
+                    required,
+                    minLength: minLength(1)
+                },
+                starting_mileage: {
+                    required,
+                    minLength: minLength(1)
+                },
+                service_mileage: {
                     required,
                     minLength: minLength(1)
                 },

@@ -21,6 +21,9 @@ class CreateBookingsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('location')->nullable();
+            $table->string('starting_mileage')->nullable();
+            $table->string('service_mileage')->nullable();
+            
             $table->decimal('deposit');
             $table->json('documents')->nullable()->comment('documents or contracts of booking');
             $table->boolean('status')->default(0)->comment('0=Requested, 1=Confirmed, 2=Signed by client, 3=Signed by owner, 4=Accepted, 5=Termination, 6=Terminated, 7=Extend, 8=Extended, 9=Close, 10=Disputed, 11=Resolved, 12=Deposit Returned');

@@ -24,6 +24,8 @@ class Vehicle extends Model
         'variant',
         'year',
         'mileage_service',
+        'service_mileage',
+        'starting_mileage',
         'mileage',
         'fuel',
         'registration_number',

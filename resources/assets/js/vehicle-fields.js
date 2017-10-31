@@ -5,6 +5,8 @@ export default {
     variant: '',
     year: '',
     mileage: '',
+    starting_mileage: '',
+    service_mileage: '',
     fuel: '',
     mpg: '',
     mpg_eco: '',
