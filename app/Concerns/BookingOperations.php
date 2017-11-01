@@ -611,7 +611,7 @@ trait BookingOperations
             'old_status' => $booking->status,
             'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
-            'title' => 'Owner completed vehicle inspection',
+            'title' => 'Contract signed successfully',
             'user' => request()->user()->name,
             'vehicle' => $booking->vehicle->vehicle_name,
             'contract_start' => $booking->start_date,
