@@ -2221,20 +2221,20 @@ padding-top: 10px;
 .vehicle_registration .card_recured ul li:nth-child(7) {
     width: 33.3%;
     float: left;
-    background: #525252;
+    background: #fff;
     border-bottom: 0;
-    color: #fff;
+    color: #525252;
     border-right: 3px solid #98b927;
 }
 
 .vehicle_registration .card_recured ul li:nth-child(7) .form-control {
-    color: #fff;
-    background: #525252;
+    color: #525252;
+    background: #fff;
 }
 
 .vehicle_registration .card_recured ul li:nth-child(12) .form-control {
-    color: #fff;
-    background: #525252;
+    color: #525252;
+    background: #fff;
 }
 
 .vehicle_registration .card_recured ul li:nth-child(8) {
@@ -3779,7 +3779,7 @@ button:disabled {
     display: inline-block;
 }
 .inlane-btn-wrap-btn3{
-    width: 50%;
+    width: 46%;
 }
 .inlane-btn-wrap ul {
     padding: 0;
@@ -3978,10 +3978,6 @@ button:disabled {
 .vehicle_registration .card_recured ul .vehicle-details-row3{
     width: 33.3% !important;
     float: left;
-}
-.vehicle_registration .card_recured ul .vehicle-details-row1:nth-child(4) .form-group{
-    background: #525252 !important;
-    color: #ffffff !important;
 }
 .vehicle_registration .card_recured ul .vehicle-details-row1:nth-child(4) .form-control{
     color: #ffffff !important;
@@ -4845,6 +4841,7 @@ background: #fff;
 }
 ul.contract_start_end li{
     display: inline-block;
+    position: relative;
     
 }
 ul.contract_start_end {
@@ -4857,4 +4854,78 @@ ul.contract_start_end li:last-child{
 .send-requst-oct28{
     width: 50%;
     float: left;
+}
+ul.contract_start_end li:first-child:after{
+    content: "|";
+    position: absolute;
+    right: -8px;
+    top: 0;
+    color: #98b927;
+}
+.driver-last-inspection-nov01{
+    display: none;
+}
+@media screen and (max-width: 1199px) {
+    .pickup_loction_btn_3_sep{
+        margin-bottom: 10px;
+        float: left;
+        width: 100%;
+    }
+    .car_detail_container_oct4 {
+        position: absolute;
+    }
+}
+@media screen and (max-width: 1020px) {
+#car_inspection {
+    background: #fff;
+    height: auto;
+    float: left;
+    width: 100%;
+    position: static;
+}
+.driver-last-inspection-nov01{
+    display: block;
+}
+}
+@media screen and (max-width: 500px) {
+    .car_detail_clander ul li:nth-child(3n) span {
+        position: relative;
+        top: 5px;
+        margin-left: 0;
+        padding-left: 10px;
+        float: right;
+        width: 85%;
+    }
+}
+.signature-bottom .js-signature {
+    width: 100% !important;
+}
+.signature-bottom .js-signature canvas {
+    width: 100% !important;
+}
+.page-quick-sidebar-chat-user-messages {
+    float: left;
+    width: 100% !important;
+}
+.chat-container .row{
+    margin: 0 !important;
+}
+.chats-container {
+    z-index: 9999;
+}
+.chat-window .panel-default > .panel-heading {
+    float: left;
+    width: 100%;
+}
+.chat-window .panel-title {
+    font-size: 13px;
+}
+.list-color-nov01 a{
+    color: #f5a523 !important;
+}
+.list-color-nov01 .svg-icon{
+    fill: #f5a523 !important;
+}
+.vehicle-registration-slider {
+    background: #fff;
 }

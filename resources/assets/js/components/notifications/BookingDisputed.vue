@@ -6,12 +6,12 @@
         <div  v-if="show" class="inlane-btn-wrap inlane-btn-wrap-btn2 ">
             <ul class="two-btn-inlane">
 
-                <li>
+                <li class="list-color-nov01">
                     <a  href="javascript:void(0)"  @click="inspectionEvent">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                         </svg>
-                        view inspection
+                        view List
                     </a>
                 </li>
                 <li>

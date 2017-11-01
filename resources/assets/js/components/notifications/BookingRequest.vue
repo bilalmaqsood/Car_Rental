@@ -28,8 +28,11 @@
             <div @click="show = !show" class="clickable driver-profile-text">
                 <h3>Booking requested</h3>
                 <p><b>{{notification.data.user}}</b> requested to book <b>{{ notification.data.vehicle }}</b></p>
-                <p><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </p>
-                <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</p>
+                <br>
+                <ul class="contract_start_end">
+                <li><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </li>
+                <li><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</li>
+                </ul>
             </div>
         </div>
     </div>

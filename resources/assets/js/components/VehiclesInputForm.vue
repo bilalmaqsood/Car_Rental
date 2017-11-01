@@ -138,7 +138,7 @@
                                 <p class=" help-block text-sm" v-if="$v.form.mpg.$error">Enter mpg </p>
                             </div>
                         </li>
-                        <li class="vehicle-details-row1 vehicle-details-row3">
+                        <li class="vehicle-details-row1 ">
                             <div class="form-group" :class="{'has-error': $v.form.mpg_eco.$error}">
                                 <input type="text" class="form-control" placeholder="mpg (economy)"
                                        v-model="form.mpg_eco" @blur="$v.form.mpg_eco.$touch()">
