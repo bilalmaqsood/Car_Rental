@@ -165,6 +165,7 @@ class SearchController extends Controller
 
         if ($request->has('vehicle') && $request->vehicle != '||_||')
             $vehicles->where(function (Builder $q) use ($request) {
+                $q->whereRaw('TRIM(BOTH \' \' FROM CONCAT_WS(\' \', `make`, `model`, `variant`, `year`)) like ?', ['%' . $request->vehicle . '%']);
                 $q->orWhere('make', 'like', '%' . $request->vehicle . '%');
                 $q->orWhere('model', 'like', '%' . $request->vehicle . '%');
                 $q->orWhere('variant', 'like', '%' . $request->vehicle . '%');
