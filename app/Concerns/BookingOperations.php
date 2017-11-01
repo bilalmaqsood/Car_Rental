@@ -603,20 +603,20 @@ trait BookingOperations
             $code = $code->confirm_code;
         }
 
-        $booking->user->notify(new BookingNotify([
-            'id' => $booking->id,
-            'type' => 'Booking',
-            'status' =>  INSPECTION_CODE_GENERATED,
-            'inspection_code'  => $code,
-            'old_status' => $booking->status,
-            'vehicle_id' => $booking->vehicle->id,
-            'image' => $booking->vehicle->images->first(),
-            'title' => 'Owner completed vehicle inspection',
-            'user' => request()->user()->name,
-            'vehicle' => $booking->vehicle->vehicle_name,
-            'contract_start' => $booking->start_date,
-            'contract_end' => $booking->end_date,
-        ]));
+        // $booking->user->notify(new BookingNotify([
+        //     'id' => $booking->id,
+        //     'type' => 'Booking',
+        //     'status' =>  INSPECTION_CODE_GENERATED,
+        //     'inspection_code'  => $code,
+        //     'old_status' => $booking->status,
+        //     'vehicle_id' => $booking->vehicle->id,
+        //     'image' => $booking->vehicle->images->first(),
+        //     'title' => 'Owner completed vehicle inspection',
+        //     'user' => request()->user()->name,
+        //     'vehicle' => $booking->vehicle->vehicle_name,
+        //     'contract_start' => $booking->start_date,
+        //     'contract_end' => $booking->end_date,
+        // ]));
 
     }
 
