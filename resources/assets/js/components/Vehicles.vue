@@ -22,14 +22,14 @@
                             Edit vehicle
                         </a>
                     </li>
-                    <li :class="{active: menuView == 'editcontract'}" >
+                    <!-- <li :class="{active: menuView == 'editcontract'}" >
                         <a @click="changeMenuView('editcontract')"  data-toggle="tab" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit_icon"></use>
                             </svg>
                             Edit contract
                         </a>
-                    </li>
+                    </li> -->
                     <li :class="{active: menuView == 'timeslots'}" >
                         <a @click="changeMenuView('timeslots')" data-toggle="tab" href="javascript:void(0)">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon">
