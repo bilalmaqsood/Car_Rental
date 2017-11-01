@@ -1,6 +1,6 @@
 <template>
     <div class="booking-request-actions notification-shadow">
-        <div class="btn-inlane-content btn-inlane-content-btn3 ">
+        <div class="btn-inlane-content btn-inlane-content-btn3 noty_danger">
             <div class="driver-profile-text">
             
             <h3>Request unsuccessfull</h3>
