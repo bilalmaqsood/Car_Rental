@@ -52,7 +52,7 @@ class InspectionController extends Controller
         $this->validate($request, [
             'data' => 'required|array|min:1',
             'data.*.type' => 'required|in:front,rear,driver_side,off_side,notes',
-            'data.*.status' => 'in:0,1',
+//            'data.*.status' => 'in:0,1',
             'data.*.is_return' => 'boolean',
             // 'data.*.x_axis' => 'numeric',
             // 'data.*.y_axis' => 'numeric',
@@ -129,7 +129,7 @@ class InspectionController extends Controller
     {
         $this->validate($request, [
             'type' => 'required|in:front,rear,driver_side,off_side,notes',
-            'status' => 'in:0,1',
+//            'status' => 'in:0,1',
             'is_return' => 'boolean',
             'x_axis' => 'numeric',
             'y_axis' => 'numeric',
