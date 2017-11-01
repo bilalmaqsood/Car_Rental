@@ -178,25 +178,26 @@ trait BookingOperations
         $balanceLog->balance()->associate($user->balance);
         $payment->balanceLogs()->save($balanceLog);
 
-        $booking->vehicle->owner->user->notify(new BookingNotify([
-            'id' => $booking->id,
-            'type' => 'Booking',
-            'status' => $booking->status,
-            'old_status' => $booking->status,
-            'vehicle_id' => $booking->vehicle->id,
-            'image' => $booking->vehicle->images->first(),
-            'title' => 'Booking requested',
-            'user' => $user->name,
-            'credit_card' => $account->last_numbers,
-            'vehicle' => $booking->vehicle->vehicle_name,
-            'contract_start' => $booking->start_date,
-            'contract_end' => $booking->end_date,
-            'deposit' => $booking->deposit,
-            'signatures' => [
-                'owner' => $booking->signatures && $booking->signatures->has('owner'),
-                'client' => $booking->signatures && $booking->signatures->has('client')
-            ]
-        ]));
+        // $booking->vehicle->owner->user->notify(new BookingNotify([
+        //     'id' => $booking->id,
+        //     'type' => 'Booking',
+        //     'status' => $booking->status,
+        //     'old_status' => $booking->status,
+        //     'vehicle_id' => $booking->vehicle->id,
+        //     'image' => $booking->vehicle->images->first(),
+        //     'title' => 'Booking requested',
+        //     'user' => $user->name,
+        //     'credit_card' => $account->last_numbers,
+        //     'vehicle' => $booking->vehicle->vehicle_name,
+        //     'contract_start' => $booking->start_date,
+        //     'contract_end' => $booking->end_date,
+        //     'deposit' => $booking->deposit,
+        //     'signatures' => [
+        //         'owner' => $booking->signatures && $booking->signatures->has('owner'),
+        //         'client' => $booking->signatures && $booking->signatures->has('client')
+        //     ]
+        // ]));
+        
     }
 
     /**
