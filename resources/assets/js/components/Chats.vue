@@ -56,7 +56,7 @@
                             check = true;
                             new Noty({
                                 type: 'success',
-                                text: 'You have new Message'
+                                text: 'You have new Message from <b>'+chat.user.name+'</b>'
                             }).show();
                         }
                     });
