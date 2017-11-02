@@ -33,7 +33,7 @@ class MessageController extends Controller
      */
     public function getMessages($id)
     {
-        return api_response(Booking::findOrFail($id)->messages()->orderBy('updated_at', 'desc')->with('receiver', 'sender')->paginate(10));
+        return api_response(Booking::findOrFail($id)->messages()->orderBy('created_at', 'desc')->with('receiver', 'sender')->paginate(10));
     }
 
     /**
@@ -190,7 +190,7 @@ class MessageController extends Controller
     {
         $target = User::find($user_id)->id;
 
-        $messages = Message::Conversation(request()->user()->id,$target)->orderBy('updated_at', 'desc')->with('receiver', 'sender')->paginate(10);
+        $messages = Message::Conversation(request()->user()->id,$target)->orderBy('created_at', 'desc')->with('receiver', 'sender')->paginate(10);
 
         return api_response($messages);
     }
@@ -200,7 +200,7 @@ class MessageController extends Controller
     {
         $target = User::find($user_id)->id;
 
-        $messages = Message::where("sender_id",$user_id)->where("receiver_id",request()->user()->id)->where('read',0)->orderBy('updated_at', 'desc');
+        $messages = Message::where("sender_id",$user_id)->where("receiver_id",request()->user()->id)->where('read',0)->orderBy('created_at', 'desc');
 
         $data = $messages->with('receiver', 'sender')->get();
 
@@ -219,7 +219,7 @@ class MessageController extends Controller
      */
     public function getBookingNewMessages($id)
     {
-        $messages = Booking::findOrFail($id)->messages()->where("receiver_id",request()->user()->id)->where('read',0)->orderBy('updated_at', 'desc');
+        $messages = Booking::findOrFail($id)->messages()->where("receiver_id",request()->user()->id)->where('read',0)->orderBy('created_at', 'desc');
 
         $data = $messages->with('receiver', 'sender')->get();
 
