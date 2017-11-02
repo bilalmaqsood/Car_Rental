@@ -19,18 +19,18 @@
                             </div>
                         </div>
                     </li>
-                    <li>
-                        <div class="form-group promo-code">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tag_icon"></use>
-                                    </svg>
-                                </div>
-                                <input class="form-control" placeholder="promotional code" type="text" @blur="checkPromoCode" v-model.trim="promo_code" @keypress.enter="checkPromoCode">
-                            </div>
-                        </div>
-                    </li>
+                    <!--<li>-->
+                        <!--<div class="form-group promo-code">-->
+                            <!--<div class="input-group">-->
+                                <!--<div class="input-group-addon">-->
+                                    <!--<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">-->
+                                        <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tag_icon"></use>-->
+                                    <!--</svg>-->
+                                <!--</div>-->
+                                <!--<input class="form-control" placeholder="promotional code" type="text" @blur="checkPromoCode" v-model.trim="promo_code" @keypress.enter="checkPromoCode">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</li>-->
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
