@@ -93,6 +93,9 @@
                         </li>
                     </ul>
                 </div>
+                <transition name="slide-fade" mode="out-in">
+              <last-inspection class="driver-last-inspection driver-last-inspection-nov01" :vehicle="user.state.vehicleData" v-if="last_inspection"></last-inspection>
+        </transition>
             </div>
 
             <!--<contact-owner v-if="contactowner" :owner="user.state.vehicleData.owner.user"></contact-owner>-->
@@ -116,6 +119,7 @@
                 contactowner: false,
                 chatView: null,
                 indexView: null,
+                last_inspection: false,
 
             };
         },
@@ -169,6 +173,7 @@
                 });
             },
         openLastInspection(){
+            this.last_inspection = !this.last_inspection;
             this.$parent.$emit("lastinspection");
         },
         closeWindow(){
