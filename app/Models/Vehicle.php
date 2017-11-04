@@ -58,6 +58,9 @@ class Vehicle extends Model
         'no_fault_accident',
         'fault_accident',
         'notes',
+        'pickup_location_title',
+        'return_location_title',
+        'location_title'
     ];
 
     /**
