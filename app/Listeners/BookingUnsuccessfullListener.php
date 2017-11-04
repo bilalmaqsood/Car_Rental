@@ -42,7 +42,7 @@ class BookingUnsuccessfullListener
             'old_status' => $booking->status,
             'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
-//            'title' => 'Booking unsuccessfull',
+            'title' => 'Booking request was auto declined',
 //            'user' => $owner->name,
 //            'requested_data'  => $requestData,
 //            'note' => $log->requested_note,
