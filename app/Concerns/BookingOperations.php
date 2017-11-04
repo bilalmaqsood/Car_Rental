@@ -126,10 +126,10 @@ trait BookingOperations
      */
     protected function deductDeposit(Booking $booking, User $user)
     {
-        if ($user->current_balance < $booking->deposit)
+//        if ($user->current_balance < $booking->deposit)
             $account = $this->makePaymentFromCard($user, $booking);
-        else
-            $account = $user->creditCard()->where('default', 1)->first();
+//        else
+//            $account = $user->creditCard()->where('default', 1)->first();
 
         // deduct deposit from balance
         $user->balance->current -= $booking->deposit;

@@ -57,7 +57,7 @@ class ResetBookingDeposit extends Command
 
                 $response = $booking->user->refund($sriptResponse->id, array('amount' => $booking->deposit*100)); // refund to client
 
-                // $booking->user->balance->current += $booking->deposit;
+                 $booking->user->balance->current += $booking->deposit;
                 }
 
                 $booking->user->balance->save();
