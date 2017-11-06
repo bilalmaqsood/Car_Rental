@@ -34,7 +34,7 @@
                     </div>
                     <div class="availablity_price">
                         <div class="availabe_item_price">
-                            <h3>{{user.state.vehicleData.rent | currency}}</h3>
+                            <h3>{{user.state.vehicleData.rent + user.state.vehicleData.insurance | currency}}</h3>
                             <span>/week</span>
                             <span v-if="user.state.vehicleData.insurance>0.0">insurance included</span>
                         </div>

@@ -35,7 +35,8 @@ class FinancialController extends Controller
         $vehicles = $request->user()->owner->vehicles;
 
         $vehicles->each(function ($v) use (&$total) {
-            $v->booking->each(function ($b) use (&$total) {
+            $v->booking()->each(function ($b) use (&$total) {
+//                d($b->payments()->get()->toArray());
                 $b->payments()->where('paid', 1)->get()->each(function ($p) use (&$total) {
                     $total['earnings'] += $p->cost;
                     if ($p->title == 'Deposit')
@@ -44,8 +45,8 @@ class FinancialController extends Controller
             });
         });
 
-        $total['available'] = $total['earnings'] - $total['deposit'] - $total['withdraw'] + $request->user()->current_balance;
-
+        $total['available'] = $total['earnings'] - $total['deposit'] - $total['withdraw'];
+//        dd( $total['available']);
         return api_response($total);
     }
 

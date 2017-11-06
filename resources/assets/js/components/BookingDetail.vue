@@ -32,7 +32,7 @@
                         </div>
 
                         <div class="availabe_item_price">
-                            <h3>{{booking.vehicle.rent | currency}}</h3>
+                            <h3>{{booking.vehicle.rent + booking.vehicle.insurance | currency}}</h3>
                             <span>/ week</span>
                         </div>
                     </div>

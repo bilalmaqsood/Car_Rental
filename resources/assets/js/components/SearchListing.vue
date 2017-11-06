@@ -31,7 +31,7 @@
                                 <p>available from: <span v-if="i.can_book">{{i.can_book | date('fromNow')}}</span>  <span v-else>Not available</span> </p>
                             </div>
                             <div class="availabe_item_price">
-                                <h3>{{i.rent | currency}}</h3>
+                                <h3>{{i.rent + i.insurance | currency}}</h3>
                                 <span>/week</span>
                             </div>
                         </div>
