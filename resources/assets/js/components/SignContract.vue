@@ -178,7 +178,7 @@
                 this.doSign = false;
             },
             closeContract(){
-                this.$emit('closeContract');
+                this.$emit('closeContract','sign');
             },
 
             submitTime(){

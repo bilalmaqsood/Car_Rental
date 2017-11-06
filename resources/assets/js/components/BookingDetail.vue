@@ -122,6 +122,14 @@
                                     sign contract
                                 </a>
                             </li>
+                            <li v-if="!canSign && [2].includes(booking.status)">
+                                <a @click="loadSideView('sign')" href="javascript:">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                    </svg>
+                                    edit contract
+                                </a>
+                            </li>
                             <li v-else-if="[0,5,7].includes(booking.status)">
                                 <a @click="approveBooking" href="javascript:">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
@@ -231,8 +239,6 @@
                     return true;
                 else if(!this.booking.signatures && this.User.state.auth.type==='client')
                     return  false;
-                else if(this.User.state.auth.type==='owner' && (typeof this.booking.signatures.client === 'undefined'))
-                    return  true;
                 else if(this.User.state.auth.type==='client' && (typeof this.booking.signatures.client === 'undefined'))
                     return  true;
                 else

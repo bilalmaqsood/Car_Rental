@@ -3,7 +3,7 @@
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_danger">
             <div class="driver-profile-text">
             
-            <h3>Request unsuccessfull</h3>
+            <h3>Booking request was auto declined</h3>
 
             <p>Unfortunately, your request to book <b> {{notification.data.vehicle}} </b>
              has beenunsuccessful.</p>

@@ -108,7 +108,6 @@
             },
 
             searchVehicles() {
-                alert("called");
                 this.fetchVehicles();
             },
 

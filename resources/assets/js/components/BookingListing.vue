@@ -150,6 +150,13 @@
             loadSideView(data) {
 
                 let $this = this;
+
+                if(data.view=='sign')
+                    axios.get('/api/booking/' + data.id).then(r => {
+                            this.booking = r.data.success;
+                            console.log(r.data.success);
+                            });
+
                 if(data.view=='sign' && User.state.auth.type === 'client'){
                     axios.get('/api/credit-card').then(function(r){
                         if(!r.data.success.length){
@@ -185,10 +192,14 @@
 
             clearSideView(e) {
                 if (typeof e !== 'undefined' && e === 'sign') {
-                    if (User.state.auth.type === 'owner')
-                        this.bookings[this.inProcess.index].status = 3;
-                    else if (User.state.auth.type === 'client')
-                        this.bookings[this.inProcess.index].status = 2; 
+                    if (User.state.auth.type === 'owner'){
+                        this.booking.status = 2 
+                        
+                    }
+                    else if (User.state.auth.type === 'client'){
+                        
+                        this.booking.status = 3;
+                    }
                     this.signature = false;
                 }
                 this.sideView = '';
