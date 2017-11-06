@@ -15,7 +15,6 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        dd(request()->user()->balance);
         $tot_vehicles=null;
         if(auth()->check())
         $tot_vehicles = request()->user()->isOwner()?request()->user()->owner->vehicles->count():null;
