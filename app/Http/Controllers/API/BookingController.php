@@ -354,6 +354,7 @@ class BookingController extends Controller
 
         if ($request->status == 4 && $booking->status==0){
             $title = trans('booking.request-unsuccessfull'); //Owner denided request for booking
+            
             event(new BookingUnsuccessfull($booking));
             return api_response(trans('booking.request-decline'));
         }
@@ -388,6 +389,29 @@ class BookingController extends Controller
                 'client' => $booking->signatures && $booking->signatures->has('client')
             ]
         ]));
+
+        if ($request->status == 1)
+            $booking->vehicle->owner->user->notify(new BookingNotify([
+                'id' => $booking->id,
+                'type' => 'Booking',
+                'status' => 1,
+                'old_status' => 0,
+                'vehicle_id' => $booking->vehicle->id,
+                'image' => $booking->vehicle->images->first(),
+                'title' => 'Contract is available for update and sign',
+                'user' =>  $booking->user->name,
+                'requested_data'  => $requestData,
+                'note' => $log->requested_note,
+                'credit_card' => $booking->account?$booking->account->last_numbers:'',
+                'vehicle' => $booking->vehicle->vehicle_name,
+                'contract_start' => $booking->start_date,
+                'contract_end' => $booking->end_date,
+                'deposit' => $booking->deposit,
+                'signatures' => [
+                    'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                    'client' => $booking->signatures && $booking->signatures->has('client')
+                ]
+            ]));
 
         if ($request->status == 9)
             $booking->user->notify(new BookingNotify([

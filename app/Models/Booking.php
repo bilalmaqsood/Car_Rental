@@ -35,6 +35,7 @@ class Booking extends Model
      * @var array
      */
     protected $fillable = [
+        'vehicle_id',
         'start_date',
         'end_date',
         'location',
@@ -102,6 +103,8 @@ class Booking extends Model
      */
 
     public function getHandoverInspectionAttribute(){
+        if($this->start_date!=null && $this->start_date->isToday() && $this->status==3)
+            return true;
         return  $this->start_date >= Carbon::now() && $this->start_date->diffInHours(Carbon::now()) <= 24;
     }
     /**
