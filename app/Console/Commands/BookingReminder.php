@@ -140,7 +140,7 @@ class BookingReminder extends Command
     {
 
         Booking::where('start_date',"<=",Carbon::now()->addDay(1)->format("Y-m-d"))->
-                 whereIn("status",[2,3])->whereNull("inspection_open")->chunk(20, function ($bookings) {
+                 whereIn("status",[3])->whereNull("inspection_open")->chunk(20, function ($bookings) {
             foreach ($bookings as $booking) {
                 $booking->inspection_open = Carbon::now();
                 $booking->save();
