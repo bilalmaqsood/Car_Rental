@@ -76,7 +76,7 @@ class SearchController extends Controller
             'longitude.regex' => 'The longitude is invalid.',
         ]);
 
-        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at','vlc');
+        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent','insurance' ,'location', 'available_from', 'available_to', 'images', 'created_at','vlc');
 
         if ($request->latitude && $request->longitude)
              $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius?: 50000);
