@@ -60,7 +60,7 @@ class ProfileController extends Controller
                     $d['doc'] == 'dbs_certificate' ||
                     $d['doc'] == 'proof_of_address' ||
                     $d['doc'] == 'pco_licence_badge' 
-                    ) && $d['path'])
+                    ) && isset($d['path']) && filter_var($d['path'], FILTER_VALIDATE_URL) !==false)
                     $docs->push($d['doc']);
             });
 
