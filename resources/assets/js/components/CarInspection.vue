@@ -742,7 +742,9 @@
                 setTimeout(function() { $('[data-toggle="tooltip"]').tooltip(); }, 500);
             })
 
-            
+            $(".digit").keyup(function () {
+                  $(this).parents('li').next().find('.digit').focus();
+            });
         },
 
         methods: {
