@@ -42,7 +42,7 @@ class BookingController extends Controller
         if ($request->user()->isOwner()) {
             $result = $request->user()->owner->vehicles()->with(['booking' => function ($with) {
                 $with->with(['vehicle' => function ($vWith) {
-                    $vWith->select('id', 'make', 'model', 'variant', 'year', 'images', 'rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
+                    $vWith->select('id', 'make', 'model', 'variant', 'year', 'images','insurance' ,'rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
                 }]);
             }])->orderBy("id","desc")->get()->map(function ($v) {
                 return $v->booking;
@@ -66,7 +66,7 @@ class BookingController extends Controller
             }
         } else
             $bookingList = $request->user()->booking()->with(['vehicle' => function ($vWith) {
-                $vWith->select('id', 'make', 'model', 'variant', 'year', 'images', 'rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
+                $vWith->select('id', 'make', 'model', 'variant', 'year', 'images', 'insurance','rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
             }])->orderBy("id","desc")->get();
 
         return api_response($bookingList);
@@ -135,7 +135,7 @@ class BookingController extends Controller
             return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $booking = Booking::whereId($id)->with(['vehicle' => function ($with) {
-            $with->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'transmission', 'fuel', 'mile_cap', 'rent', 'documents');
+            $with->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats','insurance', 'transmission', 'fuel', 'mile_cap', 'rent', 'documents');
         }, 'bookingLog' => function ($with) {
             $with->with(['requested', 'fulfilled']);
         }, 'user'])->first();
