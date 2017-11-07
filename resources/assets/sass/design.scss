@@ -4928,3 +4928,51 @@ ul.contract_start_end li:first-child:after{
     font-size: 35px;
     text-align: center;
 }
+.report-issue-form{
+    margin: 0 auto;
+}
+.report-issue-form .form-group {
+    width: 100%;
+    -webkit-box-shadow: 0.5px 0.5px 2px #9e9e9e;
+    box-shadow: 0.5px 0.5px 2px #9e9e9e;
+    padding: 12px;
+    margin-top: 9px;
+}
+.report-issue-form textarea {
+    height: 155px;
+    resize: none;
+}
+.report-issue-form .login-input .input-group-addon {
+    vertical-align: top;
+    padding-top: 10px;
+}
+
+.report-issue-form .fileUpload {
+    -webkit-box-shadow: 4px 4px 4px rgba(91, 91, 91, 0.5);
+    box-shadow: 4px 4px 4px rgba(91, 91, 91, 0.5);
+    margin: 15px auto 40px;
+    max-width: 240px;
+    overflow: hidden;
+    padding: 50px 20px 30px;
+    position: relative;
+    text-align: center;
+    background: #fff;
+}
+
+.report-issue-form .fileUpload svg {
+    display: block;
+    margin: 0 auto 10px;
+}
+
+.report-issue-form .fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    min-height: 138px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}

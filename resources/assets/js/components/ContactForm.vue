@@ -103,7 +103,42 @@
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="report_issue">
-                    <p>Nunc volutpat vehicula erat at facilisis. Quisque congue et turpis non maHs. Quisque egestas eleifend purus, eu finibus magna. In cursus fringilla leo consequat sollicitudin. Nunc in massa orci. Aenean pulvinar egestas rutrum. Aliquam elit libero, porta ac neque ut, fringilla laoreet lectus. Sed ut metus vitae risus iaculis vulputate. Curabitur preEum turpis nec velit commodo, nec egestas quam fringilla. Cras molesEe turpis eu lacus fringilla sodales. EEam a vesEbulum felis. Suspendisse laoreet dignissim nibh in posuere. Aenean a nisl dignissim, hendrerit magna vitae, interdum nisi. Suspendisse volutpat tortor vel libero dignissim, a viverra ex gravida.</p>
+                    <div class="report-issue-form">
+                        <form>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <div class="input-group login-input">
+                                    <div class="input-group-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sign_contract_icon"></use></svg>
+                                    </div> 
+                                    <input type="text" placeholder="subject" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group login-input">
+                                    <div class="input-group-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use></svg>
+                                    </div> 
+                                    <textarea placeholder="your message" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="">
+                                <div class="fileUpload">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98.328 98.329" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#images-upload"></use>
+                                    </svg>
+                                    <span>upload picture</span>
+                                    <input type="file" class="upload">
+                                </div>
+                            </div>
+
+                            <button type="button" class="submit">Submit</button>
+                        </div>
+                        </form>   
+                    </div>
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="faqs_tab">
