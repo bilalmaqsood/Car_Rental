@@ -12,7 +12,14 @@
                         contact us
                     </a>
                 </li>
-            
+                <li role="presentation">
+                    <a href="#report_issue" aria-controls="report_issue" role="tab" data-toggle="tab">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 20" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#issue"></use>
+                        </svg>
+                        report issue
+                    </a>
+                </li>
                 <li role="presentation">
                     <a href="#faqs_tab" aria-controls="faqs_tab" role="tab" data-toggle="tab">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
@@ -95,7 +102,9 @@
                     </div>
                 </div>
 
-                
+                <div role="tabpanel" class="tab-pane" id="report_issue">
+                    <p>Nunc volutpat vehicula erat at facilisis. Quisque congue et turpis non maHs. Quisque egestas eleifend purus, eu finibus magna. In cursus fringilla leo consequat sollicitudin. Nunc in massa orci. Aenean pulvinar egestas rutrum. Aliquam elit libero, porta ac neque ut, fringilla laoreet lectus. Sed ut metus vitae risus iaculis vulputate. Curabitur preEum turpis nec velit commodo, nec egestas quam fringilla. Cras molesEe turpis eu lacus fringilla sodales. EEam a vesEbulum felis. Suspendisse laoreet dignissim nibh in posuere. Aenean a nisl dignissim, hendrerit magna vitae, interdum nisi. Suspendisse volutpat tortor vel libero dignissim, a viverra ex gravida.</p>
+                </div>
 
                 <div role="tabpanel" class="tab-pane" id="faqs_tab">
                     <p>Nunc volutpat vehicula erat at facilisis. Quisque congue et turpis non maHs. Quisque egestas eleifend purus, eu finibus magna. In cursus fringilla leo consequat sollicitudin. Nunc in massa orci. Aenean pulvinar egestas rutrum.</p>
