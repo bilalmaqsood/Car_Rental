@@ -45,7 +45,7 @@ class HomeController extends Controller
                     ->orderBy("ratings_average", $value)
                     ->paginate(6);
             } else if($key=='location'){
-                $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at','vlc');
+                $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent','insurance', 'location', 'available_from', 'available_to', 'images', 'created_at','vlc');
 
                 if ($request->latitude && $request->longitude)
                     $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius?: 1000);
