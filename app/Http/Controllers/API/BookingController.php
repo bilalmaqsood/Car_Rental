@@ -346,8 +346,11 @@ class BookingController extends Controller
 
         $title = 'Booking ' . strtolower($booking->statusTypes[$request->status]);
 
-        if ($request->status == 4 && in_array($booking->status, [5, 7]))
-            $title = 'Booking ' . strtolower($booking->statusTypes[$booking->status]) . ' request declined';
+        if ($request->status == 4 && $booking->status== 5)
+            $title = 'Booking early cancellation request declined';
+
+        if ($request->status == 4 && $booking->status== 7)
+            $title = 'Booking extend request declined';
 
         if ($request->status == 4 && $booking->status==0){
             $title = trans('booking.request-unsuccessfull'); //Owner denided request for booking
