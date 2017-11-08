@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Qwikkar\Concerns\Balanceable;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
-
+use Carbon\Carbon;
 class FinancialController extends Controller
 {
     use Balanceable;
@@ -90,5 +90,15 @@ class FinancialController extends Controller
 
     }
 
+    public function getDiscount(Request $request){
+
+        $booking = new Booking();
+        $data = $request->all();
+        $data['start_date'] = Carbon::parse($data['start_date']);
+        $data['end_date'] = Carbon::parse($data['end_date']);
+        $booking->fill($data);
+
+        return api_response(Discount($booking));
+    }
 
 }

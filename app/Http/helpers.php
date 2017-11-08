@@ -70,23 +70,24 @@ function format_date($date){
 }
 
 function Discount($booking){
-    $discount=0;
-
+    $discount = [];
     $vehicle = $booking->vehicle;
-
-    $total_weeks = $booking->start_date->diffInWeeks($booking->end_date);
-
+     $total_weeks = (int) floor(($booking->start_date->diffInDays($booking->end_date)+1)/7);
     $total_discounts = count($booking->vehicle->discounts);
-
-    if($total_discounts > $total_weeks)
-        foreach ($booking->vehicle->discounts as $discount) {
-                if($discount['week']==$total_weeks);
-                    $discount = $discount['percent'];
+    if($total_discounts > 0){
+        foreach ($booking->vehicle->discounts as $d) {
+            $discount[$d['week']]=$d['percent'];
         }
-    else
-    {
-        $discount = collect($booking->vehicle->discounts)->last();
-        $discount = isset($discount["percent"])?$discount["percent"]:0;
     }
-    return $discount;
+    if(is_array($discount)){
+        if(array_key_exists($total_weeks,$discount))
+            return (int) $discount[$total_weeks];
+        else{
+            end($discount);
+            $key = key($discount);
+           if($total_weeks > $key)
+               return end($discount);
+        }
+    }
+    return 0;
 }

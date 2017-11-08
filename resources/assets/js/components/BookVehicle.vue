@@ -19,7 +19,7 @@
                             </div>
                         </div>
                     </li>
-                    <!--<li>-->
+                    <li>
                         <!--<div class="form-group promo-code">-->
                             <!--<div class="input-group">-->
                                 <!--<div class="input-group-addon">-->
@@ -30,7 +30,7 @@
                                 <!--<input class="form-control" placeholder="promotional code" type="text" @blur="checkPromoCode" v-model.trim="promo_code" @keypress.enter="checkPromoCode">-->
                             <!--</div>-->
                         <!--</div>-->
-                    <!--</li>-->
+                    </li>
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#lcotion_icon"></use>
@@ -145,18 +145,21 @@
             <ul>
                 <li>
                     <p><label>Rental cost </label><label>{{totalRent | currency}}</label></p>
-                    <span>{{days}} days * {{vehicle.rent | currency}}</span>
+                    <span>{{days}} days * {{dayRent | currency}}</span>
                 </li>
                 <li>
                     <p><label>Insurance</label><label>{{totalInsurance | currency}}</label></p>
-                    <span>{{days}} days * {{vehicle.insurance | currency}}</span>
+                    <span>{{days}} days * {{dayInsurance | currency}}</span>
                 </li>
                 <li>
                     <p><label>Deposit</label><label>{{vehicle.deposit | currency}}</label></p>
                     <span>will be paid when placing the request</span>
                 </li>
 
-                
+                <li>
+                    <p><label>Discount</label><label> - {{totalDicsount | currency}}</label></p>
+                    <span>Discount on the vehicle</span>
+                </li>
                
                 <li v-if="promo_code_reward">
                     <p><label>Sub Total</label> <label>{{ subTotalBooking | currency }}</label></p>
@@ -211,6 +214,7 @@
                 start_date: null,
                 end_date: null,
                 credit_cards: null,
+                discount: null,
                 card: {
                     id: '',
                     name: '',
@@ -251,6 +255,13 @@
         },
 
         computed: {
+
+            dayRent(){
+                return this.vehicle.rent / 7;
+            },
+            dayInsurance(){
+                return this.vehicle.insurance / 7;
+            },
             days() {
                 if (this.start_date && this.end_date)
                     return this.end_date.diff(this.start_date, 'days') + 1;
@@ -259,11 +270,11 @@
             },
 
             totalRent() {
-                return this.vehicle.rent * this.days;
+                return this.dayRent * this.days;
             },
 
             totalInsurance() {
-                return this.vehicle.insurance * this.days;
+                return this.dayInsurance * this.days;
             },
 
             subTotalBooking() {
@@ -277,12 +288,14 @@
                 return (
                     this.totalRent +
                     this.totalInsurance +
-                    this.vehicle.deposit -
+                    this.vehicle.deposit - 
+                    this.totalDicsount  -
                     this.promo_code_reward
                 );
             },
-
-
+            totalDicsount(){
+                return (this.totalRent + this.totalInsurance) - ((this.totalRent + this.totalInsurance)*(this.discount/100));
+            },
             validBooking() {
                 return this.days >= 7;
             }
@@ -369,6 +382,7 @@
 
                 if (bool) {
                     if (this.start_date.format('X') < this.end_date.format('X')) {
+                        this.getDiscount();
                         let StartDate = this.start_date;
                         let EndDate = this.end_date;
                         $e.find('td').each(function (i, e) {
@@ -600,6 +614,15 @@
                                 $elem.addClass('old disabled');
 
                         });
+            },
+            getDiscount(){
+                 let params = {vehicle_id: this.vehicle.id,start_date: this.start_date, end_date: this.end_date};
+                let discount;
+                axios.post('/api/booking/discount',params).then(r=>{
+                    this.discount = r.data.success;
+                    
+                });
+                return discount;
             }
         }
     }

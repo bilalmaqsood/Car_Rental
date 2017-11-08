@@ -130,6 +130,8 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::post('/booking/{booking_id}/confirm-inspection', 'InspectionController@confirmInspection');
 
+    Route::post('/booking/discount', 'FinancialController@getDiscount');
+
     Route::post('/booking/{booking_id}/amended-inspection', 'InspectionController@amendedInspection');
     
     Route::resource('/booking/{booking_id}/inspection', 'InspectionController');
