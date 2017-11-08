@@ -362,9 +362,10 @@ class InspectionController extends Controller
          
         $total_disputed_points =  $booking->inspections()->where("status",1)->where("type","!=","notes")->count();
 
+        $spot =  $booking->inspections()->whereId($spot_id);
+        
         if($total_disputed_points)
         {
-          $spot =  $booking->inspections()->whereId($spot_id);
           $spot->update(["status"=>0]); 
 
           if($total_disputed_points-1==0){
