@@ -79,6 +79,7 @@ function Discount($booking){
             $discount[$d['week']]=$d['percent'];
         }
     }
+    ksort($discount);
     if(is_array($discount)){
         if(array_key_exists($total_weeks,$discount))
             return (int) $discount[$total_weeks];
