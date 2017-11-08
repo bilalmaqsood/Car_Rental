@@ -294,7 +294,7 @@
                 );
             },
             totalDicsount(){
-                return (this.totalRent + this.totalInsurance) - ((this.totalRent + this.totalInsurance)*(this.discount/100));
+                return (this.totalRent + this.totalInsurance)*(this.discount/100);
             },
             validBooking() {
                 return this.days >= 7;

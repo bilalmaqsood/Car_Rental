@@ -38,7 +38,6 @@ Route::post('/time-slot/verify', 'TimeSlotController@verifySlots');
 
 Route::get('/promo-code/{code}', 'PromoCodeController@info');
 Route::post('/promo-code/verify', 'PromoCodeController@verify');
-
 Route::group(['middleware' => 'auth:api'], function () {
 
     /***
