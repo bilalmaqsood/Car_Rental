@@ -15,7 +15,7 @@ Route::get('/', 'HomeController@index');
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('/terms-and-conditions', 'HomeController@TermsConditions');
 
-Route::post('/api/booking/discount', 'API\FinancialController@getDiscount');
+Route::any('/booking/discount', 'API\FinancialController@getDiscount');
 
 
 Route::get('#reset-password-{token}', 'HomeController@index')->name('password.reset');
