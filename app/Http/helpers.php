@@ -88,6 +88,15 @@ function Discount($booking){
             $key = key($discount);
            if($total_weeks > $key)
                return end($discount);
+            else{
+                $amount = 0;
+                foreach ($discount as $key => $value){
+                    if($key <= $total_weeks)
+                        $amount = $value;
+                }
+                return $amount;
+            }
+
         }
     }
     return 0;
