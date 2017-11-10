@@ -327,6 +327,8 @@ class BookingController extends Controller
                 'status' => strtolower($log->booking->statusTypes[$log->booking->status])
             ]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
+        $old_booking_status = $booking->status;
+
         $requestData = $request->all();
         unset($requestData['note']);
         unset($requestData['log_id']);
@@ -344,7 +346,7 @@ class BookingController extends Controller
 
         $log->status = 2;
 
-        $title = 'Booking ' . strtolower($booking->statusTypes[$request->status]);
+        $title = 'Booking ' . strtolower($booking->statusTypes[$old_booking_status]);
 
         if ($request->status == 4 && $booking->status== 5)
             $title = 'Booking early cancellation request declined';
@@ -372,7 +374,7 @@ class BookingController extends Controller
             'id' => $booking->id,
             'type' => 'Booking',
             'status' => $request->status,
-            'old_status' => $booking->status,
+            'old_status' => $old_booking_status,
             'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
             'title' => $title,
