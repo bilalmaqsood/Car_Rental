@@ -1,8 +1,5 @@
 <template>
     <div class="booking-request-actions notification-shadow">
-    <div class="approved-actions-img">
-        <img :src="notification.data.image" alt="">
-    </div>
         <div v-if="show" class="inlane-btn-wrap inlane-btn-wrap-btn2 ">
             <ul class="two-btn-inlane">
 
