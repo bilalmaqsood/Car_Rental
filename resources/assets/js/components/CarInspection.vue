@@ -927,7 +927,7 @@
                 axios.post('/api/booking/'+this.booking.id+'/inspection',{data: [param]}).then(function(r){
                       $this.sportPending = false;
                       $("#remove").click();
-                    $this.inspections.data.push(param);
+                    $this.inspections.data.push(r.data.success);
                       new Noty({
                             type: 'success',
                             text: 'Inspection added success',

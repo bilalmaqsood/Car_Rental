@@ -96,7 +96,7 @@ class InspectionController extends Controller
             $booking->update(['status' => 10]);
         }
 
-        return api_response(trans('booking.inspection_added', ['count' => $spots->count()]));
+        return api_response($spots->first()->fresh());
     }
 
     /**
@@ -179,6 +179,16 @@ class InspectionController extends Controller
         $booking = Booking::findOrFail($booking_id);
 
         $inspection = $booking->vehicle->inspection()->where('id', $id)->first();
+
+        $total_disputed_points =  $booking->inspections()->where("status",1)->where("type","!=","notes")->count();
+
+        $spot =  $booking->inspections()->whereId($id)->where("status",1)->count();
+
+        if($total_disputed_points-$spot){
+            $this->disputionResolveNotification($booking);
+            $booking->update(["status"=>BOOKING_DISPUTE_RESOLVED]);
+            $booking->user->client->update(['status' => 0]);
+        }
 
         if (!$inspection) throw new ModelNotFoundException();
 

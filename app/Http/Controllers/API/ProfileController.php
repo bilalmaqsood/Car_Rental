@@ -66,6 +66,9 @@ class ProfileController extends Controller
 
             if ($docs->count() == 5)
                 $client->dlc = true;
+            else
+                $user->client()->update(["dlc" =>0]);
+
         }
 
         $client->save();

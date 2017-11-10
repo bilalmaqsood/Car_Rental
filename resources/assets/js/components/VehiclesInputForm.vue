@@ -306,7 +306,7 @@
 
                         </li>
 
-                        <li class="vehicle-details-row1">
+                        <!-- <li class="vehicle-details-row1">
                             <div class="form-group">
                                 <div class="input-group login-input">
                                     <input type="text" class="form-control" placeholder="booking restrictions">
@@ -317,7 +317,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </li>
+                        </li> -->
                         <li class="vehicle-details-row1" v-for="d in form.documents" v-if="d.title">
                             <div class="form-group">
                                 <div class="input-group login-input">
