@@ -1,11 +1,8 @@
 <template>
     <div class="booking-request-actions notification-shadow">
-    <div class="approved-actions-img">
-        <img :src="notification.data.image" alt="">
-    </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
             <div class="driver-profile-text">
-                <h3>Termination request approved</h3>
+                <h3>Early termination request approved</h3>
 
                 Your request for the contract for <b>{{ notification.data.vehicle }}</b> to terminate
                 early on <b>{{notification.data.requested_data.end_date | date('format', 'DD.MM.YYYY') }}</b> has been approved.

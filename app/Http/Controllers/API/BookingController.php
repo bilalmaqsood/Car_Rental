@@ -349,12 +349,12 @@ class BookingController extends Controller
 
         $log->status = 2;
 
-        $title = 'Booking ' . strtolower($booking->statusTypes[$old_booking_status]);
+        $title = 'Booking ' . strtolower($booking->statusTypes[$request->status]);
 
-        if ($request->status == 4 && $booking->status== 5)
+        if ($request->status == 4 && $old_booking_status == 5)
             $title = 'Booking early cancellation request declined';
 
-        if ($request->status == 4 && $booking->status== 7)
+        if ($request->status == 4 && $old_booking_status == 7)
             $title = 'Booking extend request declined';
 
         if ($request->status == 4 && $booking->status==0){

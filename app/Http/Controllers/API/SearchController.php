@@ -95,13 +95,13 @@ class SearchController extends Controller
         $vehicles->where(function (Builder $q) use ($request) {
 
             if ($request->price_min)
-                $q->where('rent', '>=', $request->price_min);
+                $q->whereRaw('(rent+insurance) >='.$request->price_min);
 
             if ($request->price_max)
-                $q->where('rent', '<=', $request->price_max);
+                $q->whereRaw('(rent+insurance) <='.$request->price_max);
 
             if ($request->price)
-                $q->where('rent', '<=', $request->price);
+                $q->whereRaw('(rent+insurance) <='.$request->price);
         });
 
         $vehicles->where(function (Builder $q) use ($request) {
