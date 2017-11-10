@@ -25,9 +25,9 @@
             <transition name="slide-fade" mode="in-out">
             <inspection-code :notification="notif" v-if="notif.data.status===CONSTANTS.INSPECTION_CODE_GENERATED"></inspection-code>
 
-            <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
-
-            <booking-accepted :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_ACCEPTED && notif.data.old_status === CONSTANTS.BOOKING_REQUESTED" ></booking-accepted>    
+<!--             <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
+ -->
+            <booking-accepted :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_ACCEPTED && notif.data.old_status === CONSTANTS.BOOKING_REQUESTED && vuex.state.auth.type === 'client'" ></booking-accepted>    
 
             <booking-unsuccessfull :notification="notif" v-if="notif.data.status === CONSTANTS.BOOKING_UNSUCCESSFULL"></booking-unsuccessfull>
 
@@ -35,7 +35,7 @@
 
             <booking-request-pending :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_PENDING"></booking-request-pending>
 
-            <booking-request :notification="notif" v-if="notif.data.status=== CONSTANTS.BOOKING_REQUESTED && vuex.state.auth.type === 'owner'" ></booking-request>
+            <booking-request :notification="notif" v-if="notif.data.status=== CONSTANTS.BOOKING_REQUESTED && notif.data.old_status === CONSTANTS.BOOKING_REQUESTED && vuex.state.auth.type === 'owner'" ></booking-request>
 
             <booking-signature-owner :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_SIGN_BY_CLIENT"></booking-signature-owner>
 
