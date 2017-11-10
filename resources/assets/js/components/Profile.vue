@@ -43,6 +43,8 @@
 
             <booking-extend-declined :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_ACTIVE && notif.data.old_status === CONSTANTS.BOOKING_EXTEND_REQUESTED"></booking-extend-declined>
 
+              <booking-cancel-decline :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_ACTIVE && notif.data.old_status=== CONSTANTS.BOOKING_EARLY_TERMINATION_REQUESTED"></booking-cancel-decline>
+
             <booking-approved :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_ACTIVE"></booking-approved>
 
             <booking-cancel-request :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_EARLY_TERMINATION_REQUESTED"></booking-cancel-request>
