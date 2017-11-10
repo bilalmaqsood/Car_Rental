@@ -293,6 +293,9 @@ class BookingController extends Controller
 
         $booking->vehicle->owner->user->notify(new BookingNotify($notiData));
 
+        $booking->status = $status;
+        $booking->save();
+
         return api_response(trans($status==7?'booking.extendrequest':'booking.earlyrequest'));
 //        return api_response($this->getStatusNotifyString($log));
     }
