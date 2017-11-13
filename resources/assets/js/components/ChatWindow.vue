@@ -126,6 +126,8 @@
                     if (this.currentPage === null) {
 //                        this.ids = [];
                         $.each(r.data.success.data, (i, m) => {
+                            if(m.sender.id==User.state.auth.id)
+                                m.is_sender = true;
                             messages.push(m);
                             if(!m.read)
                             this.ids.push(m.id);
@@ -135,6 +137,8 @@
                             if (this.ids.indexOf(m.id) === -1) {
                                 if(!m.read)
                                 this.ids.push(m.id);
+                            if(m.sender.id==User.state.auth.id)
+                                 m.is_sender = true;
                                 this.messages.push(m);
                             }
                         });
