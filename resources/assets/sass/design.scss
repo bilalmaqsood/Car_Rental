@@ -1885,7 +1885,7 @@ padding-top: 10px;
 }
 
 .main_booking_container .booking_container {
-    width: 55%;
+    width: 50%;
     float: right;
     background: rgba(255, 255, 255, 0.91);
 }
@@ -4972,4 +4972,10 @@ ul.contract_start_end li:first-child:after{
     cursor: pointer;
     opacity: 0;
     filter: alpha(opacity=0);
+}
+.listing-width .main_profile_container{
+    width: 60%;
+}
+.listing-width .booking_container{
+    width: 60%;
 }

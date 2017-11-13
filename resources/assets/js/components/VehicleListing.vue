@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="main_profile_container">
+    <div class="main_profile_container" v-bind:style="{'min-height': viewHeight+'px'}">
     <div class="booking-request-actions">
         <button @click="addVehicle=!addVehicle" type="button" class="add-new-vehile-btn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use></svg>
@@ -62,6 +62,7 @@
 
     var $scope;
     export default {
+        props: ["viewHeight"],
         data() {
             return {
                 storage: User,

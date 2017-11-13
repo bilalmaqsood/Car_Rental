@@ -267,11 +267,11 @@
                     </div>
                 </div>
 
-                <div class="menu-component-container" v-show="!!storage.state.menuView && storage.state.menuView!=='advance'" :style="{ height: height + 'px' }">
+                <div :class="{'listing-width': storage.state.searchView==true }" class="menu-component-container" v-show="!!storage.state.menuView && storage.state.menuView!=='advance'" :style="{ height: height + 'px' }">
                     <transition name="slide-fade">
-                        <user-settings v-if="storage.state.menuView == 'settings'"></user-settings>
-                        <user-profile v-if="storage.state.menuView == 'profile'"></user-profile>
-                        <vehicles-listing v-if="storage.state.menuView == 'vehicles'"></vehicles-listing>
+                        <user-settings v-if="storage.state.menuView == 'settings'" :viewHeight="height"></user-settings>
+                        <user-profile v-if="storage.state.menuView == 'profile'" :viewHeight="height"></user-profile>
+                        <vehicles-listing v-if="storage.state.menuView == 'vehicles'" :viewHeight="height"></vehicles-listing>
                         <vehicle-crud v-if="storage.state.menuView == 'vehiclesDetails'"></vehicle-crud>
                         <booking-listing v-if="storage.state.menuView == 'booking'" :viewHeight="height"></booking-listing>
                         <payment-card-listing  :viewHeight="height" v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>

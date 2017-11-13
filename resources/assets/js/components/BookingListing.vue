@@ -1,6 +1,6 @@
 <template>
-    <div class="main_booking_container">
-        <div class="booking_container">
+    <div class="main_booking_container" v-bind:style="{'min-height': viewHeight+'px'}">
+        <div class="booking_container" v-bind:style="{'min-height': viewHeight+'px'}">
             <div>
                 <transition name="flip" mode="out-in">
                     <div v-if="showView" key="booking-list">

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="main_profile_container">
+        <div class="main_profile_container" v-bind:style="{'min-height': viewHeight+'px'}">
             <div class="profile_top_content">
                 <div class="background_img" v-if="!!vuex.state.auth.avatar" :style="{'background-image': 'url(' + vuex.state.auth.avatar + ')'}"  alt=""></div>
                 <div v-else style="width:100%;height:250px;text-align:center;">
@@ -122,6 +122,7 @@
     import CONSTANTS from '../constants';
 
     export default {
+        props: ["viewHeight"],
         data() {
             return {
                 CONSTANTS,

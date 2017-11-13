@@ -1,5 +1,5 @@
 <template>
-    <div class="main_profile_container">
+    <div class="main_profile_container" v-bind:style="{'min-height': viewHeight+'px'}">
         <div class="setting_wrapper">
             <ul>
                 <li class="settings-form">
@@ -173,6 +173,7 @@
     import User from '../user';
 
     export default {
+        props: ["viewHeight"],
         data() {
             return {
                 User: User,
