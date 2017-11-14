@@ -4,7 +4,7 @@
         <div class="payment_wrapper">
             <h2 style="float: none; clear: both;">My Cards</h2>
             <transition name="flip" mode="out-in">
-                <div v-if="!addCard" class="list-group m-0" key="list-cards">
+                <div v-if="!addCard" class="list-group list-group-14nov m-0" key="list-cards">
                   <div  v-for="c in cards" >
                     <a href="javascript:" @click="cardEdit(c)" class="list-group-item col-sm-11">
                         <h4 class="list-group-item-heading">{{ c.name }}</h4>
