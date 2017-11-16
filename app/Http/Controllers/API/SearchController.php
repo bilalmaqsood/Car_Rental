@@ -79,7 +79,7 @@ class SearchController extends Controller
         $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent','insurance' ,'location', 'available_from', 'available_to', 'images', 'created_at','vlc');
 
         if ($request->latitude && $request->longitude)
-             $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius?: 50000);
+             $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius);
 
         if ($request->has('vehicle') && $request->vehicle != '||_||')
             $vehicles = $vehicles->where(function (Builder $q) use ($request) {

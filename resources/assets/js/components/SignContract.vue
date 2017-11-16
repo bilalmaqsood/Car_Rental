@@ -18,7 +18,7 @@
         </div>
     </div> -->
     <pdf-document v-else-if="canView && contract" :d="contract"></pdf-document>
-    <process-contract-signatures v-else-if="storage.state.auth.type=='client' && doSign "  :booking="booking" @signature="saveSignateues"></process-contract-signatures>  
+    <process-contract-signatures v-else-if="storage.state.auth.type=='client' && doSign "  :booking="booking" @signature="saveSignateues"></process-contract-signatures>
 
 <!--         <div class="sign-contract-wrap" v-else>
             <div class="contract-top-content">

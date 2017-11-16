@@ -139,7 +139,7 @@ class Vehicle extends Model
      *
      * @throws \Exception
      */
-    public function scopeNearLatLng( $query, $lat, $lng, $radius = 500, $units = 'K' )
+    public function scopeNearLatLng( $query, $lat, $lng, $radius = 10, $units = 'K' )
     {
         
         $distanceUnit = $this->distanceUnit( $units );

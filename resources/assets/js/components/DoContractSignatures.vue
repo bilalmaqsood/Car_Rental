@@ -19,7 +19,13 @@
     </div> -->
 
     <div>
-        <div class="sign-contract-wrap">
+        <div  v-if="preview && storage.state.auth.type=='client'">
+        <pdf-document  :d="contract"></pdf-document>
+            <div class="signature-submit">
+                <button style="margin-top: 0px;" class="btn" @click="preview=!preview">Sign Contract</button>
+            </div>
+        </div>
+            <div class="sign-contract-wrap" v-show="!preview || storage.state.auth.type=='owner'">
             <div class="contract-top-content">
                 <p>Contract
                     <span>
@@ -45,9 +51,13 @@
                     <span>retry signature</span>
                 </button>
             </div>
+
             <div class="signature-submit">
                 <button class="btn" :disabled="status" @click="postSignatures">Submit signature</button>
             </div>
+
+
+
         </div>
     </div>
 </template>
@@ -67,7 +77,8 @@
                 lastY: -1,
                 mousePressed: false,
                 status: true,
-                signature: ''
+                signature: '',
+                preview: true,
             };
         },
 
@@ -84,6 +95,9 @@
         },
 
         computed: {
+            contract() {
+                return this.booking ? this.booking.documents[0] : null;
+            },
 
         },
 
