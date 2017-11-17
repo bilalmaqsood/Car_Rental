@@ -96,7 +96,7 @@ class InspectionController extends Controller
             $booking->update(['status' => 10]);
         }
 
-        return api_response($spots->first()->fresh());
+        return api_response(trans('booking.inspection_added', ['count' => $spots->count()]));
     }
 
     /**
