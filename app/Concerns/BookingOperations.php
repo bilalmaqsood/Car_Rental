@@ -126,10 +126,10 @@ trait BookingOperations
      */
     protected function deductDeposit(Booking $booking, User $user)
     {
-        if ($user->current_balance < $booking->deposit)
+//        if ($user->current_balance < $booking->deposit)
             $account = $this->makePaymentFromCard($user, $booking);
-        else
-            $account = $user->creditCard()->where('default', 1)->first();
+//        else
+//            $account = $user->creditCard()->where('default', 1)->first();
 
         // deduct deposit from balance
         $user->balance->current -= $booking->deposit;
@@ -146,15 +146,15 @@ trait BookingOperations
         $booking->payments()->save($payment);
 
         // notify driver for deposit deduction
-        $user->notify(new BookingPaymentNotify([
-            'id' => $payment->id,
-            'view_type' => '',
-            'title' => 'Booking request deposit',
-            'user' => $user->name,
-            'vehicle' => $booking->vehicle->vehicle_name,
-            'deposit' => $booking->deposit,
-            'status'  => 100,
-        ]));
+//        $user->notify(new BookingPaymentNotify([
+//            'id' => $payment->id,
+//            'view_type' => '',
+//            'title' => 'Booking request deposit',
+//            'user' => $user->name,
+//            'vehicle' => $booking->vehicle->vehicle_name,
+//            'deposit' => $booking->deposit,
+//            'status'  => 100,
+//        ]));
 
         // update booking status for confirmed to requested
         $booking->account()->associate($account);
@@ -178,25 +178,26 @@ trait BookingOperations
         $balanceLog->balance()->associate($user->balance);
         $payment->balanceLogs()->save($balanceLog);
 
-        $booking->vehicle->owner->user->notify(new BookingNotify([
-            'id' => $booking->id,
-            'type' => 'Booking',
-            'status' => $booking->status,
-            'old_status' => $booking->status,
-            'vehicle_id' => $booking->vehicle->id,
-            'image' => $booking->vehicle->images->first(),
-            'title' => 'Booking requested',
-            'user' => $user->name,
-            'credit_card' => $account->last_numbers,
-            'vehicle' => $booking->vehicle->vehicle_name,
-            'contract_start' => $booking->start_date,
-            'contract_end' => $booking->end_date,
-            'deposit' => $booking->deposit,
-            'signatures' => [
-                'owner' => $booking->signatures && $booking->signatures->has('owner'),
-                'client' => $booking->signatures && $booking->signatures->has('client')
-            ]
-        ]));
+        // $booking->vehicle->owner->user->notify(new BookingNotify([
+        //     'id' => $booking->id,
+        //     'type' => 'Booking',
+        //     'status' => $booking->status,
+        //     'old_status' => $booking->status,
+        //     'vehicle_id' => $booking->vehicle->id,
+        //     'image' => $booking->vehicle->images->first(),
+        //     'title' => 'Booking requested',
+        //     'user' => $user->name,
+        //     'credit_card' => $account->last_numbers,
+        //     'vehicle' => $booking->vehicle->vehicle_name,
+        //     'contract_start' => $booking->start_date,
+        //     'contract_end' => $booking->end_date,
+        //     'deposit' => $booking->deposit,
+        //     'signatures' => [
+        //         'owner' => $booking->signatures && $booking->signatures->has('owner'),
+        //         'client' => $booking->signatures && $booking->signatures->has('client')
+        //     ]
+        // ]));
+        
     }
 
     /**
@@ -509,7 +510,7 @@ trait BookingOperations
      */
     protected function getFulfillNotifyString(BookingLog $log)
     {
-        $booking = $log->booking;
+        $booking = $log->booking;       
 
 
         if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===5 && request()->status===4)
@@ -522,11 +523,11 @@ trait BookingOperations
             'status' => strtolower($booking->statusTypes[$log->requested_data['old_status']])
         ]);
 
-        if(isset($log->requested_data['old_status']) && $log->requested_data['old_status']===5)
-            return trans('booking.fulfilled', [
-            'user' => $log->fulfilled->name,
-            'status' => strtolower($booking->statusTypes[6])
-        ]);
+        if(isset($log->requested_data['old_status']) && $log->requested_data['status']===6)
+            return trans('booking.earlyterminationApproved');
+
+        if(isset($log->requested_data['old_status']) && $log->requested_data['status']===8)
+            return trans('booking.extendApproved');
 
         return trans('booking.fulfilled', [
             'user' => $log->fulfilled->name,
@@ -535,7 +536,8 @@ trait BookingOperations
     }
 
     protected function extendBooking($booking,$log){
-        $booking->vehicle->timeslots()->where("day","<=",Carbon::parse($log->requested_data['end_date'])->format("Y-m-d"))
+        $start_date = $booking->start_date;
+        $booking->vehicle->timeslots()->where("day",">=",$start_date)->where("day","<=",Carbon::parse($log->requested_data['end_date'])->format("Y-m-d"))
                              ->update(["status" => 2, "booking_id" => $booking->id]);
 
 
@@ -610,7 +612,7 @@ trait BookingOperations
             'old_status' => $booking->status,
             'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
-            'title' => 'Owner completed vehicle inspection',
+            'title' => 'Contract signed successfully',
             'user' => request()->user()->name,
             'vehicle' => $booking->vehicle->vehicle_name,
             'contract_start' => $booking->start_date,

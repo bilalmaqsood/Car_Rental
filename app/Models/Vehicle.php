@@ -24,6 +24,8 @@ class Vehicle extends Model
         'variant',
         'year',
         'mileage_service',
+        'service_mileage',
+        'starting_mileage',
         'mileage',
         'fuel',
         'registration_number',
@@ -56,6 +58,9 @@ class Vehicle extends Model
         'no_fault_accident',
         'fault_accident',
         'notes',
+        'pickup_location_title',
+        'return_location_title',
+        'location_title'
     ];
 
     /**
@@ -116,7 +121,8 @@ class Vehicle extends Model
      */
     protected $appends = [
         'is_booked',
-        'can_book'
+        'can_book',
+        'tot_booking'
     ];
 
 
@@ -133,7 +139,7 @@ class Vehicle extends Model
      *
      * @throws \Exception
      */
-    public function scopeNearLatLng( $query, $lat, $lng, $radius = 500, $units = 'K' )
+    public function scopeNearLatLng( $query, $lat, $lng, $radius = 10, $units = 'K' )
     {
         
         $distanceUnit = $this->distanceUnit( $units );
@@ -194,7 +200,16 @@ class Vehicle extends Model
 
 
 
+    /**
 
+     * Get total bookings on the vehicle.
+     *
+     * @return boolean if any booking exists for this vehicle
+     */
+    public function getTotBookingAttribute()
+    {
+        return $this->booking()->where("status","<",9)->get()->count();
+    }
 
 
     /**

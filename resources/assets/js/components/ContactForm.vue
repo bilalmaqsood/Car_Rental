@@ -12,7 +12,14 @@
                         contact us
                     </a>
                 </li>
-            
+                <li role="presentation">
+                    <a href="#report_issue" aria-controls="report_issue" role="tab" data-toggle="tab">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 20" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#issue"></use>
+                        </svg>
+                        report issue
+                    </a>
+                </li>
                 <li role="presentation">
                     <a href="#faqs_tab" aria-controls="faqs_tab" role="tab" data-toggle="tab">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
@@ -95,7 +102,44 @@
                     </div>
                 </div>
 
-                
+                <div role="tabpanel" class="tab-pane" id="report_issue">
+                    <div class="report-issue-form">
+                        <form>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <div class="input-group login-input">
+                                    <div class="input-group-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 20" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#sign_contract_icon"></use></svg>
+                                    </div> 
+                                    <input type="text" placeholder="subject" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group login-input">
+                                    <div class="input-group-addon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use></svg>
+                                    </div> 
+                                    <textarea placeholder="your message" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="">
+                                <div class="fileUpload">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98.328 98.329" class="svg-icon">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#images-upload"></use>
+                                    </svg>
+                                    <span>upload picture</span>
+                                    <input type="file" class="upload">
+                                </div>
+                            </div>
+
+                            <button type="button" class="submit">Submit</button>
+                        </div>
+                        </form>   
+                    </div>
+                </div>
 
                 <div role="tabpanel" class="tab-pane" id="faqs_tab">
                     <p>Nunc volutpat vehicula erat at facilisis. Quisque congue et turpis non maHs. Quisque egestas eleifend purus, eu finibus magna. In cursus fringilla leo consequat sollicitudin. Nunc in massa orci. Aenean pulvinar egestas rutrum.</p>

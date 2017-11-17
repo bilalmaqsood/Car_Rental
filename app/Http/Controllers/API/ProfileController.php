@@ -60,12 +60,15 @@ class ProfileController extends Controller
                     $d['doc'] == 'dbs_certificate' ||
                     $d['doc'] == 'proof_of_address' ||
                     $d['doc'] == 'pco_licence_badge' 
-                    ) && $d['path'])
+                    ) && isset($d['path']) && filter_var($d['path'], FILTER_VALIDATE_URL) !==false)
                     $docs->push($d['doc']);
             });
 
             if ($docs->count() == 5)
                 $client->dlc = true;
+            else
+                $user->client()->update(["dlc" =>0]);
+
         }
 
         $client->save();

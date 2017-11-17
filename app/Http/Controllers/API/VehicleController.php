@@ -50,7 +50,7 @@ class VehicleController extends Controller
             $vehicle->fill($request->except(['available_from', 'available_to', 'vlc']));
 
             if(count($this->dcoumentsExists())>0)
-                $vehicle->vlc=0;
+                $vehicle->vlc=1; //Need to set it to zero here
             else
                 $vehicle->vlc=1;
 

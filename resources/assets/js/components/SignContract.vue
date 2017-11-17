@@ -18,7 +18,7 @@
         </div>
     </div> -->
     <pdf-document v-else-if="canView && contract" :d="contract"></pdf-document>
-    <process-contract-signatures v-else-if="storage.state.auth.type=='client' && doSign "  :booking="booking" @signature="saveSignateues"></process-contract-signatures>  
+    <process-contract-signatures v-else-if="storage.state.auth.type=='client' && doSign "  :booking="booking" @signature="saveSignateues"></process-contract-signatures>
 
 <!--         <div class="sign-contract-wrap" v-else>
             <div class="contract-top-content">
@@ -70,7 +70,7 @@
                                
                                 <div class="form-group clockpicker-box-2">
                                     <div class="input-group clockpicker clockpicker-box">
-                                        <input type="text" class="form-control" value="04:30">
+                                        <input type="text" class="form-control timepicker" value="04:30">
                                     </div>
                                 </div>
 
@@ -178,7 +178,7 @@
                 this.doSign = false;
             },
             closeContract(){
-                this.$emit('closeContract');
+                this.$emit('closeContract','sign');
             },
 
             submitTime(){

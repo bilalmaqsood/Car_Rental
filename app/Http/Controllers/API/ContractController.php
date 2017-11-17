@@ -137,8 +137,10 @@ class ContractController extends Controller
         
         $result = $booking->contract()->update($request->all());
 
-        if($result)
+        if($result){
+            $this->updateContractTemplate($booking);
             return api_response(trans('booking.contract-save'));
+        }
     }
 
     public function previewContract(Request $request, $booking_id){

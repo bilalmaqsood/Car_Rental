@@ -20,16 +20,16 @@
                         </div>
                     </li>
                     <li>
-                        <div class="form-group promo-code">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tag_icon"></use>
-                                    </svg>
-                                </div>
-                                <input class="form-control" placeholder="promotional code" type="text" @blur="checkPromoCode" v-model.trim="promo_code" @keypress.enter="checkPromoCode">
-                            </div>
-                        </div>
+                        <!--<div class="form-group promo-code">-->
+                            <!--<div class="input-group">-->
+                                <!--<div class="input-group-addon">-->
+                                    <!--<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="svg-icon">-->
+                                        <!--<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#tag_icon"></use>-->
+                                    <!--</svg>-->
+                                <!--</div>-->
+                                <!--<input class="form-control" placeholder="promotional code" type="text" @blur="checkPromoCode" v-model.trim="promo_code" @keypress.enter="checkPromoCode">-->
+                            <!--</div>-->
+                        <!--</div>-->
                     </li>
                     <li>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20" class="svg-icon">
@@ -145,18 +145,21 @@
             <ul>
                 <li>
                     <p><label>Rental cost </label><label>{{totalRent | currency}}</label></p>
-                    <span>{{days}} days * {{vehicle.rent | currency}}</span>
+                    <span>{{days}} days * {{dayRent | currency}}</span>
                 </li>
                 <li>
                     <p><label>Insurance</label><label>{{totalInsurance | currency}}</label></p>
-                    <span>{{days}} days * {{vehicle.insurance | currency}}</span>
+                    <span>{{days}} days * {{dayInsurance | currency}}</span>
                 </li>
                 <li>
                     <p><label>Deposit</label><label>{{vehicle.deposit | currency}}</label></p>
                     <span>will be paid when placing the request</span>
                 </li>
 
-                
+                <li>
+                    <p><label>Discount</label><label> - {{totalDicsount | currency}}</label></p>
+                    <span>Discount on the vehicle</span>
+                </li>
                
                 <li v-if="promo_code_reward">
                     <p><label>Sub Total</label> <label>{{ subTotalBooking | currency }}</label></p>
@@ -211,6 +214,7 @@
                 start_date: null,
                 end_date: null,
                 credit_cards: null,
+                discount: null,
                 card: {
                     id: '',
                     name: '',
@@ -251,6 +255,13 @@
         },
 
         computed: {
+
+            dayRent(){
+                return this.vehicle.rent / 7;
+            },
+            dayInsurance(){
+                return this.vehicle.insurance / 7;
+            },
             days() {
                 if (this.start_date && this.end_date)
                     return this.end_date.diff(this.start_date, 'days') + 1;
@@ -259,11 +270,11 @@
             },
 
             totalRent() {
-                return this.vehicle.rent * this.days;
+                return this.dayRent * this.days;
             },
 
             totalInsurance() {
-                return this.vehicle.insurance * this.days;
+                return this.dayInsurance * this.days;
             },
 
             subTotalBooking() {
@@ -277,12 +288,14 @@
                 return (
                     this.totalRent +
                     this.totalInsurance +
-                    this.vehicle.deposit -
+                    this.vehicle.deposit - 
+                    this.totalDicsount  -
                     this.promo_code_reward
                 );
             },
-
-
+            totalDicsount(){
+                return (this.totalRent + this.totalInsurance)*(this.discount/100);
+            },
             validBooking() {
                 return this.days >= 7;
             }
@@ -296,8 +309,10 @@
         methods: {
             prepareComponent() {
                 this.initializeJquery();
-                let bookingData = Local.get('bookingData');
+                let bookingData = localStorage.bookingData;
+                
                 if (bookingData) {
+                    bookingData = JSON.parse(localStorage.bookingData);
                     setTimeout(() => {
                         this.calenderChange({date: moment(bookingData.start_date + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true)});
                         this.calenderChange({date: moment(bookingData.end_date + ' ' + moment().format('H:m:s'), 'MM/DD/YYYY H:m:s', true)});
@@ -318,10 +333,11 @@
                 let $scope = this;
                  $('#booking_range_calender').datetimepicker({
                     inline: true,
-                    sideBySide: false,
+                     useCurrent: false,
+                     sideBySide: false,
                     minDate: moment(new Date())
                 }).on('dp.change', this.calenderChange)
-                  .on('dp.update', function(){ $scope.highlightOldDays($scope.available_slots) });
+                  .on('dp.update', function(){  $scope.highlightOldDays($scope.available_slots); $scope.highlightDays(true); });
                 $('[data-toggle="tooltip"]').tooltip();
             },
 
@@ -366,6 +382,7 @@
 
                 if (bool) {
                     if (this.start_date.format('X') < this.end_date.format('X')) {
+                        this.getDiscount();
                         let StartDate = this.start_date;
                         let EndDate = this.end_date;
                         $e.find('td').each(function (i, e) {
@@ -533,6 +550,7 @@
                 axios.post('/api/booking', data).then((r) => {
                     $btn.button('reset');
                     User.commit('details', false);
+                    this.emptyLogs();
                     new Noty({
                         type: 'success',
                         text: 'Booking created successfully for ' + User.state.auth.name,
@@ -543,13 +561,17 @@
             },
 
             saveBookingToStorage() {
-                User.commit('saveBooking', {
+                let data = {
                     start_date: this.start_date.format('MM/DD/YYYY'),
                     end_date: this.end_date.format('MM/DD/YYYY'),
                     promo_code: this.promo_code,
                     promo_code_reward: this.promo_code_reward,
-                    location: this.location
-                });
+                    location: this.location,
+                    vehicle: this.vehicle
+                };
+                localStorage.setItem("bookingData",JSON.stringify(data));
+                localStorage.setItem('vehicleData',JSON.stringify(this.vehicle));
+
             },
             fetchAddress(arg){
 
@@ -569,6 +591,11 @@
 
                 return location;
             },
+            emptyLogs(){
+                localStorage.removeItem('vehicleData');
+                localStorage.removeItem('bookingData');
+
+            },
              highlightOldDays(response){
                 let $t = this;
                 let $e = $('.bootstrap-datetimepicker-widget .datepicker-days table tbody');
@@ -580,10 +607,22 @@
 
                   $e.find('td').each(function (i, e) {
                             let $elem = $(e);
-                            if (_.indexOf($dates,$elem.data('day'))<0) 
+                      $elem.removeClass('active');
+                      $elem.removeClass('today');
+
+                      if (_.indexOf($dates,$elem.data('day'))<0)
                                 $elem.addClass('old disabled');
 
                         });
+            },
+            getDiscount(){
+                 let params = {vehicle_id: this.vehicle.id,start_date: this.start_date, end_date: this.end_date};
+                let discount;
+                axios.post('/api/booking/discount',params).then(r=>{
+                    this.discount = r.data.success;
+                    
+                });
+                return discount;
             }
         }
     }

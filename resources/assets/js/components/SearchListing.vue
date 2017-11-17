@@ -1,6 +1,6 @@
 <template>
     <div class="search_map ">
-        <map-markers :hover="hover_vehicle"></map-markers>
+        <map-markers ref='marker' :hover="hover_vehicle"></map-markers>
         <div class="search_container search_container_width">
             <transition-group name="list" tag="div">
             <advance-form v-if="user.state.showAdvance && user.state.menuView=='advance'" key="advance"></advance-form>
@@ -31,7 +31,7 @@
                                 <p>available from: <span v-if="i.can_book">{{i.can_book | date('fromNow')}}</span>  <span v-else>Not available</span> </p>
                             </div>
                             <div class="availabe_item_price">
-                                <h3>{{i.rent | currency}}</h3>
+                                <h3>{{i.rent + i.insurance | currency}}</h3>
                                 <span>/week</span>
                             </div>
                         </div>
@@ -85,17 +85,20 @@
             this.$on("lastinspection",()=>{
                  this.last_inspection = !this.last_inspection;   
             });
+            this.$on('clearLastInspection',()=>{
+                this.last_inspection = false;
+            });
         },
         methods: {
             prepareComponent(){
                 let $t = this;
                 setTimeout(function () {
-                    let vehicleData = Local.get('vehicleData');
-                    if (vehicleData) {
+                    let vehicleData = localStorage.vehicleData;
+                    if (vehicleData && vehicleData.length) {
                         setTimeout(function () {
                             User.commit('details', true);
                         }, 500);
-                        User.commit('vehicle', vehicleData);
+                        User.commit('vehicle', JSON.parse(vehicleData));
                     }
                 }, 500);
             },
@@ -106,20 +109,6 @@
 
             searchVehicles() {
                 this.fetchVehicles();
-            },
-
-            drawMarker() {
-                let $t = this;
-                _.map($t.items, function (v) {
-                    let lat = parseFloat(v.location.split(",")[0]);
-                    let lng = parseFloat(v.location.split(",")[1]);
-                    console.log(lat + "-" + lng);
-                    new google.maps.Marker({
-                        position: {lat: lat, lng: lng},
-                        map: $t.SearchMap,
-                        title: v.make + " " + v.model + " " + v.variant + " " + v.year,
-                    });
-                });
             },
 
             searchFilters() {
@@ -192,11 +181,14 @@
             },
             loadMore(){
                $('#sideLoader').show();
-               
+                let $this = this;
                axios.get(User.state.searchResults.next_page_url).then(response=>{
                    User.state.searchResults.data = User.state.searchResults.data.concat(response.data.success.data);
                    this.next_page_url = response.data.success.next_page_url;
-                   setTimeout(function() { $('#sideLoader').hide(); }, 500); 
+//                   User.commit('home', true);
+//                   User.commit('home', false);
+//                   User.commit('listing', User.state.searchResults);
+                   setTimeout(function() { $('#sideLoader').hide(); $this.$refs.marker.prepareComponent(); }, 100);
                });
                 
             },

@@ -23,7 +23,7 @@ trait Balanceable
         $this->notify(new CreditCardNotify([
             'id' => $creditCard->id,
             'type' => 'Payment',
-            'title' => 'Payment made',
+            'title' => 'Deposit amount deducted',
             'card_ending' => $creditCard->last_numbers,
             'amount' => $amount,
              'status' => 101,
@@ -40,9 +40,9 @@ trait Balanceable
 
         $this->balanceLogs()->save($balanceLog);
 
-        $this->balance->current += $amount;
+//        $this->balance->current += $amount;
 
-        $this->balance->save();
+//        $this->balance->save();
 
         return $creditCard;
     }
@@ -94,13 +94,21 @@ trait Balanceable
          * Calculate discount of the week
          **/
         $rent = $booking->vehicle->rent;
+        $insurance = $booking->vehicle->insurance;
+
+        $amount = $rent+$insurance;
+
+        $discount = $rent * (Discount($booking)/100);
+
+        $totalAmount = $amount - $discount;
+
 
         if($nextDue <= $booking->end_date)
             $booking->payments()->create([
                 "title" => 'Week '. $weekNo,
-                "cost"  => $rent,
+                "cost"  => $totalAmount,
                 "due_date" => $nextDue,
-                "discount" => $rent * (Discount($booking)/100),
+                "discount" => $discount,
                 "paid" => 0,
 
 
@@ -108,9 +116,9 @@ trait Balanceable
         else
             $booking->payments()->create([
                 "title" => 'Week '. $weekNo,
-                "cost"  => $rent,
+                "cost"  => $totalAmount,
                 "due_date" => $booking->end_date,
-                "discount" => $rent * (Discount($booking)/100),
+                "discount" => $discount,
                 "paid" => 0,
 
 

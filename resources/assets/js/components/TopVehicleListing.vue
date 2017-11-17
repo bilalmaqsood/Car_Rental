@@ -60,7 +60,7 @@
                                     <p> <strong>available from: </strong><span v-if="vehicle.can_book">{{vehicle.can_book | date('fromNow')}}</span><span v-else>Not available</span></p>
                                 </div>
                                 <div class="availabe_item_price">
-                                    <h3>{{vehicle.rent | currency}}</h3>
+                                    <h3>{{vehicle.rent + vehicle.insurance | currency}}</h3>
                                     <strong><span>/week</span>
                                     <span v-if="vehicle.insurance>0.0">insurance included</span>
                                     </strong>

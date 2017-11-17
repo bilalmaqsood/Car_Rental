@@ -38,7 +38,6 @@ Route::post('/time-slot/verify', 'TimeSlotController@verifySlots');
 
 Route::get('/promo-code/{code}', 'PromoCodeController@info');
 Route::post('/promo-code/verify', 'PromoCodeController@verify');
-
 Route::group(['middleware' => 'auth:api'], function () {
 
     /***
@@ -129,6 +128,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('/booking/{booking_id}/notify-amendedInspection', 'InspectionController@notifyAmendedInspection');
 
     Route::post('/booking/{booking_id}/confirm-inspection', 'InspectionController@confirmInspection');
+
+    Route::post('/booking/discount', 'FinancialController@getDiscount');
 
     Route::post('/booking/{booking_id}/amended-inspection', 'InspectionController@amendedInspection');
     

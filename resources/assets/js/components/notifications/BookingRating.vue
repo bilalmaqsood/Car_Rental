@@ -3,8 +3,8 @@
         
         <transition name="slide-fade" mode="out-in">
         <div class="booking-request-actions notification-shadow" v-if="!rate">
-            <div class="inlane-btn-wrap inlane-btn-wrap-btn2 inlane-btn-wrap-btn2-oct12">
-                <ul class="two-btn-inlane">
+            <div v-if="show" class="inlane-btn-wrap inlane-btn-wrap-btn2 inlane-btn-wrap-btn2-oct12">
+                <ul  class="two-btn-inlane" >
                     <li>
                         <a href="javascript:void(0)" @click="doRating">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
@@ -12,7 +12,7 @@
                         </a>
                     </li> 
                     <li>
-                        <a href="javascript:void(0)">
+                        <a href="javascript:void(0)"  @click="inspectionEvent">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use></svg>
                             vehicle inspection
                         </a>
@@ -20,8 +20,14 @@
                 </ul>
             </div>
             <div class="btn-inlane-content btn-inlane-content-btn2 btn-inlane-content-btn12oct noty_successfull">
-                <div class="driver-profile-img12">
-                    <img class="img-responsive" :src="notification.data.image" />
+               
+                <div @click="show = !show" class="clickable driver-profile-text">
+                <h3>Booking ended</h3>
+
+
+                <p>{{ user.state.auth.type=='owner'?notification.data.user:'Your'}} Booking for  <b> {{notification.data.vehicle}} </b> has ended on
+                </p><br>
+                <p>Please make the vehicle checks and rate the <b>{{user.state.auth.type=='owner'?'Driver':'Owner'}}</b>. </p>
                 </div>
             </div>
         </div>
@@ -69,6 +75,8 @@
                 note: '',
                 rating: '',
                 rate: false,
+                show: false,
+                
             };
         },
 
@@ -80,7 +88,7 @@
 
         mounted() {
 
-
+            console.log(this.notification);
         },
 
         methods: {
@@ -98,6 +106,9 @@
             contractEvent(){
                 this.$parent.$emit("contract",this.notification);
 
+            },
+            inspectionEvent(){
+                this.$parent.$emit("inspection",this.notification);
             },
             doRating(){
                 let $this= this;

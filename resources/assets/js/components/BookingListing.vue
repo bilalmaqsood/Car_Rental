@@ -1,13 +1,13 @@
 <template>
-    <div class="main_booking_container">
-        <div class="booking_container">
+    <div class="main_booking_container" v-bind:style="{'min-height': viewHeight+'px'}">
+        <div class="booking_container" v-bind:style="{'min-height': viewHeight+'px'}">
             <div>
                 <transition name="flip" mode="out-in">
                     <div v-if="showView" key="booking-list">
                         <div class="current_booking" v-if="bookings.length">
                             <h2>Current booking</h2>
                             <transition-group name="list" tag="div">
-                                <booking v-for="(book,i) in bookings" :key="book.id" :signature="signature" :Booking="book" :user="storage" :index="i" @otherBooking="loadOtherBooking" @sideView="loadSideView" ref="booking"></booking>
+                                <booking v-for="(book,i) in bookings" :key="book.id" :signature="signature" :Booking="book" :user="storage" :index="i" @otherBooking="loadOtherBooking" @sideView="loadSideView" @bookingUpdated="updateBooking" ref="booking"></booking>
                             </transition-group>
                         </div>
                         <div v-if="pastBookings.length">
@@ -39,6 +39,7 @@
                 <sign-contract v-if="sideView=='sign' || storage.state.menuView=='sign'" key="sign-contract" @closeContract="clearSideView" :booking="booking"></sign-contract>
                 <car-inspection v-if="sideView=='return_inspection' || sideView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
                 <extend-cancel-booking v-if="sideView=='extend'" key="booking-extend" :user="storage" @clearSideView="clearSideView"></extend-cancel-booking>
+                <!--<extend-cancel-booking-copy v-if="sideView=='extend'" class="fullwidth-flatpickr" key="booking-extend" :user="storage" @clearSideView="clearSideView"></extend-cancel-booking-copy>-->
                 <booking-documents v-if="sideView=='documents'" key="booking-documents" :documents="documents"></booking-documents>
                 <chat-booking v-if="sideView=='chat'" key="booking-chat" :viewHeight="viewHeight" :user="storage" :bookingId="inProcess.id"></chat-booking>
                 </transition>
@@ -72,8 +73,12 @@
          created: function(){
                  this.$on("lastinspection",()=>{
                         this.sideView=='last_inspection'?this.sideView="":this.sideView='last_inspection';
-                     // this.sideView = 'last_inspection';   
                  });
+
+                 this.$on("changeView",(view)=>{
+                        this.sideView=view;
+                 });
+
              },
         computed: {
             documents() {
@@ -145,6 +150,13 @@
             loadSideView(data) {
 
                 let $this = this;
+
+                if(data.view=='sign')
+                    axios.get('/api/booking/' + data.id).then(r => {
+                            this.booking = r.data.success;
+                            console.log(r.data.success);
+                            });
+
                 if(data.view=='sign' && User.state.auth.type === 'client'){
                     axios.get('/api/credit-card').then(function(r){
                         if(!r.data.success.length){
@@ -180,14 +192,21 @@
 
             clearSideView(e) {
                 if (typeof e !== 'undefined' && e === 'sign') {
-                    if (User.state.auth.type === 'owner')
-                        this.bookings[this.inProcess.index].status = 3;
-                    else if (User.state.auth.type === 'client')
-                        this.bookings[this.inProcess.index].status = 2; 
+                    if (User.state.auth.type === 'owner'){
+                        this.booking.status = 2 
+                        
+                    }
+                    else if (User.state.auth.type === 'client'){
+                        
+                        this.booking.status = 3;
+                    }
                     this.signature = false;
                 }
                 this.sideView = '';
                 this.inProcess = null;
+            },
+            updateBooking(booking){
+                this.booking = booking;
             },
             processView(data){
                 

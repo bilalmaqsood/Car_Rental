@@ -76,10 +76,10 @@ class SearchController extends Controller
             'longitude.regex' => 'The longitude is invalid.',
         ]);
 
-        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent', 'location', 'available_from', 'available_to', 'images', 'created_at','vlc');
+        $vehicles = Vehicle::select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'fuel', 'mpg', 'transmission', 'rent','insurance' ,'location', 'available_from', 'available_to', 'images', 'created_at','vlc');
 
         if ($request->latitude && $request->longitude)
-             $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius?: 50000);
+             $vehicles = $vehicles->NearLatLng($request->latitude,$request->longitude,$request->radius);
 
         if ($request->has('vehicle') && $request->vehicle != '||_||')
             $vehicles = $vehicles->where(function (Builder $q) use ($request) {
@@ -95,13 +95,13 @@ class SearchController extends Controller
         $vehicles->where(function (Builder $q) use ($request) {
 
             if ($request->price_min)
-                $q->where('rent', '>=', $request->price_min);
+                $q->whereRaw('(rent+insurance) >='.$request->price_min);
 
             if ($request->price_max)
-                $q->where('rent', '<=', $request->price_max);
+                $q->whereRaw('(rent+insurance) <='.$request->price_max);
 
             if ($request->price)
-                $q->where('rent', '<=', $request->price);
+                $q->whereRaw('(rent+insurance) <='.$request->price);
         });
 
         $vehicles->where(function (Builder $q) use ($request) {
@@ -123,7 +123,7 @@ class SearchController extends Controller
         else
         $vehicles->orderBy('created_at', 'desc');
 
-        $vehiclesList = $vehicles->where('vlc', 1)->paginate(30);
+        $vehiclesList = $vehicles->where('vlc', 1)->paginate(10);
 
 
             // $vehiclesList = $this->filterListRadius(
@@ -165,6 +165,7 @@ class SearchController extends Controller
 
         if ($request->has('vehicle') && $request->vehicle != '||_||')
             $vehicles->where(function (Builder $q) use ($request) {
+                $q->whereRaw('TRIM(BOTH \' \' FROM CONCAT_WS(\' \', `make`, `model`, `variant`, `year`)) like ?', ['%' . $request->vehicle . '%']);
                 $q->orWhere('make', 'like', '%' . $request->vehicle . '%');
                 $q->orWhere('model', 'like', '%' . $request->vehicle . '%');
                 $q->orWhere('variant', 'like', '%' . $request->vehicle . '%');

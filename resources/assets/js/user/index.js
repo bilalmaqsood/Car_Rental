@@ -13,8 +13,8 @@ const state = {
     showAdvance: false,
     detailsDisplay: false,
     searchResults: [],
-    vehicleData: {},
-    bookingData: {},
+    vehicleData: null,
+    bookingData: null,
     currentBook: null,
     highlighted: null,
     chatUsers: []

@@ -3,14 +3,14 @@
             <form>
                 <ul>
                     <li>
-                        <div class="form-group">
+                        <div class="form-group" id="prefetch-make">
                             <div class="input-group login-input">
                                 <div class="input-group-addon">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                                     </svg>
                                 </div>
-                                <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control" placeholder="vehicle" v-model.trim="vehicle" >
+                                <input type="text"  v-on:keydown.enter="searchVehicles" class="form-control typeahead" placeholder="vehicle" v-model.trim="vehicle" >
                             </div>
                         </div>
                     </li>
@@ -102,6 +102,17 @@
         },
         mounted() {
             this.prepareComponent();
+            var make = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                // url points to a json file that contains an array of country names, see
+                // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+                prefetch: Qwikkar.baseUrl + '/search/vehicle-titles'
+            });
+            $('#prefetch-make .typeahead').typeahead(null, {
+                name: 'make',
+                source: make
+            });
         },
 
         methods: {

@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="main_profile_container">
+    <div class="main_profile_container" v-bind:style="{'min-height': viewHeight+'px'}">
     <div class="booking-request-actions">
         <button @click="addVehicle=!addVehicle" type="button" class="add-new-vehile-btn">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use></svg>
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="availablity_price">
-                <label class="quantity-label">10</label>
+                <label class="quantity-label">{{ vehicle.tot_booking}}</label>
                 <div class="availabe_item_price">
                      <h3>{{vehicle.rent | currency}}</h3>
                         <span>/week</span>
@@ -62,11 +62,12 @@
 
     var $scope;
     export default {
+        props: ["viewHeight"],
         data() {
             return {
                 storage: User,
                 addVehicle: false,
-                vehicles: '',
+                vehicles: [],
                 vehicle: false,
             };
         },
@@ -78,7 +79,7 @@
                     type: 'success',
                     text: value.make+" "+value.model+" "+value.make + " Added!",
                 }).show();
-                this.vehicle.push(value);
+                $this.vehicles.push(value);
             });
 
             this.$on('vehicleUpdate', function(value){

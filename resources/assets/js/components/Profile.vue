@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="main_profile_container">
+        <div class="main_profile_container" v-bind:style="{'min-height': viewHeight+'px'}">
             <div class="profile_top_content">
                 <div class="background_img" v-if="!!vuex.state.auth.avatar" :style="{'background-image': 'url(' + vuex.state.auth.avatar + ')'}"  alt=""></div>
                 <div v-else style="width:100%;height:250px;text-align:center;">
@@ -25,9 +25,9 @@
             <transition name="slide-fade" mode="in-out">
             <inspection-code :notification="notif" v-if="notif.data.status===CONSTANTS.INSPECTION_CODE_GENERATED"></inspection-code>
 
-            <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
-
-            <booking-accepted :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_ACCEPTED && notif.data.old_status === CONSTANTS.BOOKING_REQUESTED" ></booking-accepted>    
+<!--             <booking-request :notification="notif" v-if="notif.data.status===1 && vuex.state.auth.type === 'owner'" ></booking-request>
+ -->
+            <booking-accepted :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_ACCEPTED && notif.data.old_status === CONSTANTS.BOOKING_REQUESTED && vuex.state.auth.type === 'client'" ></booking-accepted>    
 
             <booking-unsuccessfull :notification="notif" v-if="notif.data.status === CONSTANTS.BOOKING_UNSUCCESSFULL"></booking-unsuccessfull>
 
@@ -35,13 +35,15 @@
 
             <booking-request-pending :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_PENDING"></booking-request-pending>
 
-            <booking-request :notification="notif" v-if="notif.data.status=== CONSTANTS.BOOKING_REQUESTED && vuex.state.auth.type === 'owner'" ></booking-request>
+            <booking-request :notification="notif" v-if="notif.data.status=== CONSTANTS.BOOKING_REQUESTED && notif.data.old_status === CONSTANTS.BOOKING_REQUESTED && vuex.state.auth.type === 'owner'" ></booking-request>
 
             <booking-signature-owner :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_SIGN_BY_CLIENT"></booking-signature-owner>
 
             <booking-signature-client :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_SIGN_BY_OWNER"></booking-signature-client>
 
             <booking-extend-declined :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_ACTIVE && notif.data.old_status === CONSTANTS.BOOKING_EXTEND_REQUESTED"></booking-extend-declined>
+
+              <booking-cancel-decline :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_ACTIVE && notif.data.old_status=== CONSTANTS.BOOKING_EARLY_TERMINATION_REQUESTED"></booking-cancel-decline>
 
             <booking-approved :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_ACTIVE"></booking-approved>
 
@@ -66,7 +68,9 @@
             <booking-deposit :notification="notif" v-else-if="notif.data.status===CONSTANTS.BOOKING_DEPOSIT_MADE"></booking-deposit>
 
             <booking-payment-made :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_PAYMENT_MADE"></booking-payment-made>
-            
+
+                <booking-disputed :notification="notif" v-else-if="notif.data.status=== CONSTANTS.VEHICLE_DISPUTED"></booking-disputed>
+
             <inspection-amending :notification="notif" v-else-if="notif.data.status=== CONSTANTS.BOOKING_AMENDED && notif.data.old_status ===CONSTANTS.BOOKING_AMENDED "></inspection-amending>
 
             <inspection-complete :notification="notif" v-else-if="notif.data.status=== CONSTANTS.INSPECTION_COMPLETED"></inspection-complete>
@@ -89,12 +93,26 @@
         </div>
 
         <transition name="slide-fade" mode="in-out">
-            <sign-contract class="contract-on-profile" v-if="booking" :booking="booking" @closeContract="cleanViewContract"></sign-contract>
+             <extend-cancel-booking v-if="menuView=='extend'" key="booking-extend" :user="vuex" class="send-requst-oct28" ></extend-cancel-booking>
+        </transition>
+
+        <transition name="slide-fade" mode="in-out">
+            <sign-contract class="contract-on-profile" v-if="menuView=='contract'" :booking="booking" @closeContract="cleanViewContract"></sign-contract>
+        </transition>
+
+        <transition name="slide-fade" mode="in-out">
+            <chat-window v-if="menuView=='chat'" ref="chatWindowRef" :chat="chatView" :index="indexView" :utility="true" @closeChat="resetChat"></chat-window>
         </transition>
 
         <transition name="slide-fade" mode="in-out">
             <driver-profile v-if="driver_info" :booking_id="driver_info"></driver-profile>
         </transition>
+
+        <transition name="slide-fade" mode="in-out">
+            <car-inspection class="left-window" v-if="menuView=='inspection'" key="car-inspection" :booking="booking"></car-inspection>
+        </transition>
+
+
 
     </div>
 </template>
@@ -104,6 +122,7 @@
     import CONSTANTS from '../constants';
 
     export default {
+        props: ["viewHeight"],
         data() {
             return {
                 CONSTANTS,
@@ -116,6 +135,9 @@
                 notify: null,
                 rating: null,
                 note: null,
+                chatView: null,
+                indexView: null,
+                menuView: "",
             };
         },
         created: function(){
@@ -134,13 +156,37 @@
             this.$on("decline",(noti)=>{
                 this.cancle_action(noti);
             });
+            this.$on("changeView",(view)=>{
+                this.menuView=view;
+            });
+            this.$on("inspection",(noti)=>{
+                if(this.menuView == "inspection"){
+                    this.menuView = ""; return false;
+                }
+                this.showInspection(noti);
+            });
 
             this.$on("contract",(noti)=>{
+                if(this.menuView == "contract"){
+                    this.menuView = ""; return false;
+                }
                 this.viewContract(noti);
             });
 
             this.$on("chat",(noti)=>{
-                this.viewContract(noti);
+                if(this.menuView == "chat"){
+                    this.menuView = ""; return false;
+                }
+                if(User.state.auth.type=='client')
+                axios.get('/api/vehicle/'+noti.data.vehicle_id).then(r=>{
+                    User.commit('addChatUser', {user: r.data.success.owner.user, messages: []});
+                    this.openChat(r.data.success.owner.user);
+                });
+                else
+                    axios.get('/api/booking/'+noti.data.id).then(r=>{
+                        User.commit('addChatUser', {user: r.data.success.user, messages: []});
+                        this.openChat(r.data.success.user);
+                    });
             });
             this.$on("markread",(noti)=>{
                 this.markRead(noti);
@@ -203,7 +249,7 @@
                     .then(response => {
                         
                         this.notifications = response.data.success;
-                        console.log(response.data.success);
+                        
                         setTimeout(function() {$('#sideLoader').hide();}, 500);
                     });
 
@@ -211,13 +257,6 @@
 
 
             },
-
-
-
-            propExist(obj, prop) {
-                return obj.hasOwnProperty(prop);
-            },
-
             date_format(date) {
                 return moment.utc(date.date).format("D.M.Y");
             },
@@ -229,7 +268,7 @@
                     axios.get('/api/booking/' + notification.data.id + '/logs')
                         .then(this.approveRequest)
                         .then(()=>{
-                            if([0].includes(notification.data.status))
+                            if([0,5,7].includes(notification.data.status))
                             setTimeout(()=>{
                              this.markRead(notification);
                          }, 2000);
@@ -249,7 +288,7 @@
                     axios.get('/api/booking/' + notification.data.id + '/logs')
                         .then(this.cancelRequest)
                         .then(()=>{
-                            if([0].includes(notification.data.status))
+                            if([0,5,7].includes(notification.data.status))
                            setTimeout(()=>{ this.markRead(notification); }, 2000);
 
                         });
@@ -346,6 +385,7 @@
                     .then((r) => {
                         $('#sideLoader').hide();
                         this.booking = r.data.success;
+                        this.menuView = "contract";
                         setTimeout(function() {
                            $(".menu-component-container").animate({scrollTop: 0});
                         }, 500);
@@ -353,7 +393,7 @@
             },
 
             cleanViewContract() {
-                this.booking = null;
+                this.menuView = null;
             },
             processAvatar(r){
                 let param = {avatar: r.data.success};
@@ -380,6 +420,37 @@
                 else if([12,0].includes(notif.data.status))
                     return "noty_info";
 
+            }
+            ,
+            resetChat() {
+                this.indexView = null;
+                setTimeout(() => {
+                    this.chatView = null;
+                }, 300);
+            },
+
+
+
+            openChat(user){
+                
+                window.qwikkarChat.addUserChat({
+                    id: user.id,
+                    name: user.name
+                });
+               
+            },
+            showInspection(notification){
+                $('#sideLoader').show();
+                this.booking=null;
+                axios.get('/api/booking/' + notification.data.id)
+                    .then((r) => {
+                        $('#sideLoader').hide();
+                        this.booking = r.data.success;
+                        this.menuView = "inspection";
+                        setTimeout(function() {
+                            $(".menu-component-container").animate({scrollTop: 0});
+                        }, 500);
+                    });
             }
         },
     }

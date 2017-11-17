@@ -1,6 +1,6 @@
 <template>
     <div class="booking-request-actions notification-shadow">
-        <div class="inlane-btn-wrap inlane-btn-wrap-btn3">
+        <div v-if="show"  class="inlane-btn-wrap inlane-btn-wrap-btn3">
             <ul class="three-btn-inlane">
                 <li>
                     <a href="javascript:void(0)" @click="viewProfileEvent">
@@ -25,11 +25,14 @@
             </ul>
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_successfull">
-            <div class="driver-profile-text">
+            <div @click="show = !show" class="clickable driver-profile-text">
                 <h3>Booking requested</h3>
                 <p><b>{{notification.data.user}}</b> requested to book <b>{{ notification.data.vehicle }}</b></p>
-                <p><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </p>
-                <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</p>
+                <br>
+                <ul class="contract_start_end">
+                <li><b>Contract start:</b> {{notification.data.contract_start.date | date('format', 'DD.MM.YYYY') }} </li>
+                <li><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }}</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -42,7 +45,7 @@
         props: ['notification'],
         data() {
             return {
-
+                show: false,
             };
         },
 

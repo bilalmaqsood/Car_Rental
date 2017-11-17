@@ -42,7 +42,7 @@ class BookingController extends Controller
         if ($request->user()->isOwner()) {
             $result = $request->user()->owner->vehicles()->with(['booking' => function ($with) {
                 $with->with(['vehicle' => function ($vWith) {
-                    $vWith->select('id', 'make', 'model', 'variant', 'year', 'images', 'rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
+                    $vWith->select('id', 'make', 'model', 'variant', 'year', 'images','insurance' ,'rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
                 }]);
             }])->orderBy("id","desc")->get()->map(function ($v) {
                 return $v->booking;
@@ -66,7 +66,7 @@ class BookingController extends Controller
             }
         } else
             $bookingList = $request->user()->booking()->with(['vehicle' => function ($vWith) {
-                $vWith->select('id', 'make', 'model', 'variant', 'year', 'images', 'rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
+                $vWith->select('id', 'make', 'model', 'variant', 'year', 'images', 'insurance','rent', 'seats', 'mpg', 'fuel', 'transmission', 'mileage', 'available_from');
             }])->orderBy("id","desc")->get();
 
         return api_response($bookingList);
@@ -84,7 +84,7 @@ class BookingController extends Controller
             return api_response('Driver\'s documents are not verified.', Response::HTTP_BAD_REQUEST);
 
         if ($request->user()->client->status == 1)
-            return api_response('Sorry! you have an open dispute.', Response::HTTP_BAD_REQUEST);
+            return api_response('Sorry! you have an open dispute.', Response::HTTP_FORBIDDEN);
 
         $this->validate($request, [
             'vehicle_id' => 'required|numeric|exists:vehicles,id',
@@ -135,7 +135,7 @@ class BookingController extends Controller
             return api_response(trans('booking.unauthenticated', ['name' => $request->user()->name]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
         $booking = Booking::whereId($id)->with(['vehicle' => function ($with) {
-            $with->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats', 'transmission', 'fuel', 'mile_cap', 'rent', 'documents');
+            $with->select('id', 'make', 'model', 'variant', 'year', 'mileage', 'seats','insurance', 'transmission', 'fuel', 'mile_cap', 'rent', 'documents');
         }, 'bookingLog' => function ($with) {
             $with->with(['requested', 'fulfilled']);
         }, 'user'])->first();
@@ -235,7 +235,8 @@ class BookingController extends Controller
     public function updateStatusRequest(Request $request, $id, BookingLog $log)
     {
         $this->validate($request, [
-            'start_date' => 'date|after_or_equal:today',
+            // 'start_date' => 'date|after_or_equal:today',
+            'start_date' => 'date',
             'end_date' => 'date|after_or_equal:today',
             'location' => 'string',
             'note' => 'string',
@@ -292,7 +293,11 @@ class BookingController extends Controller
 
         $booking->vehicle->owner->user->notify(new BookingNotify($notiData));
 
-        return api_response($this->getStatusNotifyString($log));
+        $booking->status = $status;
+        $booking->save();
+
+        return api_response(trans($status==7?'booking.extendrequest':'booking.earlyrequest'));
+//        return api_response($this->getStatusNotifyString($log));
     }
 
     /**
@@ -325,6 +330,8 @@ class BookingController extends Controller
                 'status' => strtolower($log->booking->statusTypes[$log->booking->status])
             ]), Response::HTTP_UNPROCESSABLE_ENTITY);
 
+        $old_booking_status = $booking->status;
+
         $requestData = $request->all();
         unset($requestData['note']);
         unset($requestData['log_id']);
@@ -344,11 +351,15 @@ class BookingController extends Controller
 
         $title = 'Booking ' . strtolower($booking->statusTypes[$request->status]);
 
-        if ($request->status == 4 && in_array($booking->status, [5, 7]))
-            $title = 'Booking ' . strtolower($booking->statusTypes[$booking->status]) . ' request declined';
+        if ($request->status == 4 && $old_booking_status == 5)
+            $title = 'Booking early cancellation request declined';
+
+        if ($request->status == 4 && $old_booking_status == 7)
+            $title = 'Booking extend request declined';
 
         if ($request->status == 4 && $booking->status==0){
             $title = trans('booking.request-unsuccessfull'); //Owner denided request for booking
+            
             event(new BookingUnsuccessfull($booking));
             return api_response(trans('booking.request-decline'));
         }
@@ -366,7 +377,7 @@ class BookingController extends Controller
             'id' => $booking->id,
             'type' => 'Booking',
             'status' => $request->status,
-            'old_status' => $booking->status,
+            'old_status' => $old_booking_status,
             'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
             'title' => $title,
@@ -383,6 +394,29 @@ class BookingController extends Controller
                 'client' => $booking->signatures && $booking->signatures->has('client')
             ]
         ]));
+
+        if ($request->status == 1)
+            $booking->vehicle->owner->user->notify(new BookingNotify([
+                'id' => $booking->id,
+                'type' => 'Booking',
+                'status' => 1,
+                'old_status' => 0,
+                'vehicle_id' => $booking->vehicle->id,
+                'image' => $booking->vehicle->images->first(),
+                'title' => 'Contract is available for update and sign',
+                'user' =>  $booking->user->name,
+                'requested_data'  => $requestData,
+                'note' => $log->requested_note,
+                'credit_card' => $booking->account?$booking->account->last_numbers:'',
+                'vehicle' => $booking->vehicle->vehicle_name,
+                'contract_start' => $booking->start_date,
+                'contract_end' => $booking->end_date,
+                'deposit' => $booking->deposit,
+                'signatures' => [
+                    'owner' => $booking->signatures && $booking->signatures->has('owner'),
+                    'client' => $booking->signatures && $booking->signatures->has('client')
+                ]
+            ]));
 
         if ($request->status == 9)
             $booking->user->notify(new BookingNotify([

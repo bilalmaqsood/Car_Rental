@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Qwikkar\Concerns\Balanceable;
 use Qwikkar\Http\Controllers\Controller;
 use Qwikkar\Models\Booking;
-
+use Carbon\Carbon;
 class FinancialController extends Controller
 {
     use Balanceable;
@@ -35,7 +35,8 @@ class FinancialController extends Controller
         $vehicles = $request->user()->owner->vehicles;
 
         $vehicles->each(function ($v) use (&$total) {
-            $v->booking->each(function ($b) use (&$total) {
+            $v->booking()->each(function ($b) use (&$total) {
+//                d($b->payments()->get()->toArray());
                 $b->payments()->where('paid', 1)->get()->each(function ($p) use (&$total) {
                     $total['earnings'] += $p->cost;
                     if ($p->title == 'Deposit')
@@ -44,8 +45,8 @@ class FinancialController extends Controller
             });
         });
 
-        $total['available'] = $total['earnings'] - $total['deposit'] - $total['withdraw'] + $request->user()->current_balance;
-
+        $total['available'] = $total['earnings'] - $total['deposit'] - $total['withdraw'];
+//        dd( $total['available']);
         return api_response($total);
     }
 
@@ -89,5 +90,15 @@ class FinancialController extends Controller
 
     }
 
+    public function getDiscount(Request $request){
+
+        $booking = new Booking();
+        $data = $request->all();
+        $data['start_date'] = Carbon::parse($data['start_date']);
+        $data['end_date'] = Carbon::parse($data['end_date']);
+        $booking->fill($data);
+
+        return api_response(Discount($booking));
+    }
 
 }

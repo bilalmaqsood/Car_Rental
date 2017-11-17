@@ -1,9 +1,9 @@
     <template>
     <div class="booking-request-actions notification-shadow">
-    <div class="inlane-btn-wrap inlane-btn-wrap-btn2">
+    <div v-if="show"  class="inlane-btn-wrap inlane-btn-wrap-btn2">
             <ul class="two-btn-inlane">
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="javascript:void(0)" @click="markRead">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#user"></use></svg>
                         wait {{notification.data.interval}} min
                     </a>
@@ -17,7 +17,7 @@
             </ul>
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn2 noty_danger">
-            <div class="driver-profile-text">
+            <div @click="show = !show" class="clickable driver-profile-text">
                 <h3>No response from owner</h3>
                 <p><b>{{notification.data.user}}</b>  has not taken any action regarding your booking request for <b>{{ notification.data.vehicle }}</b></p>
                 <p>You can cancel your request now or allow the owner more time to reply</p>
@@ -33,7 +33,7 @@
         props: ['notification'],
         data() {
             return {
-
+                show: false,
             };
         },
 
@@ -64,6 +64,9 @@
                          this.$parent.$emit("markread",this.notification);
                         console.log(r);
                     });
+            },
+            markRead(){
+                this.$parent.$emit("markread",this.notification);
             }
     }
 }

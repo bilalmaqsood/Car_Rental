@@ -16,6 +16,16 @@ return [
 
     'requested' => 'Driver (:user) want to :status the booking.',
 
+    'extendrequest' => 'Booking extention request sent!',
+
+    'extendApproved' => 'Booking extention request approved',
+
+    'earlyterminationDecline' => 'Booking early cancelation request decline',
+
+    'earlyterminationApproved' => 'Booking early cancelation request approved',
+
+    'earlyrequest' => 'Booking early cancelation request sent!',
+
     'fulfilled' => 'Owner (:user) has updated the booking as :status.',
 
     'log-fulfilled' => 'Owner (:user) has already updated the booking as :status.',

@@ -1,5 +1,5 @@
 <template>
-    <div class="main_profile_container">
+    <div class="main_profile_container" v-bind:style="{'min-height': viewHeight+'px'}">
         <div class="setting_wrapper">
             <ul>
                 <li class="settings-form">
@@ -173,6 +173,7 @@
     import User from '../user';
 
     export default {
+        props: ["viewHeight"],
         data() {
             return {
                 User: User,
@@ -187,7 +188,7 @@
                     {title: 'PCO License (badge)', name:'',path: '',type: '', doc: 'pco_licence_badge', status: '' },
                     {title: 'DBS certificate', name:'',path: '',type: '', doc: 'dbs_certificate', status: '' },
                     {title: 'Proof of address', name:'',path: '',type: '', doc: 'proof_of_address', status: '' },
-                    {title: 'Passport and Visa Copy', name:'',path: '',type: '', doc: '', status: '' },
+                    {title: 'Passport and Visa Copy', name:'',path: '',type: '', doc: 'visa_doc', status: '' },
                    
                 ],
                 clone: JSON.stringify(User.state.auth)
@@ -286,6 +287,7 @@
                 
                     $(".hiddenUpload").unbind().trigger("click").change(function () {
                         $.map(this.files, function (val) {
+                            if($this.isUploadAble(val)){
                            $('#sideLoader').show();
                             obj.name = val.name.substring(0, val.name.lastIndexOf('.'));
                             obj.type = val.name.split('.').pop();
@@ -301,7 +303,13 @@
                                     setTimeout(function() { $('#sideLoader').hide(); }, 500);
                                     // User.state.auth.documents.push(obj);
                                 });
-                            };
+                            }
+                            } else {
+                                val=null;
+                                $(".hiddenUpload").val(null);
+
+
+                            }
                         });
                     });
             },
@@ -339,6 +347,16 @@
                         User.commit('menuView', false);
                         }, 500);
                 }
+            },
+            isUploadAble(file){
+                if(parseInt(file.size)/1024/1024 >5.00){
+                    new Noty({
+                        type: 'error',
+                        text: file.name+" Exceeds the Max Size! 5MB",
+                    }).show();
+                    return false;
+                }
+                return true;
             },
             
         }

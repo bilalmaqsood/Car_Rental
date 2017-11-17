@@ -15,6 +15,9 @@ Route::get('/', 'HomeController@index');
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 Route::get('/terms-and-conditions', 'HomeController@TermsConditions');
 
+Route::any('/booking/discount', 'API\FinancialController@getDiscount');
+
+
 Route::get('#reset-password-{token}', 'HomeController@index')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
@@ -62,6 +65,14 @@ Route::get('/overdue-check', function()
     $exitCode = Artisan::call('overdue:check'); 
 });
 
+Route::get('/free',function (){
+    \DB::statement("UPDATE `time_slots` SET status=1, booking_id=null");
+    \DB::statement("DELETE FROM bookings");
+    \DB::statement("DELETE FROM booking_payments");
+    \DB::statement("DELETE FROM booking_logs");
+    \DB::statement("DELETE FROM balances");
+    \DB::statement("DELETE FROM balance_logs");
+});
 
 use Qwikkar\Notifications\RatingNotify;
 use Carbon\Carbon;

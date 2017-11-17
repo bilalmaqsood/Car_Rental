@@ -15,7 +15,7 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('chatroom', function ($user) {
+Broadcast::channel('chatroom-{id}', function ($user) {
     return $user;
 });
 
@@ -23,7 +23,5 @@ Broadcast::channel('booking.{id}', function ($user, $id) {
     return $user;
 });
 Broadcast::channel('user-{id}', function ($user, $id) {
-	logger(">>>>>>".$user);
-	logger(">>>>>>".$id);
     return (int)$user->id === (int)$id ? $user : null;
 });

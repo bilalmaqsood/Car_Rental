@@ -34,7 +34,7 @@
                     </div>
                     <div class="availablity_price">
                         <div class="availabe_item_price">
-                            <h3>{{user.state.vehicleData.rent | currency}}</h3>
+                            <h3>{{user.state.vehicleData.rent + user.state.vehicleData.insurance | currency}}</h3>
                             <span>/week</span>
                             <span v-if="user.state.vehicleData.insurance>0.0">insurance included</span>
                         </div>
@@ -93,6 +93,9 @@
                         </li>
                     </ul>
                 </div>
+                <transition name="slide-fade" mode="out-in">
+              <last-inspection class="driver-last-inspection driver-last-inspection-nov01" :vehicle="user.state.vehicleData" v-if="last_inspection"></last-inspection>
+        </transition>
             </div>
 
             <!--<contact-owner v-if="contactowner" :owner="user.state.vehicleData.owner.user"></contact-owner>-->
@@ -116,6 +119,7 @@
                 contactowner: false,
                 chatView: null,
                 indexView: null,
+                last_inspection: false,
 
             };
         },
@@ -129,7 +133,7 @@
         methods: {
             prepareComponent() {
                 let $t = this;
-                let bookingData = Local.get('bookingData');
+                let bookingData = localStorage.bookingData;
 
                 if (bookingData && this.user.state.auth.type === 'client') {
                     setTimeout(function () {
@@ -142,6 +146,7 @@
             },
 
             doBooking() {
+                this.$parent.$emit("clearLastInspection");
                 if(User.state.auth){
                     if(!User.state.auth.dlc){
                         User.commit('menuView', 'settings');
@@ -168,6 +173,7 @@
                 });
             },
         openLastInspection(){
+            this.last_inspection = !this.last_inspection;
             this.$parent.$emit("lastinspection");
         },
         closeWindow(){
@@ -180,45 +186,13 @@
                     this.chatView = null;
                 
             },
-            loadChat(chat, index) {
-                if (this.indexView === index)
-                    this.resetChat();
-                else {
-                    this.indexView = null;
-                    setTimeout(() => {
-                        this.chatView = chat;
-                        this.indexView = index;
-                        this.menu = true;
-                    }, 300);
-                }
-            },
-
-            addUserChat(user) {
-                let index = -1;
-                $.each(User.state.chatUsers, function (k, v) {
-                    if (v.user.id === user.id) index = k;
-                });
-                if (index === -1)
-                    axios.get('/api/user/' + user.id).then(r => {
-                        User.commit('addChatUser', {user: r.data.success, messages: []});
-                        this.menu = true;
-                        let index = User.state.chatUsers.length - 1;
-                        this.loadChat(User.state.chatUsers[index], index);
-                    });
-                else if (this.indexView === null || this.indexView !== index) this.loadChat(User.state.chatUsers[index], index);
-                else new Noty({
-                        type: 'warning',
-                        text: '<div><p class="m-0">You already chatting with <b>' + user.name + '</b>.</p></div>',
-                        timeout: 800
-                    }).show();
-            },
 
             openChat(user){
-                setTimeout(() => {
-                    this.contactowner = !this.contactowner;
-                }, 500);
+                window.qwikkarChat.addUserChat({
+                    id: user.id,
+                    name: user.name
+                });
 
-                this.addUserChat(user);
             }
     }
 }

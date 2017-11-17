@@ -1885,7 +1885,7 @@ padding-top: 10px;
 }
 
 .main_booking_container .booking_container {
-    width: 55%;
+    width: 50%;
     float: right;
     background: rgba(255, 255, 255, 0.91);
 }
@@ -2221,20 +2221,20 @@ padding-top: 10px;
 .vehicle_registration .card_recured ul li:nth-child(7) {
     width: 33.3%;
     float: left;
-    background: #525252;
+    background: #fff;
     border-bottom: 0;
-    color: #fff;
+    color: #525252;
     border-right: 3px solid #98b927;
 }
 
 .vehicle_registration .card_recured ul li:nth-child(7) .form-control {
-    color: #fff;
-    background: #525252;
+    color: #525252;
+    background: #fff;
 }
 
 .vehicle_registration .card_recured ul li:nth-child(12) .form-control {
-    color: #fff;
-    background: #525252;
+    color: #525252;
+    background: #fff;
 }
 
 .vehicle_registration .card_recured ul li:nth-child(8) {
@@ -3589,7 +3589,10 @@ button:disabled {
     border-left: 5px solid #f5a623;
 }
 .noty_successfull{
-    border-left: 5px solid green;
+    border-left: 5px solid #87af1e;
+}
+.noty_successfull h3{
+    color: #87af1e;
 }
 .noty_info{
     border-left: 5px solid #3108b6;
@@ -3776,7 +3779,7 @@ button:disabled {
     display: inline-block;
 }
 .inlane-btn-wrap-btn3{
-    width: 50%;
+    width: 46%;
 }
 .inlane-btn-wrap ul {
     padding: 0;
@@ -3975,13 +3978,6 @@ button:disabled {
 .vehicle_registration .card_recured ul .vehicle-details-row3{
     width: 33.3% !important;
     float: left;
-}
-.vehicle_registration .card_recured ul .vehicle-details-row1:nth-child(4) .form-group{
-    background: #525252 !important;
-    color: #ffffff !important;
-}
-.vehicle_registration .card_recured ul .vehicle-details-row1:nth-child(4) .form-control{
-    color: #ffffff !important;
 }
 .requests-counter-wrap .availablity_price {
     margin-top: -40px;
@@ -4802,4 +4798,223 @@ background: #fff;
     z-index: 99999999999;
     display: block;
     width: 25%;
+}
+.left-window {
+    float: left;
+    width: 50%;
+    background: #fff;
+    -webkit-box-shadow: 2px 0 4px #505050;
+    box-shadow: 2px 0 4px #505050;
+}
+.fullwidth-flatpickr .flatpickr-day{
+    width: 100% ;
+}
+.fullwidth-flatpickr .dayContainer{
+    width: 100%;
+    max-width: 100%;
+}
+.fullwidth-flatpickr .flatpickr-days{
+    width: 100%;
+    max-width: 100%;
+}
+
+.fullwidth-flatpickr .flatpickr-rContainer{
+    width: 100%;
+    max-width: 100%;
+}
+
+.fullwidth-flatpickr .flatpickr-calendar{
+    width: 100%;
+    max-width: 100%;
+}
+.fullwidth-flatpickr .flatpickr-wrapper{
+    width: 100%;
+    max-width: 100%;
+}
+
+.fullwidth-flatpickr .flatpickr-day{
+    width: 100%;
+    max-width: 100%;
+}
+ul.contract_start_end li{
+    display: inline-block;
+    position: relative;
+    
+}
+ul.contract_start_end {
+       padding-left: 0px;
+
+}
+ul.contract_start_end li:last-child{
+    margin-left: 10px;
+}
+.send-requst-oct28{
+    width: 50%;
+    float: left;
+}
+ul.contract_start_end li:first-child:after{
+    content: "|";
+    position: absolute;
+    right: -8px;
+    top: 0;
+    color: #98b927;
+}
+.driver-last-inspection-nov01{
+    display: none;
+}
+@media screen and (max-width: 1199px) {
+    .pickup_loction_btn_3_sep{
+        margin-bottom: 10px;
+        float: left;
+        width: 100%;
+    }
+    .car_detail_container_oct4 {
+        position: absolute;
+    }
+}
+@media screen and (max-width: 1020px) {
+#car_inspection {
+    background: #fff;
+    height: auto;
+    float: left;
+    width: 100%;
+    position: static;
+}
+.driver-last-inspection-nov01{
+    display: block;
+}
+}
+@media screen and (max-width: 500px) {
+    .car_detail_clander ul li:nth-child(3n) span {
+        position: relative;
+        top: 5px;
+        margin-left: 0;
+        padding-left: 10px;
+        float: right;
+        width: 85%;
+    }
+}
+
+.page-quick-sidebar-chat-user-messages {
+    float: left;
+    width: 100% !important;
+}
+.chat-container .row{
+    margin: 0 !important;
+}
+.chats-container {
+    z-index: 9999;
+}
+.chat-window .panel-default > .panel-heading {
+    float: left;
+    width: 100%;
+}
+.chat-window .panel-title {
+    font-size: 13px;
+}
+.list-color-nov01 a{
+    color: #f5a523 !important;
+}
+.list-color-nov01 .svg-icon{
+    fill: #f5a523 !important;
+}
+.vehicle-registration-slider {
+    background: #fff;
+}
+.inspection-digits-confirmation ul li .form-control {
+    font-size: 35px;
+    text-align: center;
+}
+.report-issue-form{
+    margin: 0 auto;
+}
+.report-issue-form .form-group {
+    width: 100%;
+    -webkit-box-shadow: 0.5px 0.5px 2px #9e9e9e;
+    box-shadow: 0.5px 0.5px 2px #9e9e9e;
+    padding: 12px;
+    margin-top: 9px;
+}
+.report-issue-form textarea {
+    height: 155px;
+    resize: none;
+}
+.report-issue-form .login-input .input-group-addon {
+    vertical-align: top;
+    padding-top: 10px;
+}
+
+.report-issue-form .fileUpload {
+    -webkit-box-shadow: 4px 4px 4px rgba(91, 91, 91, 0.5);
+    box-shadow: 4px 4px 4px rgba(91, 91, 91, 0.5);
+    margin: 15px auto 40px;
+    max-width: 240px;
+    overflow: hidden;
+    padding: 50px 20px 30px;
+    position: relative;
+    text-align: center;
+    background: #fff;
+}
+
+.report-issue-form .fileUpload svg {
+    display: block;
+    margin: 0 auto 10px;
+}
+
+.report-issue-form .fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    min-height: 138px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+.listing-width .main_profile_container{
+    width: 60%;
+}
+.listing-width .booking_container{
+    width: 60%;
+}
+.list-group-14nov .btn-danger {
+    color: #fff;
+    background-color: #87af1e;
+    border-color: #87af1e;
+    border-radius: 0;
+    padding: 17px 12px;
+}
+.list-group-14nov .btn-danger .fa{
+    font-size: 24px;
+}
+.payment_wrapper .primary-button {
+    margin-top: 90px;
+}
+@media screen and (max-width: 1199px) {
+    .listing-width .booking_container {
+        width: 75%;
+    }
+}
+@media screen and (max-width: 1023px) {
+    .listing-width .main_profile_container{
+        width: 100%;
+    }
+    .listing-width .booking_container{
+        width: 100%;
+    }
+    .listing-width  .main_booking_container {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 767px) {
+    .list-group-item {
+        float: left;
+        width: 92%;
+    }
+    .list-group-14nov .btn-danger {
+        padding: 17px 0;
+        width: 8%;
+    }
 }

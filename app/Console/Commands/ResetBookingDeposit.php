@@ -45,7 +45,9 @@ class ResetBookingDeposit extends Command
                     'comment' => 'Deposit returned from booking after completion.',
                 ]);
 
-                   $sriptResponse = json_decode($booking->balanceLogs()->first()->payment_response);
+                if($booking->balanceLogs()->first()){
+
+                $sriptResponse = json_decode($booking->balanceLogs()->first()->payment_response);
 
                 $balanceLog->balance()->associate($booking->user->balance);
 
@@ -55,7 +57,8 @@ class ResetBookingDeposit extends Command
 
                 $response = $booking->user->refund($sriptResponse->id, array('amount' => $booking->deposit*100)); // refund to client
 
-                // $booking->user->balance->current += $booking->deposit;
+                 $booking->user->balance->current += $booking->deposit;
+                }
 
                 $booking->user->balance->save();
 
@@ -85,7 +88,7 @@ class ResetBookingDeposit extends Command
 
                 if($booking->vehicle)
                 $this->generateRatingNotification($booking);
-
+                $booking->inspections()->where("status","=",0)->update(["is_return"=>0]);
                 $booking->status = 12;
                 $booking->save();
 

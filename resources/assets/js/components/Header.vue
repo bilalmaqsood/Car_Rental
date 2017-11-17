@@ -242,7 +242,7 @@
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search_icon"></use>
                                     </svg>
                                     vehicles
-                                    <span v-if="storage.state.menuView=='vehicles'" class="quantity-span">25</span> 
+                                    <span v-if="storage.state.menuView=='vehicles'" class="quantity-span">{{tot_vehicles}}</span>
                                 </a>
                             </li>
 
@@ -267,11 +267,11 @@
                     </div>
                 </div>
 
-                <div class="menu-component-container" v-show="!!storage.state.menuView && storage.state.menuView!=='advance'" :style="{ height: height + 'px' }">
+                <div :class="{'listing-width': storage.state.searchView==true }" class="menu-component-container" v-show="!!storage.state.menuView && storage.state.menuView!=='advance'" :style="{ height: height + 'px' }">
                     <transition name="slide-fade">
-                        <user-settings v-if="storage.state.menuView == 'settings'"></user-settings>
-                        <user-profile v-if="storage.state.menuView == 'profile'"></user-profile>
-                        <vehicles-listing v-if="storage.state.menuView == 'vehicles'"></vehicles-listing>
+                        <user-settings v-if="storage.state.menuView == 'settings'" :viewHeight="height"></user-settings>
+                        <user-profile v-if="storage.state.menuView == 'profile'" :viewHeight="height"></user-profile>
+                        <vehicles-listing v-if="storage.state.menuView == 'vehicles'" :viewHeight="height"></vehicles-listing>
                         <vehicle-crud v-if="storage.state.menuView == 'vehiclesDetails'"></vehicle-crud>
                         <booking-listing v-if="storage.state.menuView == 'booking'" :viewHeight="height"></booking-listing>
                         <payment-card-listing  :viewHeight="height" v-if="storage.state.menuView == 'payment' && storage.state.auth.type == 'client'"></payment-card-listing>
@@ -290,6 +290,7 @@
     import {required, email, minLength, sameAs} from 'vuelidate/lib/validators';
 
     export default {
+        props: ['tot_vehicles'],
         data() {
             return {
                 storage: User,
@@ -488,11 +489,16 @@
             },
 
             goHome() {
-                if (User.state.home)
+                console.log(User.state.home);
+                if (User.state.home && !User.state.detailsDisplay && !User.state.searchView)
                     $("html, body").animate({scrollTop: 0}, 1000);
                 else {
-                    User.commit('home', true);
-                    User.commit('view', false);
+                    window.location.href ='/';
+//                    User.commit('home', true);
+//                    User.commit('view', false);
+//                    User.commit('view', false);
+//                    User.commit('listing', false);
+
                 }
             },
             handleMenuView(view){

@@ -185,7 +185,9 @@
         <div class="inlain-black-btn2">
             <ul>
                 <li><a href="javascript:void(0)" class="btn" @click="PreviewContract">Preview contract</a></li> 
-                <li><a href="javascript:void(0)" class="btn" @click="processContract">Confirm contract</a></li>
+
+                <li v-if="booking.status==2 && booking.signatures"><a href="javascript:void(0)" class="btn" @click="processContract(true)">Update contract</a></li>
+                <li v-else><a href="javascript:void(0)" class="btn" @click="processContract(false)">Confirm contract</a></li>
             </ul>
         </div>
     </div>
@@ -295,7 +297,7 @@
             });
 
             },
-            processContract(){
+            processContract(status){
              $('#sideLoader').show();
                 axios.patch('/api/booking/'+this.booking.id+'/contract-data',this.form)
                      .then(r=>{
@@ -304,7 +306,11 @@
                                 type: 'success',
                                 text:  r.data.success
                             }).show();
+                            if(!status)
                             this.signContract=true;
+                            else
+                            this.closeContract();
+
                         }, 500);
                         
                      });   

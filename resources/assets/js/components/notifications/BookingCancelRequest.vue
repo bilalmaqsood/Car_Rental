@@ -4,7 +4,7 @@
         <img :src="notification.data.image" alt="">
     </div>
         <div class="inlane-btn-wrap inlane-btn-wrap-btn2 ">
-            <ul class="two-btn-inlane">
+            <ul v-if="show" class="two-btn-inlane">
 
                  <li>
                     <a  href="javascript:void(0)"  @click="approveEvent">
@@ -23,8 +23,8 @@
             </ul>
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_warning">
-            <div class="driver-profile-text">
-                <h3>Early termination requested</h3>
+            <div @click="show = !show" class="clickable driver-profile-text">
+                <h3 >Early termination requested</h3>
                 <p><b>{{notification.data.user}}</b>  has requested to terminate the contract for  {{ notification.data.vehicle }}
                 </p>
                 <p><b>Contract end:</b> {{notification.data.contract_end.date | date('format', 'DD.MM.YYYY') }} |  <b>  Requested end:</b> {{notification.data.requested_data.end_date | date('format', 'DD.MM.YYYY') }}</p>
@@ -41,7 +41,7 @@
         props: ['notification'],
         data() {
             return {
-
+                show: false,
             };
         },
 

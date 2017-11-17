@@ -1,30 +1,33 @@
 <template>
     <div class="booking-request-actions notification-shadow">
-        <div class="inlane-btn-wrap inlane-btn-wrap-btn2 ">
+        <div  v-if="show" class="inlane-btn-wrap inlane-btn-wrap-btn2 ">
             <ul class="two-btn-inlane">
 
                  <li>
-                    <a  href="javascript:void(0)"  >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" class="svg-icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hellp"></use>
+                    <a  href="javascript:void(0)"  @click="inspectionEvent">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 25" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#booking_menu"></use>
                         </svg>
                         view inspection 
                     </a>
                 </li>
                 <li>
-                    <a  href="javascript:void(0)" >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25" class="svg-icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#close_icon"></use></svg>
-                        decline
+                    <a href="javascript:void(0)" @click="chatEvent">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20" class="svg-icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chat"></use>
+                        </svg>
+                        chat
                     </a>
                 </li>
             </ul>
         </div>
         <div class="btn-inlane-content btn-inlane-content-btn3 noty_warning">
-            <div class="driver-profile-text">
+            <div @click="show = !show" class="clickable driver-profile-text">
                 <h3>Inspection amended request</h3>
                 <p><b>{{notification.data.user}}</b>  has requested for the inspection amended.
                 </p>
-                
+                <br>
+                <p>You can click the inspection button to approve the amendment</p>
                 
             </div>
         </div>
@@ -38,7 +41,7 @@
         props: ['notification'],
         data() {
             return {
-
+                show: false,
             };
         },
 
@@ -68,7 +71,12 @@
                 this.$parent.$emit("contract",this.notification);
 
             },
-
+            chatEvent(){
+                this.$parent.$emit("chat",this.notification);
+            },
+            inspectionEvent(){
+                this.$parent.$emit("inspection",this.notification);
+            },
         }
     }
 </script>

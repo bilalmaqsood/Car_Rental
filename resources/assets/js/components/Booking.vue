@@ -34,7 +34,7 @@
                                         <p>available from: <span v-if="booking.vehicle.can_book">{{booking.vehicle.can_book | date('fromNow')}}</span><span v-else>Not Available</span></p>
                                     </div>
                                     <div class="availabe_item_price">
-                                        <h3>{{ booking.vehicle.rent | currency }}</h3>
+                                        <h3>{{ booking.vehicle.rent + booking.vehicle.insurance | currency }}</h3>
                                         <span>/week</span>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                                     <p>available from: <span v-if="booking.vehicle.can_book">{{booking.vehicle.can_book | date('fromNow')}}</span><span v-else>Not available</span></p>
                                 </div>
                                 <div class="availabe_item_price">
-                                    <h3>{{ booking.vehicle.rent | currency }} </h3>
+                                    <h3>{{ booking.vehicle.rent + booking.vehicle.insurance | currency }} </h3>
                                     <span>/week</span>
                                 </div>
                             </div>

@@ -742,23 +742,46 @@
                 setTimeout(function() { $('[data-toggle="tooltip"]').tooltip(); }, 500);
             })
 
-            
+            $(".digit").keyup(function () {
+                  $(this).parents('li').next().find('.digit').focus();
+            });
         },
 
         methods: {
             logit(obj){ console.log(obj) },
             changeMenu(view) {
+                let $this = this;
                 if(this.sportPending){
-                    var result = confirm("Inspection is pending, do you want to contnue");
-                    if(result){
-                        this.clearSpot();
-                        this.sportPending = false;
-                    } else { return false; }
-                } else { this.clearSpot(); }
+                    let result;
+                    var n = new Noty({
+                  text: '<b>Inspection is pending, do you want to continue ??</b>',
+                  timeout: false,
+                  buttons: [
+                    Noty.button('YES', 'btn btn-success', function () {
+                      n.close();
+                      $this.clearSpot();
+                        $this.sportPending = false;
+                        if ($this.menuView && $this.menuView === view)
+                            $this.menuView = '';
+                        else
+                            $this.menuView = view;
+                    }, {id: 'button1', 'data-status': 'ok'}),
+
+                    Noty.button('NO', 'btn btn-error', function () {
+                            n.close();
+                            result=false;
+                        })
+                     ]
+                }).show();
+                    if(result==false)
+                    return false;
+                } else { this.clearSpot(); 
+                
                 if (this.menuView && this.menuView === view)
                     this.menuView = '';
                 else
                     this.menuView = view;
+                }
                 setTimeout(function() { $('[data-toggle="tooltip"]').tooltip(); }, 100);
             },
             drawSpots(spotSide){
@@ -778,6 +801,9 @@
                 let GtotalWidth, GtotalHeight;
                 let sportNum = 1;
                 let $scope = this;
+
+                $scope.X_Axis = 50;
+                $scope.Y_Axis = 50;
 
                 GtotalWidth = parseInt($('.carcondition-img').width());
                 GtotalHeight = parseInt($('.carcondition-img').height());
@@ -834,12 +860,9 @@
 
                     });
             },
-            deleteSpot(spot){
+            procesDelete(spot){
                 let $this = this;
-                var result = confirm("Are you sure to delete this spot");
-                console.log(spot);
-                    if(result){
-                        axios.delete('/api/booking/'+this.booking.id+'/inspection/'+spot.id).then(function () {
+                axios.delete('/api/booking/'+this.booking.id+'/inspection/'+spot.id).then(function () {
                             let index = $this.inspections.data.indexOf(spot);
                             $this.inspections.data.splice(index,1);
                             new Noty({
@@ -847,9 +870,23 @@
                                 text: 'Spot delted successfully',
                             }).show();
                         });
+            },
+            deleteSpot(spot){
+                let $this = this;
+                var n = new Noty({
+                  text: '<b> Are you sure to delete this spot ??</b>',
+                  timeout: false,
+                  buttons: [
+                    Noty.button('YES', 'btn btn-success', function () {
+                      n.close();
+                      $this.procesDelete(spot);
+                    }, {id: 'button1', 'data-status': 'ok'}),
 
-
-                    } else { return false; }
+                    Noty.button('NO', 'btn btn-error', function () {
+                            n.close();
+                        })
+                     ]
+                }).show();
             },
             saveSpots(side){
 
@@ -890,7 +927,7 @@
                 axios.post('/api/booking/'+this.booking.id+'/inspection',{data: [param]}).then(function(r){
                       $this.sportPending = false;
                       $("#remove").click();
-                    $this.inspections.data.push(param);
+                    $this.inspections.data.push(r.data.success);
                       new Noty({
                             type: 'success',
                             text: 'Inspection added success',
@@ -965,6 +1002,7 @@
                  axios.post('/api/booking/'+this.booking.id+'/confirm-inspection',{inspection_code: code})
                  .then(r=>{
                     this.hideLoader(500);
+                    this.$parent.$emit("changeView","");
                     new Noty({
                                     type: 'success',
                                     text: r.data.success,
@@ -981,18 +1019,30 @@
             sendInspection(){
 
                 let url;
-                if(User.state.auth.type=='client')
-                    url = '/api/booking/'+this.booking.id+'/notify-amendedInspection'
-                else if(User.state.auth.type=='owner')
-                    url = '/api/booking/'+this.booking.id+'/notify-driver'
+                let title;
+                if(User.state.auth.type=='client'){
+                    url = '/api/booking/'+this.booking.id+'/notify-amendedInspection';
+                    title = "Inspection amendment notification sent to owner";
+                }
+
+                else if(User.state.auth.type=='owner'){
+                    url = '/api/booking/'+this.booking.id+'/notify-driver';
+                    title = "Inspection amendment notification sent to driver";
+                }
+
                 $('#centerLoader').show();
                 axios.post(url).then(()=>{
                     this.hideLoader(500);
+                    new Noty({
+                        type: 'success',
+                        text: title,
+                    }).show();
+
                  });
 
 
             },
-            soptColor(inspection){  
+            soptColor(inspection){
                 if(inspection.status==CONSTANTS.BOOKING_AMENDED)                
                     return 'inspection_ammended mydraggable';
                 else if(inspection.is_return==0)
@@ -1048,7 +1098,7 @@
 
                         this.hideLoader(500);
                  });
-            }
+            },
         }
     }
 </script>

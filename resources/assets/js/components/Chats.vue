@@ -52,11 +52,14 @@
                     let check = false;
 
                     User.state.chatUsers.filter(function (chat) {
+                        console.log(chat);
                         if (chat.messages.length) {
                             check = true;
                             new Noty({
-                                type: 'success',
-                                text: 'You have new Message'
+                                theme: 'qwikkar',
+                                timeout: false,
+                                type: 'message',
+                                text: '<h3> You have new Message </h3> <p>  On '+ moment(chat.messages[0].created_at).format('DD.MM.Y')+' <b>'+chat.user.name+'</b> wrote: </p> <p>'+chat.messages[0].message+'</p>',
                             }).show();
                         }
                     });

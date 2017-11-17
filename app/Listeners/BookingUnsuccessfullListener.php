@@ -42,7 +42,7 @@ class BookingUnsuccessfullListener
             'old_status' => $booking->status,
             'vehicle_id' => $booking->vehicle->id,
             'image' => $booking->vehicle->images->first(),
-//            'title' => 'Booking unsuccessfull',
+            'title' => 'Booking request was auto declined',
 //            'user' => $owner->name,
 //            'requested_data'  => $requestData,
 //            'note' => $log->requested_note,
@@ -52,7 +52,7 @@ class BookingUnsuccessfullListener
 //            'contract_end' => $booking->end_date,
         ];
         $driver->notify(new BookingNotify($data));
-        $owner->notify(new BookingNotify($data));
+//        $owner->notify(new BookingNotify($data));
 
         
         $booking->timeslots()->update(["status" => 1, "booking_id" => null]);
@@ -60,7 +60,7 @@ class BookingUnsuccessfullListener
         $booking_id = $booking->id;
 
         $booking->delete();
-        \DB::table('notifications')->whereRaw('DATA->"$.id"',$booking_id)->delete();
+//        \DB::table('notifications')->whereRaw('DATA->"$.id"',$booking_id)->delete();
 
         return true;
     }

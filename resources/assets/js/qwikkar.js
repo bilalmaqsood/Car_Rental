@@ -73,7 +73,8 @@ Vue.component('chat-window', require('./components/ChatWindow.vue'));
 
 Vue.component('vehicle-input-form-copy', require('./components/VehiclesInputFormCopy.vue'));
 
-
+Vue.component('extend-cancel-booking-copy', require('./components/ExtendCancelCopy.vue'));
+Vue.component('early-cancel-booking-copy', require('./components/EarlyCancelationCopy.vue'));
 
 /**
  * seprate components for notifications
@@ -92,6 +93,7 @@ Vue.component('booking-extended', require('./components/notifications/BookingExt
 Vue.component('booking-extend-declined', require('./components/notifications/BookingExtendDeclined.vue'));
 Vue.component('booking-cancel-request', require('./components/notifications/BookingCancelRequest.vue'));
 Vue.component('booking-cancel-approved', require('./components/notifications/BookingCancelApproved.vue'));
+Vue.component('booking-cancel-decline', require('./components/notifications/BookingEarlyTerminationDecline.vue'));
 Vue.component('booking-rating', require('./components/notifications/BookingRating.vue'));
 Vue.component('booking-signature-client', require('./components/notifications/BookingSignatureClient.vue'));
 Vue.component('booking-signature-owner', require('./components/notifications/BookingSignatureOwner.vue'));
@@ -105,6 +107,7 @@ Vue.component('inspection-amending', require('./components/notifications/Inspect
 Vue.component('inspection-open', require('./components/notifications/InspectionOpen.vue'));
 Vue.component('inspection-confirmed', require('./components/notifications/InspectionConfirmed.vue'));
 Vue.component('inspection-resolved', require('./components/notifications/InspectionDisputedResolved.vue'));
+Vue.component('booking-disputed', require('./components/notifications/BookingDisputed.vue'));
 
 
 
@@ -116,3 +119,14 @@ Vue.filter('bookingStatus', require('./filters/booking-status'));
 const app = new Vue({
     el: '#app'
 });
+
+
+window.qwikkarChat = {
+   addUserChat(id) {
+       app.$refs.chats.addUserChat(id);
+   },
+
+   removeUserChat(id) {
+       app.$refs.chats.removeUserChat(id);
+   }
+};

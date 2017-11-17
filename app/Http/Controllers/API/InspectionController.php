@@ -52,7 +52,7 @@ class InspectionController extends Controller
         $this->validate($request, [
             'data' => 'required|array|min:1',
             'data.*.type' => 'required|in:front,rear,driver_side,off_side,notes',
-            'data.*.status' => 'in:0,1',
+//            'data.*.status' => 'in:0,1',
             'data.*.is_return' => 'boolean',
             // 'data.*.x_axis' => 'numeric',
             // 'data.*.y_axis' => 'numeric',
@@ -96,7 +96,7 @@ class InspectionController extends Controller
             $booking->update(['status' => 10]);
         }
 
-        return api_response(trans('booking.inspection_added', ['count' => $spots->count()]));
+        return api_response($spots->first()->fresh());
     }
 
     /**
@@ -129,7 +129,7 @@ class InspectionController extends Controller
     {
         $this->validate($request, [
             'type' => 'required|in:front,rear,driver_side,off_side,notes',
-            'status' => 'in:0,1',
+//            'status' => 'in:0,1',
             'is_return' => 'boolean',
             'x_axis' => 'numeric',
             'y_axis' => 'numeric',
@@ -179,6 +179,16 @@ class InspectionController extends Controller
         $booking = Booking::findOrFail($booking_id);
 
         $inspection = $booking->vehicle->inspection()->where('id', $id)->first();
+
+        $total_disputed_points =  $booking->inspections()->where("status",1)->where("type","!=","notes")->count();
+
+        $spot =  $booking->inspections()->whereId($id)->where("status",1)->count();
+
+        if($total_disputed_points-$spot){
+            $this->disputionResolveNotification($booking);
+            $booking->update(["status"=>BOOKING_DISPUTE_RESOLVED]);
+            $booking->user->client->update(['status' => 0]);
+        }
 
         if (!$inspection) throw new ModelNotFoundException();
 
@@ -362,9 +372,10 @@ class InspectionController extends Controller
          
         $total_disputed_points =  $booking->inspections()->where("status",1)->where("type","!=","notes")->count();
 
+        $spot =  $booking->inspections()->whereId($spot_id);
+        
         if($total_disputed_points)
         {
-          $spot =  $booking->inspections()->whereId($spot_id);
           $spot->update(["status"=>0]); 
 
           if($total_disputed_points-1==0){
