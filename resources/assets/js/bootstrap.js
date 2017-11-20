@@ -26,8 +26,6 @@ require('./starrr.js');
 
 require('bootstrap-sass');
 
-require('vue-animate/dist/vue-animate.min.css');
-
 require('eonasdan-bootstrap-datetimepicker');
 
 window.Inputmask = require('inputmask');
@@ -98,7 +96,7 @@ import Echo from 'laravel-echo'
 try {
     window.Echo = new Echo({
         broadcaster: 'socket.io',
-        host: window.location.hostname + ':7941',
+        host: window.location.hostname + ':7945',
         namespace: 'Qwikkar.Events'
     });
 } catch (e) {

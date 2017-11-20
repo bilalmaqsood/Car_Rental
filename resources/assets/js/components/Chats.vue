@@ -81,9 +81,11 @@
                     window.Echo
                         .join(`user-${r.data.success.id}`)
                         .here(this.initSocketAd)
+                        .joining(this.initSocketAd)
                         .listen('MessageReceived', this.updateMessagePosted);
 
                     this.showChat = true;
+                    alert(window.Echo.socketId());
                     this.loadLatestChat();
                 });
             },
@@ -121,10 +123,13 @@
             },
 
             initSocketAd() {
+                alert("Join socket:" +window.Echo.socketId());
                 axios.post('/api/message/socket', {socket: window.Echo.socketId()});
             },
 
             updateMessagePosted(posted) {
+                console.log("message posted");
+                alert("posted");
                 posted.message.is_sender = false;
 
                 let index = null;
