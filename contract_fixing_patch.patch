@@ -1,0 +1,69 @@
+Index: resources/assets/js/components/BookingDetail.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- resources/assets/js/components/BookingDetail.vue	(date 1509387175000)
++++ resources/assets/js/components/BookingDetail.vue	(revision )
+@@ -114,12 +114,12 @@
+                             </li>
+                         </transition>
+                         <transition name="flip" v-else-if="User.state.auth.type=='owner'">
+-                            <li v-if="canSign && isSignDone">
++                            <li v-if="canSign && !isSignDone">
+                                 <a @click="loadSideView('sign')" href="javascript:">
+                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 15" class="svg-icon">
+                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#availability_results"></use>
+                                     </svg>
+-                                    sign contract
++                                    {{ !isSignDone?'Sign':'Edit' }} contract
+                                 </a>
+                             </li>
+                             <li v-else-if="[0,5,7].includes(booking.status)">
+Index: resources/assets/js/components/BookingListing.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- resources/assets/js/components/BookingListing.vue	(date 1509387175000)
++++ resources/assets/js/components/BookingListing.vue	(revision )
+@@ -62,7 +62,7 @@
+                 sideView: '',
+                 book_past: false,
+                 showView: false,
+-                signature: true,
++                signature: false,
+                 booking: {},
+                 bookings: [],
+                 pastBookings: [],
+@@ -186,10 +186,10 @@
+             clearSideView(e) {
+                 if (typeof e !== 'undefined' && e === 'sign') {
+                     if (User.state.auth.type === 'owner')
+-                        this.bookings[this.inProcess.index].status = 3;
+-                    else if (User.state.auth.type === 'client')
+-                        this.bookings[this.inProcess.index].status = 2; 
+-                    this.signature = false;
++                        this.bookings[this.inProcess.index].status = 2;
++                    else if (User.state.auth.type === 'client')
++                        this.bookings[this.inProcess.index].status = 3; 
++                    this.signature = true;
+                 }
+                 this.sideView = '';
+                 this.inProcess = null;
+Index: resources/assets/js/components/SignContract.vue
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- resources/assets/js/components/SignContract.vue	(date 1509387175000)
++++ resources/assets/js/components/SignContract.vue	(revision )
+@@ -178,7 +178,7 @@
+                 this.doSign = false;
+             },
+             closeContract(){
+-                this.$emit('closeContract');
++                this.$emit('closeContract', 'sign');
+             },
+ 
+             submitTime(){
